@@ -1,6 +1,6 @@
 import {modules,readCourse,readFatf,readLegacy,readScore} from './progress';
 import type {CourseKey} from './progress';
-import {hasCelebrated,worldComplete} from './WorldCompletion';
+import {hasCelebrated} from './WorldCompletion';
 
 type Props={openCourse:(id:CourseKey)=>void;openFatf:()=>void;openProgress:()=>void;openResources:()=>void};
 const descriptions:Record<CourseKey,{subtitle:string;description:string;color:string;label:string}>={
