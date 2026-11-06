@@ -226,3 +226,15 @@ The front page now represents the current AMLVERSE offering rather than the orig
 - Duplicate sidebar quick-case links have been removed from the primary menu. Existing browser progress and previously saved scores remain intact.
 
 No network account or data upload is introduced. Progress is stored on the same browser, not synchronised across devices.
+
+## Integrated Capstone Challenge — v0.19
+**Operation Integrity Shield** is an optional final practice mission combining skills from the existing nine learning worlds without changing their independent progress, gifts or scores.
+
+- Six fictional case decisions covering risk assessment, multi-hop tracing, provisional exchange attribution, confidential FIU information exchange, evidence-based findings and lawful recommendations.
+- Immediate explanatory feedback after each selection and a final decision review.
+- Practice score out of 100%, with an 80% threshold for the locally recorded **Integrity Challenger** educational achievement. Attempts and personal best are stored only in the current browser under `amlverse-capstone-v1`.
+- A gift-opening experience on a passing attempt, plus an example note under ABSTRACT, FINDINGS, INFERENCE, RECOMMENDED ACTIONS and LIMITATIONS.
+- Downloadable text-only educational debrief. A result appears separately on **My Progress**; the capstone is not a tenth 5-step course.
+- No real data collection, backend, accreditation, or authoritative case determination.
+
+The capstone is available to all learners for practice. Finishing the earlier nine worlds is recommended preparation, but not an enforced requirement. It does not award a professional qualification.
