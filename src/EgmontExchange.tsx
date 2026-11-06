@@ -27,7 +27,7 @@ const questions:Question[]=[
 ];
 type Stage='intro'|'sort'|'quiz'|'done';
 function readBest(){try{return Number(localStorage.getItem('amlverse-egmont-best')||'0')||0}catch{return 0}}
-export default function EgmontExchange({onBack}:{onBack:()=>void}){
+export default function EgmontExchange({onBack,onContinue}:{onBack:()=>void;onContinue:()=>void}){
  const [stage,setStage]=useState<Stage>('intro');
  const [selected,setSelected]=useState<string|null>(null);
  const [placed,setPlaced]=useState<Record<string,Bin>>({});
@@ -64,7 +64,7 @@ export default function EgmontExchange({onBack}:{onBack:()=>void}){
  <h1 className="title">Operation Secure Exchange 🌍</h1>
  <p className="lead">You are an FIU cooperation officer on a fictional international assignment. Protect information, follow authorisations and complete the mission!</p>
  <TutorialGuide game="egmont"/>
- <WorldCompletion game={"egmont"} trigger={stage==='done'}/>
+ <WorldCompletion game={"egmont"} trigger={stage==='done'} onContinue={onContinue}/>
  <div className="arcadehud"><span>🧩 {stage==='sort'?sorted+'/6 cards sorted':stage==='quiz'?'Question '+(question+1)+'/3':stage==='done'?'Mission complete':'Ready to play'}</span><span>🏆 Best {best} points</span><button type="button" onClick={restart}>↻ Restart</button></div>
  {stage==='intro'?<div className="evalscene"><div className="evalmascot" aria-hidden="true">🌐</div><div><span className="eyebrow">INCOMING INTERNATIONAL REQUEST</span><h2>Protect the intelligence!</h2><p>A fictional foreign FIU has shared financial information. Some actions are safe, some need permission, and some must be stopped.</p><p><b>How to play:</b> Drag each card into a box—or tap a card and then tap its box. Complete all six to unlock three short decision challenges.</p><button className="primary" onClick={()=>setStage('sort')}>Start mission →</button></div></div>
  :stage==='sort'?<><div className="arcadeinstruction"><strong>ROUND 1 — THE SECURITY DESK</strong><p>Where should each action go? Drag a card or tap it, then tap a box.</p><div className="arcadeprogress"><div style={{width:sorted/cards.length*100+'%'}}/></div></div>
@@ -80,6 +80,7 @@ export default function EgmontExchange({onBack}:{onBack:()=>void}){
  <div className="actions">{!checked?<button className="primary" disabled={answer===null} onClick={check}>Check my decision →</button>:<button className="primary" onClick={advance}>{question===questions.length-1?'Complete mission':'Next decision'} →</button>}</div>
  </>
  :<div className="arcadewin"><span aria-hidden="true">🏆</span><h2>International mission accomplished!</h2><p>You correctly sorted six decisions and answered {correct} of three cooperation challenges.</p><strong>{points} points</strong><p>Remember: authorised purposes, secure channels, confidentiality and consent make trustworthy FIU cooperation possible.</p><div className="actions"><button className="primary" onClick={restart}>Play again ↻</button><button className="secondary" onClick={onBack}>Return to academy</button></div></div>}
+ {stage==='done'?<div className="nextstepbar" role="navigation" aria-label="Continue learning"><span>✓ Mission finished. Your next learning world is ready.</span><button type="button" className="primary" onClick={onContinue}>Continue to next world →</button></div>:null}
  <div className="notice"><b>Educational simulation only.</b> No real FIU messages, accounts or restricted Egmont information are used or collected. Details are simplified and must be checked against applicable law and operational guidance. <a href={source} target="_blank" rel="noopener noreferrer">Egmont Principles for Information Exchange (May 2022) ↗</a></div>
  </main>;
 }
