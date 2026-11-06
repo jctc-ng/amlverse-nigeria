@@ -248,3 +248,8 @@ The My Progress achievement gallery now covers the complete curriculum:
 - **Integrity Challenger** awarded for a passing result in the Capstone Challenge.
 
 The page includes All / Unlocked / To earn filters, an overall unlocked count and specific progress on each locked or unlocked badge. Achievement calculations reuse existing saved local browser data: no reset, server account or official certification is introduced. Older passes not previously recorded may need to be resubmitted.
+
+## Arcade responsive layout fix — v0.20
+All shared categorisation games now use a consistent responsive grid: three drop-zone columns and three evidence-card columns on wide displays, two columns on tablets (with a two-column card grid on narrower desktop widths), and a single column on small phones. This corrects the default one-column drop zones that unintentionally stacked vertically even on wide screens. The existing drag-and-drop and tap-to-place interactions remain available.
+
+Before further curriculum expansion, prioritise usability tests, question bank variety, content citations/versioning, and accessible interactions across screen sizes.
