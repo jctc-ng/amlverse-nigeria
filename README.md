@@ -88,3 +88,12 @@ A beginner-focused, two-stage fictional evaluation game:
 The game teaches the distinction between legal/institutional measures and verified results; it is **not** an official FATF/GIABA assessment, rating system or certification. The lesson content and simulated evidence should undergo institutional expert review before use for formal training. Never upload actual STRs, case files, or restricted FIU materials to this public project.
 
 Official orientation: [FATF Mutual Evaluations](https://www.fatf-gafi.org/en/topics/mutual-evaluations.html).
+
+## Egmont Exchange 2.0 (v0.7)
+Interactive fictional FIU cooperation mission in `src/EgmontExchange.tsx`:
+- Round one: drag or tap six action cards into **Safe to proceed**, **Check permission**, or **Stop & protect**.
+- Round two: three decision challenges on approved purpose, onward dissemination, consent, security and confidentiality.
+- Instant coaching, score, replay and locally saved personal best.
+- Source: [Egmont Principles for Information Exchange Between FIUs, May 2022 revision](https://egmontgroup.org/wp-content/uploads/2013/10/2.-Principles-Information-Exchange-Revised-May-2022.pdf), particularly Principles 26, 28–36.
+- Important nuance: Principle 26 provides for assumed consent for dissemination to competent authorities **identified in the original request**, unless explicitly refused. Other uses/dissemination beyond the originally approved scope are governed by Principle 32 and may require prior authorisation.
+This public prototype never sends real FIU requests. Institutional operational rules, applicable law and any restricted Egmont requirements take precedence.
