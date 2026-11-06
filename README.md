@@ -275,3 +275,11 @@ This release begins a gradual deepening of existing academy worlds rather than c
 - Learners may retry assessments; best scores and prior passes are retained locally.
 
 **Scope:** This is an educational prototype, not professional accreditation. FATF Recommendation and risk-based-approach materials are linked for further learning; content requires subject-matter review against current authoritative sources before formal training.
+
+## Sequential learning and mobile continuation — v0.23
+A clear primary **Continue** pathway now guides learners beyond each lesson, quiz, simulation, result and World Champion gift.
+
+- **Across the nine worlds:** The Learn → Quick Check → Tutorial → Play sequence remains available for review. After completing the game, a sticky continuation prompt takes the learner to the next world; opening the World Champion gift also offers an actionable **Continue to next world** button. The final reporting world advances to the Capstone Challenge.
+- **RiskLab Academy 2.0:** Four lessons are followed by the tier's ten-question quiz (80% practice pass), then the tier's synthetic case simulation (two of three decisions correct). Passing a complete tier opens a congratulatory gift and an explicit next-level action; the Advanced-level gift continues to the next academy world. The course overview has a saved-progress-aware **Continue my learning** entry, which returns to the next missing required step.
+- **Mobile:** Continue actions are large, touch-friendly and visible in a sticky navigation bar or the bottom of the celebration modal; the next lesson scrolls into view on compact screens.
+- **Progress and compatibility:** Previously recorded classic game achievements, 12 expanded lesson visits, quiz best scores and simulation pass flags are preserved. Learners may review previous material; mandatory progress is earned through the appropriate passed checks and case work, not merely opening a gift. Gifts remain informal educational achievements, not regulated certifications.
