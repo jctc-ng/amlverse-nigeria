@@ -46,3 +46,17 @@ Ten guided lessons (Recommendations 1–10), with 20 interactive practice questi
 - Instructor-reviewed answer rationales at the paragraph/criterion level
 - Accessible matching and sorting interactions
 - 40-Recommendation curriculum, version tracking and optional approved learning management backend
+
+## RiskLab 2.0 (v0.3)
+
+An interactive, synthetic sectoral-risk simulator:
+- Three fictional sectors: cross-border payments, property investment and charitable transfers.
+- Clickable evidence collection; threats, vulnerabilities, context and existing controls.
+- Adjustable threat, vulnerability and consequence dimensions; illustrated 5×5 heatmap.
+- Proportionate control-selection challenge and written justification.
+- Explanation-rich debrief, suggested mitigations and best-score saving in browser storage.
+
+### Methodology caveat
+The risk rating and training score in this game are **illustrative**, not a FATF-approved, national, or NFIU scoring formula. An actual national or sectoral assessment requires an agreed methodology, data quality review, contextual analysis, uncertainty disclosure and institutional validation. The module's scenarios do not concern actual entities.
+
+Primary learning source: [FATF Money Laundering National Risk Assessment Guidance](https://www.fatf-gafi.org/en/publications/Methodsandtrends/Money-Laundering-National-Risk-Assessment-Guidance.html).
