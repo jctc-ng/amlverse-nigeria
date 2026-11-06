@@ -213,3 +213,16 @@ All route identifiers, amounts and characters are synthetic. This public lesson 
 - Records a personal-best score locally and supports the **World Champion** reward upon completing the three lessons, Quick Check and game.
 
 The learning examples are synthetic and intentionally incomplete. Never paste real STRs, bank statements, identities or restricted intelligence into the public training app. 
+
+## Academy Overview Refresh — v0.18
+The front page now represents the current AMLVERSE offering rather than the original six prototype world cards and a growing list of repeated promotional banners.
+
+- **Nine** playable, tracked learning worlds arranged in three tracks: Foundations & Standards; Financial Intelligence & Cooperation; Blockchain Investigation & Reporting.
+- **FATF Quest R.1–R.10** remains independently accessible and gets its own progress snapshot and featured entry.
+- The progress overview reads the same locally saved course results and FATF scores as **My Progress**. Each world is counted as finished only when all **three lessons, the passed Quick Check, and the completed game** are recorded.
+- Cards show actual 0–5 milestones, lessons visited, Quick Check status, best saved score, and gift/achievement status where applicable.
+- A recommended next mission prioritises a partially completed world before an unstarted one; all cards are linked to their actual learning rooms.
+- An updated introduction, clean featured learning sections and official resource links replace the duplicated old home content.
+- Duplicate sidebar quick-case links have been removed from the primary menu. Existing browser progress and previously saved scores remain intact.
+
+No network account or data upload is introduced. Progress is stored on the same browser, not synchronised across devices.
