@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import type {DragEvent} from 'react';
 import TutorialGuide from './TutorialGuide';
+import WorldCompletion from './WorldCompletion';
 
 type DocumentCard={id:string;title:string;detail:string;answer:'technical'|'effectiveness'|'insufficient';explanation:string};
 type Question={prompt:string;options:string[];correct:number;explanation:string;source:string};
@@ -51,6 +52,7 @@ export default function EvaluationArena({onBack}:{onBack:()=>void}){
  <h1 className="title">The Assessor's Challenge</h1>
  <p className="lead">Help a fictional team prepare for a mutual evaluation. Sort its evidence, then answer three questions from a simulated assessor.</p>
  <TutorialGuide game="evaluation"/>
+ <WorldCompletion game={"evaluation"} trigger={stage==='result'}/>
  <div className="evalhud"><span>⭐ {stage==='intro'?'Ready':stage==='evidence'?'Evidence round':stage==='interview'?'Assessor interview':'Mission complete'}</span><span>🏆 Best score: {best}</span><button type="button" onClick={reset}>↻ Restart</button></div>
  {stage==='intro'?<div className="evalscene"><div className="evalmascot" aria-hidden="true">🕵️</div><div><span className="eyebrow">YOUR MISSION</span><h2>Prepare for the assessor!</h2><p>A fictional FIU has a folder full of documents. Some show that rules exist, some demonstrate actual results, and some don't prove anything yet.</p><p><b>How to play:</b> Drag each document into the correct box—or tap a document and then its box. Get instant feedback, then unlock the assessor interview.</p><button className="primary" onClick={()=>setStage('evidence')}>Start sorting evidence →</button></div></div>
  :stage==='evidence'?<>
