@@ -21,7 +21,7 @@ const questions:Question[]=[
 ];
 const sourceUrl='https://www.fatf-gafi.org/en/topics/mutual-evaluations.html';
 type Stage='intro'|'evidence'|'interview'|'result';
-export default function EvaluationArena({onBack}:{onBack:()=>void}){
+export default function EvaluationArena({onBack,onContinue}:{onBack:()=>void;onContinue:()=>void}){
  const [stage,setStage]=useState<Stage>('intro');
  const [assigned,setAssigned]=useState<Record<string,string>>({});
  const [selected,setSelected]=useState<string|null>(null);
@@ -52,7 +52,7 @@ export default function EvaluationArena({onBack}:{onBack:()=>void}){
  <h1 className="title">The Assessor's Challenge</h1>
  <p className="lead">Help a fictional team prepare for a mutual evaluation. Sort its evidence, then answer three questions from a simulated assessor.</p>
  <TutorialGuide game="evaluation"/>
- <WorldCompletion game={"evaluation"} trigger={stage==='result'}/>
+ <WorldCompletion game={"evaluation"} trigger={stage==='result'} onContinue={onContinue}/>
  <div className="evalhud"><span>⭐ {stage==='intro'?'Ready':stage==='evidence'?'Evidence round':stage==='interview'?'Assessor interview':'Mission complete'}</span><span>🏆 Best score: {best}</span><button type="button" onClick={reset}>↻ Restart</button></div>
  {stage==='intro'?<div className="evalscene"><div className="evalmascot" aria-hidden="true">🕵️</div><div><span className="eyebrow">YOUR MISSION</span><h2>Prepare for the assessor!</h2><p>A fictional FIU has a folder full of documents. Some show that rules exist, some demonstrate actual results, and some don't prove anything yet.</p><p><b>How to play:</b> Drag each document into the correct box—or tap a document and then its box. Get instant feedback, then unlock the assessor interview.</p><button className="primary" onClick={()=>setStage('evidence')}>Start sorting evidence →</button></div></div>
  :stage==='evidence'?<>
@@ -69,6 +69,7 @@ export default function EvaluationArena({onBack}:{onBack:()=>void}){
  {checked?<div className="feedback"><strong>{picked===q.correct?'Correct — excellent answer!':'Good try — here is the stronger approach.'}</strong><p>{q.explanation}</p><small>{q.source}</small></div>:null}
  <div className="actions">{!checked?<button className="primary" disabled={picked===null} onClick={answer}>Check my answer →</button>:<button className="primary" onClick={advance}>{questionIndex===questions.length-1?'See mission results':'Next assessor question'} →</button>}</div>
  </>:<div className="arcadewin"><span aria-hidden="true">🏆</span><h2>Evaluation mission completed!</h2><p>You sorted {sorted} evidence cards and answered {interviewCorrect} of {questions.length} assessor questions correctly.</p><strong>{score} points</strong><p>The most important lesson: written requirements and real-world results are different types of evidence. Effective evaluations consider both.</p><div className="actions"><button className="primary" onClick={reset}>Replay mission ↻</button><button className="secondary" onClick={onBack}>Return to academy</button></div></div>}
+ {stage==='result'?<div className="nextstepbar" role="navigation" aria-label="Continue learning"><span>✓ Mission finished. Your next learning world is ready.</span><button type="button" className="primary" onClick={onContinue}>Continue to next world →</button></div>:null}
  <div className="notice"><b>Training disclaimer:</b> All agencies, documents and events in this simulation are fictional. This game is not an official FATF or GIABA assessment tool, grading methodology or certification. <a href={sourceUrl} target="_blank" rel="noopener noreferrer">Explore FATF mutual evaluations ↗</a></div>
  </main>;
 }
