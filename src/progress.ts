@@ -11,6 +11,8 @@ export const modules:{id:CourseKey;title:string;icon:string;scoreKey:string;maxS
 {id:'advancedtrace',title:'Advanced Crypto Tracing',icon:'🕸️',scoreKey:'amlverse-advanced-trace-best',maxScore:105},
 {id:'reportwriting',title:'Financial Intelligence Reporting',icon:'📝',scoreKey:'amlverse-report-writing-best',maxScore:100}
 ];
+export const learningSequence:CourseKey[]=['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'];
+export function nextLearningWorld(game:CourseKey):CourseKey|null {return learningSequence[learningSequence.indexOf(game)+1]||null}
 const prefix='amlverse-course-v1-';
 const empty=():CourseProgress=>({lessons:[],checkPassed:false,checkAttempts:0,lastVisited:''});
 export function readCourse(id:CourseKey):CourseProgress{
