@@ -1,4 +1,5 @@
-import {useEffect,useState} from 'react';
+import {useState} from 'react';
+import type {DragEvent} from 'react';
 
 type Mode='risk'|'team';
 type Item={id:string;title:string;detail:string;target:string;why:string};
@@ -63,7 +64,7 @@ export default function GameArcade({mode,onBack}:{mode:Mode;onBack:()=>void}){
   setPlaced(p=>({...p,[id]:target}));setSelected(null);setFeedback('Great match! '+item.why);
  }
  function chooseBox(target:string){if(selected)place(selected,target);else setFeedback('First tap a clue card below, then tap a box.')}
- function onDrop(e:React.DragEvent<HTMLButtonElement>,target:string){e.preventDefault();const id=e.dataTransfer.getData('text/plain');if(id)place(id,target)}
+ function onDrop(e:DragEvent<HTMLButtonElement>,target:string){e.preventDefault();const id=e.dataTransfer.getData('text/plain');if(id)place(id,target)}
  function finish(){if(choice===null)return;const answer=level.finalOptions[choice];setFinalFeedback(answer.explain);if(answer.right){setRound('won');const score=fullScore;setBest(previous=>{const next=Math.max(previous,score);try{localStorage.setItem('amlverse-arcade-'+mode,String(next))}catch{}return next})}}
  function reset(){setRound('sort');setPlaced({});setSelected(null);setFeedback('');setMistakes(0);setChoice(null);setFinalFeedback('')}
  return <main className="narrow arcade"><button className="back" onClick={onBack}>← Back to the academy</button>
