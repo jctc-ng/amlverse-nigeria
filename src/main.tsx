@@ -9,6 +9,7 @@ import ProgressDashboard from './ProgressDashboard';
 import AcademyOverview from './AcademyOverview';
 import CapstoneChallenge from './CapstoneChallenge';
 import AcademyNavigation from './AcademyNavigation';
+import {nextLearningWorld} from './progress';
 import type {CourseKey} from './progress';
 
 
@@ -27,6 +28,7 @@ function App(){
  const xp=Object.values(saved).reduce((sum,x)=>sum+x.xp,0);
  const scenario=active.scenarios[index];
  function openCourse(id:CourseKey){setScreen(id==='risk'?'risklab':id);window.scrollTo(0,0)}
+ function advanceCourse(id:CourseKey){const next=nextLearningWorld(id);if(next)openCourse(next);else{setScreen('capstone');window.scrollTo(0,0)}}
  function openWorld(w:World){setActive(w);setIndex(0);setAnswer(null);setSubmitted(false);setEarned(0);setScreen('mission');window.scrollTo(0,0)}
  function next(){if(index<active.scenarios.length-1){setIndex(index+1);setAnswer(null);setSubmitted(false)}else{setSaved(prev=>({...prev,[active.id]:{complete:true,xp:Math.max(earned,prev[active.id]?.xp||0)}}));setScreen('home')}window.scrollTo(0,0)}
  function submit(){if(answer===null)return;setSubmitted(true);if(scenario.choices[answer].correct)setEarned(p=>p+100)}
@@ -36,15 +38,15 @@ function App(){
  {screen==='home'?<AcademyOverview openCourse={openCourse} openFatf={()=>setScreen('chapter')} openProgress={()=>setScreen('progress')} openResources={()=>setScreen('resources')} openCapstone={()=>setScreen('capstone')}/>
  :screen==='progress'?<ProgressDashboard onBack={()=>setScreen('home')} onOpen={openCourse} onFatf={()=>setScreen('chapter')} onCapstone={()=>setScreen('capstone')}/>
  :screen==='chapter'?<FatfChapter onBack={()=>setScreen('home')}/>
- :screen==='risklab'?<LearningExperience key="risk" game="risk" onBack={()=>setScreen('home')}/>
- :screen==='team'?<LearningExperience key="team" game="team" onBack={()=>setScreen('home')}/>
- :screen==='evaluation'?<LearningExperience key="evaluation" game="evaluation" onBack={()=>setScreen('home')}/>
- :screen==='egmont'?<LearningExperience key="egmont" game="egmont" onBack={()=>setScreen('home')}/>
- :screen==='typologies'?<LearningExperience key="typologies" game="typologies" onBack={()=>setScreen('home')}/>
- :screen==='nigeria'?<LearningExperience key="nigeria" game="nigeria" onBack={()=>setScreen('home')}/>
- :screen==='virtualassets'?<LearningExperience key="virtualassets" game="virtualassets" onBack={()=>setScreen('home')}/>
- :screen==='advancedtrace'?<LearningExperience key="advancedtrace" game="advancedtrace" onBack={()=>setScreen('home')}/>
- :screen==='reportwriting'?<LearningExperience key="reportwriting" game="reportwriting" onBack={()=>setScreen('home')}/>
+ :screen==='risklab'?<LearningExperience key="risk" game="risk" onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('risk')}/>
+ :screen==='team'?<LearningExperience key="team" game="team" onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('team')}/>
+ :screen==='evaluation'?<LearningExperience key="evaluation" game="evaluation" onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('evaluation')}/>
+ :screen==='egmont'?<LearningExperience key="egmont" game="egmont" onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('egmont')}/>
+ :screen==='typologies'?<LearningExperience key="typologies" game="typologies" onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('typologies')}/>
+ :screen==='nigeria'?<LearningExperience key="nigeria" game="nigeria" onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('nigeria')}/>
+ :screen==='virtualassets'?<LearningExperience key="virtualassets" game="virtualassets" onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('virtualassets')}/>
+ :screen==='advancedtrace'?<LearningExperience key="advancedtrace" game="advancedtrace" onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('advancedtrace')}/>
+ :screen==='reportwriting'?<LearningExperience key="reportwriting" game="reportwriting" onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('reportwriting')}/>
  :screen==='capstone'?<CapstoneChallenge onBack={()=>setScreen('home')} onProgress={()=>setScreen('progress')}/>
  :screen==='resources'?<main className="narrow"><button className="back" onClick={()=>setScreen('home')}>← Academy overview</button><span className="eyebrow">OFFICIAL SOURCES</span><h1 className="title">Resource library</h1><p className="lead">Explore original publications. Future releases will add versioned, section-linked explanations and approval workflows.</p><div className="resourcegrid">{references.map(r=><a className="resource" target="_blank" rel="noopener noreferrer" href={r.url} key={r.url}><div>▤</div><span><strong>{r.title}</strong><small>{r.org} • Official website</small></span><b>↗</b></a>)}</div></main>
  :<main className="narrow"><button className="back" onClick={()=>setScreen('home')}>← Learning worlds</button><div className="missionmeta"><span className="eyebrow">{active.title.toUpperCase()} • MISSION {index+1}/{active.scenarios.length}</span><strong>{earned} XP</strong></div><h1 className="title">{scenario.title}</h1><div className="track"><div style={{width:((index+1)/active.scenarios.length*100)+'%',background:active.color}}/></div><div className="situation"><small>YOUR SCENARIO</small><p>{scenario.context}</p></div><h2 className="question">{scenario.question}</h2><div className="choices">{scenario.choices.map((c,i)=><button key={i} disabled={submitted} onClick={()=>setAnswer(i)} className={'choice'+(answer===i?' picked':'')+(submitted&&c.correct?' correct':'')+(submitted&&answer===i&&!c.correct?' incorrect':'')}><span className="letter">{String.fromCharCode(65+i)}</span>{c.text}{submitted&&c.correct?<span className="indicator">✓</span>:null}</button>)}</div>{submitted&&answer!==null?<div className="feedback"><strong>{scenario.choices[answer].correct?'Excellent! +100 XP':'Learning opportunity'}</strong><p>{scenario.explanation}</p><a href={scenario.url} target="_blank" rel="noopener noreferrer">Read source: {scenario.reference} ↗</a></div>:null}<div className="actions">{!submitted?<button className="primary" disabled={answer===null} onClick={submit}>Submit decision →</button>:<button className="primary" onClick={next}>{index===active.scenarios.length-1?'Complete world':'Next mission'} →</button>}<button className="secondary" onClick={()=>openWorld(active)}>↻ Restart world</button></div><div className="notice">Synthetic educational exercises only. Guidance and explanations require subject-matter review.</div></main>}
