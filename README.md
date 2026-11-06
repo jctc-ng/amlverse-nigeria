@@ -120,3 +120,15 @@ This is explanatory, fictional educational content, **not official institutional
 
 ## Interactive stage navigation and mini tutorial — v0.10
 The three visible stages **① Learn**, **② Quick check**, and **③ Play** are now clickable navigation tabs in every Knowledge Room. Learn shows the short lessons, Quick check presents the practice question and feedback, and Play provides a short **hands-on tutorial** before the actual arcade game. The learner selects a sample clue, taps the correct category, sees coaching feedback, then launches the game. A skip option is available. The earlier in-game **How to play** help button remains available for replaying instructions. No user data is sent to a backend.
+
+## Typology Detective — v0.11
+A new evidence-based financial intelligence mission, **Operation Red Flag**, added to the Typology Detective learning world.
+
+- Learning Room: three short lessons on typologies, red flags versus proof, contextual information, and lawful analytical escalation.
+- Quick Check: one non-blocking knowledge check with detailed feedback.
+- Hands-on Tutorial: select a sample clue and place it in a Red Flag box before the game.
+- Game Round 1: sort six synthetic evidence cards among **Red flag**, **Check context**, and **Safeguard** with drag-and-drop or tap-to-place controls.
+- Game Round 2: three branching-style analyst decisions with immediate feedback about uncertainty, alternative explanations and lawful procedures.
+- Best-score storage on the local device; no account, backend or real data.
+
+Important: transaction alerts are indicators requiring proportionate investigation, not proof of guilt. Never enter real account numbers, STRs, customer records, FIU intelligence or restricted case data into this public educational project.
