@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import type {DragEvent} from 'react';
 import TutorialGuide from './TutorialGuide';
+import WorldCompletion from './WorldCompletion';
 
 type Bucket='pattern'|'context'|'control';
 type Clue={id:string;title:string;detail:string;bucket:Bucket;lesson:string};
@@ -55,6 +56,7 @@ export default function TypologyDetective({onBack}:{onBack:()=>void}){
  <h1 className="title">Operation Red Flag 🔎</h1>
  <p className="lead">Inspect a fictional payment account. Sort the clues, consider alternative explanations and make careful analytical decisions.</p>
  <TutorialGuide game="typologies"/>
+ <WorldCompletion game={"typologies"} trigger={stage==='end'}/>
  <div className="arcadehud"><span>🧩 {stage==='sort'?Object.keys(placed).length+'/6 clues sorted':stage==='decision'?'Decision '+(qIndex+1)+'/3':stage==='end'?'Case completed':'Case briefing'}</span><span>🏆 Best: {best} points</span><button type="button" onClick={reset}>↻ Restart</button></div>
  {stage==='intro'?<div className="evalscene"><div className="evalmascot" aria-hidden="true">🕵️</div><div><span className="eyebrow">MISSION BRIEFING</span><h2>A suspicious pattern is not a verdict.</h2><p>Some incoming transfers and rapid outward payments have triggered fictional monitoring alerts. Your job is to distinguish warning signs from contextual evidence and safeguards.</p><p><b>How to play:</b> Tap a clue then its category—or drag and drop on desktop. Complete the evidence board to unlock the analyst decisions.</p><button className="primary" onClick={()=>setStage('sort')}>Open case file →</button></div></div>
  :stage==='sort'?<>
