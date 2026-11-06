@@ -48,14 +48,36 @@ const courses:Record<Game,Course>={
  sourceName:'Egmont Principles for Information Exchange (May 2022)',source:'https://egmontgroup.org/wp-content/uploads/2013/10/2.-Principles-Information-Exchange-Revised-May-2022.pdf'
  }
 };
+type Stage='learn'|'check'|'play';
+const demonstrations:Record<Game,{card:string;destination:string;explanation:string}>={
+ risk:{card:'Unknown company owners',destination:'🔓 Weakness',explanation:'Unverified owners create a weakness criminals could exploit.'},
+ team:{card:'Analyse suspicious transfers',destination:'📊 FIU Analyst',explanation:'Financial intelligence analysis is an FIU function.'},
+ evaluation:{card:'AML/CFT legislation',destination:'📜 Technical compliance',explanation:'Legislation helps establish formal compliance; results demonstrate effectiveness.'},
+ egmont:{card:'Unsecured personal email',destination:'⛔ Stop & protect',explanation:'Sensitive FIU information belongs on approved secure channels.'}
+};
 export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>void}){
+ const [stage,setStage]=useState<Stage>('learn');
  const [playing,setPlaying]=useState(false);
  const [topic,setTopic]=useState(0);
  const [answer,setAnswer]=useState<number|null>(null);
  const [showFeedback,setShowFeedback]=useState(false);
+ const [tutorialStep,setTutorialStep]=useState(0);
+ const [demoSelected,setDemoSelected]=useState(false);
+ const [demoMatched,setDemoMatched]=useState(false);
  const course=courses[game];
  const item=course.topics[topic];
+ const demo=demonstrations[game];
  const mastered=showFeedback&&answer!==null&&course.answers[answer].correct;
+ function navigate(next:Stage){
+  setStage(next);
+  if(next==='play'){setTutorialStep(0);setDemoSelected(false);setDemoMatched(false)}
+  window.scrollTo(0,0);
+ }
+ function launch(){
+  try{localStorage.setItem('amlverse-guide-v1-'+game,'yes')}catch{}
+  setPlaying(true);
+  window.scrollTo(0,0);
+ }
  if(playing){
   if(game==='risk'||game==='team')return <GameArcade key={game} mode={game} onBack={()=>setPlaying(false)}/>;
   if(game==='evaluation')return <EvaluationArena onBack={()=>setPlaying(false)}/>;
@@ -63,18 +85,38 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
  }
  return <main className="narrow knowledgepath">
  <button className="back" onClick={onBack}>← Academy overview</button>
- <span className="eyebrow">AMLVERSE LEARN • PRACTISE • PLAY</span>
- <h1 className="title">{course.name}</h1>
- <p className="lead">{course.goal}</p>
- <div className="knowledgeflow"><span className="active">① Learn</span><span>② Quick check</span><span>③ Play</span></div>
- <div className="knowledgeintro"><span className="knowledgeemoji" aria-hidden="true">📚</span><div><small>LEARNING ROOM</small><h2>{course.subtitle}</h2><p>Read three short lessons and try one practice question. You can explore at your own pace, or enter the game when you're ready.</p></div></div>
- <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>setTopic(i)} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
- <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>setTopic(i=>i-1)}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>setTopic(i=>i+1)}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>document.getElementById('knowledge-check')?.scrollIntoView({behavior:'smooth',block:'start'})}>Try a quick check ↓</button>}</div></section>
- <section id="knowledge-check" className="knowledgecheck"><span className="eyebrow">QUICK UNDERSTANDING CHECK</span><h2>{course.question}</h2><div className="knowledgeanswers">{course.answers.map((a,i)=><button key={i} type="button" className={answer===i?'selected':''} onClick={()=>{setAnswer(i);setShowFeedback(false)}}><span>{String.fromCharCode(65+i)}</span>{a.text}</button>)}</div>
- {showFeedback&&answer!==null?<div className="arcadefeedback" role="status">{course.answers[answer].why}</div>:null}
- <div className="actions"><button type="button" className="primary" disabled={answer===null} onClick={()=>setShowFeedback(true)}>Check understanding →</button></div>
- </section>
- <section className="knowledgeplay"><div><span className="eyebrow">READY FOR THE MISSION?</span><h2>{mastered?'Great work — let’s play!':'Turn knowledge into action'}</h2><p>{mastered?'You answered the practice question correctly.': 'You can practise the question again or start the game whenever you feel ready.'} The game provides feedback as you play.</p></div><button className="primary" type="button" onClick={()=>setPlaying(true)}>🎮 Start the game →</button></section>
+ <span className="eyebrow">AMLVERSE • LEARN • QUICK CHECK • PLAY</span>
+ <h1 className="title">{course.name}</h1><p className="lead">{course.goal}</p>
+ <nav className="knowledgeflow" aria-label="Learning stages">
+  <button type="button" className={stage==='learn'?'active':''} aria-current={stage==='learn'?'step':undefined} onClick={()=>navigate('learn')}>① Learn</button>
+  <button type="button" className={stage==='check'?'active':''} aria-current={stage==='check'?'step':undefined} onClick={()=>navigate('check')}>② Quick check</button>
+  <button type="button" className={stage==='play'?'active':''} aria-current={stage==='play'?'step':undefined} onClick={()=>navigate('play')}>③ Play</button>
+ </nav>
+ {stage==='learn'?<>
+  <div className="knowledgeintro"><span className="knowledgeemoji" aria-hidden="true">📚</span><div><small>LEARNING ROOM</small><h2>{course.subtitle}</h2><p>Read three short lessons and see examples before trying a game.</p></div></div>
+  <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>setTopic(i)} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
+  <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>setTopic(i=>i-1)}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>setTopic(i=>i+1)}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>navigate('check')}>Go to quick check →</button>}</div></section>
+ </>:stage==='check'?<>
+  <section className="knowledgecheck"><span className="eyebrow">STEP 2 • QUICK UNDERSTANDING CHECK</span><h2>{course.question}</h2><div className="knowledgeanswers">{course.answers.map((a,i)=><button key={i} type="button" className={answer===i?'selected':''} onClick={()=>{setAnswer(i);setShowFeedback(false)}}><span>{String.fromCharCode(65+i)}</span>{a.text}</button>)}</div>
+  {showFeedback&&answer!==null?<div className="arcadefeedback" role="status">{course.answers[answer].why}</div>:null}
+  <div className="actions"><button type="button" className="primary" disabled={answer===null} onClick={()=>setShowFeedback(true)}>Check understanding →</button><button className="secondary" type="button" onClick={()=>navigate('learn')}>← Review lessons</button></div></section>
+  <section className="knowledgeplay"><div><span className="eyebrow">NEXT UP</span><h2>{mastered?'Excellent — ready to play!':'Try the mini tutorial'}</h2><p>{mastered?'You got the practice answer right.':'The check is for practice, not a compulsory exam.'} Learn the card controls in a short hands-on demonstration before your mission.</p></div><button className="primary" type="button" onClick={()=>navigate('play')}>Continue to tutorial →</button></section>
+ </>:<>
+  <section className="knowledgecard minitutorial"><span className="eyebrow">STEP 3 • HOW TO PLAY</span><h2>Practice a move before your mission</h2><p>Try a sample card. This tutorial does not affect your score.</p>
+  <div className="ministeps"><span className={tutorialStep===0?'on':''}>1. Select</span><span className={tutorialStep===1?'on':''}>2. Match</span><span className={tutorialStep===2?'on':''}>3. Start</span></div>
+  {tutorialStep===0?<div className="miniarea">
+   <p><b>Tap the clue card</b> below to select it.</p>
+   <button type="button" className={'arcadecard miniclue'+(demoSelected?' selected':'')} onClick={()=>setDemoSelected(v=>!v)}><strong>{demo.card}</strong><small>{demoSelected?'✓ SELECTED':'TAP TO SELECT'}</small></button>
+   <div className="actions"><button className="primary" disabled={!demoSelected} onClick={()=>setTutorialStep(1)}>Next: place the card →</button></div>
+  </div>:tutorialStep===1?<div className="miniarea">
+   <p><b>Tap the matching box</b> to drop your selected card. On desktop you can also drag game cards.</p>
+   <button type="button" className={'minidrop'+(demoMatched?' matched':'')} onClick={()=>setDemoMatched(true)}>{demo.destination}</button>
+   {demoMatched?<div className="arcadefeedback" role="status">✓ Correct! {demo.explanation}</div>:null}
+   <div className="actions"><button className="secondary" onClick={()=>setTutorialStep(0)}>← Back</button><button className="primary" disabled={!demoMatched} onClick={()=>setTutorialStep(2)}>Next: launch mission →</button></div>
+  </div>:<div className="miniarea miniready"><span aria-hidden="true">🏆</span><h2>You know how to play!</h2><p>Select a clue, place it in a category, read the feedback, and continue to the final challenge.</p><div className="actions"><button className="secondary" onClick={()=>{setTutorialStep(0);setDemoSelected(false);setDemoMatched(false)}}>↻ Replay tutorial</button><button className="primary" onClick={launch}>🎮 Start the game →</button></div></div>}
+  <div className="actions"><button className="secondary" onClick={()=>navigate('check')}>← Back to quick check</button><button className="secondary" onClick={launch}>Skip tutorial and play →</button></div>
+  </section>
+ </>}
  <div className="notice"><b>Learning source:</b> <a href={course.source} target="_blank" rel="noopener noreferrer">{course.sourceName} ↗</a>. Educational summaries only, with fictional examples. Check current authoritative publications before formal institutional use.</div>
  </main>;
 }
