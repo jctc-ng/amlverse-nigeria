@@ -34,7 +34,7 @@ const nMap=Object.fromEntries(nodes.map(n=>[n.id,n])) as Record<NodeId,(typeof n
 type Phase='brief'|'trace'|'confidence'|'decisions'|'report';
 type Confidence='high'|'medium'|'low';
 const source='https://www.fatf-gafi.org/en/topics/virtual-assets.html';
-export default function AdvancedTracingLab({onBack}:{onBack:()=>void}){
+export default function AdvancedTracingLab({onBack,onContinue}:{onBack:()=>void;onContinue:()=>void}){
  const [phase,setPhase]=useState<Phase>('brief');
  const [chosen,setChosen]=useState<string[]>([]);
  const [focused,setFocused]=useState<string|null>(null);
@@ -97,7 +97,7 @@ export default function AdvancedTracingLab({onBack}:{onBack:()=>void}){
  <button type="button" className="back" onClick={onBack}>← Back to learning room</button>
  <span className="eyebrow">ADVANCED CRYPTOCURRENCY TRACING SIMULATOR</span><h1 className="title">Operation Multi-Hop 🕸️</h1><p className="lead">Follow a fictional transaction network, grade attribution evidence and compile a responsible financial intelligence note.</p>
  <TutorialGuide game="advancedtrace"/>
- <WorldCompletion game="advancedtrace" trigger={reportReady}/>
+ <WorldCompletion game="advancedtrace" trigger={reportReady} onContinue={onContinue}/>
  <div className="arcadehud"><span>{phase==='trace'?'🔎 '+chosen.length+'/3 target hops':phase==='confidence'?'🧠 '+Object.keys(confidence).length+'/3 confidence calls':phase==='decisions'?'📋 Decision '+(decisionIndex+1)+'/3':phase==='report'?'📄 Case report ready':'📂 Case briefing'}</span><span>🏆 Best {best}</span><button type="button" onClick={reset}>↻ Restart</button></div>
  {phase==='brief'?<section className="chaincase"><span className="eyebrow">CASE BRIEFING</span><h2>Can you trace a multi-hop route without overclaiming?</h2><p>This case presents a synthetic ledger with a fork: one branch approaches an exchange deposit lead and the other does not. Click the correct edges in order, beginning at Origin A, then assess the evidence and write a careful inference.</p><p className="chainnote">These wallet IDs, times, transaction references and amounts are fabricated solely for training. No real blockchain or exchange is contacted.</p><button type="button" className="primary" onClick={()=>setPhase('trace')}>Start interactive graph →</button></section>:
  phase==='trace'?<><section className="advancedgraph"><span className="eyebrow">ROUND 1 — FOLLOW THE TARGET FLOW</span><h2>Select each transaction in order from Origin A to Deposit E</h2><p>Tap a transaction arrow on the graph or its button below. The graph contains an unrelated branch.</p>
@@ -116,6 +116,7 @@ export default function AdvancedTracingLab({onBack}:{onBack:()=>void}){
  </section>:
  phase==='decisions'?<section className="advancedgraph"><span className="eyebrow">ROUND 3 — ANALYST DECISIONS</span><h2>{current.prompt}</h2><div className="choices">{current.options.map((o,i)=><button key={i} type="button" disabled={checked} onClick={()=>setPicked(i)} className={'choice'+(picked===i?' picked':'')+(checked&&current.right===i?' correct':'')}><span className="letter">{String.fromCharCode(65+i)}</span>{o}</button>)}</div>{checked?<div className="feedback" role="status"><strong>{picked===current.right?'✓ Evidence-based decision!':'Learning opportunity'}</strong><p>{current.why}</p></div>:null}<div className="actions">{checked?<button className="primary" onClick={nextDecision}>{decisionIndex===decisions.length-1?'Generate report →':'Next decision →'}</button>:<button className="primary" disabled={picked===null} onClick={()=>{setChecked(true);if(picked===current.right)setRightCount(n=>n+1);else setErrors(n=>n+1)}}>Check decision →</button>}</div></section>:
  <section className="advancedgraph"><span className="eyebrow">MISSION COMPLETE</span><div className="arcadewin"><span aria-hidden="true">🏆</span><h2>Analyst report ready!</h2><strong>{score}/105 points</strong><p>You traced three connected transactions, examined attribution confidence and completed the intelligence decision round.</p></div><h2>Your fictional intelligence note</h2><pre className="trace-report">{report}</pre>{message?<div className="arcadefeedback" role="status">{message}</div>:null}<div className="actions"><button type="button" className="primary" onClick={downloadReport}>↓ Download report (.txt)</button><button type="button" className="secondary" onClick={copyReport}>Copy report</button><button type="button" className="secondary" onClick={reset}>Replay mission</button></div></section>}
+ {reportReady?<div className="nextstepbar" role="navigation" aria-label="Continue learning"><span>✓ Mission finished. Your next learning world is ready.</span><button type="button" className="primary" onClick={onContinue}>Continue to next world →</button></div>:null}
  <div className="notice"><b>Training only.</b> No real wallets, transaction hashes, case files or intelligence data are processed. This example uses an intentionally simplified account-style graph; amounts are not a full reconciliation, nor proof of common ownership. <a href={source} target="_blank" rel="noopener noreferrer">FATF Virtual Assets ↗</a></div>
  </main>;
 }
