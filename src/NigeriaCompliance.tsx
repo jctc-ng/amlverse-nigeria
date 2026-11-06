@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import type {DragEvent} from 'react';
 import TutorialGuide from './TutorialGuide';
+import WorldCompletion from './WorldCompletion';
 
 type Lane='fiu'|'supervisor'|'controls';
 type Card={id:string;title:string;detail:string;lane:Lane;why:string};
@@ -57,6 +58,7 @@ export default function NigeriaCompliance({onBack}:{onBack:()=>void}){
  <h1 className="title">Operation Compliance Shield 🇳🇬</h1>
  <p className="lead">A fictional Nigerian compliance team needs your help. Match the duties to the right function, then make three careful decisions.</p>
  <TutorialGuide game="nigeria"/>
+ <WorldCompletion game={"nigeria"} trigger={phase==='win'}/>
  <div className="arcadehud"><span>⭐ {phase==='sort'?Object.keys(placed).length+'/6 cards matched':phase==='quiz'?'Question '+(index+1)+'/3':phase==='win'?'Mission complete':'Ready'}</span><span>🏆 Best {best}</span><button type="button" onClick={reset}>↻ Restart</button></div>
  {phase==='intro'?<div className="evalscene"><div className="evalmascot" aria-hidden="true">🇳🇬</div><div><span className="eyebrow">MISSION BRIEFING</span><h2>Who handles what?</h2><p>Reporting entities, supervisors and the NFIU have different responsibilities. You will sort six fictional work orders to the right desks.</p><p><b>How to play:</b> Select a card and tap its box, or drag and drop on desktop. Complete the board and unlock a decision round.</p><button className="primary" type="button" onClick={()=>setPhase('sort')}>Start the compliance mission →</button></div></div>
  :phase==='sort'?<>
