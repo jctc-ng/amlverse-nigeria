@@ -1,6 +1,6 @@
 import {useEffect,useState} from 'react';
 
-type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets';
+type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets'|'advancedtrace';
 type Guide={name:string;example:string;target:string;reason:string};
 const guides:Record<Game,Guide>={
  risk:{name:'RiskLab Arcade',example:'Unknown company owners',target:'🔓 Weakness',reason:'Unverified ownership makes financial crime harder to detect.'},
@@ -9,7 +9,8 @@ const guides:Record<Game,Guide>={
  egmont:{name:'Egmont Exchange',example:'Private email forwarding',target:'⛔ Stop & protect',reason:'FIU information must be handled through approved secure channels.'},
  typologies:{name:'Typology Detective',example:'Many unrelated senders',target:'🚩 Red flag',reason:'Unusual patterns invite further analysis but do not establish wrongdoing.'},
  nigeria:{name:'Nigeria Compliance Challenge',example:'Review a bank’s AML programme',target:'🏛️ Sector supervision',reason:'The competent financial supervisor examines a bank’s regulatory compliance controls.'},
- virtualassets:{name:'Virtual Asset Investigation Academy',example:'Synthetic transaction hash TX-A1',target:'🔗 On-chain record',reason:'A transaction identifier supports tracing ledger movements, but does not itself identify a person.'}
+ virtualassets:{name:'Virtual Asset Investigation Academy',example:'Synthetic transaction hash TX-A1',target:'🔗 On-chain record',reason:'A transaction identifier supports tracing ledger movements, but does not itself identify a person.'},
+ advancedtrace:{name:'Advanced Crypto Tracing',example:'SIM-TX-001: A → B',target:'🔗 First traced hop',reason:'Follow confirmed transactions in order and distinguish observed flows from personal attribution.'}
 };
 function seen(id:Game){try{return localStorage.getItem('amlverse-guide-v1-'+id)==='yes'}catch{return false}}
 export default function TutorialGuide({game}:{game:Game}){
