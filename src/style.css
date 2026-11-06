@@ -77,3 +77,6 @@
 .progressactions{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}
 @media(max-width:740px){.progressstats{grid-template-columns:repeat(2,minmax(0,1fr))}.progressworlds{grid-template-columns:1fr}.badgegrid{grid-template-columns:repeat(2,minmax(0,1fr))}.progresshero{padding:18px}.progressring{height:96px;width:96px}.progressring>span{width:76px;height:76px;font-size:22px}}
 @media(max-width:425px){.progressstats strong{font-size:25px}.progressring{width:82px;height:82px}.progressring>span{width:65px;height:65px;font-size:18px}.progresshero h2{font-size:21px}.badgegrid{gap:7px}.achievement{padding:12px}}
+
+/* v0.13.1: clear saved quick-check completion state */
+.checkstatus{padding:12px 15px;background:#173b4b;border:1px solid #416877;border-radius:9px;color:#d4e9ea;font-size:13px;line-height:1.65;margin:12px 0 17px}
