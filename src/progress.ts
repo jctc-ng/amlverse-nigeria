@@ -1,4 +1,4 @@
-export type CourseKey='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria';
+export type CourseKey='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets';
 export type CourseProgress={lessons:number[];checkPassed:boolean;checkAttempts:number;lastVisited:string};
 export const modules:{id:CourseKey;title:string;icon:string;scoreKey:string;maxScore:number}[]=[
 {id:'risk',title:'RiskLab Arcade',icon:'◈',scoreKey:'amlverse-arcade-risk',maxScore:100},
@@ -6,7 +6,8 @@ export const modules:{id:CourseKey;title:string;icon:string;scoreKey:string;maxS
 {id:'evaluation',title:'Mutual Evaluation Arena',icon:'🏆',scoreKey:'amlverse-evaluation-arena-best',maxScore:105},
 {id:'egmont',title:'Egmont Exchange',icon:'🌍',scoreKey:'amlverse-egmont-best',maxScore:105},
 {id:'typologies',title:'Typology Detective',icon:'🔎',scoreKey:'amlverse-typology-best',maxScore:105},
-{id:'nigeria',title:'Nigeria Compliance Challenge',icon:'🇳🇬',scoreKey:'amlverse-nigeria-compliance-best',maxScore:105}
+{id:'nigeria',title:'Nigeria Compliance Challenge',icon:'🇳🇬',scoreKey:'amlverse-nigeria-compliance-best',maxScore:105},
+{id:'virtualassets',title:'Virtual Asset Investigation',icon:'🔗',scoreKey:'amlverse-virtual-asset-best',maxScore:105}
 ];
 const prefix='amlverse-course-v1-';
 const empty=():CourseProgress=>({lessons:[],checkPassed:false,checkAttempts:0,lastVisited:''});
