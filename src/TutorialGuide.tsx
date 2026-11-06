@@ -1,6 +1,6 @@
 import {useEffect,useState} from 'react';
 
-type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria';
+type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets';
 type Guide={name:string;example:string;target:string;reason:string};
 const guides:Record<Game,Guide>={
  risk:{name:'RiskLab Arcade',example:'Unknown company owners',target:'🔓 Weakness',reason:'Unverified ownership makes financial crime harder to detect.'},
@@ -8,7 +8,8 @@ const guides:Record<Game,Guide>={
  evaluation:{name:'Mutual Evaluation Arena',example:'Approved AML/CFT law',target:'📜 Technical compliance',reason:'A law shows that a requirement exists; actual results show effectiveness.'},
  egmont:{name:'Egmont Exchange',example:'Private email forwarding',target:'⛔ Stop & protect',reason:'FIU information must be handled through approved secure channels.'},
  typologies:{name:'Typology Detective',example:'Many unrelated senders',target:'🚩 Red flag',reason:'Unusual patterns invite further analysis but do not establish wrongdoing.'},
- nigeria:{name:'Nigeria Compliance Challenge',example:'Review a bank’s AML programme',target:'🏛️ Sector supervision',reason:'The competent financial supervisor examines a bank’s regulatory compliance controls.'}
+ nigeria:{name:'Nigeria Compliance Challenge',example:'Review a bank’s AML programme',target:'🏛️ Sector supervision',reason:'The competent financial supervisor examines a bank’s regulatory compliance controls.'},
+ virtualassets:{name:'Virtual Asset Investigation Academy',example:'Synthetic transaction hash TX-A1',target:'🔗 On-chain record',reason:'A transaction identifier supports tracing ledger movements, but does not itself identify a person.'}
 };
 function seen(id:Game){try{return localStorage.getItem('amlverse-guide-v1-'+id)==='yes'}catch{return false}}
 export default function TutorialGuide({game}:{game:Game}){
