@@ -3,8 +3,9 @@ import GameArcade from './GameArcade';
 import EvaluationArena from './EvaluationArena';
 import EgmontExchange from './EgmontExchange';
 import TypologyDetective from './TypologyDetective';
+import NigeriaCompliance from './NigeriaCompliance';
 
-type Game='risk'|'team'|'evaluation'|'egmont'|'typologies';
+type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria';
 type Topic={title:string;explanation:string;example:string;takeaway:string};
 type Course={name:string;subtitle:string;goal:string;topics:Topic[];question:string;answers:{text:string;correct:boolean;why:string}[];sourceName:string;source:string};
 const courses:Record<Game,Course>={
@@ -38,6 +39,16 @@ const courses:Record<Game,Course>={
  answers:[{text:'Verified examples showing financial intelligence was used in investigations',correct:true,why:'Correct. Documented use and results support an effectiveness assessment.'},{text:'A new law granting an agency powers',correct:false,why:'A law mainly demonstrates legal arrangements, not whether they are effective.'},{text:'An unverified statement that the system works',correct:false,why:'Unsupported claims do not substantiate outcomes.'}],
  sourceName:'FATF Mutual Evaluations',source:'https://www.fatf-gafi.org/en/topics/mutual-evaluations.html'
  },
+ nigeria:{
+ name:'Nigeria AML/CFT/CPF Compliance',subtitle:'Nigeria Compliance Learning Room',goal:'Learn how reporting businesses, the NFIU and sector supervisors cooperate under Nigeria’s AML/CFT/CPF framework.',
+ topics:[
+ {title:'Core Nigerian laws and mandates',explanation:'The NFIU Act 2018 and the Money Laundering (Prevention and Prohibition) Act 2022 are among the important legal instruments in Nigeria. The Terrorism (Prevention and Prohibition) Act 2022 also forms part of the CFT framework.',example:'A compliance officer checks the applicable law and current sector-specific regulations before deciding what the institution must do.',takeaway:'Identify the legal obligation and the institution responsible.'},
+ {title:'Reporting and financial intelligence',explanation:'Reporting entities carry out due diligence, review suspicious activity and submit suspicious transaction reports to the NFIU where applicable. The NFIU receives, analyses and disseminates intelligence through lawful channels.',example:'A reporting institution reviews unusual payments, forms suspicion based on relevant facts, and makes the required confidential report.',takeaway:'A suspicious report is not an allegation of proven guilt.'},
+ {title:'Supervision and internal controls',explanation:'Competent supervisors oversee institutions within their remit. This includes the CBN for relevant financial institutions and SCUML for designated non-financial businesses and professions, subject to applicable law.',example:'A bank verifies beneficial owners and monitors transactions; the competent supervisor can examine whether its controls comply with applicable obligations.',takeaway:'Understand the difference between internal checks, supervision and FIU analysis.'}],
+ question:'A reporting institution has established suspicion after examining unusual transactions. Which action best reflects its reporting responsibility?',
+ answers:[{text:'Make the required confidential suspicious transaction report to the NFIU',correct:true,why:'Correct. Nigeria’s STR requirements provide for reporting suspicion to the NFIU in accordance with applicable law and guidance.'},{text:'Publish the customer’s identity to warn the public',correct:false,why:'Public disclosure can breach confidentiality and does not substitute for an STR.'},{text:'Wait until a court has convicted the customer',correct:false,why:'Suspicious transaction reporting concerns suspicion; a prior conviction is not a prerequisite.'}],
+ sourceName:'NFIU Laws and Regulations / STR reporting guidance',source:'https://www.nfiu.gov.ng/LawsAndRegulations'
+ },
  typologies:{
  name:'Follow the Money — Typology Basics',subtitle:'Typology Detective Learning Room',goal:'Learn how to spot patterns, check context and avoid treating indicators as proof of crime.',
  topics:[
@@ -65,7 +76,8 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
  team:{card:'Analyse suspicious transfers',destination:'📊 FIU Analyst',explanation:'Financial intelligence analysis is an FIU function.'},
  evaluation:{card:'AML/CFT legislation',destination:'📜 Technical compliance',explanation:'Legislation helps establish formal compliance; results demonstrate effectiveness.'},
  egmont:{card:'Unsecured personal email',destination:'⛔ Stop & protect',explanation:'Sensitive FIU information belongs on approved secure channels.'},
- typologies:{card:'Many unrelated senders',destination:'🚩 Red flag',explanation:'A suspicious pattern is worth investigating but does not prove a crime.'}
+ typologies:{card:'Many unrelated senders',destination:'🚩 Red flag',explanation:'A suspicious pattern is worth investigating but does not prove a crime.'},
+ nigeria:{card:'Inspect a bank’s AML programme',destination:'🏛️ Sector supervision',explanation:'Competent supervisors oversee compliance in the regulated sectors within their mandates.'}
 };
 export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>void}){
  const [stage,setStage]=useState<Stage>('learn');
@@ -94,6 +106,7 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
   if(game==='risk'||game==='team')return <GameArcade key={game} mode={game} onBack={()=>setPlaying(false)}/>;
   if(game==='evaluation')return <EvaluationArena onBack={()=>setPlaying(false)}/>;
   if(game==='typologies')return <TypologyDetective onBack={()=>setPlaying(false)}/>;
+  if(game==='nigeria')return <NigeriaCompliance onBack={()=>setPlaying(false)}/>;
   return <EgmontExchange onBack={()=>setPlaying(false)}/>;
  }
  return <main className="narrow knowledgepath">
