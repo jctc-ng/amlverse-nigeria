@@ -118,7 +118,7 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
  advancedtrace:{card:'SIM-TX-001: A → B',destination:'🔗 First traced hop',explanation:'Document the first transfer before exploring downstream flows.'},
  reportwriting:{card:'Five recorded credit transfers',destination:'📑 Documented finding',explanation:'Transaction records support observations; uncertainty and allegations belong in a separate category.'}
 };
-export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>void}){
+export default function LearningExperience({game,onBack,onNextCourse}:{game:Game;onBack:()=>void;onNextCourse:()=>void}){
  const [stage,setStage]=useState<Stage>('learn');
  const [playing,setPlaying]=useState(false);
  const [advancedOpen,setAdvancedOpen]=useState(false);
@@ -154,20 +154,20 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
  }
  if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>setAdvancedOpen(false)} onClassic={()=>{setAdvancedOpen(false);navigate('play')}}/>;
  if(playing){
-  if(game==='risk'||game==='team')return <GameArcade key={game} mode={game} onBack={()=>setPlaying(false)}/>;
-  if(game==='evaluation')return <EvaluationArena onBack={()=>setPlaying(false)}/>;
-  if(game==='typologies')return <TypologyDetective onBack={()=>setPlaying(false)}/>;
-  if(game==='nigeria')return <NigeriaCompliance onBack={()=>setPlaying(false)}/>;
-  if(game==='virtualassets')return <VirtualAssetLab onBack={()=>setPlaying(false)}/>;
-  if(game==='advancedtrace')return <AdvancedTracingLab onBack={()=>setPlaying(false)}/>;
-  if(game==='reportwriting')return <ReportWritingLab onBack={()=>setPlaying(false)}/>;
-  return <EgmontExchange onBack={()=>setPlaying(false)}/>;
+  if(game==='risk'||game==='team')return <GameArcade key={game} mode={game} onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
+  if(game==='evaluation')return <EvaluationArena onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
+  if(game==='typologies')return <TypologyDetective onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
+  if(game==='nigeria')return <NigeriaCompliance onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
+  if(game==='virtualassets')return <VirtualAssetLab onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
+  if(game==='advancedtrace')return <AdvancedTracingLab onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
+  if(game==='reportwriting')return <ReportWritingLab onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
+  return <EgmontExchange onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
  }
  return <main className="narrow knowledgepath">
  <button className="back" onClick={onBack}>← Academy overview</button>
  <span className="eyebrow">AMLVERSE • LEARN • QUICK CHECK • PLAY</span>
  <h1 className="title">{course.name}</h1><p className="lead">{course.goal}</p>
- <WorldCompletion game={game} trigger={true}/>
+ <WorldCompletion game={game} trigger={true} onContinue={onNextCourse}/>
  {game==='risk'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • RISKLAB EXPANDED CURRICULUM</span><h2>RiskLab Academy 2.0</h2><p>12 lessons · 60 varied questions · 3 case simulations · Foundation to Advanced. Classic RiskLab progress remains unchanged.</p></div><button type="button" className="primary" onClick={()=>setAdvancedOpen(true)}>Enter expanded RiskLab →</button></section>:null}
  <nav className="knowledgeflow" aria-label="Learning stages">
   <button type="button" className={stage==='learn'?'active':''} aria-current={stage==='learn'?'step':undefined} onClick={()=>navigate('learn')}>① Learn</button>
@@ -176,8 +176,8 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
  </nav>
  {stage==='learn'?<>
   <div className="knowledgeintro"><span className="knowledgeemoji" aria-hidden="true">📚</span><div><small>LEARNING ROOM</small><h2>{course.subtitle}</h2><p>Read three short lessons and see examples before trying a game.</p></div></div>
-  <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>setTopic(i)} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
-  <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>setTopic(i=>i-1)}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>setTopic(i=>i+1)}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>navigate('check')}>Go to quick check →</button>}</div></section>
+  <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>{setTopic(i);window.scrollTo(0,0)}} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
+  <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>{setTopic(i=>i-1);window.scrollTo(0,0)}}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>{setTopic(i=>i+1);window.scrollTo(0,0)}}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>navigate('check')}>Go to quick check →</button>}</div></section>
  </>:stage==='check'?<>
   <section className="knowledgecheck"><span className="eyebrow">STEP 2 • QUICK UNDERSTANDING CHECK</span><h2>{course.question}</h2>
   <p className="checkstatus" role="status">{confirmedPass?'✓ Quick Check passed and saved in this browser':'Quick Check not yet recorded as passed. Choose an answer and press Check understanding to save a correct result.'}</p><div className="knowledgeanswers">{course.answers.map((a,i)=><button key={i} type="button" className={answer===i?'selected':''} onClick={()=>{setAnswer(i);setShowFeedback(false)}}><span>{String.fromCharCode(65+i)}</span>{a.text}</button>)}</div>
