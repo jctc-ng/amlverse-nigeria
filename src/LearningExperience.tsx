@@ -7,6 +7,7 @@ import NigeriaCompliance from './NigeriaCompliance';
 import VirtualAssetLab from './VirtualAssetLab';
 import AdvancedTracingLab from './AdvancedTracingLab';
 import ReportWritingLab from './ReportWritingLab';
+import RiskLabAdvanced from './RiskLabAdvanced';
 import {readCourse,saveCourse} from './progress';
 import WorldCompletion from './WorldCompletion';
 
@@ -120,6 +121,7 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
 export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>void}){
  const [stage,setStage]=useState<Stage>('learn');
  const [playing,setPlaying]=useState(false);
+ const [advancedOpen,setAdvancedOpen]=useState(false);
  const [topic,setTopic]=useState(0);
  const [answer,setAnswer]=useState<number|null>(null);
  const [showFeedback,setShowFeedback]=useState(false);
@@ -150,6 +152,7 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
   setPlaying(true);
   window.scrollTo(0,0);
  }
+ if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>setAdvancedOpen(false)} onClassic={()=>{setAdvancedOpen(false);navigate('play')}}/>;
  if(playing){
   if(game==='risk'||game==='team')return <GameArcade key={game} mode={game} onBack={()=>setPlaying(false)}/>;
   if(game==='evaluation')return <EvaluationArena onBack={()=>setPlaying(false)}/>;
@@ -165,6 +168,7 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
  <span className="eyebrow">AMLVERSE • LEARN • QUICK CHECK • PLAY</span>
  <h1 className="title">{course.name}</h1><p className="lead">{course.goal}</p>
  <WorldCompletion game={game} trigger={true}/>
+ {game==='risk'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • RISKLAB EXPANDED CURRICULUM</span><h2>RiskLab Academy 2.0</h2><p>12 lessons · 60 varied questions · 3 case simulations · Foundation to Advanced. Classic RiskLab progress remains unchanged.</p></div><button type="button" className="primary" onClick={()=>setAdvancedOpen(true)}>Enter expanded RiskLab →</button></section>:null}
  <nav className="knowledgeflow" aria-label="Learning stages">
   <button type="button" className={stage==='learn'?'active':''} aria-current={stage==='learn'?'step':undefined} onClick={()=>navigate('learn')}>① Learn</button>
   <button type="button" className={stage==='check'?'active':''} aria-current={stage==='check'?'step':undefined} onClick={()=>navigate('check')}>② Quick check</button>
