@@ -86,6 +86,7 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
  const [topic,setTopic]=useState(0);
  const [answer,setAnswer]=useState<number|null>(null);
  const [showFeedback,setShowFeedback]=useState(false);
+ const [confirmedPass,setConfirmedPass]=useState(()=>readCourse(game).checkPassed);
  const [tutorialStep,setTutorialStep]=useState(0);
  const [demoSelected,setDemoSelected]=useState(false);
  const [demoMatched,setDemoMatched]=useState(false);
@@ -94,7 +95,14 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
  const course=courses[game];
  const item=course.topics[topic];
  const demo=demonstrations[game];
- const mastered=showFeedback&&answer!==null&&course.answers[answer].correct;
+ const mastered=confirmedPass||(showFeedback&&answer!==null&&course.answers[answer].correct);
+ function submitCheck(){
+  if(answer===null)return;
+  const isCorrect=course.answers[answer].correct;
+  saveCourse(game,old=>({...old,checkAttempts:old.checkAttempts+1,checkPassed:old.checkPassed||isCorrect}));
+  if(isCorrect)setConfirmedPass(true);
+  setShowFeedback(true);
+ }
  function navigate(next:Stage){
   setStage(next);
   if(next==='play'){setTutorialStep(0);setDemoSelected(false);setDemoMatched(false)}
@@ -126,9 +134,10 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
   <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>setTopic(i)} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
   <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>setTopic(i=>i-1)}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>setTopic(i=>i+1)}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>navigate('check')}>Go to quick check →</button>}</div></section>
  </>:stage==='check'?<>
-  <section className="knowledgecheck"><span className="eyebrow">STEP 2 • QUICK UNDERSTANDING CHECK</span><h2>{course.question}</h2><div className="knowledgeanswers">{course.answers.map((a,i)=><button key={i} type="button" className={answer===i?'selected':''} onClick={()=>{setAnswer(i);setShowFeedback(false)}}><span>{String.fromCharCode(65+i)}</span>{a.text}</button>)}</div>
-  {showFeedback&&answer!==null?<div className="arcadefeedback" role="status">{course.answers[answer].why}</div>:null}
-  <div className="actions"><button type="button" className="primary" disabled={answer===null} onClick={()=>{if(answer!==null){saveCourse(game,old=>({...old,checkAttempts:old.checkAttempts+1,checkPassed:old.checkPassed||course.answers[answer].correct}));setShowFeedback(true)}}}>Check understanding →</button><button className="secondary" type="button" onClick={()=>navigate('learn')}>← Review lessons</button></div></section>
+  <section className="knowledgecheck"><span className="eyebrow">STEP 2 • QUICK UNDERSTANDING CHECK</span><h2>{course.question}</h2>
+  <p className="checkstatus" role="status">{confirmedPass?'✓ Quick Check passed and saved in this browser':'Quick Check not yet recorded as passed. Choose an answer and press Check understanding to save a correct result.'}</p><div className="knowledgeanswers">{course.answers.map((a,i)=><button key={i} type="button" className={answer===i?'selected':''} onClick={()=>{setAnswer(i);setShowFeedback(false)}}><span>{String.fromCharCode(65+i)}</span>{a.text}</button>)}</div>
+  {showFeedback&&answer!==null?<div className="arcadefeedback" role="status">{course.answers[answer].why} {course.answers[answer].correct?'✓ Pass recorded — your dashboard will show Quick Check: Passed.':'Try again whenever you are ready. Your previous passes are preserved.'}</div>:null}
+  <div className="actions"><button type="button" className="primary" disabled={answer===null} onClick={submitCheck}>Check understanding →</button><button className="secondary" type="button" onClick={()=>navigate('learn')}>← Review lessons</button></div></section>
   <section className="knowledgeplay"><div><span className="eyebrow">NEXT UP</span><h2>{mastered?'Excellent — ready to play!':'Try the mini tutorial'}</h2><p>{mastered?'You got the practice answer right.':'The check is for practice, not a compulsory exam.'} Learn the card controls in a short hands-on demonstration before your mission.</p></div><button className="primary" type="button" onClick={()=>navigate('play')}>Continue to tutorial →</button></section>
  </>:<>
   <section className="knowledgecard minitutorial"><span className="eyebrow">STEP 3 • HOW TO PLAY</span><h2>Practice a move before your mission</h2><p>Try a sample card. This tutorial does not affect your score.</p>
