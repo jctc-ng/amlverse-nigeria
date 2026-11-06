@@ -68,3 +68,13 @@ Single-device facilitated simulation of a fictional cross-border payment sector.
 After all four roles are completed, the group can compare positions, record an integrated consensus, and download or copy a plain-text exercise report. Draft role responses persist only in browser localStorage; the consensus is exported in the final report and is not remotely saved.
 
 **Limitations:** This is not real-time collaboration or an official Nigerian National Risk Assessment. The different role ratings capture distinct considerations and must not be mathematically combined as if they measured the same risk factor. Use synthetic data only. Training evidence and ratings require expert review before NFIU or interagency institutional use.
+
+## Arcade redesign (v0.5)
+The beginner-friendly `src/GameArcade.tsx` replaces the previous RiskLab 2.0 and Interagency Risk Room screens (their older source files remain in the repository for reference but are not loaded).
+- **RiskLab Arcade:** six fictional clues are placed into Threat, Weakness or Protection boxes.
+- **Teamwork Arcade:** eight fictional mission cards are matched with FIU analyst, investigator, supervisor or prosecutor roles.
+- Supports pointer drag-and-drop **and** accessible tap-a-card-then-tap-a-box controls on mobile.
+- Immediate coaching on correct and incorrect placements, a short final decision, restart and best score in localStorage.
+- No sign-in or backend; no official institutional training or risk score. Do not enter confidential information.
+
+Future scope: optional illustrated tutorials, keyboard-driven placement, animated transitions, localization and subject-matter reviewed curricular content.
