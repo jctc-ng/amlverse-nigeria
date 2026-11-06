@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import type {DragEvent} from 'react';
+import TutorialGuide from './TutorialGuide';
 
 type Bin='safe'|'check'|'stop';
 type Item={id:string;title:string;detail:string;bin:Bin;reason:string};
@@ -61,6 +62,7 @@ export default function EgmontExchange({onBack}:{onBack:()=>void}){
  <span className="eyebrow">EGMONT EXCHANGE 2.0 • FIU COOPERATION GAME</span>
  <h1 className="title">Operation Secure Exchange 🌍</h1>
  <p className="lead">You are an FIU cooperation officer on a fictional international assignment. Protect information, follow authorisations and complete the mission!</p>
+ <TutorialGuide game="egmont"/>
  <div className="arcadehud"><span>🧩 {stage==='sort'?sorted+'/6 cards sorted':stage==='quiz'?'Question '+(question+1)+'/3':stage==='done'?'Mission complete':'Ready to play'}</span><span>🏆 Best {best} points</span><button type="button" onClick={restart}>↻ Restart</button></div>
  {stage==='intro'?<div className="evalscene"><div className="evalmascot" aria-hidden="true">🌐</div><div><span className="eyebrow">INCOMING INTERNATIONAL REQUEST</span><h2>Protect the intelligence!</h2><p>A fictional foreign FIU has shared financial information. Some actions are safe, some need permission, and some must be stopped.</p><p><b>How to play:</b> Drag each card into a box—or tap a card and then tap its box. Complete all six to unlock three short decision challenges.</p><button className="primary" onClick={()=>setStage('sort')}>Start mission →</button></div></div>
  :stage==='sort'?<><div className="arcadeinstruction"><strong>ROUND 1 — THE SECURITY DESK</strong><p>Where should each action go? Drag a card or tap it, then tap a box.</p><div className="arcadeprogress"><div style={{width:sorted/cards.length*100+'%'}}/></div></div>
