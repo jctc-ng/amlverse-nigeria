@@ -32,6 +32,8 @@ export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone}:Prop
   {icon:'📖',title:'Curious Learner',earned:courses.filter(m=>m.learning.lessons.length>0).length>=3,hint:'Explore lessons in three different learning worlds',category:'milestone',progress:courses.filter(m=>m.learning.lessons.length>0).length+'/3 worlds'},
   {icon:'🧠',title:'Knowledge Seeker',earned:passed>=2,hint:'Pass two different world Quick Checks',category:'milestone',progress:passed+'/2 checks'},
   {icon:'🎮',title:'First Mission',earned:played>=1,hint:'Complete your first arcade game',category:'milestone',progress:played>=1?'1/1 game':'0/1 game'},
+  {icon:'🕵️',title:'Case Detective',earned:readScore('amlverse-typology-best')>0,hint:'Finish the Typology Detective game',category:'milestone',progress:readScore('amlverse-typology-best')>0?'1/1 game':'0/1 game'},
+  {icon:'🌍',title:'Global Collaborator',earned:readScore('amlverse-egmont-best')>0,hint:'Finish the Egmont Exchange game',category:'milestone',progress:readScore('amlverse-egmont-best')>0?'1/1 game':'0/1 game'},
   {icon:'🎁',title:'World Champion',earned:championCount>=1,hint:'Complete three lessons, a Quick Check and a game in one world',category:'milestone',progress:championCount+'/1 world'},
   {icon:'🏆',title:'Learning Champion',earned:played===modules.length,hint:'Complete all nine academy arcade games',category:'milestone',progress:played+'/'+modules.length+' games'},
   {icon:'🌟',title:'Academy Master',earned:achievedWorlds.length===modules.length,hint:'Complete all five milestones across all nine learning worlds',category:'milestone',progress:achievedWorlds.length+'/'+modules.length+' worlds'},
