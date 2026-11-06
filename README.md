@@ -29,3 +29,20 @@ All cases and data in this prototype are fictional. Do not upload STRs, real cas
 - Role-specific learning paths
 - Instructors, evaluations, badges and accessible mobile UX
 - Authenticated private deployment for institutional usage
+
+## FATF Quest Chapter 1 (v0.2)
+
+Ten guided lessons (Recommendations 1–10), with 20 interactive practice questions, immediate feedback in Learn & Play mode, a separate assessment mode, best scores and progress stored locally in the browser.
+
+### Source and editorial control
+- Primary standard: [FATF Recommendations, as amended June 2026](https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html).
+- Content in `src/quest.ts` is educational paraphrase, not a reproduction or official FATF interpretation.
+- Every scenario is fictional and must be reviewed before institutional rollout.
+- Assessment results are browser-local, not synchronised across devices or appropriate for official certifications.
+- Review changes in FATF Standards, Interpretive Notes and Nigerian legislation with designated subject-matter experts before each training release.
+
+### Planned improvements
+- Second question set per lesson and scenario branching
+- Instructor-reviewed answer rationales at the paragraph/criterion level
+- Accessible matching and sorting interactions
+- 40-Recommendation curriculum, version tracking and optional approved learning management backend
