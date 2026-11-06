@@ -5,13 +5,24 @@ import EgmontExchange from './EgmontExchange';
 import TypologyDetective from './TypologyDetective';
 import NigeriaCompliance from './NigeriaCompliance';
 import VirtualAssetLab from './VirtualAssetLab';
+import AdvancedTracingLab from './AdvancedTracingLab';
 import {readCourse,saveCourse} from './progress';
 import WorldCompletion from './WorldCompletion';
 
-type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets';
+type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets'|'advancedtrace';
 type Topic={title:string;explanation:string;example:string;takeaway:string};
 type Course={name:string;subtitle:string;goal:string;topics:Topic[];question:string;answers:{text:string;correct:boolean;why:string}[];sourceName:string;source:string};
 const courses:Record<Game,Course>={
+ advancedtrace:{
+ name:'Advanced Cryptocurrency Tracing',subtitle:'Multi-Hop Tracing & Evidence Room',goal:'Learn graph-based tracing, attribution confidence and evidence-based intelligence reporting before investigating a fictional case.',
+ topics:[
+ {title:'Follow transactions across multiple hops',explanation:'Blockchain investigation often involves reconstructing a sequence of transactions, checking chain, asset, hash, timestamp and direction. Branches or split transactions mean that one observed flow may not represent every related transfer.',example:'An illustrative route connects A → B → C → E while an independent branch connects B → D → F. Each hop must be evidenced rather than assumed.',takeaway:'Trace documented edges and keep uncertain branches separate.'},
+ {title:'Distinguish data from attribution',explanation:'A confirmed ledger transfer may be strongly supported, while a third-party exchange label is tentative. Linking a service deposit to a customer normally requires verified evidence, potentially obtained from a provider through appropriate lawful channels.',example:'A wallet labelled as an exchange deposit can justify additional verification, but the label does not prove the real-world identity of a user.',takeaway:'State exactly what the evidence supports, with limitations and confidence.'},
+ {title:'Turn a trace into an intelligence note',explanation:'A clear report separates observed transactions, corroborated findings, qualified inference and recommended next steps. Preserve identifiers and methodology, and avoid declaring guilt from transaction patterns alone.',example:'Write ABSTRACT, FINDINGS and INFERENCE, then identify lawful avenues for independent verification of any exchange association.',takeaway:'Explain facts, uncertainty, provenance and authorised follow-up.'}],
+ question:'A trace shows A → B → C → E, but another branch leads B → D → F. What is the most defensible finding?',
+ answers:[{text:'The recorded path to E is supported; the separate branch requires its own analysis',correct:true,why:'Correct. Each confirmed transfer supports its observed flow, not automatic attribution or an assumption that all branches reach E.'},{text:'All six addresses necessarily belong to one person',correct:false,why:'Graph connectivity is not proof of common control or ownership.'},{text:'The full origin amount must have arrived at E',correct:false,why:'Amounts can split or be affected by other activity; verify value flows before claiming full arrival.'}],
+ sourceName:'FATF guidance on Virtual Assets',source:'https://www.fatf-gafi.org/en/topics/virtual-assets.html'
+ },
  virtualassets:{
  name:'Virtual Asset Investigation Basics',subtitle:'Blockchain Intelligence Learning Room',goal:'Understand blockchain records, transaction tracing, exchange touchpoints and the limits of wallet attribution.',
  topics:[
@@ -91,7 +102,8 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
  egmont:{card:'Unsecured personal email',destination:'⛔ Stop & protect',explanation:'Sensitive FIU information belongs on approved secure channels.'},
  typologies:{card:'Many unrelated senders',destination:'🚩 Red flag',explanation:'A suspicious pattern is worth investigating but does not prove a crime.'},
  nigeria:{card:'Inspect a bank’s AML programme',destination:'🏛️ Sector supervision',explanation:'Competent supervisors oversee compliance in the regulated sectors within their mandates.'},
- virtualassets:{card:'Synthetic transaction TX-A1',destination:'🔗 On-chain record',explanation:'A hash identifies a transaction record, not a person or proof of criminality.'}
+ virtualassets:{card:'Synthetic transaction TX-A1',destination:'🔗 On-chain record',explanation:'A hash identifies a transaction record, not a person or proof of criminality.'},
+ advancedtrace:{card:'SIM-TX-001: A → B',destination:'🔗 First traced hop',explanation:'Document the first transfer before exploring downstream flows.'}
 };
 export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>void}){
  const [stage,setStage]=useState<Stage>('learn');
@@ -132,6 +144,7 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
   if(game==='typologies')return <TypologyDetective onBack={()=>setPlaying(false)}/>;
   if(game==='nigeria')return <NigeriaCompliance onBack={()=>setPlaying(false)}/>;
   if(game==='virtualassets')return <VirtualAssetLab onBack={()=>setPlaying(false)}/>;
+  if(game==='advancedtrace')return <AdvancedTracingLab onBack={()=>setPlaying(false)}/>;
   return <EgmontExchange onBack={()=>setPlaying(false)}/>;
  }
  return <main className="narrow knowledgepath">
