@@ -2,7 +2,7 @@ import {useEffect,useState} from 'react';
 import {fatfOfficial,questLessons} from './quest';
 import type {QuestLesson} from './quest';
 type Outcome={score:number;total:number};
-type Props={onBack:()=>};
+type Props={onBack:() => void};
 function load():Record<string,Outcome>{try{return JSON.parse(localStorage.getItem('amlverse-fatf-ch1')||'{}')}catch{return {}}}
 export default function FatfChapter({onBack}:Props){
  const [outcomes,setOutcomes]=useState<Record<string,Outcome>>(load);
