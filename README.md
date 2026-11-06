@@ -160,3 +160,6 @@ The academy now includes a **My Progress** view with:
 - browser-only storage: no authentication, server sync, leaderboard, or user profile submission.
 
 Lesson visits and successful understanding checks are recorded from v0.13 onward. Historical lesson visits cannot be reconstructed, while historical scores that were already stored continue to appear. Badges are educational motivators, not certifications or institutional grades.
+
+## Quick Check progress clarification — v0.13.1
+A world’s completion measure is **three lessons explored + one correctly answered and submitted Quick Check + one completed game = five milestones**. Game scores do not imply that a separate Quick Check was completed. The Quick Check now visibly confirms its saved status, and My Progress distinguishes an **unrecorded** check from a known failed result. Historical Quick Check attempts before v0.13 were not stored, so learners must submit the correct answer in the current version to record a pass. Browser-local storage is used; no previous scores are erased.
