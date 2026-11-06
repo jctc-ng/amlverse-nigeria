@@ -80,3 +80,28 @@
 
 /* v0.13.1: clear saved quick-check completion state */
 .checkstatus{padding:12px 15px;background:#173b4b;border:1px solid #416877;border-radius:9px;color:#d4e9ea;font-size:13px;line-height:1.65;margin:12px 0 17px}
+
+/* v0.14 — World Champion gift reveal and celebration */
+.championshade{position:fixed;inset:0;z-index:10010;display:flex;align-items:center;justify-content:center;overflow-y:auto;padding:18px;background:rgba(4,12,27,.87);backdrop-filter:blur(9px)}
+.championmodal{position:relative;isolation:isolate;overflow:hidden;width:min(100%,570px);max-height:calc(100vh - 36px);overflow-y:auto;background:radial-gradient(circle at 50% 0%,#3b6d67,#172a49 47%,#131d37 100%);border:2px solid #f6d67b;border-radius:24px;box-shadow:0 0 80px #fbcc6d36,0 30px 80px #0009;text-align:center;padding:34px 26px 28px;color:#fff;animation:championPop .48s cubic-bezier(.2,1.35,.3,1)}
+.championmodal>*:not(.championconfetti){position:relative;z-index:2}
+.championclose{position:absolute!important;right:12px;top:12px;border:1px solid #ffffff55;color:white;background:#1e3654;border-radius:11px;padding:8px 12px;cursor:pointer;z-index:4!important}
+.championkicker{display:block;color:#f9dc87;font-size:13px;font-weight:900;letter-spacing:2px;margin:11px 0}
+.championmodal h2{font-size:clamp(27px,5.5vw,39px);line-height:1.25;margin:14px 0;text-shadow:0 3px 24px #ffd85a54}
+.championmodal>p{color:#e4f5f0;font-size:15px;line-height:1.7;max-width:430px;margin:0 auto 18px}.championmodal>p strong{color:#ffdf81}
+.championsteps{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;margin:12px 0 16px}.championsteps span{border:1px solid #73e4b7;background:#23564a;padding:7px 9px;border-radius:999px;font-size:11px;color:#dbfff0;font-weight:750}
+.championgift{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;margin:14px auto;padding:15px 20px 10px;border:1px dashed #f8dd8a;border-radius:19px;background:#1b3a51;color:#ffefa8;cursor:pointer;min-width:210px}
+.championgift>span{font-size:92px;line-height:1.3;filter:drop-shadow(0 10px 15px #0006);animation:giftBounce 1.15s ease-in-out infinite}
+.championgift small{font-weight:800;letter-spacing:.7px}.championgift:hover,.championgift:focus-visible{outline:3px solid #ffd876;outline-offset:2px}
+.championprompt{font-size:13px!important;margin:0 auto 16px!important}
+.championreward{border:1px solid #f4da86;background:linear-gradient(135deg,#3f4d54,#265d4c);border-radius:18px;padding:19px;margin:20px auto;animation:giftReveal .45s ease-out}
+.championreward>span{display:block;font-size:78px;animation:giftBounce 2.2s ease-in-out infinite}
+.championreward h3{color:#ffe9a3;letter-spacing:2px;font-size:24px;margin:7px 0}.championreward p{color:#e8fff5;font-size:14px;margin:7px 0}.championreward small{color:#bbd9d3;font-size:11px}
+.championactions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}.championactions button{min-width:135px}
+.championconfetti{pointer-events:none;position:absolute;inset:0;z-index:0}.championconfetti i{position:absolute;top:-16px;width:9px;height:18px;opacity:.9;border-radius:2px;animation:championFall 2.9s linear infinite}
+@keyframes championFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(680px) rotate(630deg);opacity:0}}
+@keyframes championPop{from{opacity:0;transform:scale(.78) translateY(30px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes giftBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+@keyframes giftReveal{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@media(max-width:520px){.championmodal{padding:27px 15px 20px}.championgift>span{font-size:72px}.championmodal>p{font-size:13px}.championsteps span{font-size:10px}.championactions button{min-width:0}}
+@media(prefers-reduced-motion:reduce){.championmodal,.championgift>span,.championreward,.championreward>span,.championconfetti i{animation:none!important}.championconfetti i{display:none}}
