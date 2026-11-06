@@ -153,3 +153,36 @@
 @media(min-width:701px) and (max-width:1000px){.arcadecards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.arcadebins{grid-template-columns:repeat(2,minmax(0,1fr))!important}.arcadecards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:450px){.arcadebins{grid-template-columns:1fr!important}.arcadecards{grid-template-columns:1fr}.arcadebin{min-height:105px;padding:13px 9px}}
+
+/* v0.21 Professional academy navigation */
+.academynavigation.sidebar{width:284px;min-width:284px;padding:23px 14px 15px;gap:0;overflow:hidden;background:#0a1c2d;border-right:1px solid #284453}
+.academynavigation .brand{margin:3px 7px 22px;flex-shrink:0}
+.anavscroll{min-height:0;flex:1;overflow-y:auto;overflow-x:hidden;padding:0 3px 10px;scrollbar-color:#365667 transparent;scrollbar-width:thin}
+.anavsearchlabel{display:block;font-size:10px;color:#9abcc5;font-weight:750;letter-spacing:.7px;margin:0 9px 7px}
+.anavsearch{width:100%;border:1px solid #35576b;color:#e6f9fb;border-radius:10px;background:#122f44;padding:10px 12px;font-size:12px;outline-offset:2px}
+.anavsearch:focus{outline:2px solid #5ddabd;border-color:#54c7b0}.anavsearch::placeholder{color:#83a7b4}
+.anavgroup{margin-top:17px}.anavgrouplabel{color:#809caa;font-size:10px;letter-spacing:1.5px;font-weight:850;padding:0 9px 8px}
+.anavdivider{height:1px;background:#284150;margin:18px 6px 11px}
+.anavgroupbutton{width:100%;background:none;border:0;color:#80b2b7;display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:10px;letter-spacing:.75px;text-transform:uppercase;font-weight:850;padding:12px 8px;text-align:left;border-radius:8px;cursor:pointer}
+.anavgroupbutton:hover,.anavgroupbutton:focus-visible{color:#d2f6ed;background:#123143}.anavgroupbutton>span:last-child{font-size:16px;line-height:1}
+.anavitem{position:relative;width:100%;min-height:41px;border:1px solid transparent;background:transparent;color:#b1c5d2;display:flex;align-items:center;gap:10px;text-align:left;border-radius:10px;padding:9px 10px;font-size:12px;font-weight:600;cursor:pointer;white-space:normal;line-height:1.35;margin:2px 0}
+.anavitem:hover{background:#18374a;color:#fff}.anavitem.active{background:linear-gradient(100deg,#1b554f,#1b3a4b);border-color:#488f81;color:#f4fffb;box-shadow:inset 3px 0 #77edca}
+.anavitem:focus-visible{outline:2px solid #ffe3a0;outline-offset:1px}
+.anavicon{width:24px;min-width:24px;display:grid;place-items:center;font-size:17px}.anavname{flex:1;min-width:0;overflow-wrap:anywhere}
+.anavdone{flex-shrink:0;color:#b3ffdb;background:#246f55;font-size:12px;border-radius:50%;width:18px;height:18px;display:grid;place-items:center}
+.anavempty{font-size:12px;line-height:1.7;color:#b0c9d0;padding:12px}
+.academynavigation .sidenote{margin-top:7px;flex-shrink:0;background:#102b3c;font-size:10px;padding:10px 12px}
+.anavmobiletoggle{display:none}
+@media(min-width:761px) and (max-width:1150px){.academynavigation.sidebar{width:250px;min-width:250px}.anavitem{font-size:11px}}
+@media(max-width:760px){
+ .shell{display:block}
+ .anavmobiletoggle{display:flex;position:sticky;top:0;z-index:60;width:100%;background:#103043;border:0;border-bottom:1px solid #396173;color:#eafcf7;padding:13px 20px;align-items:center;gap:12px;text-align:left;font-size:13px;font-weight:800;cursor:pointer}
+ .anavmobiletoggle>span:first-child{font-size:19px}.anavmobiletoggle>span:nth-child(2){flex:1}.anavmobiletoggle>span:last-child{color:#8cdcc8;font-size:17px}
+ .academynavigation.sidebar{display:none;position:static;top:auto;width:100%;min-width:0;height:auto;max-height:none;border-right:0;border-bottom:1px solid #36576a;padding:12px 16px 18px;overflow:visible}
+ .academynavigation.sidebar.mobile-open{display:flex;flex-direction:column}
+ .academynavigation .brand{display:flex;margin:5px 5px 14px}
+ .academynavigation .sidenote{display:block}
+ .anavscroll{overflow-y:auto;max-height:min(68vh,680px);min-height:0}
+ .anavgroupbutton{font-size:11px}.anavitem{min-height:44px;padding:11px 12px;font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){.anavitem{transition:none}}
