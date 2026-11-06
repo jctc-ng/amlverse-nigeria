@@ -10,15 +10,14 @@ export function worldComplete(game:CourseKey){
  return course.lessons.includes(0)&&course.lessons.includes(1)&&course.lessons.includes(2)&&course.checkPassed&&!!module&&readScore(module.scoreKey)>0;
 }
 export function hasCelebrated(game:CourseKey){try{return localStorage.getItem(flag(game))==='yes'}catch{return false}}
-export default function WorldCompletion({game,trigger}:{game:CourseKey;trigger:boolean}){
+export default function WorldCompletion({game,trigger,onContinue}:{game:CourseKey;trigger:boolean;onContinue?:()=>void}){
  const [open,setOpen]=useState(false);
  const [unwrapped,setUnwrapped]=useState(false);
  const closeRef=useRef<HTMLButtonElement>(null);
  const title=modules.find(m=>m.id===game)?.title||'Learning World';
  useEffect(()=>{
   if(!trigger||!worldComplete(game)||hasCelebrated(game))return;
-  try{localStorage.setItem(flag(game),'yes')}catch{}
-  setUnwrapped(false);
+  setUnwrapped(hasCelebrated(game));
   setOpen(true);
  },[game,trigger]);
  useEffect(()=>{
@@ -37,9 +36,9 @@ export default function WorldCompletion({game,trigger}:{game:CourseKey;trigger:b
    <h2 id="champion-title">BOOM! You did it! 💥</h2>
    <p id="champion-description">Congratulations! You have mastered the learning journey in <strong>{title}</strong>.</p>
    <div className="championsteps"><span>✓ 3 Lessons</span><span>✓ Quick Check</span><span>✓ Game Finished</span></div>
-   {!unwrapped?<><button type="button" className="championgift" onClick={()=>setUnwrapped(true)} aria-label="Open your achievement gift"><span aria-hidden="true">🎁</span><small>Tap to open your gift</small></button><p className="championprompt">A special learning achievement is waiting inside.</p></>
+   {!unwrapped?<><button type="button" className="championgift" onClick={()=>{setUnwrapped(true);try{localStorage.setItem(flag(game),'yes')}catch{}}} aria-label="Open your achievement gift"><span aria-hidden="true">🎁</span><small>Tap to open your gift</small></button><p className="championprompt">A special learning achievement is waiting inside.</p></>
    :<div className="championreward" role="status"><span aria-hidden="true">🏅</span><h3>WORLD CHAMPION</h3><p>{title} achievement unlocked!</p><small>Personal learning milestone — not an official qualification.</small></div>}
-   <div className="championactions">{!unwrapped?<button type="button" className="primary" onClick={()=>setUnwrapped(true)}>🎁 Open my gift</button>:<button type="button" className="primary" onClick={()=>setOpen(false)}>Continue my adventure →</button>}<button type="button" className="secondary" onClick={()=>setOpen(false)}>Close</button></div>
+   <div className="championactions">{!unwrapped?<button type="button" className="primary" onClick={()=>{setUnwrapped(true);try{localStorage.setItem(flag(game),'yes')}catch{}}}>🎁 Open my gift</button>:<button type="button" className="primary" onClick={()=>{setOpen(false);onContinue?.()}}>{onContinue?"Continue to next world →":"Continue learning →"}</button>}<button type="button" className="secondary" onClick={()=>setOpen(false)}>Close</button></div>
   </section>
  </div>;
 }
