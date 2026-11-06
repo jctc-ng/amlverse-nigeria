@@ -152,7 +152,7 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
   setPlaying(true);
   window.scrollTo(0,0);
  }
- if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>setAdvancedOpen(false)} onClassic={()=>{setAdvancedOpen(false);navigate('play')}}/>;
+ if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>setAdvancedOpen(false)} onClassic={()=>{setAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(playing){
   if(game==='risk'||game==='team')return <GameArcade key={game} mode={game} onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
   if(game==='evaluation')return <EvaluationArena onBack={()=>setPlaying(false)} onContinue={onNextCourse}/>;
