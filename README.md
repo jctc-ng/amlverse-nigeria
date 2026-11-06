@@ -97,3 +97,11 @@ Interactive fictional FIU cooperation mission in `src/EgmontExchange.tsx`:
 - Source: [Egmont Principles for Information Exchange Between FIUs, May 2022 revision](https://egmontgroup.org/wp-content/uploads/2013/10/2.-Principles-Information-Exchange-Revised-May-2022.pdf), particularly Principles 26, 28–36.
 - Important nuance: Principle 26 provides for assumed consent for dissemination to competent authorities **identified in the original request**, unless explicitly refused. Other uses/dissemination beyond the originally approved scope are governed by Principle 32 and may require prior authorisation.
 This public prototype never sends real FIU requests. Institutional operational rules, applicable law and any restricted Egmont requirements take precedence.
+
+## Guided Game Tutorials (v0.8)
+All four beginner arcade games (RiskLab, Teamwork, Mutual Evaluation and Egmont Exchange) now open a reusable, animated, three-step onboarding walkthrough when first visited:
+1. Select a clue card (tap, or drag on a computer).
+2. Choose the correct destination box.
+3. Read feedback and unlock the mission challenge.
+
+Each walkthrough has Back, Next, Skip and Play controls, respects reduced-motion preferences, and can be replayed through **How to play**. Completion preferences are stored locally in the browser; no accounts, tracking, or personal data collection are added. The walkthrough uses illustrative sample clues, not actual case information.
