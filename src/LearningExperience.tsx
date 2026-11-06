@@ -6,13 +6,24 @@ import TypologyDetective from './TypologyDetective';
 import NigeriaCompliance from './NigeriaCompliance';
 import VirtualAssetLab from './VirtualAssetLab';
 import AdvancedTracingLab from './AdvancedTracingLab';
+import ReportWritingLab from './ReportWritingLab';
 import {readCourse,saveCourse} from './progress';
 import WorldCompletion from './WorldCompletion';
 
-type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets'|'advancedtrace';
+type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets'|'advancedtrace'|'reportwriting';
 type Topic={title:string;explanation:string;example:string;takeaway:string};
 type Course={name:string;subtitle:string;goal:string;topics:Topic[];question:string;answers:{text:string;correct:boolean;why:string}[];sourceName:string;source:string};
 const courses:Record<Game,Course>={
+ reportwriting:{
+ name:'Financial Intelligence Report Writing',subtitle:'FIU Analytical Reporting Learning Room',goal:'Learn to distinguish documented findings, cautious inferences and lawful next steps before drafting a fictional intelligence report.',
+ topics:[
+ {title:'What belongs in an abstract?',explanation:'An abstract briefly and neutrally states the purpose, the main supported observations and important limitations of an intelligence product. It should not presume criminal guilt.',example:'Records show five credits and one significant debit, while the purpose and beneficial ownership are not established.',takeaway:'Summarise the case and major gaps without introducing unsupported accusations.'},
+ {title:'Findings versus inference',explanation:'Findings describe evidence-supported facts, sources and chronology. Inference explains a reasoned interpretation and should identify alternatives, uncertainty and the need for corroboration.',example:'Finding: the statement contains a recorded debit. Inference: unusual payment timing may warrant further review, not a conclusion that the payment is illicit.',takeaway:'Separate observations from interpretation and keep the language proportionate to the evidence.'},
+ {title:'Recommendations and safe handling',explanation:'Recommendations identify lawful, proportionate follow-up such as validating records or seeking information under the appropriate authority. Financial intelligence is not itself a judicial determination.',example:'Request additional transaction records through authorised procedures and verify relevant company information, while retaining confidentiality.',takeaway:'Explain information gaps and propose permissible steps to close them.'}],
+ question:'Which of these statements is appropriate for an intelligence report based on unverified allegations?',
+ answers:[{text:'The allegations remain unverified and require corroboration',correct:true,why:'Correct. An intelligence report should distinguish source allegations from facts supported by independent records.'},{text:'The allegations conclusively prove guilt',correct:false,why:'An allegation, even if serious, does not by itself establish wrongdoing.'},{text:'The subject must be publicly named as a criminal',correct:false,why:'Unverified assertions do not justify a public accusation; confidentiality and applicable law still apply.'}],
+ sourceName:'FATF Recommendations — financial intelligence functions',source:'https://www.fatf-gafi.org/en/topics/fatf-recommendations.html'
+ },
  advancedtrace:{
  name:'Advanced Cryptocurrency Tracing',subtitle:'Multi-Hop Tracing & Evidence Room',goal:'Learn graph-based tracing, attribution confidence and evidence-based intelligence reporting before investigating a fictional case.',
  topics:[
@@ -103,7 +114,8 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
  typologies:{card:'Many unrelated senders',destination:'🚩 Red flag',explanation:'A suspicious pattern is worth investigating but does not prove a crime.'},
  nigeria:{card:'Inspect a bank’s AML programme',destination:'🏛️ Sector supervision',explanation:'Competent supervisors oversee compliance in the regulated sectors within their mandates.'},
  virtualassets:{card:'Synthetic transaction TX-A1',destination:'🔗 On-chain record',explanation:'A hash identifies a transaction record, not a person or proof of criminality.'},
- advancedtrace:{card:'SIM-TX-001: A → B',destination:'🔗 First traced hop',explanation:'Document the first transfer before exploring downstream flows.'}
+ advancedtrace:{card:'SIM-TX-001: A → B',destination:'🔗 First traced hop',explanation:'Document the first transfer before exploring downstream flows.'},
+ reportwriting:{card:'Five recorded credit transfers',destination:'📑 Documented finding',explanation:'Transaction records support observations; uncertainty and allegations belong in a separate category.'}
 };
 export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>void}){
  const [stage,setStage]=useState<Stage>('learn');
@@ -145,6 +157,7 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
   if(game==='nigeria')return <NigeriaCompliance onBack={()=>setPlaying(false)}/>;
   if(game==='virtualassets')return <VirtualAssetLab onBack={()=>setPlaying(false)}/>;
   if(game==='advancedtrace')return <AdvancedTracingLab onBack={()=>setPlaying(false)}/>;
+  if(game==='reportwriting')return <ReportWritingLab onBack={()=>setPlaying(false)}/>;
   return <EgmontExchange onBack={()=>setPlaying(false)}/>;
  }
  return <main className="narrow knowledgepath">
