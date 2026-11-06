@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {modules,readCourse,readScore,readFatf,readLegacy} from './progress';
 import type {CourseKey} from './progress';
 import {hasCelebrated,worldComplete} from './WorldCompletion';
+import {readRiskAdvancedProgress,riskAdvancedMastered} from './RiskLabAdvanced';
 
 type Props={onBack:()=>void;onOpen:(id:CourseKey)=>void;onFatf:()=>void;onCapstone:()=>void};
 export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone}:Props){
@@ -20,6 +21,9 @@ export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone}:Prop
  const earned=legacy.xp+fatf.earned+totalScore;
  const level=earned>=2200?'Master Explorer':earned>=1200?'Advanced Explorer':earned>=500?'Rising Investigator':'Rookie Analyst';
  const championCount=modules.filter(m=>worldComplete(m.id)).length;
+ const riskAdvanced=readRiskAdvancedProgress();
+ const riskAdvancedDone=riskAdvancedMastered(riskAdvanced);
+ const riskAdvancedSteps=riskAdvanced.visited.length+(['Foundations','Intermediate','Advanced'] as const).filter(t=>riskAdvanced.quizPass[t]).length+(['Foundations','Intermediate','Advanced'] as const).filter(t=>riskAdvanced.simPass[t]).length;
  const capstone=(()=>{try{const x=JSON.parse(localStorage.getItem('amlverse-capstone-v1')||'{}') as {best?:number;passed?:boolean};return {best:typeof x.best==='number'?x.best:0,passed:x.passed===true}}catch{return {best:0,passed:false}}})();
  const achievedWorlds=courses.filter(m=>m.learning.lessons.length===3&&m.learning.checkPassed&&m.score>0);
  const trackSets=[
@@ -29,6 +33,7 @@ export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone}:Prop
  ];
  type Achievement={icon:string;title:string;earned:boolean;hint:string;category:'milestone'|'world'|'track'|'special';progress:string};
  const badges:Achievement[]=[
+  {icon:'🧪',title:'RiskLab Advanced Master',earned:riskAdvancedDone,hint:'Explore all 12 lessons, pass three tier quizzes and complete all three case simulations',category:'special',progress:riskAdvancedSteps+'/18 expanded milestones'},
   {icon:'📖',title:'Curious Learner',earned:courses.filter(m=>m.learning.lessons.length>0).length>=3,hint:'Explore lessons in three different learning worlds',category:'milestone',progress:courses.filter(m=>m.learning.lessons.length>0).length+'/3 worlds'},
   {icon:'🧠',title:'Knowledge Seeker',earned:passed>=2,hint:'Pass two different world Quick Checks',category:'milestone',progress:passed+'/2 checks'},
   {icon:'🎮',title:'First Mission',earned:played>=1,hint:'Complete your first arcade game',category:'milestone',progress:played>=1?'1/1 game':'0/1 game'},
@@ -55,6 +60,7 @@ export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone}:Prop
  const total=m.learning.lessons.length+(m.learning.checkPassed?1:0)+(m.score>0?1:0);
  return <article className="progressworld" key={m.id}><div className="progressworldhead"><div className="progressworldname"><span>{m.icon}</span><div><b>{m.title}</b><small>{m.score>0?'Mission complete':'Ready to explore'}</small></div></div><strong>{total}/5</strong></div><div className="arcadeprogress"><div style={{width:(total/5*100)+'%'}}/></div><div className="progressmarks"><span>📚 {m.learning.lessons.length}/3 lessons</span><span>🧠 {m.learning.checkPassed?'Passed':'Not recorded'}</span><span>🏆 Best: {m.score||'—'}{m.score>0?'/'+m.maxScore:''}</span>{hasCelebrated(m.id)?<span>🎁 World Champion gift claimed</span>:null}</div><button type="button" className="secondary" onClick={()=>onOpen(m.id)}>{total===5?'Replay / review world →':m.learning.lessons.length===3&&!m.learning.checkPassed?'Complete Quick Check →':'Continue learning →'}</button></article>
  })}</div></section>
+ <section className="progresssection"><h2>RiskLab Advanced Curriculum</h2><div className="progressworld"><div className="progressworldhead"><div><b>RiskLab Academy 2.0</b><p>12 lessons · 60-question bank · three tier quizzes · three fictional case simulations</p></div><strong>{riskAdvancedSteps}/18</strong></div><div className="arcadeprogress"><div style={{width:(riskAdvancedSteps/18*100)+"%"}}/></div><div className="progressmarks"><span>📚 {riskAdvanced.visited.length}/12 lessons</span><span>🧠 {(["Foundations","Intermediate","Advanced"] as const).filter(t=>riskAdvanced.quizPass[t]).length}/3 quizzes passed</span><span>🎮 {(["Foundations","Intermediate","Advanced"] as const).filter(t=>riskAdvanced.simPass[t]).length}/3 simulations passed</span></div><p>{riskAdvancedDone?"✓ Advanced RiskLab Master achievement unlocked.":"Your classic RiskLab score and World Champion achievement remain unaffected."}</p><button type="button" className="secondary" onClick={()=>onOpen("risk")}>Open RiskLab →</button></div></section>
  <section className="progresssection"><h2>FATF Quest</h2><div className="progressworld"><div className="progressworldhead"><div><b>Recommendations 1–10</b><p>{fatf.attempted} lessons attempted · {fatf.perfect} perfect lessons</p></div><strong>{fatf.earned} XP</strong></div><div className="arcadeprogress"><div style={{width:(fatf.perfect/10*100)+'%'}}/></div><button type="button" className="secondary" onClick={onFatf}>Open FATF Quest →</button></div></section>
  <section className="progresssection"><h2>Integrated Capstone Challenge</h2><div className="progressworld"><div className="progressworldhead"><div><b>Operation Integrity Shield</b><p>Apply risk, tracing, cooperation and report writing in one fictional case.</p></div><strong>{capstone.best}% best</strong></div><p>{capstone.passed?"✓ Practice passed — Integrity Challenger achievement unlocked.":"Practice pass threshold: 80%. No prior world completion is required."}</p><button type="button" className="secondary" onClick={onCapstone}>{capstone.passed?"Replay Capstone →":"Open Capstone →"}</button></div></section>
  <section className="progresssection" aria-labelledby="achievements-title">
