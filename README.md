@@ -105,3 +105,15 @@ All four beginner arcade games (RiskLab, Teamwork, Mutual Evaluation and Egmont 
 3. Read feedback and unlock the mission challenge.
 
 Each walkthrough has Back, Next, Skip and Play controls, respects reduced-motion preferences, and can be replayed through **How to play**. Completion preferences are stored locally in the browser; no accounts, tracking, or personal data collection are added. The walkthrough uses illustrative sample clues, not actual case information.
+
+## Learn before you play — v0.9
+
+All four beginner arcade worlds now open an educational **Learning Room** before gameplay:
+- RiskLab: threat, vulnerability, and preventive/detective controls.
+- Teamwork: FIU analysts, investigators, supervisors, prosecutors, and lawful collaboration.
+- Mutual Evaluation: what evaluations assess; technical compliance versus demonstrated effectiveness.
+- Egmont Exchange: international FIU cooperation, purpose/consent, and confidentiality/security.
+
+Each Learning Room has three brief illustrated-by-example topics, navigation between lessons, one multiple-choice understanding check with explanatory feedback, a source link to FATF/Egmont material, and a direct **Start the game** option. The brief practice check is non-blocking: players can practise as much as they wish or move to the game at their own pace. Games retain their optional animated how-to-play onboarding.
+
+This is explanatory, fictional educational content, **not official institutional training or professional legal advice**. Content should be peer-reviewed and versioned against current FATF/Egmont standards before formal rollout.
