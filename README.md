@@ -78,3 +78,13 @@ The beginner-friendly `src/GameArcade.tsx` replaces the previous RiskLab 2.0 and
 - No sign-in or backend; no official institutional training or risk score. Do not enter confidential information.
 
 Future scope: optional illustrated tutorials, keyboard-driven placement, animated transitions, localization and subject-matter reviewed curricular content.
+
+## Mutual Evaluation Arena 2.0 — v0.6
+A beginner-focused, two-stage fictional evaluation game:
+1. Sort six document cards by drag-and-drop or tap-to-place into **Technical compliance**, **Effectiveness**, and **Needs evidence**.
+2. Answer three simulated assessor interview questions, with explanations after each decision.
+3. Review a completion score and retry to improve the locally stored best result.
+
+The game teaches the distinction between legal/institutional measures and verified results; it is **not** an official FATF/GIABA assessment, rating system or certification. The lesson content and simulated evidence should undergo institutional expert review before use for formal training. Never upload actual STRs, case files, or restricted FIU materials to this public project.
+
+Official orientation: [FATF Mutual Evaluations](https://www.fatf-gafi.org/en/topics/mutual-evaluations.html).
