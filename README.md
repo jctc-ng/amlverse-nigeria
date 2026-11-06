@@ -163,3 +163,14 @@ Lesson visits and successful understanding checks are recorded from v0.13 onward
 
 ## Quick Check progress clarification — v0.13.1
 A world’s completion measure is **three lessons explored + one correctly answered and submitted Quick Check + one completed game = five milestones**. Game scores do not imply that a separate Quick Check was completed. The Quick Check now visibly confirms its saved status, and My Progress distinguishes an **unrecorded** check from a known failed result. Historical Quick Check attempts before v0.13 were not stored, so learners must submit the correct answer in the current version to record a pass. Browser-local storage is used; no previous scores are erased.
+
+## World Champion Completion Rewards — v0.14
+A major celebration is displayed when a player has **explored all three lessons, passed the independent Quick Check, and completed the game** in any of the six arcade worlds. It works whether the game or the Quick Check is the last milestone.
+
+- Full-screen, dismissible congratulations modal with animated confetti and a cheerful “BOOM! You did it!” message.
+- A large interactive **🎁 gift** that opens to reveal a **🏅 World Champion** badge for that learning world.
+- Respects reduced-motion accessibility preferences and supports keyboard Escape to dismiss.
+- Awards are browser-local and appear only once per world, so normal repeated visits and game replays do not constantly interrupt players.
+- The My Progress dashboard marks claimed world gifts and includes a World Champion achievement.
+
+The celebration is a motivational learning feature, **not a formal training certificate**. As before, no real case data or sensitive information is used.
