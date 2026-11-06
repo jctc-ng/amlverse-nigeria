@@ -29,7 +29,7 @@ const sources=[
 {name:'SCUML — Laws and Regulations',url:'https://scuml.efcc.gov.ng/laws-regulations/'}
 ];
 type Phase='intro'|'sort'|'quiz'|'win';
-export default function NigeriaCompliance({onBack}:{onBack:()=>void}){
+export default function NigeriaCompliance({onBack,onContinue}:{onBack:()=>void;onContinue:()=>void}){
  const [phase,setPhase]=useState<Phase>('intro');
  const [selected,setSelected]=useState<string|null>(null);
  const [placed,setPlaced]=useState<Record<string,Lane>>({});
@@ -58,7 +58,7 @@ export default function NigeriaCompliance({onBack}:{onBack:()=>void}){
  <h1 className="title">Operation Compliance Shield 🇳🇬</h1>
  <p className="lead">A fictional Nigerian compliance team needs your help. Match the duties to the right function, then make three careful decisions.</p>
  <TutorialGuide game="nigeria"/>
- <WorldCompletion game={"nigeria"} trigger={phase==='win'}/>
+ <WorldCompletion game={"nigeria"} trigger={phase==='win'} onContinue={onContinue}/>
  <div className="arcadehud"><span>⭐ {phase==='sort'?Object.keys(placed).length+'/6 cards matched':phase==='quiz'?'Question '+(index+1)+'/3':phase==='win'?'Mission complete':'Ready'}</span><span>🏆 Best {best}</span><button type="button" onClick={reset}>↻ Restart</button></div>
  {phase==='intro'?<div className="evalscene"><div className="evalmascot" aria-hidden="true">🇳🇬</div><div><span className="eyebrow">MISSION BRIEFING</span><h2>Who handles what?</h2><p>Reporting entities, supervisors and the NFIU have different responsibilities. You will sort six fictional work orders to the right desks.</p><p><b>How to play:</b> Select a card and tap its box, or drag and drop on desktop. Complete the board and unlock a decision round.</p><button className="primary" type="button" onClick={()=>setPhase('sort')}>Start the compliance mission →</button></div></div>
  :phase==='sort'?<>
@@ -74,6 +74,7 @@ export default function NigeriaCompliance({onBack}:{onBack:()=>void}){
  {checked?<div className="feedback" role="status"><strong>{answer===current.correct?'✓ Excellent compliance judgement!':'Learning opportunity'}</strong><p>{current.why}</p></div>:null}
  <div className="actions">{checked?<button className="primary" onClick={next}>{index===questions.length-1?'Complete mission':'Next decision'} →</button>:<button className="primary" disabled={answer===null} onClick={check}>Check decision →</button>}</div></>
  :<div className="arcadewin"><span aria-hidden="true">🏆</span><h2>Compliance Shield complete!</h2><p>You matched six duties and answered {correct} of three compliance decisions correctly.</p><strong>{score} points</strong><p>Good compliance means appropriate due diligence, justified reporting, competent supervision and lawful use of intelligence.</p><div className="actions"><button className="primary" onClick={reset}>Play again ↻</button><button className="secondary" onClick={onBack}>Return to learning</button></div></div>}
+ {phase==='win'?<div className="nextstepbar" role="navigation" aria-label="Continue learning"><span>✓ Mission finished. Your next learning world is ready.</span><button type="button" className="primary" onClick={onContinue}>Continue to next world →</button></div>:null}
  <div className="notice"><b>Legal learning disclaimer:</b> All scenarios are fictional and simplify complex mandates. Nigeria’s laws, regulations and agency guidance can change; verify current texts and sector-specific rules before operational use. {sources.map(s=><a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer">{s.name} ↗ </a>)}</div>
  </main>;
 }
