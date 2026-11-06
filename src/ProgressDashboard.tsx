@@ -21,16 +21,29 @@ export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone}:Prop
  const level=earned>=2200?'Master Explorer':earned>=1200?'Advanced Explorer':earned>=500?'Rising Investigator':'Rookie Analyst';
  const championCount=modules.filter(m=>worldComplete(m.id)).length;
  const capstone=(()=>{try{const x=JSON.parse(localStorage.getItem('amlverse-capstone-v1')||'{}') as {best?:number;passed?:boolean};return {best:typeof x.best==='number'?x.best:0,passed:x.passed===true}}catch{return {best:0,passed:false}}})();
- const badges=[
- {icon:'🛡️',title:'Integrity Challenger',earned:capstone.passed,hint:'Pass the integrated capstone at 80% or above'},
- {icon:'📚',title:'Curious Learner',earned:seen>=3,hint:'Explore three different lessons'},
- {icon:'🧠',title:'Knowledge Seeker',earned:passed>=2,hint:'Pass two quick checks'},
- {icon:'🎮',title:'First Mission',earned:played>=1,hint:'Complete an arcade mission'},
- {icon:'🕵️',title:'Case Detective',earned:readScore('amlverse-typology-best')>0,hint:'Complete Typology Detective'},
- {icon:'🌍',title:'Global Collaborator',earned:readScore('amlverse-egmont-best')>0,hint:'Complete Egmont Exchange'},
- {icon:'🏆',title:'Learning Champion',earned:played===modules.length,hint:'Finish all six arcade games'},
- {icon:'🎁',title:'World Champion',earned:championCount>=1,hint:'Complete all five milestones in a learning world'}
+ const achievedWorlds=courses.filter(m=>m.learning.lessons.length===3&&m.learning.checkPassed&&m.score>0);
+ const trackSets=[
+  {name:'Foundations & Standards',icon:'📚',worlds:['risk','team','evaluation']},
+  {name:'Financial Intelligence & Cooperation',icon:'🌐',worlds:['egmont','typologies','nigeria']},
+  {name:'Blockchain Investigation & Reporting',icon:'🔗',worlds:['virtualassets','advancedtrace','reportwriting']}
  ];
+ type Achievement={icon:string;title:string;earned:boolean;hint:string;category:'milestone'|'world'|'track'|'special';progress:string};
+ const badges:Achievement[]=[
+  {icon:'📖',title:'Curious Learner',earned:courses.filter(m=>m.learning.lessons.length>0).length>=3,hint:'Explore lessons in three different learning worlds',category:'milestone',progress:courses.filter(m=>m.learning.lessons.length>0).length+'/3 worlds'},
+  {icon:'🧠',title:'Knowledge Seeker',earned:passed>=2,hint:'Pass two different world Quick Checks',category:'milestone',progress:passed+'/2 checks'},
+  {icon:'🎮',title:'First Mission',earned:played>=1,hint:'Complete your first arcade game',category:'milestone',progress:played>=1?'1/1 game':'0/1 game'},
+  {icon:'🎁',title:'World Champion',earned:championCount>=1,hint:'Complete three lessons, a Quick Check and a game in one world',category:'milestone',progress:championCount+'/1 world'},
+  {icon:'🏆',title:'Learning Champion',earned:played===modules.length,hint:'Complete all nine academy arcade games',category:'milestone',progress:played+'/'+modules.length+' games'},
+  {icon:'🌟',title:'Academy Master',earned:achievedWorlds.length===modules.length,hint:'Complete all five milestones across all nine learning worlds',category:'milestone',progress:achievedWorlds.length+'/'+modules.length+' worlds'},
+  ...courses.map(m=>({icon:m.icon,title:m.title+' Champion',earned:m.learning.lessons.length===3&&m.learning.checkPassed&&m.score>0,hint:'Finish all five milestones in '+m.title,category:'world' as const,progress:(m.learning.lessons.length+(m.learning.checkPassed?1:0)+(m.score>0?1:0))+'/5 milestones'})),
+  ...trackSets.map(t=>({icon:t.icon,title:t.name+' Specialist',earned:t.worlds.every(id=>achievedWorlds.some(m=>m.id===id)),hint:'Complete all three worlds in this learning track',category:'track' as const,progress:t.worlds.filter(id=>achievedWorlds.some(m=>m.id===id)).length+'/3 worlds'})),
+  {icon:'⭐',title:'FATF Quest Explorer',earned:fatf.attempted>=1,hint:'Attempt a FATF Quest Recommendation lesson',category:'special',progress:fatf.attempted+'/1 attempted'},
+  {icon:'🏅',title:'FATF Quest Master',earned:fatf.perfect>=10,hint:'Earn a perfect result in all ten FATF Quest lessons',category:'special',progress:fatf.perfect+'/10 perfect'},
+  {icon:'🛡️',title:'Integrity Challenger',earned:capstone.passed,hint:'Pass the integrated capstone with at least 80%',category:'special',progress:capstone.best+'% best'}
+ ];
+ const unlocked=badges.filter(b=>b.earned).length;
+ const [achievementFilter,setAchievementFilter]=useState<'all'|'earned'|'locked'>('all');
+ const visibleBadges=badges.filter(b=>achievementFilter==='all'||(achievementFilter==='earned'?b.earned:!b.earned));
  return <main className="narrow progressdash">
  <button className="back" onClick={onBack}>← Academy overview</button><span className="eyebrow">YOUR PERSONAL LEARNING RECORD</span>
  <h1 className="title">My Progress 🏅</h1><p className="lead">See what you've learned, the missions you've completed and what to explore next. Your records stay in this browser.</p>
@@ -42,8 +55,18 @@ export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone}:Prop
  })}</div></section>
  <section className="progresssection"><h2>FATF Quest</h2><div className="progressworld"><div className="progressworldhead"><div><b>Recommendations 1–10</b><p>{fatf.attempted} lessons attempted · {fatf.perfect} perfect lessons</p></div><strong>{fatf.earned} XP</strong></div><div className="arcadeprogress"><div style={{width:(fatf.perfect/10*100)+'%'}}/></div><button type="button" className="secondary" onClick={onFatf}>Open FATF Quest →</button></div></section>
  <section className="progresssection"><h2>Integrated Capstone Challenge</h2><div className="progressworld"><div className="progressworldhead"><div><b>Operation Integrity Shield</b><p>Apply risk, tracing, cooperation and report writing in one fictional case.</p></div><strong>{capstone.best}% best</strong></div><p>{capstone.passed?"✓ Practice passed — Integrity Challenger achievement unlocked.":"Practice pass threshold: 80%. No prior world completion is required."}</p><button type="button" className="secondary" onClick={onCapstone}>{capstone.passed?"Replay Capstone →":"Open Capstone →"}</button></div></section>
- <section className="progresssection"><h2>Achievements</h2><div className="badgegrid">{badges.map(b=><div key={b.title} className={'achievement'+(b.earned?' unlocked':'')}><span aria-hidden="true">{b.icon}</span><b>{b.title}</b><small>{b.earned?'✓ Unlocked':b.hint}</small></div>)}</div></section>
+ <section className="progresssection" aria-labelledby="achievements-title">
+  <div className="progressachievementhead"><div><h2 id="achievements-title">Achievements</h2><p>Earn milestone, world, track and special practice awards as you learn.</p></div><strong>{unlocked} / {badges.length} unlocked</strong></div>
+  <div className="achievementfilters" role="group" aria-label="Filter achievements">
+   <button type="button" className={achievementFilter==='all'?'active':''} onClick={()=>setAchievementFilter('all')}>All ({badges.length})</button>
+   <button type="button" className={achievementFilter==='earned'?'active':''} onClick={()=>setAchievementFilter('earned')}>Unlocked ({unlocked})</button>
+   <button type="button" className={achievementFilter==='locked'?'active':''} onClick={()=>setAchievementFilter('locked')}>To earn ({badges.length-unlocked})</button>
+  </div>
+  <div className="badgegrid">{visibleBadges.map(b=><div key={b.title} className={'achievement'+(b.earned?' unlocked':'')}><span aria-hidden="true">{b.icon}</span><b>{b.title}</b><small>{b.earned?'✓ Achievement unlocked':b.hint}</small><small className="achievementprogress">{b.progress}</small></div>)}</div>
+  {!visibleBadges.length?<p className="chainnote">No achievements match this filter.</p>:null}
+  <p className="achievementnote">World Champion awards require all five learning milestones; finishing the game alone does not unlock them. Achievements are based on locally saved progress and are not professional certifications.</p>
+ </section>
  <div className="progressactions"><button className="secondary" type="button" onClick={()=>setRefresh(refresh+1)}>↻ Refresh progress</button><button className="secondary" type="button" onClick={()=>{const rows=['World,Lessons,Quick Check Passed,Best Game Score',...courses.map(m=>[m.title,m.learning.lessons.length,m.learning.checkPassed?'Yes':'No',m.score].join(','))];const blob=new Blob([rows.join('\n')],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='amlverse-personal-progress.csv';link.click();URL.revokeObjectURL(url)}}>↓ Export CSV</button></div>
- <div className="notice"><b>Local progress only.</b> Scores and activities are saved to this device's browser storage and may disappear when browser data is cleared. These achievements are informal learning milestones, not professional qualifications. Completion is counted only after a game records a result. Older lesson visits and Quick Check passes were not previously tracked, but earlier saved game and FATF scores are included. If your game score is complete but Quick Check says Not recorded, open that learning room, select Quick Check, answer correctly and press Check understanding.</div>
+ <div className="notice"><b>Local progress only.</b> Scores and activities are saved to this device's browser storage and may disappear when browser data is cleared. These achievements are informal learning milestones, not professional qualifications. Game completion is recorded after a game result; world completion also requires all lessons and the Quick Check. Older lesson visits and Quick Check passes were not previously tracked, but earlier saved game and FATF scores are included. If your game score is complete but Quick Check says Not recorded, open that learning room, select Quick Check, answer correctly and press Check understanding.</div>
  </main>;
 }
