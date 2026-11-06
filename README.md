@@ -253,3 +253,12 @@ The page includes All / Unlocked / To earn filters, an overall unlocked count an
 All shared categorisation games now use a consistent responsive grid: three drop-zone columns and three evidence-card columns on wide displays, two columns on tablets (with a two-column card grid on narrower desktop widths), and a single column on small phones. This corrects the default one-column drop zones that unintentionally stacked vertically even on wide screens. The existing drag-and-drop and tap-to-place interactions remain available.
 
 Before further curriculum expansion, prioritise usability tests, question bank variety, content citations/versioning, and accessible interactions across screen sizes.
+
+## Professional navigation redesign — v0.21
+The academy now uses a grouped, searchable sidebar instead of one long flat list. Primary destinations (Academy Overview, My Progress, FATF Quest and Resource Library) are separated from the programme sections **Foundations & Standards**, **Financial Intelligence**, **Virtual Assets & Blockchain**, and **Reporting & Assessment**.
+
+- The **Virtual Asset Academy** is correctly grouped together with **Advanced Tracing Simulator** in a dedicated, clearly titled Virtual Assets & Blockchain menu.
+- Desktop navigation uses accordion group headings, clear active-world indicators, completed-world ticks and a scrollable list for shorter screens.
+- Mobile navigation uses a compact, expandable **Explore academy** menu rather than a horizontal row of hard-to-find tabs.
+- A local search field filters the navigation links by module or section name.
+- Existing routes, progress, scores and completion gifts remain unchanged.
