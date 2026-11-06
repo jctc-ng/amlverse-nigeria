@@ -200,3 +200,16 @@ All route identifiers, amounts and characters are synthetic. This public lesson 
 - Reference: [FATF Virtual Assets](https://www.fatf-gafi.org/en/topics/virtual-assets.html).
 
 **Privacy and limitations:** All wallet IDs, amounts, hashes and timestamps are synthetic. The scenario is intentionally simplified and does not perform blockchain API calls or customer identity checks. It is not a live investigative tool or admissible forensic report. Do not submit sensitive financial intelligence or personal details to the public prototype.
+
+## Financial Intelligence Report Writing Lab — v0.17
+**Operation Clear Findings** is a fictional case-based training world covering the distinction between substantiated findings, provisional intelligence leads, analytical inference and lawful follow-up.
+
+- Learn: three plain-language lessons explaining abstracts, findings and inferences, plus recommendations and confidentiality.
+- Quick Check: assess a correct statement about unverified allegations.
+- Tutorial: practise sorting a documented transaction into its evidence category.
+- Game Round 1: sort six synthetic cards among **Documented finding**, **Unverified lead**, and **Next-step recommendation**, using tap-to-place or desktop drag-and-drop.
+- Game Round 2: choose defensible wording for an **ABSTRACT, FINDINGS, INFERENCE and RECOMMENDATIONS** section, with answer feedback.
+- Final product: an intentionally fictional **.txt financial intelligence note** including limits and source caveats. This is a standard teaching model, not an automatically verified real-world case report.
+- Records a personal-best score locally and supports the **World Champion** reward upon completing the three lessons, Quick Check and game.
+
+The learning examples are synthetic and intentionally incomplete. Never paste real STRs, bank statements, identities or restricted intelligence into the public training app. 
