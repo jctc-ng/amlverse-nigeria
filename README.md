@@ -150,3 +150,13 @@ This new **Operation Compliance Shield** training module follows the full **Lear
 - [Nigeria Sanctions Committee regulations](https://nigsac.gov.ng/Regulations)
 
 Educational simplified examples only. Legal duties are sector-specific and subject to change. Verify laws and regulatory guidance before institutional use.
+
+## My Progress dashboard — v0.13
+The academy now includes a **My Progress** view with:
+- all six beginner arcade worlds, explored lessons (0–3), passed Quick Checks, saved best game scores and per-world completion;
+- existing FATF Quest chapter progress and previously saved arcade results (without clearing any prior results);
+- a learning-level indicator, overall completion percentage and six informal achievement badges;
+- links to resume each learning world and FATF Quest, plus a personal CSV export;
+- browser-only storage: no authentication, server sync, leaderboard, or user profile submission.
+
+Lesson visits and successful understanding checks are recorded from v0.13 onward. Historical lesson visits cannot be reconstructed, while historical scores that were already stored continue to appear. Badges are educational motivators, not certifications or institutional grades.
