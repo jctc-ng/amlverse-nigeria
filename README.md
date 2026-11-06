@@ -238,3 +238,13 @@ No network account or data upload is introduced. Progress is stored on the same 
 - No real data collection, backend, accreditation, or authoritative case determination.
 
 The capstone is available to all learners for practice. Finishing the earlier nine worlds is recommended preparation, but not an enforced requirement. It does not award a professional qualification.
+
+## Achievement audit and expansion — v0.19.1
+The My Progress achievement gallery now covers the complete curriculum:
+- General milestones: Curious Learner (lessons in three distinct worlds), Knowledge Seeker, First Mission, Case Detective, Global Collaborator, World Champion, Learning Champion (all **nine** games) and Academy Master (all nine complete 5-step worlds).
+- Nine **individual World Champion** achievements, one for each learning world, require three visited lessons, a passed Quick Check and a completed game.
+- Three **Learning Track Specialist** achievements: Foundations & Standards; Financial Intelligence & Cooperation; and Blockchain Investigation & Reporting.
+- **FATF Quest Explorer** and **FATF Quest Master** (perfect results in all ten Recommendation lessons).
+- **Integrity Challenger** awarded for a passing result in the Capstone Challenge.
+
+The page includes All / Unlocked / To earn filters, an overall unlocked count and specific progress on each locked or unlocked badge. Achievement calculations reuse existing saved local browser data: no reset, server account or official certification is introduced. Older passes not previously recorded may need to be resubmitted.
