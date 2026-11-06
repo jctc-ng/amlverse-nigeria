@@ -46,7 +46,7 @@ const levels:Record<Mode,Level>={
 };
 const sourceUrl='https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html';
 function shuffle<T,>(data:T[]):T[]{return data.map((value,i)=>({value,sort:(i*7+3)%11})).sort((a,b)=>a.sort-b.sort).map(x=>x.value)}
-export default function GameArcade({mode,onBack}:{mode:Mode;onBack:()=>void}){
+export default function GameArcade({mode,onBack,onContinue}:{mode:Mode;onBack:()=>void;onContinue:()=>void}){
  const level=levels[mode];
  const [round,setRound]=useState<'sort'|'final'|'won'>('sort');
  const [placed,setPlaced]=useState<Record<string,string>>({});
@@ -73,7 +73,7 @@ export default function GameArcade({mode,onBack}:{mode:Mode;onBack:()=>void}){
  <span className="eyebrow">AMLVERSE ARCADE • {mode==='risk'?'RISK DETECTIVE':'TEAMWORK CHALLENGE'}</span>
  <h1 className="title">{level.title}</h1><p className="lead">{level.story}</p>
  <TutorialGuide key={mode} game={mode}/>
- <WorldCompletion game={mode} trigger={round==='won'}/>
+ <WorldCompletion game={mode} trigger={round==='won'} onContinue={onContinue}/>
  <div className="arcadehud"><span>⭐ {done}/{level.items.length} clues matched</span><span>🏆 Best: {best}/100</span><button onClick={reset} type="button">↻ Restart</button></div>
  {round==='sort'?<>
  <div className="arcadeinstruction"><strong>YOUR MISSION</strong><p>{level.instruction}</p><div className="arcadeprogress"><div style={{width:(done/level.items.length*100)+'%'}}/></div></div>
@@ -91,6 +91,7 @@ export default function GameArcade({mode,onBack}:{mode:Mode;onBack:()=>void}){
  {finalFeedback?<div className="arcadefeedback">{finalFeedback}</div>:null}
  <div className="actions"><button className="primary" disabled={choice===null} onClick={finish}>Check decision →</button><button className="secondary" onClick={()=>setRound('sort')}>← Review cards</button></div>
  </>:<div className="arcadewin"><span>🏆</span><h2>Mission complete!</h2><p>{finalFeedback}</p><strong>{fullScore}/100 points</strong><div className="actions"><button className="primary" onClick={reset}>Play again ↻</button><button className="secondary" onClick={onBack}>Choose another world</button></div></div>}
+ {round==='won'?<div className="nextstepbar" role="navigation" aria-label="Continue learning"><span>✓ Mission finished. Your next learning world is ready.</span><button type="button" className="primary" onClick={onContinue}>Continue to next world →</button></div>:null}
  <div className="notice"><b>Learning note:</b> All clues are fictional. Categories and institution roles are simplified for teaching; real risk assessments and legal mandates require more detailed evidence and applicable law. <a href={sourceUrl} target="_blank" rel="noopener noreferrer">Read the FATF Recommendations ↗</a></div>
  </main>;
 }
