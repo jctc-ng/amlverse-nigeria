@@ -262,3 +262,16 @@ The academy now uses a grouped, searchable sidebar instead of one long flat list
 - Mobile navigation uses a compact, expandable **Explore academy** menu rather than a horizontal row of hard-to-find tabs.
 - A local search field filters the navigation links by module or section name.
 - Existing routes, progress, scores and completion gifts remain unchanged.
+
+## RiskLab Academy 2.0 — v0.22
+This release begins a gradual deepening of existing academy worlds rather than creating another superficial world.
+
+- 12 authored lessons arranged into **Foundations**, **Intermediate** and **Advanced** tiers, including threats, inherent/residual risk, customer due diligence, monitoring, risk matrices, control testing, segmentation, escalation, beneficial ownership, virtual-asset exposure, intelligence writing and governance.
+- An original **60-question** bank with 20 questions per tier; each practice attempt draws 10 in a varied sequence with independently varied answer placement, immediate feedback and a visible review. Assessment threshold: **80%**.
+- Three fictional tier-specific case simulations: New Payments Firm, Cross-Border Merchant and Layered Digital Transfer Network. Two correct decisions out of three are needed for a simulation milestone. No real case data is accepted.
+- A new self-contained progress store (`amlverse-risklab-advanced-v1`) tracks 12 lessons + three passed tier quizzes + three passed simulations as **18 expanded curriculum milestones**. A separate **RiskLab Advanced Master** achievement is shown in My Progress once these are complete.
+- The previous RiskLab 3-lesson Learn → Quick Check → Tutorial → Play, classic 100-point score, five-milestone tracking and gift award remain intact. Expanded milestones do not silently modify or revoke historical achievements.
+- Launch it from the **Enter expanded RiskLab** banner inside the RiskLab learning room, or from the academy overview.
+- Learners may retry assessments; best scores and prior passes are retained locally.
+
+**Scope:** This is an educational prototype, not professional accreditation. FATF Recommendation and risk-based-approach materials are linked for further learning; content requires subject-matter review against current authoritative sources before formal training.
