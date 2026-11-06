@@ -187,3 +187,16 @@ The new **Operation Chain Trace** beginner learning world includes:
 Official references: [FATF — Virtual Assets](https://www.fatf-gafi.org/en/topics/virtual-assets.html) and [FATF — Virtual Asset Red Flag Indicators](https://www.fatf-gafi.org/en/publications/Methodsandtrends/Virtual-assets-red-flag-indicators.html).
 
 All route identifiers, amounts and characters are synthetic. This public lesson does **not** perform live tracing, submit information to any exchange, or determine who owns a wallet. No sensitive FIU or investigative data should be entered. Addresses, transaction identifiers, exchange labels and real-world attribution all require correct chain context and independent verification before use in an actual case.
+
+## Advanced Cryptocurrency Tracing Simulator — v0.16
+**Operation Multi-Hop** is a new, fully fictional training world:
+- Learning Room with three lessons about multi-hop transfers, confidence in exchange/wallet attribution, and intelligence report writing.
+- Quick Check and interactive tutorial before entering the mission.
+- A clickable transaction-edge selector alongside a six-node synthetic graph (A→B→C→E, branching B→D→F), with hop-specific feedback and graph highlighting.
+- Confidence Lab: classify evidence support as high, medium or low; review why an unverified label cannot establish customer identity.
+- Analyst decision challenges about exchange data requests, value accounting and qualified conclusions.
+- Generates and downloads a **fictional .txt intelligence note** structured **ABSTRACT / FINDINGS / INFERENCE / RECOMMENDED NEXT STEPS / LIMITATIONS**.
+- Integrated best scores, lesson progress and one-time World Champion gift when all milestones are complete.
+- Reference: [FATF Virtual Assets](https://www.fatf-gafi.org/en/topics/virtual-assets.html).
+
+**Privacy and limitations:** All wallet IDs, amounts, hashes and timestamps are synthetic. The scenario is intentionally simplified and does not perform blockchain API calls or customer identity checks. It is not a live investigative tool or admissible forensic report. Do not submit sensitive financial intelligence or personal details to the public prototype.
