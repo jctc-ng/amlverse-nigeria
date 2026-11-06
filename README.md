@@ -174,3 +174,16 @@ A major celebration is displayed when a player has **explored all three lessons,
 - The My Progress dashboard marks claimed world gifts and includes a World Champion achievement.
 
 The celebration is a motivational learning feature, **not a formal training certificate**. As before, no real case data or sensitive information is used.
+
+## Virtual Asset Investigation Academy — v0.15
+The new **Operation Chain Trace** beginner learning world includes:
+- Three plain-language lessons on addresses and transaction hashes; tracing synthetic flows and virtual asset service provider touchpoints; red flags, uncertainty and lawful investigative follow-up.
+- A scored understanding check plus the established short interactive tutorial.
+- A visual, fictional route: WAL-A → WAL-B → WAL-C with synthetic TX-A1 and TX-B2 references (not real identifiers).
+- Six drag-or-tap evidence cards classified as **On-chain record**, **Exchange lead**, or **Interpret carefully**, each with explanatory feedback.
+- Three analyst decisions about address attribution, provider records and privacy-service labels.
+- Locally saved best result, **My Progress** milestones, and the celebratory **World Champion gift** when all five milestones are completed.
+
+Official references: [FATF — Virtual Assets](https://www.fatf-gafi.org/en/topics/virtual-assets.html) and [FATF — Virtual Asset Red Flag Indicators](https://www.fatf-gafi.org/en/publications/Methodsandtrends/Virtual-assets-red-flag-indicators.html).
+
+All route identifiers, amounts and characters are synthetic. This public lesson does **not** perform live tracing, submit information to any exchange, or determine who owns a wallet. No sensitive FIU or investigative data should be entered. Addresses, transaction identifiers, exchange labels and real-world attribution all require correct chain context and independent verification before use in an actual case.
