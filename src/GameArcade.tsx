@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import type {DragEvent} from 'react';
+import TutorialGuide from './TutorialGuide';
 
 type Mode='risk'|'team';
 type Item={id:string;title:string;detail:string;target:string;why:string};
@@ -70,6 +71,7 @@ export default function GameArcade({mode,onBack}:{mode:Mode;onBack:()=>void}){
  return <main className="narrow arcade"><button className="back" onClick={onBack}>← Back to the academy</button>
  <span className="eyebrow">AMLVERSE ARCADE • {mode==='risk'?'RISK DETECTIVE':'TEAMWORK CHALLENGE'}</span>
  <h1 className="title">{level.title}</h1><p className="lead">{level.story}</p>
+ <TutorialGuide key={mode} game={mode}/>
  <div className="arcadehud"><span>⭐ {done}/{level.items.length} clues matched</span><span>🏆 Best: {best}/100</span><button onClick={reset} type="button">↻ Restart</button></div>
  {round==='sort'?<>
  <div className="arcadeinstruction"><strong>YOUR MISSION</strong><p>{level.instruction}</p><div className="arcadeprogress"><div style={{width:(done/level.items.length*100)+'%'}}/></div></div>
