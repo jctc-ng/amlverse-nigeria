@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {modules,readCourse,readScore,readFatf,readLegacy} from './progress';
 import type {CourseKey} from './progress';
+import {hasCelebrated,worldComplete} from './WorldCompletion';
 
 type Props={onBack:()=>void;onOpen:(id:CourseKey)=>void;onFatf:()=>void};
 export default function ProgressDashboard({onBack,onOpen,onFatf}:Props){
@@ -18,13 +19,15 @@ export default function ProgressDashboard({onBack,onOpen,onFatf}:Props){
  const totalScore=courses.reduce((sum,m)=>sum+m.score,0);
  const earned=legacy.xp+fatf.earned+totalScore;
  const level=earned>=2200?'Master Explorer':earned>=1200?'Advanced Explorer':earned>=500?'Rising Investigator':'Rookie Analyst';
+ const championCount=modules.filter(m=>worldComplete(m.id)).length;
  const badges=[
  {icon:'📚',title:'Curious Learner',earned:seen>=3,hint:'Explore three different lessons'},
  {icon:'🧠',title:'Knowledge Seeker',earned:passed>=2,hint:'Pass two quick checks'},
  {icon:'🎮',title:'First Mission',earned:played>=1,hint:'Complete an arcade mission'},
  {icon:'🕵️',title:'Case Detective',earned:readScore('amlverse-typology-best')>0,hint:'Complete Typology Detective'},
  {icon:'🌍',title:'Global Collaborator',earned:readScore('amlverse-egmont-best')>0,hint:'Complete Egmont Exchange'},
- {icon:'🏆',title:'Learning Champion',earned:played===modules.length,hint:'Finish all six arcade games'}
+ {icon:'🏆',title:'Learning Champion',earned:played===modules.length,hint:'Finish all six arcade games'},
+ {icon:'🎁',title:'World Champion',earned:championCount>=1,hint:'Complete all five milestones in a learning world'}
  ];
  return <main className="narrow progressdash">
  <button className="back" onClick={onBack}>← Academy overview</button><span className="eyebrow">YOUR PERSONAL LEARNING RECORD</span>
@@ -33,7 +36,7 @@ export default function ProgressDashboard({onBack,onOpen,onFatf}:Props){
  <div className="progressstats"><div><small>LESSONS EXPLORED</small><strong>{seen}<span> / {totalLessons}</span></strong></div><div><small>QUICK CHECKS PASSED</small><strong>{passed}<span> / {modules.length}</span></strong></div><div><small>GAMES COMPLETED</small><strong>{played}<span> / {modules.length}</span></strong></div><div><small>FATF QUEST PERFECT</small><strong>{fatf.perfect}<span> / 10</span></strong></div></div>
  <section className="progresssection"><h2>Learning worlds</h2><p>Each world has three short lessons, a quick check and a game. Explore each step in any order.</p><div className="progressworlds">{courses.map(m=>{
  const total=m.learning.lessons.length+(m.learning.checkPassed?1:0)+(m.score>0?1:0);
- return <article className="progressworld" key={m.id}><div className="progressworldhead"><div className="progressworldname"><span>{m.icon}</span><div><b>{m.title}</b><small>{m.score>0?'Mission complete':'Ready to explore'}</small></div></div><strong>{total}/5</strong></div><div className="arcadeprogress"><div style={{width:(total/5*100)+'%'}}/></div><div className="progressmarks"><span>📚 {m.learning.lessons.length}/3 lessons</span><span>🧠 {m.learning.checkPassed?'Passed':'Not recorded'}</span><span>🏆 Best: {m.score||'—'}{m.score>0?'/'+m.maxScore:''}</span></div><button type="button" className="secondary" onClick={()=>onOpen(m.id)}>{total===5?'Replay / review world →':m.learning.lessons.length===3&&!m.learning.checkPassed?'Complete Quick Check →':'Continue learning →'}</button></article>
+ return <article className="progressworld" key={m.id}><div className="progressworldhead"><div className="progressworldname"><span>{m.icon}</span><div><b>{m.title}</b><small>{m.score>0?'Mission complete':'Ready to explore'}</small></div></div><strong>{total}/5</strong></div><div className="arcadeprogress"><div style={{width:(total/5*100)+'%'}}/></div><div className="progressmarks"><span>📚 {m.learning.lessons.length}/3 lessons</span><span>🧠 {m.learning.checkPassed?'Passed':'Not recorded'}</span><span>🏆 Best: {m.score||'—'}{m.score>0?'/'+m.maxScore:''}</span>{hasCelebrated(m.id)?<span>🎁 World Champion gift claimed</span>:null}</div><button type="button" className="secondary" onClick={()=>onOpen(m.id)}>{total===5?'Replay / review world →':m.learning.lessons.length===3&&!m.learning.checkPassed?'Complete Quick Check →':'Continue learning →'}</button></article>
  })}</div></section>
  <section className="progresssection"><h2>FATF Quest</h2><div className="progressworld"><div className="progressworldhead"><div><b>Recommendations 1–10</b><p>{fatf.attempted} lessons attempted · {fatf.perfect} perfect lessons</p></div><strong>{fatf.earned} XP</strong></div><div className="arcadeprogress"><div style={{width:(fatf.perfect/10*100)+'%'}}/></div><button type="button" className="secondary" onClick={onFatf}>Open FATF Quest →</button></div></section>
  <section className="progresssection"><h2>Achievements</h2><div className="badgegrid">{badges.map(b=><div key={b.title} className={'achievement'+(b.earned?' unlocked':'')}><span aria-hidden="true">{b.icon}</span><b>{b.title}</b><small>{b.earned?'✓ Unlocked':b.hint}</small></div>)}</div></section>
