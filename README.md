@@ -132,3 +132,21 @@ A new evidence-based financial intelligence mission, **Operation Red Flag**, add
 - Best-score storage on the local device; no account, backend or real data.
 
 Important: transaction alerts are indicators requiring proportionate investigation, not proof of guilt. Never enter real account numbers, STRs, customer records, FIU intelligence or restricted case data into this public educational project.
+
+## Nigeria Compliance Challenge 2.0 — v0.12
+This new **Operation Compliance Shield** training module follows the full **Learn → Quick Check → Tutorial → Play** journey.
+
+- Three beginner lessons: NFIU Act 2018, Money Laundering (Prevention and Prohibition) Act 2022, Terrorism (Prevention and Prohibition) Act 2022; reporting and analysis; sector supervision and controls.
+- Quick Check: confidential suspicious transaction reporting and why suspicion is different from proof of guilt.
+- Hands-on tutorial: place a supervisory work order on the correct desk.
+- Game Round 1: sort six synthetic work orders into **NFIU / Intelligence**, **Sector supervision**, and **Entity controls**, using tap-to-place or desktop drag-and-drop.
+- Game Round 2: three fictional decisions on reporting, DNFBP supervision, and responsible intelligence dissemination.
+- Instant explanations, scores, replay, and locally stored personal best. No backend or real data.
+
+### Primary official learning references
+- [NFIU laws and regulations](https://www.nfiu.gov.ng/LawsAndRegulations)
+- [NFIU suspicious transaction reporting FAQs](https://www.nfiu.gov.ng/Faqs)
+- [SCUML laws and regulations](https://scuml.efcc.gov.ng/laws-regulations/)
+- [Nigeria Sanctions Committee regulations](https://nigsac.gov.ng/Regulations)
+
+Educational simplified examples only. Legal duties are sector-specific and subject to change. Verify laws and regulatory guidance before institutional use.
