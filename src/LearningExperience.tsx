@@ -2,8 +2,9 @@ import {useState} from 'react';
 import GameArcade from './GameArcade';
 import EvaluationArena from './EvaluationArena';
 import EgmontExchange from './EgmontExchange';
+import TypologyDetective from './TypologyDetective';
 
-type Game='risk'|'team'|'evaluation'|'egmont';
+type Game='risk'|'team'|'evaluation'|'egmont'|'typologies';
 type Topic={title:string;explanation:string;example:string;takeaway:string};
 type Course={name:string;subtitle:string;goal:string;topics:Topic[];question:string;answers:{text:string;correct:boolean;why:string}[];sourceName:string;source:string};
 const courses:Record<Game,Course>={
@@ -37,6 +38,16 @@ const courses:Record<Game,Course>={
  answers:[{text:'Verified examples showing financial intelligence was used in investigations',correct:true,why:'Correct. Documented use and results support an effectiveness assessment.'},{text:'A new law granting an agency powers',correct:false,why:'A law mainly demonstrates legal arrangements, not whether they are effective.'},{text:'An unverified statement that the system works',correct:false,why:'Unsupported claims do not substantiate outcomes.'}],
  sourceName:'FATF Mutual Evaluations',source:'https://www.fatf-gafi.org/en/topics/mutual-evaluations.html'
  },
+ typologies:{
+ name:'Follow the Money — Typology Basics',subtitle:'Typology Detective Learning Room',goal:'Learn how to spot patterns, check context and avoid treating indicators as proof of crime.',
+ topics:[
+ {title:'What is a financial crime typology?',explanation:'A typology describes a recurring method or pattern associated with financial crime. Typologies help analysts recognise behaviours worth examining.',example:'An account receives transfers from many unrelated senders and quickly forwards the money.',takeaway:'A pattern can be a warning sign, not a final conclusion.'},
+ {title:'Look beyond the red flag',explanation:'An indicator is a reason to look closer. Analysts compare activity with customer information, legitimate explanations and corroborating evidence.',example:'A verified fundraising campaign may explain some deposits, but other unusual activity could remain unexplained.',takeaway:'Test alternative explanations and check the records.'},
+ {title:'Document findings and act lawfully',explanation:'When concerns persist, analysts document their reasoning, preserve evidence and follow applicable internal escalation or reporting procedures.',example:'An analyst records what is known, what remains uncertain and what additional information is needed.',takeaway:'Evidence, uncertainty and lawful process matter.'}],
+ question:'Several unrelated people send funds into one account, followed by rapid outward transfers. What can be concluded?',
+ answers:[{text:'The pattern warrants further contextual analysis',correct:true,why:'Correct. This may indicate mule activity, but additional evidence is needed before drawing conclusions.'},{text:'The customer is conclusively guilty of money laundering',correct:false,why:'A pattern alone does not establish guilt.'},{text:'Nothing can be reviewed unless a court has already convicted someone',correct:false,why:'Risk monitoring and financial intelligence analysis can assess unusual activity before any conviction.'}],
+ sourceName:'FATF publications and typologies guidance',source:'https://www.fatf-gafi.org/en/publications.html'
+ },
  egmont:{
  name:'Secure FIU Cooperation',subtitle:'Egmont Learning Room',goal:'Understand purpose, confidentiality, consent and secure channels before handling a fictional request.',
  topics:[
@@ -53,7 +64,8 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
  risk:{card:'Unknown company owners',destination:'🔓 Weakness',explanation:'Unverified owners create a weakness criminals could exploit.'},
  team:{card:'Analyse suspicious transfers',destination:'📊 FIU Analyst',explanation:'Financial intelligence analysis is an FIU function.'},
  evaluation:{card:'AML/CFT legislation',destination:'📜 Technical compliance',explanation:'Legislation helps establish formal compliance; results demonstrate effectiveness.'},
- egmont:{card:'Unsecured personal email',destination:'⛔ Stop & protect',explanation:'Sensitive FIU information belongs on approved secure channels.'}
+ egmont:{card:'Unsecured personal email',destination:'⛔ Stop & protect',explanation:'Sensitive FIU information belongs on approved secure channels.'},
+ typologies:{card:'Many unrelated senders',destination:'🚩 Red flag',explanation:'A suspicious pattern is worth investigating but does not prove a crime.'}
 };
 export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>void}){
  const [stage,setStage]=useState<Stage>('learn');
@@ -81,6 +93,7 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
  if(playing){
   if(game==='risk'||game==='team')return <GameArcade key={game} mode={game} onBack={()=>setPlaying(false)}/>;
   if(game==='evaluation')return <EvaluationArena onBack={()=>setPlaying(false)}/>;
+  if(game==='typologies')return <TypologyDetective onBack={()=>setPlaying(false)}/>;
   return <EgmontExchange onBack={()=>setPlaying(false)}/>;
  }
  return <main className="narrow knowledgepath">
