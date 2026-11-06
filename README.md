@@ -117,3 +117,6 @@ All four beginner arcade worlds now open an educational **Learning Room** before
 Each Learning Room has three brief illustrated-by-example topics, navigation between lessons, one multiple-choice understanding check with explanatory feedback, a source link to FATF/Egmont material, and a direct **Start the game** option. The brief practice check is non-blocking: players can practise as much as they wish or move to the game at their own pace. Games retain their optional animated how-to-play onboarding.
 
 This is explanatory, fictional educational content, **not official institutional training or professional legal advice**. Content should be peer-reviewed and versioned against current FATF/Egmont standards before formal rollout.
+
+## Interactive stage navigation and mini tutorial — v0.10
+The three visible stages **① Learn**, **② Quick check**, and **③ Play** are now clickable navigation tabs in every Knowledge Room. Learn shows the short lessons, Quick check presents the practice question and feedback, and Play provides a short **hands-on tutorial** before the actual arcade game. The learner selects a sample clue, taps the correct category, sees coaching feedback, then launches the game. A skip option is available. The earlier in-game **How to play** help button remains available for replaying instructions. No user data is sent to a backend.
