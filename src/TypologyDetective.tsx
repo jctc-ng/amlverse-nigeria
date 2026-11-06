@@ -24,7 +24,7 @@ const decisions=[
 {question:'After reasonable checks, concerns remain. What should the analyst do?',answers:['Document reasoning and follow applicable escalation or reporting procedures.','Publish the account holder’s identity online.','Freeze all connected accounts without lawful authority.'],correct:0,why:'Record the analysis and follow the authorised reporting, investigative or escalation process.'}
 ];
 type Stage='intro'|'sort'|'decision'|'end';
-export default function TypologyDetective({onBack}:{onBack:()=>void}){
+export default function TypologyDetective({onBack,onContinue}:{onBack:()=>void;onContinue:()=>void}){
  const [stage,setStage]=useState<Stage>('intro');
  const [selected,setSelected]=useState<string|null>(null);
  const [placed,setPlaced]=useState<Record<string,Bucket>>({});
@@ -56,7 +56,7 @@ export default function TypologyDetective({onBack}:{onBack:()=>void}){
  <h1 className="title">Operation Red Flag 🔎</h1>
  <p className="lead">Inspect a fictional payment account. Sort the clues, consider alternative explanations and make careful analytical decisions.</p>
  <TutorialGuide game="typologies"/>
- <WorldCompletion game={"typologies"} trigger={stage==='end'}/>
+ <WorldCompletion game={"typologies"} trigger={stage==='end'} onContinue={onContinue}/>
  <div className="arcadehud"><span>🧩 {stage==='sort'?Object.keys(placed).length+'/6 clues sorted':stage==='decision'?'Decision '+(qIndex+1)+'/3':stage==='end'?'Case completed':'Case briefing'}</span><span>🏆 Best: {best} points</span><button type="button" onClick={reset}>↻ Restart</button></div>
  {stage==='intro'?<div className="evalscene"><div className="evalmascot" aria-hidden="true">🕵️</div><div><span className="eyebrow">MISSION BRIEFING</span><h2>A suspicious pattern is not a verdict.</h2><p>Some incoming transfers and rapid outward payments have triggered fictional monitoring alerts. Your job is to distinguish warning signs from contextual evidence and safeguards.</p><p><b>How to play:</b> Tap a clue then its category—or drag and drop on desktop. Complete the evidence board to unlock the analyst decisions.</p><button className="primary" onClick={()=>setStage('sort')}>Open case file →</button></div></div>
  :stage==='sort'?<>
@@ -71,6 +71,7 @@ export default function TypologyDetective({onBack}:{onBack:()=>void}){
  {revealed?<div className="feedback" role="status"><strong>{choice===q.correct?'✓ Well reasoned!':'Review this finding'}</strong><p>{q.why}</p></div>:null}<div className="actions">{revealed?<button className="primary" onClick={next}>{qIndex===decisions.length-1?'Close the case':'Next decision'} →</button>:<button className="primary" disabled={choice===null} onClick={check}>Check decision →</button>}</div>
  </>
  :<div className="arcadewin"><span aria-hidden="true">🏆</span><h2>Case complete!</h2><p>You classified six clues and made {correct} out of three sound analytical decisions.</p><strong>{score} points</strong><p>Remember: red flags lead to questions, evidence-based analysis and lawful action—not automatic allegations of guilt.</p><div className="actions"><button className="primary" onClick={reset}>Play again ↻</button><button className="secondary" onClick={onBack}>Return to learning</button></div></div>}
+ {stage==='end'?<div className="nextstepbar" role="navigation" aria-label="Continue learning"><span>✓ Mission finished. Your next learning world is ready.</span><button type="button" className="primary" onClick={onContinue}>Continue to next world →</button></div>:null}
  <div className="notice"><b>Public educational simulation.</b> All activity, entities and transactions are fictional. Red flags are not proof of wrongdoing. <a href="https://www.fatf-gafi.org/en/publications.html" target="_blank" rel="noopener noreferrer">FATF publications ↗</a></div>
  </main>;
 }
