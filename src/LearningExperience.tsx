@@ -4,13 +4,24 @@ import EvaluationArena from './EvaluationArena';
 import EgmontExchange from './EgmontExchange';
 import TypologyDetective from './TypologyDetective';
 import NigeriaCompliance from './NigeriaCompliance';
+import VirtualAssetLab from './VirtualAssetLab';
 import {readCourse,saveCourse} from './progress';
 import WorldCompletion from './WorldCompletion';
 
-type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria';
+type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets';
 type Topic={title:string;explanation:string;example:string;takeaway:string};
 type Course={name:string;subtitle:string;goal:string;topics:Topic[];question:string;answers:{text:string;correct:boolean;why:string}[];sourceName:string;source:string};
 const courses:Record<Game,Course>={
+ virtualassets:{
+ name:'Virtual Asset Investigation Basics',subtitle:'Blockchain Intelligence Learning Room',goal:'Understand blockchain records, transaction tracing, exchange touchpoints and the limits of wallet attribution.',
+ topics:[
+ {title:'Wallets, addresses and transaction hashes',explanation:'A blockchain address is a destination or account identifier used by a network. A transaction hash identifies a recorded transaction. Neither is automatically the real-world identity of the person who controlled the funds.',example:'A synthetic transaction TX-A1 records 12 units transferred from WAL-A to WAL-B. The ledger record does not name either human owner.',takeaway:'Keep transaction records distinct from personal identity and account ownership.'},
+ {title:'Trace a route and recognise exchange leads',explanation:'Analysts can inspect transactions and record a plausible asset flow. A deposit address associated with a virtual asset service provider may create a lawful avenue to request additional customer data. Network type, timestamps, fees and different transaction models matter.',example:'WAL-B sends 9 units to WAL-C, which has a verified fictional exchange attribution. The customer associated with that deposit still needs corroboration.',takeaway:'Trace the visible flow; verify exchange labels and seek records through authorised processes.'},
+ {title:'Red flags, uncertainty and reporting',explanation:'Unusual transaction patterns, privacy services or rapid transfers can warrant more examination, but a red flag alone does not prove criminal activity. Record uncertainty and assess contextual information before escalation.',example:'A mixing-service label is an analytical lead. Further independent evidence is needed before inferring an illicit purpose or individual attribution.',takeaway:'Describe what the data shows, what it does not show, and what additional evidence is needed.'}],
+ question:'A blockchain explorer shows a transfer from wallet WAL-A to wallet WAL-B. What can the analyst reliably conclude from this record alone?',
+ answers:[{text:'The specified transaction was recorded between the addresses on that network',correct:true,why:'Correct. The ledger record establishes the observed transfer; independent evidence is needed to attribute control or identity.'},{text:'The person controlling WAL-B is conclusively guilty of laundering',correct:false,why:'Blockchain transfers do not automatically establish an offence or identify an owner.'},{text:'Both addresses necessarily belong to the same person',correct:false,why:'Address clustering requires additional evidence and methodological caution, especially across hosted services.'}],
+ sourceName:'FATF — Virtual Assets and Red Flag Indicators',source:'https://www.fatf-gafi.org/en/topics/virtual-assets.html'
+ },
  risk:{
  name:'Risk Assessment Basics',subtitle:'RiskLab Learning Room',goal:'Understand threats, vulnerabilities, and controls before sorting the clues.',
  topics:[
@@ -79,7 +90,8 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
  evaluation:{card:'AML/CFT legislation',destination:'📜 Technical compliance',explanation:'Legislation helps establish formal compliance; results demonstrate effectiveness.'},
  egmont:{card:'Unsecured personal email',destination:'⛔ Stop & protect',explanation:'Sensitive FIU information belongs on approved secure channels.'},
  typologies:{card:'Many unrelated senders',destination:'🚩 Red flag',explanation:'A suspicious pattern is worth investigating but does not prove a crime.'},
- nigeria:{card:'Inspect a bank’s AML programme',destination:'🏛️ Sector supervision',explanation:'Competent supervisors oversee compliance in the regulated sectors within their mandates.'}
+ nigeria:{card:'Inspect a bank’s AML programme',destination:'🏛️ Sector supervision',explanation:'Competent supervisors oversee compliance in the regulated sectors within their mandates.'},
+ virtualassets:{card:'Synthetic transaction TX-A1',destination:'🔗 On-chain record',explanation:'A hash identifies a transaction record, not a person or proof of criminality.'}
 };
 export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>void}){
  const [stage,setStage]=useState<Stage>('learn');
@@ -119,6 +131,7 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
   if(game==='evaluation')return <EvaluationArena onBack={()=>setPlaying(false)}/>;
   if(game==='typologies')return <TypologyDetective onBack={()=>setPlaying(false)}/>;
   if(game==='nigeria')return <NigeriaCompliance onBack={()=>setPlaying(false)}/>;
+  if(game==='virtualassets')return <VirtualAssetLab onBack={()=>setPlaying(false)}/>;
   return <EgmontExchange onBack={()=>setPlaying(false)}/>;
  }
  return <main className="narrow knowledgepath">
