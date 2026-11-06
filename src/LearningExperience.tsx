@@ -125,7 +125,7 @@ export default function LearningExperience({game,onBack}:{game:Game;onBack:()=>v
  <button className="back" onClick={onBack}>← Academy overview</button>
  <span className="eyebrow">AMLVERSE • LEARN • QUICK CHECK • PLAY</span>
  <h1 className="title">{course.name}</h1><p className="lead">{course.goal}</p>
- <WorldCompletion game={game} trigger={showFeedback&&confirmedPass}/>
+ <WorldCompletion game={game} trigger={true}/>
  <nav className="knowledgeflow" aria-label="Learning stages">
   <button type="button" className={stage==='learn'?'active':''} aria-current={stage==='learn'?'step':undefined} onClick={()=>navigate('learn')}>① Learn</button>
   <button type="button" className={stage==='check'?'active':''} aria-current={stage==='check'?'step':undefined} onClick={()=>navigate('check')}>② Quick check</button>
