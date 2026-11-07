@@ -320,3 +320,19 @@ The tier's existing 60-question bank remains, giving **120 authored practice que
 All diagram addresses, hashes, amounts and cases are fictitious. A recorded transfer does not establish criminal intent, service-customer attribution or legal identity. Historical progress, previous quiz scores, simulation passes and gifts are preserved; new graph-check results are tracked separately.
 
 Content is for educational use and should undergo domain and regulatory review before use as an official FIU investigative training resource.
+
+## Interactive Transaction Graph Investigation Lab — v0.27
+Virtual Asset Academy now includes **six playable node-and-edge graph investigations**, separate from the existing graph-reading lesson quizzes and the three earlier case simulations:
+
+1. Follow the Confirmed Path — 5 selection steps across a split flow.
+2. Identify Payment and Change — 5 steps on a simplified Bitcoin-style UTXO accounting diagram (the fee node is explicitly schematic, not a real output).
+3. Exchange Deposit versus Customer — 5 steps differentiating confirmed transactions from a provisional customer association.
+4. Reconstruct a Multi-Branch Route — 5 steps distinguishing an 8-unit arrival at a deposit lead from independent branches.
+5. Cross-Chain Bridge Correlation — 5 steps distinguishing a confirmed Chain-X deposit from an unverified Chain-Y claim.
+6. Privacy Service and Attribution Limits — 5 steps identifying confirmed entry and hypothetical subsequent links without conflating privacy with an offence.
+
+Learners select graph **nodes or transaction edges directly**, or use the corresponding larger, accessible touch-friendly evidence inspector buttons. Every action gives evidence-specific explanations, optional hints, recorded mistakes and a per-mission accuracy score. Correct selections highlight the corresponding graph elements. A sequential **Continue to next evidence / next graph** control advances without requiring a return to the overview. Keyboard Enter/Space also selects graph elements.
+
+The separate local progress key `amlverse-interactive-tracing-v1` records completed missions and personal-best scores. All six completions unlock the informal **Interactive Graph Investigator** achievement in My Progress and an achievement gift in the simulator. No existing graph-lesson checks, quizzes, gifts or course milestones are reset.
+
+All assets, wallet identifiers, transfers, service attributions, chain bridges and user labels are fictional. Provisional dashed edges are hypotheses and should never be reported as on-chain transfers or confirmed customer attribution. The lab uses no blockchain API or real case data.
