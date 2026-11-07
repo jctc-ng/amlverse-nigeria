@@ -10,6 +10,7 @@ import ReportWritingLab from './ReportWritingLab';
 import RiskLabAdvanced from './RiskLabAdvanced';
 import NigeriaComplianceAdvanced from './NigeriaComplianceAdvanced';
 import VirtualAssetAdvanced from './VirtualAssetAdvanced';
+import InteractiveWorldChallenge from './InteractiveWorldChallenge';
 import {readCourse,saveCourse} from './progress';
 import WorldCompletion from './WorldCompletion';
 
@@ -122,6 +123,7 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
 };
 export default function LearningExperience({game,onBack,onNextCourse}:{game:Game;onBack:()=>void;onNextCourse:()=>void}){
  const [stage,setStage]=useState<Stage>('learn');
+ const [worldInteractive,setWorldInteractive]=useState(false);
  const [playing,setPlaying]=useState(false);
  const [advancedOpen,setAdvancedOpen]=useState(false);
  const [nigeriaAdvancedOpen,setNigeriaAdvancedOpen]=useState(false);
@@ -156,6 +158,7 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
   setPlaying(true);
   window.scrollTo(0,0);
  }
+ if(worldInteractive)return <InteractiveWorldChallenge game={game} onBack={()=>setWorldInteractive(false)} onPass={()=>{saveCourse(game,p=>({...p,checkPassed:true,checkAttempts:p.checkAttempts+1}));setConfirmedPass(true)}} onNext={()=>{setWorldInteractive(false);navigate('play')}}/>;
  if(game==='virtualassets'&&virtualAdvancedOpen)return <VirtualAssetAdvanced onBack={()=>setVirtualAdvancedOpen(false)} onClassic={()=>{setVirtualAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(game==='nigeria'&&nigeriaAdvancedOpen)return <NigeriaComplianceAdvanced onBack={()=>setNigeriaAdvancedOpen(false)} onClassic={()=>{setNigeriaAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>setAdvancedOpen(false)} onClassic={()=>{setAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
@@ -177,6 +180,7 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
  {game==='virtualassets'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • VIRTUAL ASSET INVESTIGATION ACADEMY 2.0</span><h2>Virtual Asset Academy 2.0 🔗</h2><p>12 lessons · 60 randomized questions · 3 transaction-flow simulations. Continue from level to level with mobile-friendly achievement gifts.</p></div><button className="primary" type="button" onClick={()=>setVirtualAdvancedOpen(true)}>Enter expanded Virtual Asset Academy →</button></section>:null}
  {game==='nigeria'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • EXPANDED NIGERIAN AML/CFT/CPF CURRICULUM</span><h2>Nigeria Compliance Academy 2.0 🇳🇬</h2><p>12 Nigeria-focused lessons · 60 questions · 3 simulations · sequential levels with completion gifts. Original progress is preserved.</p></div><button type="button" className="primary" onClick={()=>setNigeriaAdvancedOpen(true)}>Enter expanded Nigeria Compliance →</button></section>:null}
  {game==='risk'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • RISKLAB EXPANDED CURRICULUM</span><h2>RiskLab Academy 2.0</h2><p>12 lessons · 60 varied questions · 3 case simulations · Foundation to Advanced. Classic RiskLab progress remains unchanged.</p></div><button type="button" className="primary" onClick={()=>setAdvancedOpen(true)}>Enter expanded RiskLab →</button></section>:null}
+ <section className="worldinteractivepromo"><div><span className="eyebrow">NEW • INTERACTIVE EVIDENCE INVESTIGATION</span><h2>Practise with real decisions, not just multiple-choice answers</h2><p>Three hands-on cases in this learning world. Select evidence cards, assign classifications, review feedback and continue directly to your game. Completing all three records the Quick Check as passed without removing earlier results.</p></div><button type="button" className="primary" onClick={()=>{setWorldInteractive(true);window.scrollTo(0,0)}}>Open interactive challenges →</button></section>
  <nav className="knowledgeflow" aria-label="Learning stages">
   <button type="button" className={stage==='learn'?'active':''} aria-current={stage==='learn'?'step':undefined} onClick={()=>navigate('learn')}>① Learn</button>
   <button type="button" className={stage==='check'?'active':''} aria-current={stage==='check'?'step':undefined} onClick={()=>navigate('check')}>② Quick check</button>
@@ -185,12 +189,12 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
  {stage==='learn'?<>
   <div className="knowledgeintro"><span className="knowledgeemoji" aria-hidden="true">📚</span><div><small>LEARNING ROOM</small><h2>{course.subtitle}</h2><p>Read three short lessons and see examples before trying a game.</p></div></div>
   <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>{setTopic(i);window.scrollTo(0,0)}} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
-  <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>{setTopic(i=>i-1);window.scrollTo(0,0)}}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>{setTopic(i=>i+1);window.scrollTo(0,0)}}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>navigate('check')}>Go to quick check →</button>}</div></section>
+  <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>{setTopic(i=>i-1);window.scrollTo(0,0)}}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>{setTopic(i=>i+1);window.scrollTo(0,0)}}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>{setWorldInteractive(true);window.scrollTo(0,0)}}>Continue to interactive cases →</button>}</div></section>
  </>:stage==='check'?<>
   <section className="knowledgecheck"><span className="eyebrow">STEP 2 • QUICK UNDERSTANDING CHECK</span><h2>{course.question}</h2>
   <p className="checkstatus" role="status">{confirmedPass?'✓ Quick Check passed and saved in this browser':'Quick Check not yet recorded as passed. Choose an answer and press Check understanding to save a correct result.'}</p><div className="knowledgeanswers">{course.answers.map((a,i)=><button key={i} type="button" className={answer===i?'selected':''} onClick={()=>{setAnswer(i);setShowFeedback(false)}}><span>{String.fromCharCode(65+i)}</span>{a.text}</button>)}</div>
   {showFeedback&&answer!==null?<div className="arcadefeedback" role="status">{course.answers[answer].why} {course.answers[answer].correct?'✓ Pass recorded — your dashboard will show Quick Check: Passed.':'Try again whenever you are ready. Your previous passes are preserved.'}</div>:null}
-  <div className="actions"><button type="button" className="primary" disabled={answer===null} onClick={submitCheck}>Check understanding →</button><button className="secondary" type="button" onClick={()=>navigate('learn')}>← Review lessons</button></div></section>
+  <div className="actions"><button type="button" className="primary" disabled={answer===null} onClick={submitCheck}>Check understanding →</button><button type="button" className="primary" onClick={()=>setWorldInteractive(true)}>Investigate three interactive cases →</button><button className="secondary" type="button" onClick={()=>navigate('learn')}>← Review lessons</button></div></section>
   <section className="knowledgeplay"><div><span className="eyebrow">NEXT UP</span><h2>{mastered?'Excellent — ready to play!':'Try the mini tutorial'}</h2><p>{mastered?'You got the practice answer right.':'The check is for practice, not a compulsory exam.'} Learn the card controls in a short hands-on demonstration before your mission.</p></div><button className="primary" type="button" onClick={()=>navigate('play')}>Continue to tutorial →</button></section>
  </>:<>
   <section className="knowledgecard minitutorial"><span className="eyebrow">STEP 3 • HOW TO PLAY</span><h2>Practice a move before your mission</h2><p>Try a sample card. This tutorial does not affect your score.</p>
