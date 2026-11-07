@@ -343,3 +343,34 @@
 .wcinteractiveprogress{flex-wrap:wrap}.wcinteractiveprogress>.riskadvancedprogress{flex-basis:100%}
 .wcinteractivebrief{padding:15px}.wcinteractivelog>div{grid-template-columns:1fr}
 .wcinteractiveclue,.wcinteractivetargets button{min-height:60px}.wcinteractivecomplete{padding:15px}}
+
+/* v0.29: Subject-specific evidence dossiers and decision pathways */
+.worlddecisionentry{margin:18px 0;display:flex;align-items:center;justify-content:space-between;gap:15px;border:1px solid #6cbdad;background:linear-gradient(105deg,#194a47,#1b374b);border-radius:15px;padding:18px}
+.worlddecisionentry h2{font-size:19px;margin:8px 0}.worlddecisionentry p{font-size:12px;line-height:1.65;color:#c8e4df}.worlddecisionentry button{min-width:190px;flex-shrink:0}
+.worlddecisionbrief,.worlddecisionfile,.worlddecisionquestion,.worlddecisionresult{border:1px solid #4c767e;background:linear-gradient(125deg,#153348,#1b4545);border-radius:16px;padding:21px;margin:18px 0}
+.worlddecisionbrief h2,.worlddecisionfile h2{font-size:20px;margin:4px 0 12px}
+.worlddecisionbrief p,.worlddecisionfile p,.worlddecisionquestion p,.worlddecisionresult p{font-size:13px;color:#c4dcdf;line-height:1.75}
+.worlddecisionanalogy{border:1px solid #4d9683;background:#22514d;border-radius:12px;margin:16px 0 0;padding:14px}.worlddecisionanalogy strong{color:#b7fae1;font-size:13px}.worlddecisionanalogy p{margin:7px 0 0}
+.worlddecisionrecords{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.worlddecisionrecords article{border:1px solid #456e7a;background:#153147;border-radius:11px;padding:15px;min-width:0}
+.worlddecisionrecords article span{font-size:10px;letter-spacing:1px;font-weight:800;color:#83e0c3}.worlddecisionrecords article p{font-size:12px;margin:10px 0 0;overflow-wrap:anywhere}
+.worlddecisiondisclaimer{font-size:11px!important;color:#9ac5cc!important}
+.worlddecisionstages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:20px 0}
+.worlddecisionstages>div{border:1px solid #476e7a;background:#1a3448;border-radius:11px;min-height:59px;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px}
+.worlddecisionstages>div.active{border-color:#e8c07d;background:#4c4939}.worlddecisionstages>div.done{border-color:#71d2ad;background:#245445}
+.worlddecisionstages span{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:#38596a;color:#fff;font-weight:900}
+.worlddecisionstages small{color:#cbe4df;font-weight:750;font-size:11px}
+.worlddecisionquestion{border-color:#79d4b3}.worlddecisionquestion h2{font-size:21px;line-height:1.5;margin:14px 0}
+.worlddecisionoptions{display:grid;gap:10px;margin:18px 0}.worlddecisionoptions button{display:flex;align-items:center;gap:14px;text-align:left;border:1px solid #537988;border-radius:12px;padding:14px;background:#133247;color:#e4fbf7;cursor:pointer;min-height:61px;line-height:1.6}
+.worlddecisionoptions button:hover,.worlddecisionoptions button:focus-visible{border-color:#ffdf9b;outline-offset:2px}.worlddecisionoptions button.picked{border-color:#f0d18a;background:#425040}.worlddecisionoptions button.right{border-color:#8ce9b9;background:#265642}
+.worlddecisionoptions button b{display:grid;place-items:center;border-radius:9px;width:34px;min-width:34px;height:34px;background:#2a5360;color:#b5f4dc}
+.worlddecisionreview{display:grid;gap:10px;margin:20px 0;text-align:left}.worlddecisionreview article{border:1px solid #446c72;border-radius:10px;padding:15px;background:#153447}
+.worlddecisionreview b{font-size:12px;color:#e3faf2}.worlddecisionreview p{font-size:12px;margin:8px 0 0}
+.worlddecisionresult{text-align:center;border-color:#87d0af}.worlddecisionresult>span{font-size:49px}.worlddecisionresult>h2{font-size:24px}.worlddecisionresult>strong{color:#ffe6b6}
+.worlddecisionaward{padding:17px;background:#294f43;border:1px solid #92d4a8;border-radius:12px;display:grid;justify-items:center;gap:12px}
+.worlddecisionaward strong{color:#e6f9e8;font-size:14px}
+.worlddecisionresult>.secondary{margin-top:16px}
+@media(max-width:760px){.worlddecisionentry{flex-direction:column;align-items:stretch;padding:15px}.worlddecisionentry button{width:100%;min-width:0;min-height:48px}
+.worlddecisionrecords{grid-template-columns:1fr}.worlddecisionbrief,.worlddecisionfile,.worlddecisionquestion,.worlddecisionresult{padding:15px}
+.worlddecisionstages>div{flex-direction:column;gap:5px}.worlddecisionquestion h2{font-size:19px}
+.worlddecisionquestion .nextstepbar,.worlddecisionresult .nextstepbar{margin:16px 0 10px}
+.worlddecisionoptions button{min-height:56px}}
