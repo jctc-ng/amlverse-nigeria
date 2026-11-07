@@ -374,3 +374,20 @@
 .worlddecisionstages>div{flex-direction:column;gap:5px}.worlddecisionquestion h2{font-size:19px}
 .worlddecisionquestion .nextstepbar,.worlddecisionresult .nextstepbar{margin:16px 0 10px}
 .worlddecisionoptions button{min-height:56px}}
+
+/* v0.29: Mobile-friendly shuffled evidence timeline for the third case in each world */
+.wcinteractivetimeline{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0}
+.wcinteractivetimeline>section{padding:19px;background:#183a4c;border:1px solid #497786;border-radius:15px}
+.wcinteractivetimeline h3{font-size:16px;color:#e8fff5;margin:5px 0 8px}
+.wcinteractivetimeline>section>p{font-size:12px;line-height:1.7;color:#bedad9}
+.wcinteractivetimelinecards{display:grid;gap:10px;margin-top:14px}
+.wcinteractivetimelinecards button{display:flex;gap:12px;align-items:center;min-height:70px;text-align:left;border:1px solid #568494;background:#123148;border-radius:12px;padding:12px;color:#e6f9f1;line-height:1.6;cursor:pointer}
+.wcinteractivetimelinecards button span{display:grid;place-items:center;flex-shrink:0;width:29px;height:29px;background:#295766;border-radius:9px;color:#90efc4}
+.wcinteractivetimelinecards button:hover:not(:disabled),.wcinteractivetimelinecards button:focus-visible{border-color:#fce4a1;outline-offset:2px}
+.wcinteractivetimelinecards button.assigned{background:#265746;border-color:#7dd8b5;opacity:.85}
+.wcinteractivetimelinesteps{display:grid;gap:13px;margin-top:16px}
+.wcinteractivetimelinesteps>div{border-left:4px solid #607c88;padding:12px 14px;background:#133349;border-radius:0 10px 10px 0;min-height:67px}
+.wcinteractivetimelinesteps>div.complete{border-left-color:#82e2b9;background:#235046}
+.wcinteractivetimelinesteps strong{font-size:12px;color:#a9f4d8}
+.wcinteractivetimelinesteps p{font-size:12px;line-height:1.6;color:#d3eaeb;margin:6px 0 0}
+@media(max-width:760px){.wcinteractivetimeline{grid-template-columns:1fr}.wcinteractivetimeline>section{padding:14px}.wcinteractivetimelinecards button{min-height:58px}}
