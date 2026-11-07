@@ -141,7 +141,8 @@ export const interactiveWorldCases:Record<CourseKey,InteractionCase[]>={
    ],
    "correct": [
     "Technical compliance",
-    "Demonstrated effectiveness"
+    "Demonstrated effectiveness",
+    "Technical compliance"
    ],
    "instruction": "Select an evidence card, then assign it to the most defensible category."
   },
