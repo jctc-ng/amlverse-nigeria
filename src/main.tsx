@@ -48,7 +48,7 @@ function App(){
  return <div className="shell">
  <AcademyNavigation screen={screen} onNavigate={navigateScreen}/>
  <div className="page"><header><div className="mobilebrand">✦ AMLVERSE <span>NIGERIA</span></div><div className="headeritems"><span className="demo">● PUBLIC DEMO</span><div className="avatar">LE</div></div></header>
- {screen==='home'?<AcademyOverview openCourse={openCourse} openFatf={()=>setScreen('chapter')} openProgress={()=>setScreen('progress')} openResources={()=>setScreen('resources')} openCapstone={()=>navigateScreen('capstone')}/>
+ {screen==='home'?<AcademyOverview openCourse={openCourse} openFatf={()=>setScreen('chapter')} openProgress={()=>setScreen('progress')} openResources={()=>setScreen('resources')} openCapstone={()=>navigateScreen('capstone')} openResearch={()=>navigateScreen('about')}/>
  :screen==='about'?<ProjectResearch onBack={()=>{setScreen('home');window.scrollTo(0,0)}} onStart={()=>{setScreen('home');window.scrollTo(0,0)}}/>
  :screen==='progress'?<ProgressDashboard onBack={()=>setScreen('home')} onOpen={openCourse} onFatf={()=>setScreen('chapter')} onCapstone={()=>navigateScreen('capstone')}/>
  :screen==='chapter'?<FatfChapter onBack={()=>setScreen('home')}/>
