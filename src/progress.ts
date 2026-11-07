@@ -28,8 +28,22 @@ export function saveCourse(id:CourseKey,patch:(old:CourseProgress)=>CourseProgre
 }
 export function readScore(key:string):number{try{const n=Number(localStorage.getItem(key)||0);return Number.isFinite(n)?Math.max(0,n):0}catch{return 0}}
 export function readFatf(){
- try{const obj=JSON.parse(localStorage.getItem('amlverse-fatf-ch1')||'{}') as Record<string,{score:number;total:number}>;const outcomes=Object.values(obj).filter(x=>x&&Number.isFinite(x.score)&&Number.isFinite(x.total)&&x.total>0);return {attempted:outcomes.length,perfect:outcomes.filter(x=>x.score===x.total).length,earned:outcomes.reduce((total,x)=>total+Math.max(0,x.score)*100,0)}}
- catch{return {attempted:0,perfect:0,earned:0}}
+ try{
+  type Outcome={score:number;total:number};
+  const old=JSON.parse(localStorage.getItem('amlverse-fatf-ch1')||'{}') as Record<string,Outcome>;
+  const extended=JSON.parse(localStorage.getItem('amlverse-fatf-40-v2')||'{}') as {studied?:number[];outcomes?:Record<string,Outcome>};
+  const merged:Record<string,Outcome>={};
+  for(let n=1;n<=40;n++){
+   const k=String(n),a=old?.[k],b=extended.outcomes?.[k];
+   const valid=(x:Outcome|undefined)=>!!x&&Number.isFinite(x.score)&&Number.isFinite(x.total)&&x.total>0&&x.score>=0&&x.score<=x.total;
+   if(valid(a)&&valid(b))merged[k]=a.score/a.total>=b.score/b.total?a:b;
+   else if(valid(a))merged[k]=a;
+   else if(valid(b))merged[k]=b;
+  }
+  const outcomes=Object.values(merged);
+  const studied=Array.isArray(extended.studied)?new Set(extended.studied.filter(x=>Number.isInteger(x)&&x>=1&&x<=40)).size:0;
+  return {attempted:outcomes.length,perfect:outcomes.filter(x=>x.score===x.total).length,earned:outcomes.reduce((total,x)=>total+x.score*100,0),studied,total:40};
+ }catch{return {attempted:0,perfect:0,earned:0,studied:0,total:40}}
 }
 export function readLegacy(){
  try{const saved=JSON.parse(localStorage.getItem('amlverse-v1')||'{}') as Record<string,{xp:number;complete:boolean}>;const data=Object.values(saved).filter(x=>x&&typeof x==='object');return {complete:data.filter(x=>x.complete).length,xp:data.reduce((sum,x)=>sum+(Number.isFinite(x.xp)?Math.max(0,x.xp):0),0)}}
