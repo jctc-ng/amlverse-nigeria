@@ -304,3 +304,42 @@
 @media(max-width:760px){.itracemissiontabs{grid-template-columns:repeat(3,minmax(0,1fr))}.itraceevidencegrid{grid-template-columns:1fr}.itracebrief,.itraceinspector,.itracequestion,.itracecompleted{padding:15px}.itracegraphpanel{padding:5px}.itraceevidenceitem{min-height:46px}.itraceactions{flex-direction:column}.itraceactions button{width:100%;min-height:48px}.itracequestion .nextstepbar{margin:16px 0 0}}
 @media(max-width:420px){.itracemissiontabs{grid-template-columns:repeat(3,minmax(0,1fr))}.itracelegend{font-size:10px;justify-content:flex-start}.itracebrief h2,.itracequestion h2{font-size:19px}}
 @media(prefers-reduced-motion:reduce){.itraceprogress>div{transition:none}}
+
+/* v0.28 — Interactive evidence decisions across the nine learning worlds */
+.worldinteractivepromo{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:19px 0;padding:20px 22px;border-radius:16px;border:1px solid #77d3b1;background:linear-gradient(110deg,#17463f,#193b53)}
+.worldinteractivepromo h2{font-size:20px;margin:10px 0}.worldinteractivepromo p{font-size:12px;line-height:1.7;color:#c5e5e0}.worldinteractivepromo button{min-width:210px;flex-shrink:0}
+.wcinteractive{max-width:1020px}.wcinteractiveprogress{background:#183b4c;border:1px solid #497577;border-radius:13px;padding:13px 17px;display:flex;align-items:center;gap:18px;margin:20px 0}
+.wcinteractiveprogress>div:first-child{min-width:155px}.wcinteractiveprogress strong{display:block;color:#e6fff6;font-size:13px}.wcinteractiveprogress span{font-size:11px;color:#a7d1d3}
+.wcinteractivetabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:16px 0 23px}
+.wcinteractivetabs button{border-radius:12px;background:#1b3a4d;border:1px solid #47777c;padding:13px;min-height:55px;color:#c8e9e9;cursor:pointer;text-align:left;font-weight:750;font-size:12px;line-height:1.45}
+.wcinteractivetabs button.active{background:#205447;border-color:#83e4c5;color:#f2fff9}.wcinteractivetabs button:hover,.wcinteractivetabs button:focus-visible{border-color:#ffe0a0;outline-offset:2px}
+.wcinteractivebrief{border:1px solid #4f827b;background:linear-gradient(125deg,#193d4a,#1c4544);padding:23px;border-radius:17px;margin:16px 0}
+.wcinteractivebrief h2{font-size:22px;margin:12px 0}.wcinteractivebrief>p{font-size:13px;line-height:1.75;color:#cbe3e2}
+.wcinteractiveanalogy{border:1px solid #51887e;background:#224c47;border-radius:11px;padding:14px 17px}.wcinteractiveanalogy strong{font-size:12px;color:#d6ffef}
+.wcinteractiveanalogy p{margin:9px 0 0;font-size:13px;color:#c9e7df;line-height:1.7}
+.wcinteractiveworkshop{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;gap:15px;margin:20px 0}
+.wcinteractiveworkshop>section{background:#19384a;border:1px solid #456e79;border-radius:15px;padding:17px}
+.wcinteractiveworkshop h3{font-size:16px;color:#e5faf4;margin:4px 0}.wcinteractiveworkshop p{color:#bed6da;font-size:11px;line-height:1.7}
+.wcinteractiveclues,.wcinteractivetargets{display:grid;gap:10px;margin-top:15px}
+.wcinteractiveclue,.wcinteractivetargets button{min-height:72px;background:#123149;border:1px solid #4a7681;border-radius:12px;padding:12px;color:#ebfaf6;cursor:pointer;text-align:left;display:flex;align-items:center;gap:11px;font-size:13px;line-height:1.5}
+.wcinteractiveclue:hover,.wcinteractivetargets button:hover:not(:disabled){border-color:#ffe0a0}
+.wcinteractiveclue:focus-visible,.wcinteractivetargets button:focus-visible{outline:2px solid #fce5ae;outline-offset:1px}
+.wcinteractiveclue.selected{border:2px solid #ffdb8e;background:#39513f}.wcinteractiveclue.assigned{background:#245848;border-color:#73d6a9;opacity:.83}
+.wcinteractivecluenum{border-radius:9px;display:grid;place-items:center;flex-shrink:0;width:35px;height:35px;background:#23465e;color:#9cefd6;font-size:12px;font-weight:850}
+.wcinteractivetargets button{justify-content:space-between;background:#234454}.wcinteractivetargets button:disabled{opacity:.55;cursor:not-allowed}
+.wcinteractivetargets button>span{color:#76e1c4;font-size:20px}.wcinteractivetargets button>strong{flex:1;font-size:12px}
+.wcinteractivetargets button>small{font-size:10px;color:#b2d6d8}
+.wcinteractivelog{border:1px solid #3d6b76;background:#102c40;border-radius:13px;padding:14px 16px;margin:15px 0}
+.wcinteractivelog>strong{display:block;font-size:12px;color:#b0eadc;margin-bottom:10px}
+.wcinteractivelog>div{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:9px 4px;border-top:1px solid #335b66;font-size:12px;line-height:1.5}
+.wcinteractivelog>div span{color:#c4dbdc}.wcinteractivelog>div b{color:#a5f5d8}.wcinteractivelog>p,.wcinteractivehint{font-size:12px;color:#a6cbd4;line-height:1.7}
+.wcinteractivecomplete{text-align:center;border:1px solid #8adaae;background:linear-gradient(120deg,#1c5849,#18354c);padding:26px;border-radius:15px;margin:20px 0}
+.wcinteractivecomplete>span{font-size:48px}.wcinteractivecomplete h2{font-size:25px;margin:12px 0}.wcinteractivecomplete p{color:#d3e8e5;font-size:13px;line-height:1.7}
+.wcinteractivecomplete>h3{color:#ffe2a6}.wcinteractivegift{background:#365747;border-radius:10px;padding:15px;margin:15px 0}
+.wcinteractivecomplete .nextstepbar{text-align:left}
+@media(max-width:750px){.worldinteractivepromo{flex-direction:column;align-items:stretch;padding:16px}.worldinteractivepromo button{width:100%;min-width:0;min-height:48px}
+.wcinteractiveworkshop{grid-template-columns:1fr}.wcinteractiveworkshop>section{padding:14px}
+.wcinteractivetabs{grid-template-columns:1fr}.wcinteractivetabs button{min-height:48px}
+.wcinteractiveprogress{flex-wrap:wrap}.wcinteractiveprogress>.riskadvancedprogress{flex-basis:100%}
+.wcinteractivebrief{padding:15px}.wcinteractivelog>div{grid-template-columns:1fr}
+.wcinteractiveclue,.wcinteractivetargets button{min-height:60px}.wcinteractivecomplete{padding:15px}}
