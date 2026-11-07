@@ -212,3 +212,11 @@
  .riskadvanced .riskadvancedassessment .actions button,.riskadvanced .riskadvancedlesson .actions button{width:100%;min-height:49px}
 }
 @media(prefers-reduced-motion:reduce){.championmodal{animation:none}}
+
+/* v0.25: Mobile-responsive fictional blockchain transaction flows */
+.virtualflow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:19px 0 25px}
+.virtualflowedge{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;border:1px solid #4d7c81;border-radius:12px;background:#112f42;padding:13px 10px;min-width:0}
+.virtualflowwallet{font-weight:800;font-size:13px;color:#a3f4df;min-width:0;overflow-wrap:anywhere}
+.virtualflowarrow{font-size:21px;color:#ffdb8b}
+.virtualflowedge small{flex-basis:100%;text-align:center;color:#bfdae4;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+@media(max-width:710px){.virtualflow{grid-template-columns:1fr}.virtualflowedge{padding:16px 12px}}
