@@ -4,14 +4,14 @@ import {readFile} from 'node:fs/promises';
 test('Academy Overview and My Progress share a full milestone summary',async({page})=>{
  await page.goto('./');
  await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
- await expect(page.getByText(/Version 0\.33/)).toBeVisible();
+ await expect(page.getByText(/Version 0\\.35/)).toBeVisible();
  await page.getByRole('button',{name:/My Progress/}).first().click();
  await expect(page.getByRole('heading',{name:/My Progress/})).toBeVisible();
  await expect(page.getByText(/learning activities completed/)).toBeVisible();
  await expect(page.getByRole('heading',{name:/Learning worlds — complete activity tracking/})).toBeVisible();
 });
 
-test('Resume opens unfinished expanded course without awarding an unrelated lesson',async({page})=>{
+test('Resume opens first incomplete guided activity without awarding an unrelated lesson',async({page})=>{
  await page.addInitScript(()=>{
    localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
    localStorage.setItem('amlverse-arcade-risk','75');
@@ -19,13 +19,14 @@ test('Resume opens unfinished expanded course without awarding an unrelated less
  await page.goto('./');
  await expect(page.getByText('Your next recommended mission')).toBeVisible();
  await page.getByRole('button',{name:/Resume next unfinished activity/}).click();
- await expect(page.getByRole('heading',{name:/RiskLab Academy 2\.0/}).first()).toBeVisible();
+ await expect(page.getByRole('heading',{name:/RiskLab.*Interactive Cases/}).first()).toBeVisible();
  const progress=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-course-v1-risk')||'{}'));
  expect(progress.lessons).toEqual([0,1,2]);
 });
 
 test('Deep resume to decision lab does not add an introductory lesson visit',async({page})=>{
  await page.addInitScript(()=>{
+   localStorage.setItem('amlverse-town-unlocked-v1-team','yes');
    localStorage.setItem('amlverse-world-interactions-v1-team',JSON.stringify({completed:[0,1,2],best:100}));
  });
  await page.goto('./');
@@ -130,6 +131,7 @@ test('FATF Quest preserves previous R1–R10 achievements and progress is shown 
 
 test('Mobile expanded academy keeps Continue below the course information and opens the relevant lesson',async({page,isMobile})=>{
  test.skip(!isMobile,'Reading-first layout applies to mobile viewport');
+ await page.addInitScript(()=>localStorage.setItem('amlverse-town-unlocked-v1-risk','yes'));
  await page.goto('./');
  await page.getByRole('button',{name:/RiskLab Arcade/}).last().click();
  await page.getByRole('button',{name:/Enter expanded RiskLab/}).click();
@@ -147,6 +149,7 @@ test('Mobile expanded academy keeps Continue below the course information and op
 });
 test('Mobile lesson Continue reaches knowledge checker and checker advances question by question',async({page,isMobile})=>{
  test.skip(!isMobile,'Exercise scroll and checker transition on mobile');
+ await page.addInitScript(()=>localStorage.setItem('amlverse-town-unlocked-v1-risk','yes'));
  await page.goto('./');
  await page.getByRole('button',{name:/RiskLab Arcade/}).last().click();
  await page.getByRole('button',{name:/Enter expanded RiskLab/}).click();
@@ -163,4 +166,73 @@ test('Mobile lesson Continue reaches knowledge checker and checker advances ques
  await page.locator('.riskadvancedassessment').getByRole('button',{name:/Next question/}).click();
  await expect(page.getByText('Question 2 / 10')).toBeVisible();
  await expect.poll(()=>page.locator('.riskadvancedassessment').evaluate(el=>Math.round(el.getBoundingClientRect().top))).toBeLessThan(140);
+});
+
+
+test('Learning Town is locked by default after the first district',async({page})=>{
+ await page.goto('./');
+ await expect(page.getByRole('heading',{name:/Follow the pathway, unlock each district/})).toBeVisible();
+ await expect(page.locator('.townstop')).toHaveCount(9);
+ await expect(page.locator('.townstop').nth(0)).toContainText('Available');
+ await expect(page.locator('.townstop').nth(1)).toContainText('Locked');
+ await expect(page.locator('.academyworldcard').nth(1)).toBeDisabled();
+ await expect(page.locator('.townstop').nth(1).getByRole('button',{name:/Unlock this course/})).toBeVisible();
+});
+test('Individual manual unlock grants access to a locked world without manufacturing completion',async({page})=>{
+ await page.goto('./');
+ await page.locator('.townstop').nth(1).getByRole('button',{name:/Unlock this course/}).click();
+ await expect(page.locator('.townstop').nth(1)).toContainText('Unlocked by learner');
+ await page.locator('.townstop').nth(1).getByRole('button',{name:/Enter district/}).click();
+ await expect(page.getByRole('heading',{name:'Who Does What?'})).toBeVisible();
+ const unlock=await page.evaluate(()=>localStorage.getItem('amlverse-town-unlocked-v1-team'));
+ expect(unlock).toBe('yes');
+ const progress=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-course-v1-team')||'{}'));
+ expect(progress.lessons||[]).toEqual([]);
+});
+test('Guided RiskLab locks future lessons and checker until preceding lessons completed',async({page})=>{
+ await page.goto('./');
+ await page.locator('.townstop').first().getByRole('button',{name:/Enter district/}).click();
+ await expect(page.getByRole('button',{name:/Quick check/})).toBeDisabled();
+ await expect(page.locator('.knowledgetabs button').nth(1)).toBeDisabled();
+ await page.getByRole('button',{name:/Next lesson/}).click();
+ await expect(page.locator('.knowledgetabs button').nth(1)).toBeEnabled();
+ await page.getByRole('button',{name:/Next lesson/}).click();
+ await page.getByRole('button',{name:/Continue to Quick Check/}).click();
+ await expect(page.getByRole('button',{name:/Quick check/})).toBeEnabled();
+ await expect(page.getByRole('button',{name:/③ Play/})).toBeDisabled();
+});
+test('Reset Course requires RESET and deletes only that course progress',async({page})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:4,lastVisited:''}));
+  localStorage.setItem('amlverse-arcade-risk','80');
+  localStorage.setItem('amlverse-risklab-advanced-v1',JSON.stringify({visited:[0,1]}));
+  localStorage.setItem('amlverse-course-v1-team',JSON.stringify({lessons:[0],checkPassed:false,checkAttempts:0,lastVisited:''}));
+  localStorage.setItem('amlverse-fatf-ch1',JSON.stringify({'1':{score:2,total:2}}));
+ });
+ await page.goto('./');
+ await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
+ await page.getByRole('button',{name:/Reset course progress/}).click();
+ await expect(page.getByRole('button',{name:'Delete this course progress'})).toBeDisabled();
+ await page.getByLabel(/Type RESET/).fill('RESET');
+ await page.getByRole('button',{name:'Delete this course progress'}).click();
+ await page.waitForLoadState('domcontentloaded');
+ const values=await page.evaluate(()=>({
+  risk:localStorage.getItem('amlverse-course-v1-risk'),
+  score:localStorage.getItem('amlverse-arcade-risk'),
+  advanced:localStorage.getItem('amlverse-risklab-advanced-v1'),
+  team:localStorage.getItem('amlverse-course-v1-team'),
+  fatf:localStorage.getItem('amlverse-fatf-ch1')
+ }));
+ expect(values.risk).toBeNull();
+ expect(values.score).toBeNull();
+ expect(values.advanced).toBeNull();
+ expect(values.team).not.toBeNull();
+ expect(values.fatf).not.toBeNull();
+});
+test('Unlock all courses exposes all districts and restores guided mode',async({page})=>{
+ await page.goto('./');
+ await page.getByRole('button',{name:/Unlock all courses/}).click();
+ await expect(page.locator('.townstop.locked')).toHaveCount(0);
+ await page.getByRole('button',{name:/Restore guided course locks/}).click();
+ await expect(page.locator('.townstop.locked')).toHaveCount(8);
 });
