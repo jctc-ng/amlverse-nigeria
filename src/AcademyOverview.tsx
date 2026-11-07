@@ -1,4 +1,4 @@
-import {readCourse,readFatf} from './progress';
+import {modules,readCourse,readFatf} from './progress';
 import {readAcademyMetrics} from './AcademyMetrics';
 import type {CourseKey} from './progress';
 import {hasCelebrated} from './WorldCompletion';
