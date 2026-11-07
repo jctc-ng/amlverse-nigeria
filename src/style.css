@@ -605,3 +605,23 @@
 .fatf40tile:disabled{opacity:.56;filter:saturate(.4);cursor:not-allowed;background:#152b3c}
 .fatf40tile:disabled:hover{border-color:#37677a}
 @media(max-width:700px){.fatftowncontrols{padding:14px 13px}.fatftowncontrols button{min-height:48px}}
+
+/* v0.36 guided progression: informative, accessible locked-district dialog */
+.districtdialogbackdrop{position:fixed;inset:0;z-index:250;display:grid;place-items:center;padding:18px;background:rgba(5,16,29,.78);backdrop-filter:blur(6px)}
+.districtdialog{position:relative;width:min(100%,490px);max-height:min(90vh,780px);overflow-y:auto;background:linear-gradient(145deg,#1b4550,#123448);border:1px solid #7ecab3;border-radius:19px;padding:27px;box-shadow:0 24px 80px rgba(0,0,0,.5);color:#effff8}
+.districtdialogclose{position:absolute;top:13px;right:13px;border:1px solid #6c999f;border-radius:9px;background:#224752;color:#e5fcf4;padding:8px 12px;min-width:40px;min-height:40px}
+.districtdialogsymbol{width:61px;height:61px;display:grid;place-items:center;border-radius:17px;background:#294d54;border:1px solid #7fc8b3;font-size:30px;margin:0 0 15px}
+.districtdialog h2{font-size:clamp(21px,4vw,27px);line-height:1.25;margin:9px 40px 12px 0}
+.districtdialog>p{font-size:13px;line-height:1.75;color:#d0e9e6}
+.districtdialog>p strong{color:#fff}
+.districtdialogprogress{background:#123345;border:1px solid #4c7c82;border-radius:12px;padding:15px;display:grid;gap:11px;margin:19px 0}
+.districtdialogprogressrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.districtdialogprogressrow strong{font-size:12px}
+.districtdialogprogressrow span{font-size:12px;color:#b6f4d5;font-weight:800;white-space:nowrap}
+.districtdialogprogress small{font-size:11px;color:#b4d6d8}
+.districtdialogactions{display:grid;gap:10px;margin-top:15px}
+.districtdialogactions button{width:100%;min-height:49px;font-size:13px}
+.districtdialogcancel{border:1px solid #608791;background:transparent;color:#d9f4ec;border-radius:10px;padding:11px 15px}
+.districtdialog .districtdialogfooter{border-top:1px solid #3b6773;padding-top:13px;margin:18px 0 0;font-size:11px;line-height:1.7;color:#accfce}
+@media(max-width:600px){.districtdialogbackdrop{padding:12px;align-items:center}.districtdialog{padding:21px 16px;border-radius:15px}.districtdialogsymbol{width:50px;height:50px;font-size:25px}.districtdialogprogressrow{align-items:start}.districtdialog h2{margin-right:33px}}
+@media(prefers-reduced-motion:reduce){.districtdialogbackdrop{backdrop-filter:none}}
