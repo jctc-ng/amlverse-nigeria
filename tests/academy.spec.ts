@@ -101,6 +101,7 @@ test('FATF Quest catalogue contains all forty recommendations and seven categori
 test('FATF 40 provides implementation and analogous learning for new recommendations',async({page})=>{
  await page.goto('./');
  await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await page.getByRole('button',{name:/Unlock FATF course/}).click();
  await page.locator('.fatf40tile').filter({hasText:'R.24'}).click();
  await expect(page.getByRole('heading',{name:'Understand through an analogy'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Implementation process'})).toBeVisible();
@@ -111,6 +112,7 @@ test('FATF 40 provides implementation and analogous learning for new recommendat
 test('FATF Recommendation 6 humanitarian safeguards and Recommendation 16 transition notes',async({page})=>{
  await page.goto('./');
  await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await page.getByRole('button',{name:/Unlock FATF course/}).click();
  await page.locator('.fatf40tile').filter({hasText:'R.6'}).click();
  await expect(page.getByText(/humanitarian exemptions and basic-needs safeguards/i).first()).toBeVisible();
  await page.getByRole('button',{name:/All forty Recommendations/}).click();
@@ -242,4 +244,39 @@ test('Unlock all courses exposes all districts and restores guided mode',async({
  await expect(page.locator('.townstop.locked')).toHaveCount(0);
  await page.getByRole('button',{name:/Restore guided course locks/}).click();
  await expect(page.locator('.townstop.locked')).toHaveCount(8);
+});
+
+
+test('FATF Quest locks future recommendations until the preceding one is mastered',async({page})=>{
+ await page.goto('./');
+ await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await expect(page.locator('.fatf40tile').nth(0)).toBeEnabled();
+ await expect(page.locator('.fatf40tile').nth(1)).toBeDisabled();
+ await page.getByRole('button',{name:/Unlock FATF course/}).click();
+ await expect(page.locator('.fatf40tile').nth(39)).toBeEnabled();
+ await page.getByRole('button',{name:/Restore guided FATF locks/}).click();
+ await expect(page.locator('.fatf40tile').nth(39)).toBeDisabled();
+});
+test('FATF reset requires confirmation and preserves other worlds',async({page})=>{
+ await page.goto('./');
+ await page.evaluate(()=>{
+  localStorage.setItem('amlverse-fatf-ch1',JSON.stringify({'1':{score:2,total:2}}));
+  localStorage.setItem('amlverse-fatf-40-v2',JSON.stringify({studied:[1,2],outcomes:{'2':{score:3,total:3}}}));
+  localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0],checkPassed:false,checkAttempts:0,lastVisited:''}));
+ });
+ await page.reload();
+ await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await page.getByRole('button',{name:/Reset FATF course/}).click();
+ await expect(page.getByRole('button',{name:/Delete FATF course progress/})).toBeDisabled();
+ await page.getByLabel(/Type RESET/).fill('RESET');
+ await page.getByRole('button',{name:/Delete FATF course progress/}).click();
+ await expect(page.getByText('0 / 40').first()).toBeVisible();
+ const data=await page.evaluate(()=>({
+  legacy:localStorage.getItem('amlverse-fatf-ch1'),
+  expanded:localStorage.getItem('amlverse-fatf-40-v2'),
+  risk:localStorage.getItem('amlverse-course-v1-risk')
+ }));
+ expect(data.legacy).toBeNull();
+ expect(data.expanded).toBeNull();
+ expect(data.risk).not.toBeNull();
 });
