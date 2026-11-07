@@ -440,3 +440,71 @@
 .academyworldprogress{height:9px}
 .academyworldbottom{gap:10px}
 @media(max-width:740px){.academy31headline{padding:16px 13px}.academy31headline strong{font-size:17px}.academy31headline button{width:100%}.progress31details{padding:10px}}
+
+/* v0.33 — FATF complete forty-recommendation learning academy */
+.fatf40page{max-width:1040px}.fatf40page .title{line-height:1.28}
+.fatf40stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:24px 0 14px}
+.fatf40stats>div{border:1px solid #356c73;background:#16394c;border-radius:13px;padding:18px;display:grid;gap:9px}
+.fatf40stats small{font-size:10px;letter-spacing:.7px;color:#addbd3;line-height:1.5}
+.fatf40stats strong{font-size:23px;color:#d6ffe9}
+.fatf40progress{height:10px;border-radius:22px;background:#244e58;overflow:hidden}
+.fatf40progress>div{height:100%;background:linear-gradient(90deg,#44bfa6,#b6edbf)}
+.fatf40summary{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:#c5dfdc;margin:9px 0 20px}
+.fatf40summary strong{color:#b7f7da}
+.fatf40filters{display:grid;gap:12px;margin:23px 0}
+.fatf40filters label{color:#c4e5e3;font-size:12px;font-weight:750}
+.fatf40filters input{width:100%;min-height:45px;border:1px solid #5e888e;border-radius:10px;background:#142f42;color:#f1fff9;padding:12px 15px;font:inherit;outline-offset:3px}
+.fatf40groupbuttons{display:flex;gap:7px;flex-wrap:wrap}
+.fatf40groupbuttons button{border:1px solid #4c737d;border-radius:9px;background:#1b394a;color:#ccede6;padding:9px 11px;font-size:11px;line-height:1.3;min-height:39px}
+.fatf40groupbuttons button.active{background:#245c4e;border-color:#88dbb8;color:#fff}
+.fatf40tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.fatf40tile{background:#153548;border:1px solid #37677a;border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px;text-align:left;color:#eafff8;min-width:0}
+.fatf40tile:hover,.fatf40tile:focus-visible{border-color:#e6d18f;outline-offset:2px}
+.fatf40number{background:#25574d;color:#d4ffe8;border-radius:9px;display:grid;place-items:center;font-size:14px;font-weight:850;min-width:51px;min-height:49px}
+.fatf40tilebody{flex:1;display:grid;gap:5px;min-width:0}
+.fatf40tilebody small{font-size:10px;color:#9fcacb}
+.fatf40tilebody strong{font-size:13px;line-height:1.4}
+.fatf40tilebody span{font-size:10px;color:#b6e7d8}
+.fatf40arrow{color:#a4e9d6;font-size:18px}
+.fatf40finish{background:#275449;border:1px solid #a9d9a7;padding:16px 18px;border-radius:13px;margin:18px 0}
+.fatf40finish h2{font-size:20px;margin:4px 0}.fatf40finish p{font-size:12px;line-height:1.6}
+.fatf40header,.fatf40lessonmeter{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0;color:#a7dfd3;font-size:11px}
+.fatf40lessonmeter{border:1px solid #437a7c;padding:12px 15px;background:#173a4a;border-radius:11px;font-weight:800}
+.fatf40study,.fatf40analogy,.fatf40scenario,.fatf40quiz,.fatf40result{border:1px solid #427779;border-radius:15px;background:linear-gradient(135deg,#183b4b,#133341);padding:23px;margin:18px 0}
+.fatf40study>p,.fatf40analogy>p,.fatf40scenario>p{font-size:14px;line-height:1.95;color:#d4e9e6}
+.fatf40studyheading{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.fatf40studyheading span{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;background:#285d52;color:#b8ffe0;font-size:13px;font-weight:900}
+.fatf40studyheading h2{margin:0;font-size:19px;line-height:1.4}
+.fatf40why{border-left:3px solid #7bc9b3;background:#194947;padding:13px 16px;border-radius:0 10px 10px 0}
+.fatf40why strong{font-size:12px;color:#caffeb}.fatf40why p{font-size:12px;line-height:1.8;color:#c9e6e1}
+.fatf40analogy{background:linear-gradient(130deg,#2b584a,#16374a);border-color:#7cb99d}
+.fatf40analogy>small{color:#b0d5d0;font-size:11px;line-height:1.7}
+.fatf40steps{display:grid;gap:11px;margin-top:16px}
+.fatf40steps button{width:100%;text-align:left;display:flex;gap:14px;align-items:flex-start;padding:15px;background:#142d43;border:1px solid #426c79;border-radius:11px;color:#e3f8f3;min-height:83px}
+.fatf40steps button:hover,.fatf40steps button:focus-visible{border-color:#ffe0ac;outline-offset:2px}
+.fatf40steps button.checked{background:#225144;border-color:#7cd5b0}
+.fatf40steps button>span{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#345766;color:#c9ffeb;font-weight:900;flex-shrink:0}
+.fatf40steps button strong{font-size:13px}.fatf40steps button p{font-size:12px;line-height:1.75;margin:6px 0 0;color:#c2e1df}
+.fatf40stepprogress{color:#a5e5ce;font-size:11px;font-weight:800;margin-top:13px}
+.fatf40scenario{border-color:#6598ac;background:#193d51}
+.fatf40caution{border-left:3px solid #f1c77f;background:#4c423c;padding:14px 16px;border-radius:0 10px 10px 0}
+.fatf40caution strong{color:#ffe1a9;font-size:12px}.fatf40caution p{line-height:1.7;font-size:12px;color:#e9e3d6}
+.fatf40actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.fatf40actions button{min-height:48px}
+.fatf40quizhead{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:9px 0 15px}
+.fatf40quizhead strong{font-size:12px;color:#ade8d9}
+.fatf40result{text-align:center;border-color:#7accaa}.fatf40result>span{font-size:50px}
+.fatf40result h2{font-size:23px}.fatf40result p{color:#c9e6df;font-size:13px;line-height:1.8}
+.fatf40result>strong{font-size:17px;color:#ffdf9f}
+.fatf40review{text-align:left;display:grid;gap:10px;margin:19px 0}
+.fatf40review h3{font-size:17px}.fatf40review>div{border:1px solid #426d77;background:#143347;border-radius:10px;padding:14px}
+.fatf40review>div strong{color:#e0f9ee;font-size:12px;line-height:1.6}
+.fatf40review>div p{font-size:12px;line-height:1.7}
+.fatf40footer{border:1px solid #3c6f76;background:#153849;border-radius:11px;padding:15px;margin:20px 0;color:#bddbd9;font-size:12px;line-height:1.7}
+.fatf40footer a{color:#b6f5d8;text-decoration:underline}.fatf40footer p{margin:7px 0 0}
+@media(max-width:760px){.fatf40stats{grid-template-columns:repeat(2,minmax(0,1fr))}.fatf40tiles{grid-template-columns:1fr}
+.fatf40study,.fatf40analogy,.fatf40scenario,.fatf40quiz,.fatf40result{padding:15px}
+.fatf40studyheading h2{font-size:17px}.fatf40study>p,.fatf40analogy>p,.fatf40scenario>p{font-size:13px}
+.fatf40actions{display:grid}.fatf40actions button{width:100%}.fatf40groupbuttons button{flex:1}.fatf40quiz .actions button{width:100%;min-height:48px}
+.fatf40header,.fatf40lessonmeter{align-items:flex-start}
+}
+@media(max-width:380px){.fatf40stats>div{padding:12px}.fatf40stats strong{font-size:20px}}
