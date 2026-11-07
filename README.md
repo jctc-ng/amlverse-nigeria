@@ -349,3 +349,19 @@ The original Learn → Quick Check → Tutorial → Play format now includes an 
 - All cases use fictional evidence, not real subjects or regulated personal information. The interactive activities are practical educational exercises and are not professional accreditation.
 
 Future phases can adapt each question bank to more native graph, timeline, routing, evidence-validation and written-analysis interactions instead of duplicating the same categorisation mechanism.
+
+## Professional subject-specific decision investigations — v0.29
+The new **World Decision Lab** expands all nine worlds beyond repetitive matching or standalone multiple-choice responses. Each world has a distinct, evidence-led fictional case file, an analogy, three documentary clues and three progressively presented professional decisions with contextual feedback and a review:
+- RiskLab: assess a new instant-payment product and decide appropriate controls
+- Teamwork: distribute FIU, investigative and prosecutorial responsibilities
+- Mutual Evaluation: distinguish legal technical compliance from verifiable effectiveness outcomes
+- Egmont: resolve purpose restrictions, originator consent and secure dissemination
+- Typologies: assess rapid transfers while testing invoice explanations
+- Nigeria Compliance: handle confidential STRs, NFIU functions and reporting safeguards
+- Virtual Assets: reconcile transaction splits and distinguish exchange labels from customer attribution
+- Advanced Tracing: assess source-chain and destination-chain bridge evidence
+- Financial Intelligence Reporting: build Findings, qualified Inference and Recommendations from source records
+
+Three interactive evidence-classification cases in each world now lead sequentially to the new three-stage professional decision dossier and then to the existing tutorial/game. All cases are accessible separately for optional practice or review. The dedicated local progress key `amlverse-world-decisions-v1-<world>` stores pass and best score (2/3 pass), without altering existing world, expanded-course or interactive graph achievements. **My Progress** includes per-world results and awards the informal **Decision Lab Master** achievement after passing all nine dossiers.
+
+All examples are synthetic and educational, without real personal data, live AML investigations, official certification or automatic determinations of guilt.
