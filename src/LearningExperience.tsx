@@ -139,8 +139,6 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  const [tutorialStep,setTutorialStep]=useState(0);
  const [demoSelected,setDemoSelected]=useState(false);
  const [demoMatched,setDemoMatched]=useState(false);
- useEffect(()=>{if(!initialSection||initialSection==='classic')saveCourse(game,old=>({...old,lessons:Array.from(new Set([...old.lessons,0]))}))},[game,initialSection]);
- useEffect(()=>{if(stage==='learn'&&(!initialSection||initialSection==='classic'))saveCourse(game,old=>({...old,lessons:Array.from(new Set([...old.lessons,topic]))}))},[game,stage,topic,initialSection]);
  const course=courses[game];
  const item=course.topics[topic];
  const demo=demonstrations[game];
@@ -160,6 +158,7 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  }
 
  useEffect(()=>{if(initialSection)resumeSection(initialSection)},[game,initialSection]);
+ function recordLesson(index:number){saveCourse(game,old=>({...old,lessons:Array.from(new Set([...old.lessons,index]))}))}
  function submitCheck(){
   if(answer===null)return;
   const isCorrect=course.answers[answer].correct;
@@ -211,8 +210,8 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  </nav>
  {stage==='learn'?<>
   <div className="knowledgeintro"><span className="knowledgeemoji" aria-hidden="true">📚</span><div><small>LEARNING ROOM</small><h2>{course.subtitle}</h2><p>Read three short lessons and see examples before trying a game.</p></div></div>
-  <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>{setTopic(i);window.scrollTo(0,0)}} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
-  <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>{setTopic(i=>i-1);window.scrollTo(0,0)}}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>{setTopic(i=>i+1);window.scrollTo(0,0)}}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>{setWorldInteractive(true);window.scrollTo(0,0)}}>Continue to interactive cases →</button>}</div></section>
+  <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>{recordLesson(topic);setTopic(i);window.scrollTo(0,0)}} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
+  <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>{recordLesson(topic);setTopic(i=>i-1);window.scrollTo(0,0)}}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>{recordLesson(topic);setTopic(i=>i+1);window.scrollTo(0,0)}}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>{recordLesson(topic);setWorldInteractive(true);window.scrollTo(0,0)}}>Continue to interactive cases →</button>}</div></section>
  </>:stage==='check'?<>
   <section className="knowledgecheck"><span className="eyebrow">STEP 2 • QUICK UNDERSTANDING CHECK</span><h2>{course.question}</h2>
   <p className="checkstatus" role="status">{confirmedPass?'✓ Quick Check passed and saved in this browser':'Quick Check not yet recorded as passed. Choose an answer and press Check understanding to save a correct result.'}</p><div className="knowledgeanswers">{course.answers.map((a,i)=><button key={i} type="button" className={answer===i?'selected':''} onClick={()=>{setAnswer(i);setShowFeedback(false)}}><span>{String.fromCharCode(65+i)}</span>{a.text}</button>)}</div>
