@@ -154,7 +154,7 @@ test('Mobile lesson Continue reaches knowledge checker and checker advances ques
  for(let i=0;i<3;i++){
    await page.locator('.riskadvancedlesson').getByRole('button',{name:/Continue/}).click();
  }
- await page.locator('.riskadvancedlesson').getByRole('button',{name:/Continue to Foundations quiz/}).click();
+ await page.locator('.riskadvancedlesson').getByRole('button',{name:/Continue to Foundations knowledge check/}).click();
  await expect(page.locator('.riskadvancedassessment')).toBeVisible();
  await expect(page.getByText('Question 1 / 10')).toBeVisible();
  await page.locator('.riskadvancedassessment .choice').first().click();
