@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect,useState} from 'react';
 import {riskLessons,riskQuestions,riskCases,riskReferences} from './RiskLabContent';
 import type {RiskTier,RiskQuestion} from './RiskLabContent';
 type Progress={visited:number[];quizBest:Record<RiskTier,number>;quizPass:Record<RiskTier,boolean>;simBest:Record<RiskTier,number>;simPass:Record<RiskTier,boolean>;attempts:Record<RiskTier,number>};
@@ -19,6 +19,15 @@ type Mode='overview'|'lesson'|'quiz'|'simulation';
 export default function RiskLabAdvanced({onBack,onClassic,onNextCourse}:{onBack:()=>void;onClassic:()=>void;onNextCourse:()=>void}){
  const [progress,setProgress]=useState<Progress>(getProgress);
  const [mode,setMode]=useState<Mode>('overview');
+ useEffect(()=>{
+  if(typeof window==='undefined'||!window.matchMedia('(max-width:760px)').matches)return;
+  if(mode!=='lesson'&&mode!=='quiz'&&mode!=='simulation')return;
+  const frame=window.requestAnimationFrame(()=>{
+   const target=document.querySelector(mode==='lesson'?'.riskadvancedlesson':'.riskadvancedassessment');
+   if(target)target.scrollIntoView({block:'start',behavior:'auto'});
+  });
+  return ()=>window.cancelAnimationFrame(frame);
+ },[mode,lessonIndex,qIndex,simIndex,finished]);
  const [tier,setTier]=useState<RiskTier>('Foundations');
  const [lessonIndex,setLessonIndex]=useState(0);
  const [quiz,setQuiz]=useState<QuizItem[]>([]);
