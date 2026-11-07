@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {modules,readCourse,readScore} from './progress';
 import type {CourseKey} from './progress';
 
-export type MenuScreen='home'|'progress'|'chapter'|'risklab'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets'|'advancedtrace'|'reportwriting'|'capstone'|'resources'|'mission';
+export type MenuScreen='home'|'progress'|'chapter'|'risklab'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets'|'advancedtrace'|'reportwriting'|'capstone'|'resources'|'mission'|'about';
 type MenuEntry={id:MenuScreen;title:string;symbol:string;course?:CourseKey};
 type MenuGroup={id:string;title:string;short:string;entries:MenuEntry[]};
 const groups:MenuGroup[]=[
@@ -24,8 +24,9 @@ const groups:MenuGroup[]=[
 const shortcuts:MenuEntry[]=[
 {id:'home',title:'Academy Overview',symbol:'◫'},
 {id:'progress',title:'My Progress',symbol:'📈'},
-{id:'chapter',title:'FATF Quest R.1–R.10',symbol:'★'},
-{id:'resources',title:'Resource Library',symbol:'▤'}
+{id:'chapter',title:'FATF Quest R.1–R.40',symbol:'★'},
+{id:'resources',title:'Resource Library',symbol:'▤'},
+{id:'about',title:'Project & Research',symbol:'◎'}
 ];
 export default function AcademyNavigation({screen,onNavigate}:{screen:MenuScreen;onNavigate:(screen:MenuScreen)=>void}){
  const [expanded,setExpanded]=useState<string[]>(()=>groups.map(g=>g.id));
