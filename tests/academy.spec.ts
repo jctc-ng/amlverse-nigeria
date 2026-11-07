@@ -312,3 +312,34 @@ test('Locked district message can be dismissed with Escape',async({page,isMobile
  await page.keyboard.press('Escape');
  await expect(page.getByRole('dialog')).toHaveCount(0);
 });
+
+test('Project & Research names the independent creator and accurately limits endorsement claims',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:'Project & Research'}).click();
+ await expect(page.getByRole('heading',{name:/Building better financial investigations/})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Muzammil Adamu'})).toBeVisible();
+ await expect(page.getByText(/not an official NFIU, FATF, Egmont Group, UNODC/)).toBeVisible();
+ await expect(page.getByText(/No agency endorsement, peer review, formal impact study/)).toBeVisible();
+ await expect(page.getByText(/No real investigation records required/)).toBeVisible();
+});
+test('Research sections and official references are accessible on desktop and mobile',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:'Project & Research'}).click();
+ await expect(page.getByRole('tab',{name:'Learning methodology'})).toHaveAttribute('aria-selected','true');
+ await page.getByRole('tab',{name:'Evidence & review policy'}).click();
+ await expect(page.getByRole('heading',{name:/What is verified/})).toBeVisible();
+ await page.getByRole('tab',{name:'International pilot protocol'}).click();
+ await expect(page.getByText(/This is a proposed evaluation protocol, not a completed study/)).toBeVisible();
+ await expect(page.locator('.researchsourcesgrid article')).toHaveCount(4);
+ await expect(page.locator('.researchengageactions a')).toHaveCount(2);
+ if(isMobile)expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+3)).toBe(true);
+});
+test('Project page offers copyable professional citation and returns to the learning town',async({page})=>{
+ await page.goto('./');
+ await page.getByRole('button',{name:'Project & Research'}).click();
+ await expect(page.getByText(/Adamu, M. \(2026\)/)).toBeVisible();
+ await page.getByRole('button',{name:/Academy overview/}).click();
+ await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
+});
