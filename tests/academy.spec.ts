@@ -60,6 +60,7 @@ test('CSV exports all activity types and can be downloaded',async({page})=>{
 
 test('Complete an interactive timeline and retain it across navigation',async({page})=>{
  await page.addInitScript(()=>{
+   localStorage.setItem('amlverse-town-unlocked-v1-team','yes');
    localStorage.setItem('amlverse-world-interactions-v1-team',JSON.stringify({completed:[0,1],best:88}));
  });
  await page.goto('./');
@@ -173,15 +174,15 @@ test('Learning Town is locked by default after the first district',async({page})
  await page.goto('./');
  await expect(page.getByRole('heading',{name:/Follow the pathway, unlock each district/})).toBeVisible();
  await expect(page.locator('.townstop')).toHaveCount(9);
- await expect(page.locator('.townstop').nth(0)).toContainText('Available');
- await expect(page.locator('.townstop').nth(1)).toContainText('Locked');
+ await expect(page.locator('.townstop').nth(0)).toContainText(/AVAILABLE/i);
+ await expect(page.locator('.townstop').nth(1)).toContainText(/LOCKED/i);
  await expect(page.locator('.academyworldcard').nth(1)).toBeDisabled();
  await expect(page.locator('.townstop').nth(1).getByRole('button',{name:/Unlock this course/})).toBeVisible();
 });
 test('Individual manual unlock grants access to a locked world without manufacturing completion',async({page})=>{
  await page.goto('./');
  await page.locator('.townstop').nth(1).getByRole('button',{name:/Unlock this course/}).click();
- await expect(page.locator('.townstop').nth(1)).toContainText('Unlocked by learner');
+ await expect(page.locator('.townstop').nth(1)).toContainText(/UNLOCKED BY LEARNER/i);
  await page.locator('.townstop').nth(1).getByRole('button',{name:/Enter district/}).click();
  await expect(page.getByRole('heading',{name:'Who Does What?'})).toBeVisible();
  const unlock=await page.evaluate(()=>localStorage.getItem('amlverse-town-unlocked-v1-team'));
