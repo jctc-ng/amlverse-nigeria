@@ -382,3 +382,20 @@ The tracker reads legacy localStorage progress and never resets scores. Percenta
 - **My Progress** now displays per-world progress percentages, collapsible activity-by-activity tracking, a three-track breakdown and consolidated statistics. Duplicate extended curriculum summaries were replaced with the expandable views.
 - The **Export all activities (CSV)** button produces a quoted, Excel-compatible UTF-8 CSV with each world and each activity milestone, recorded best game scores, FATF Quest progress and capstone pass/best score. The export does not contain real customer data.
 - The overview's version label is updated and its world catalogue uses complete-activity percentages. Progress remains in existing browser localStorage keys: no migration, reset, account or personal data collection. Refreshing or reopening screens reads the current stored results.
+
+## FATF Quest Complete — v0.33, all forty Recommendations
+
+FATF Quest now provides **R.1 through R.40**, organised into FATF's seven thematic groups: policies and coordination; money laundering and confiscation; terrorist financing and proliferation; preventive measures; beneficial ownership; competent authorities and other institutional measures; and international cooperation. Every Recommendation provides:
+- A topic-specific, professionally contextualised explanation in clear English;
+- A practical analogy explaining the concept while stating that analogies are not legal definitions;
+- **Four implementation actions** learners can review interactively, with responsibility, procedural safeguards and validation considerations;
+- A fictional applied scenario with one relevant risk or interpretative caution;
+- **Three applied assessment questions**, immediate explanations in guided mode and a feedback-at-end mode, with a detailed result review and next-recommendation continuation.
+
+The searchable catalogue includes category filters, individual progress and full forty-recommendation mastery tracking; **FATF 40 Scholar** is a simulated educational completion award, not an official credential. The Academy Overview, My Progress and CSV export now report FATF mastery against **40 recommendations**.
+
+The source is the consolidated [FATF Recommendations, as amended June 2026](https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html). In particular, R.6 covers relevant UN humanitarian exemptions reflected in the June 2026 updates, while R.16 explains the strengthened cross-border payment-transparency framework and its expected end-of-2030 implementation timeline. Learners must consult the full current Recommendations, Interpretive Notes, Glossary, transitional arrangements and the law of their jurisdiction before treating educational implementation steps as binding duties.
+
+Legacy records from the original R.1–R.10 pilot, saved in `amlverse-fatf-ch1`, are **not deleted or overwritten**. New study visits and assessments use `amlverse-fatf-40-v2`, and the consolidated progress reader merges the best mastery proportion from either source. This avoids losing existing perfect scores when returning to the fuller curriculum. All content and data in the course are educational and fictional; there are no external payments, actual regulatory filings or collection of sensitive case information.
+
+Automated desktop/mobile tests cover the full 40-recommendation catalogue, sample lessons and implementation steps, contemporary R.6/R.16 guidance and preservation of R.1–R.10 scores.
