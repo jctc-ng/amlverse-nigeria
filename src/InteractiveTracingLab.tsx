@@ -61,6 +61,7 @@ export default function InteractiveTracingLab({onBack,onAdvance}:{onBack:()=>voi
   setMissionIndex(i);setStep(0);setSelected([]);setLast(null);setMistakes(0);setInspection(null);setCompletedNow(false);setAwardOpen(false);window.scrollTo(0,0);
  }
  function inspect(type:'node'|'edge',id:string){
+  if(completedNow||last?.correct)return;
   const item=type==='node'?mission.nodes.find(n=>n.id===id):mission.edges.find(e=>e.id===id);
   setInspection(item?type==='node'?(item as TraceMission['nodes'][number]).detail:(item as TraceEdge).detail:null);
   const ok=action.type===type&&action.target===id;
