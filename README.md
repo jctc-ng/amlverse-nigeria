@@ -2,10 +2,17 @@
 
 Gamified AML/CFT/CPF learning and simulation platform prototype for financial intelligence practitioners and partner agencies.
 
-**Status:** Educational proof of concept, not an official NFIU publication or accreditation.
+**Created and led by:** Muzammil Adamu — independent financial intelligence and AML/CFT/CPF learning initiative.
+
+**Status:** Public educational prototype, not an official NFIU publication, professional accreditation, or endorsed programme of FATF, Egmont Group or UNODC.
+
+**Project & Research:** Open the live site and select **Project & Research** for project attribution, training methodology, reviewer invitation, source governance and a proposed institutional pilot protocol.
+
+**International review framework:** [docs/INTERNATIONAL_REVIEW_AND_PILOT.md](docs/INTERNATIONAL_REVIEW_AND_PILOT.md). Submit corrections or pilot proposals via the [public issue templates](https://github.com/jctc-ng/amlverse-nigeria/issues/new/choose). Never include restricted intelligence or personal data.
 
 ## Features
-- Six learning worlds: FATF Quest, RiskLab, Mutual Evaluation Arena, Egmont Exchange, Typology Detective, Nigeria Compliance
+- Nine learning worlds covering risk assessment, interagency cooperation, mutual evaluations, FIU information exchange, typologies, Nigeria compliance, virtual assets, advanced tracing and financial intelligence reporting
+- FATF Quest with all forty recommendations, analogies, operational implementation steps, and scenario-based assessments
 - Interactive scenario missions with instant explanatory feedback, XP and progress
 - Public-source reference links to FATF, Egmont and GIABA
 - Responsive React + TypeScript app with GitHub Pages deployment
