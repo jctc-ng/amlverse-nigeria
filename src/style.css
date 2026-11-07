@@ -527,3 +527,72 @@
 .mobilequizhelp{border-left:3px solid #7bd7b3;background:#153b47;color:#c6e7df;border-radius:0 10px 10px 0;font-size:12px;line-height:1.8;padding:12px 15px;margin:15px 0 18px}
 .mobilequizhelp strong{color:#e9fff1}
 @media(min-width:761px){.mobilequizhelp{display:none}}
+
+/* v0.35 - Learning Town: winding, sequential districts with deliberate unlocks */
+.learningtown{position:relative;margin:28px 0;padding:22px 24px;border:1px solid #4a8e89;border-radius:22px;background:radial-gradient(circle at 20% 15%,#1e5649 0,transparent 38%),radial-gradient(circle at 90% 80%,#193f5c 0,transparent 40%),#0c263b;overflow:hidden}
+.learningtownhead{display:flex;justify-content:space-between;align-items:start;gap:18px;flex-wrap:wrap}
+.learningtownhead>div{flex:1;min-width:230px}
+.learningtownhead h2{font-size:clamp(20px,3vw,27px);line-height:1.3;margin:9px 0}
+.learningtownhead p,.townfootnote{font-size:12px;line-height:1.75;color:#bddbd9;max-width:680px}
+.townunlockall{background:#224a55;border:1px solid #88cdb6;color:#e3fff5;border-radius:11px;padding:13px 16px;max-width:280px;text-align:left;font-size:12px;font-weight:800;line-height:1.5}
+.townunlockall:hover,.townunlockall:focus-visible{border-color:#f5d996;outline-offset:2px}
+.townnotice{padding:12px 15px;background:#245245;border:1px solid #8be1b7;border-radius:10px;color:#e9fff5;font-size:12px;line-height:1.7;margin:10px 0}
+.townroad{position:relative;padding:18px 0 7px;display:grid;grid-template-columns:1fr;gap:22px;isolation:isolate}
+.townroad:before{content:"";position:absolute;z-index:-1;top:16px;bottom:16px;left:50%;width:6px;transform:translateX(-50%);border-radius:5px;background:repeating-linear-gradient(to bottom,#84d6b4 0px,#84d6b4 22px,transparent 22px,transparent 38px);opacity:.72}
+.townstop{position:relative;width:49%;display:flex;align-items:center;gap:10px;min-height:165px}
+.townstop:nth-child(odd){justify-self:start;flex-direction:row-reverse;padding-right:12px}
+.townstop:nth-child(even){justify-self:end;padding-left:12px}
+.townmarker{position:absolute;top:50%;width:34px;height:34px;border-radius:50%;border:3px solid #75dbbc;background:#145545;display:grid;place-items:center;transform:translateY(-50%);color:#d9fbee;font-size:15px;box-shadow:0 0 0 5px #082d3d}
+.townstop:nth-child(odd) .townmarker{right:-20px}
+.townstop:nth-child(even) .townmarker{left:-20px}
+.townstop.locked .townmarker{background:#374455;border-color:#7e8995}
+.townbuilding{display:flex;gap:14px;align-items:center;width:100%;padding:16px;background:linear-gradient(120deg,#1a4b47,#163747);border:1px solid #4f9f88;border-radius:17px;box-shadow:0 8px 20px #061b2b6b;min-width:0}
+.townstop.locked .townbuilding{filter:saturate(.48);background:#193043;border-color:#526674}
+.townstop.complete .townbuilding{border-color:#f1d78e}
+.townscenery{font-size:39px;line-height:1;background:#235f56;border-radius:12px;min-width:60px;min-height:60px;display:grid;place-items:center}
+.townstop.locked .townscenery{background:#344557}
+.townbuildingbody{min-width:0;flex:1}
+.townbuildingbody small{font-size:10px;color:#afe8db;font-weight:800;letter-spacing:.6px}
+.townbuildingbody h3{font-size:16px;margin:8px 0 5px;line-height:1.35;color:#f0fff7}
+.townbuildingbody p{font-size:11px;color:#bbd9da;line-height:1.5;margin:3px 0 10px}
+.townmeter{height:7px;background:#45646b;border-radius:20px;overflow:hidden;margin:10px 0 5px}
+.townmeter>div{height:100%;background:#91dfb3;border-radius:20px}
+.townbuildingbody>span{font-size:10px;color:#c6e9dc;font-weight:700}
+.townactions{margin-top:11px}
+.townactions button{width:100%;font-size:12px;min-height:44px}
+.townlockreason{font-size:10px!important;line-height:1.6!important}
+.townfootnote{max-width:100%;border-top:1px solid #3c706d;margin-top:20px;padding-top:13px}
+.towncontrols{border:1px solid #5c8f88;border-radius:15px;background:#173d4a;padding:17px 19px;display:grid;gap:12px;margin:16px 0 20px}
+.towncontrolstitle h2{font-size:18px;margin:7px 0}
+.towncontrolstitle p,.towncontrolnote{font-size:12px;line-height:1.65;color:#bddcdb;margin:0}
+.towncontrolsbuttons{display:flex;gap:10px;flex-wrap:wrap}
+.towncontrolsbuttons button{min-height:44px}
+.townresetopen{background:#453437;border:1px solid #be8c91;color:#ffe1df;border-radius:10px;padding:11px 15px;font-size:12px;font-weight:800}
+.townresetopen:hover,.townresetopen:focus-visible{border-color:#ffd7d7}
+.townresetconfirm{padding:16px;border:1px solid #e4a2a2;border-radius:12px;background:#3b292f;display:grid;gap:11px}
+.townresetconfirm h3{font-size:17px;margin:0;color:#ffe5e3}
+.townresetconfirm p{font-size:12px;color:#f2d8d8;line-height:1.75;margin:0}
+.townresetconfirm label{font-size:12px;color:#ffe6e3}
+.townresetconfirm input{width:100%;max-width:300px;border:1px solid #dfb6ad;background:#1b2a38;color:#fff;border-radius:9px;padding:12px;font:inherit}
+.townresetactions{display:flex;flex-wrap:wrap;gap:10px}
+.townresetdanger{border:1px solid #f6b1b1;border-radius:9px;background:#bb4949;color:#fff;padding:12px 16px;font-size:12px;font-weight:800}
+.townresetdanger:disabled{opacity:.45}
+.worldprogresssection.worldlocked{opacity:.7;cursor:not-allowed;filter:saturate(.5)}
+.riskadvancedtierlocked{opacity:.65}
+.riskadvancedtierlocked .riskadvancedtierhead>span{color:#f5cf9e}
+@media(max-width:1040px){.townbuilding{flex-direction:column;align-items:start}.townscenery{font-size:30px;min-width:52px;min-height:52px}}
+@media(max-width:700px){
+ .learningtown{margin:18px 0;padding:17px 13px}
+ .townunlockall{max-width:none;width:100%;min-height:48px}
+ .townroad{padding:16px 0 12px;gap:14px}
+ .townroad:before{left:22px;transform:none;width:5px}
+ .townstop,.townstop:nth-child(odd),.townstop:nth-child(even){width:100%;justify-self:stretch;flex-direction:row;padding:0 0 0 54px}
+ .townstop .townmarker,.townstop:nth-child(odd) .townmarker,.townstop:nth-child(even) .townmarker{left:7px;right:auto}
+ .townbuilding{flex-direction:row;align-items:start;padding:12px 13px;gap:10px}
+ .townscenery{font-size:26px;min-width:39px;min-height:39px;border-radius:9px}
+ .townbuildingbody h3{font-size:14px}
+ .towncontrols{padding:14px}
+ .towncontrolsbuttons,.townresetactions{display:grid}
+ .towncontrolsbuttons button,.townresetactions button{width:100%;min-height:48px}
+}
+@media(max-width:390px){.townbuilding{flex-direction:column}.townscenery{min-height:38px}}
