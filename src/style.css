@@ -256,3 +256,51 @@
 .graphstudyreminder{font-size:12px;color:#b6d8d8;line-height:1.7}
 @media(max-width:720px){.graphstudyexplainer{grid-template-columns:1fr}.graphstudyfigure,.graphstudyquiz{padding:12px}.graphstudyedges>div{grid-template-columns:1fr auto}.graphstudyedges>div span{grid-column:1/-1;grid-row:2}.graphstudyquiz .actions{display:flex;flex-direction:column}.graphstudyquiz .actions button{width:100%;min-height:48px}}
 @media(max-width:420px){.graphstudyhead{flex-direction:column;align-items:flex-start}.graphstudylegend{gap:7px}.graphstudyquiz h3{font-size:17px}}
+
+/* v0.27: Responsive hands-on blockchain graph simulator */
+.itracelab{width:100%;max-width:1080px;margin:auto;display:grid;gap:17px}
+.itracetop{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.itracelab h1{margin-bottom:0}.itracelab .lead{margin:0 0 6px}
+.itracemissiontabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}
+.itracemissiontabs button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:60px;padding:9px 5px;background:#1a3549;border:1px solid #426875;border-radius:10px;color:#d9f3ed;cursor:pointer}
+.itracemissiontabs button.active{background:#276450;border-color:#8bf3cd;box-shadow:inset 0 0 0 1px #8bf3cd}
+.itracemissiontabs button span{font-size:18px;font-weight:900}.itracemissiontabs button small{font-size:10px;color:#b3d7d4}
+.itracebrief,.itraceinspector,.itracequestion,.itracecompleted{border:1px solid #386775;border-radius:18px;padding:22px;background:linear-gradient(120deg,#17394a,#14303f)}
+.itracebrief h2,.itracequestion h2{font-size:22px;line-height:1.45;margin:12px 0}
+.itracebrief p,.itracequestion p,.itracecompleted p{font-size:13px;line-height:1.8;color:#c5dee2}
+.itraceanalogy,.itraceobjective{padding:14px 17px;border-radius:12px;background:#225248;border:1px solid #518f7d;margin-top:13px}
+.itraceobjective{background:#223c51;border-color:#496d80}
+.itraceanalogy strong,.itraceobjective strong{font-size:13px;color:#e5fff5}
+.itraceanalogy p,.itraceobjective p{margin:7px 0 0}
+.itracehud{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:12px;color:#b4e6db;font-weight:750}
+.itracehud button{border:1px solid #567681;border-radius:9px;background:#1b4052;color:#e7faf4;padding:9px 12px;cursor:pointer}
+.itraceprogress{height:8px;border-radius:20px;background:#284f58;overflow:hidden}
+.itraceprogress>div{height:100%;background:#7fe6ba;transition:width .2s}
+.itracegraphpanel{background:#0c2437;border:1px solid #426b7c;border-radius:17px;padding:12px;min-width:0}
+.itracesvg{display:block;width:100%;height:auto;max-width:900px;margin:auto;overflow:visible;background:#0d263b;border-radius:12px;touch-action:manipulation}
+.itraceedgehit,.itracenodehit{cursor:pointer;outline:none}
+.itraceedgehit:focus-visible rect,.itracenodehit:focus-visible rect{stroke:#ffe2a1;stroke-width:4px}
+.itraceedgehit:hover rect,.itracenodehit:hover rect{stroke:#f6d892;stroke-width:3px}
+.itracelegend{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;color:#b2d5da;font-size:11px;padding:12px 4px 2px}
+.itraceinspector h3{margin:0 0 5px;font-size:17px}.itraceinspector>p{color:#b4d2d8;font-size:12px;line-height:1.6}
+.itraceevidencegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.itraceevidencegrid h4{font-size:13px;color:#a8ebd5;margin:9px 0}
+.itraceevidenceitem{display:flex;width:100%;gap:10px;justify-content:space-between;align-items:center;border-radius:9px;padding:11px 13px;text-align:left;background:#183a4c;border:1px solid #456d7b;color:#e6fbf6;cursor:pointer;margin:6px 0;font-size:12px}
+.itraceevidenceitem:hover,.itraceevidenceitem:focus-visible{border-color:#ffdc92;outline-offset:2px}
+.itraceevidenceitem.selected{border-color:#f4d38b;background:#475341}
+.itraceevidenceitem strong{overflow-wrap:anywhere}.itraceevidenceitem span{font-size:10px;color:#b9d9d7;text-align:right}
+.itracedetail{padding:14px 17px;border-radius:12px;border:1px solid #608a90;background:#193e4a;color:#def9ef;font-size:13px;line-height:1.7}
+.itracequestion{border-color:#71cfa5}.itracequestion h2{font-size:22px}
+.itracefeedback{padding:15px;border:1px solid #627d81;border-radius:10px;margin:13px 0}
+.itracefeedback.right{background:#1c4c41;border-color:#66cb9e}
+.itracefeedback.wrong{background:#4a3a32;border-color:#d8a46c}
+.itracefeedback strong{color:#fff}.itracefeedback p{margin:5px 0}
+.itracequestion details{margin:16px 0;color:#c1dae1;font-size:12px}.itracequestion summary{cursor:pointer;font-weight:750}
+.itracecompleted{text-align:center;border-color:#8eccab;background:linear-gradient(125deg,#164d45,#192e45)}
+.itracecompleted>span{font-size:60px}.itracecompleted h2{font-size:25px;margin:12px 0}.itracecompleted>strong{color:#ffe5a5;font-size:19px}
+.itraceactions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px auto}
+.itraceaward{border:1px solid #c8ab74;border-radius:14px;background:#395142;padding:16px;margin:15px auto}
+.itraceaward h3{font-size:19px}
+@media(max-width:760px){.itracemissiontabs{grid-template-columns:repeat(3,minmax(0,1fr))}.itraceevidencegrid{grid-template-columns:1fr}.itracebrief,.itraceinspector,.itracequestion,.itracecompleted{padding:15px}.itracegraphpanel{padding:5px}.itraceevidenceitem{min-height:46px}.itraceactions{flex-direction:column}.itraceactions button{width:100%;min-height:48px}.itracequestion .nextstepbar{margin:16px 0 0}}
+@media(max-width:420px){.itracemissiontabs{grid-template-columns:repeat(3,minmax(0,1fr))}.itracelegend{font-size:10px;justify-content:flex-start}.itracebrief h2,.itracequestion h2{font-size:19px}}
+@media(prefers-reduced-motion:reduce){.itraceprogress>div{transition:none}}
