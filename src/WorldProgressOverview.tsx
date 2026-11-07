@@ -1,3 +1,4 @@
+import {CompletionMeter} from './CompletionMeter';
 import {modules,readCourse,readScore} from './progress';
 import type {CourseKey} from './progress';
 import {readWorldInteractionProgress} from './InteractiveWorldChallenge';
@@ -45,13 +46,6 @@ export function readWorldSections(game:CourseKey):ProgressSection[]{
  return sections;
 }
 
-export function CompletionMeter({done,total,caption,compact=false}:{done:number;total:number;caption?:string;compact?:boolean}){
- const pct=total>0?Math.min(100,Math.max(0,Math.round(100*done/total))):0;
- return <div className={'worldmetermini'+(compact?' compact':'')} aria-label={`${caption||'Progress'}: ${done} of ${total}, ${pct}% complete`}>
-  <div className="worldmeterline"><span>{caption||'Completion progress'}</span><strong>{done}/{total} · {pct}%</strong></div>
-  <div className="worldmetertrack" role="progressbar" aria-label={caption||'Completion progress'} aria-valuenow={done} aria-valuemin={0} aria-valuemax={total}><div style={{width:pct+'%'}}/></div>
- </div>;
-}
 export default function WorldProgressOverview({game,onOpen}:{game:CourseKey;onOpen:(id:string)=>void}){
  const sections=readWorldSections(game);
  const done=sections.reduce((a,s)=>a+s.done,0),total=sections.reduce((a,s)=>a+s.total,0);
