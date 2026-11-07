@@ -336,3 +336,16 @@ Learners select graph **nodes or transaction edges directly**, or use the corres
 The separate local progress key `amlverse-interactive-tracing-v1` records completed missions and personal-best scores. All six completions unlock the informal **Interactive Graph Investigator** achievement in My Progress and an achievement gift in the simulator. No existing graph-lesson checks, quizzes, gifts or course milestones are reset.
 
 All assets, wallet identifiers, transfers, service attributions, chain bridges and user labels are fictional. Provisional dashed edges are hypotheses and should never be reported as on-chain transfers or confirmed customer attribution. The lab uses no blockchain API or real case data.
+
+## Hands-on Interactive Learning Across All Nine Worlds — v0.28
+
+The original Learn → Quick Check → Tutorial → Play format now includes an optional **Interactive Cases** route accessible from every learning room and directly from the end of its three introductory lessons.
+
+- A shared evidence-workshop engine serves **27 fictional hands-on cases** (three per world, nine worlds), with **81 evidence selection and classification actions**. Learners select cards, assign them to evidence categories or investigation stages, receive immediate explanations and update an evidence notebook; there are no drag-and-drop-only interactions, so mobile tap controls work reliably.
+- Coverage: **RiskLab** (threats, vulnerabilities, controls), **Teamwork** (agency mandates, intelligence/evidence), **Mutual Evaluation** (technical compliance vs operational effectiveness), **Egmont Exchange** (lawful secure sharing), **Typology Detective** (red flags, corroboration), **Nigeria Compliance** (NFIU/CBN/sector responsibilities), **Virtual Assets** (on-chain facts vs attribution), **Advanced Tracing** (multi-hop path and exchange inquiry), and **Intelligence Reporting** (facts, inferences, recommendations).
+- Once the three cases in a world have been completed, the previous Quick Check milestone is also recorded as passed, without overwriting prior Quick Check attempts or scores. Learners proceed directly into the tutorial and existing playable world, retaining all existing World Champion achievements and game scores.
+- Local storage key `amlverse-world-interactions-v1-<world>` records which interactive cases have been completed and the best simulated accuracy. **My Progress** now displays all 27 interactive case milestones and the informal **Interactive Academy Investigator** achievement for completing all nine sets.
+- Earlier legacy one-question Quick Checks and existing arcade missions remain accessible so previously saved achievements are not invalidated. This release supplements the earlier question formats; it does not yet convert every older standalone question and advanced bank question into a graph-style task.
+- All cases use fictional evidence, not real subjects or regulated personal information. The interactive activities are practical educational exercises and are not professional accreditation.
+
+Future phases can adapt each question bank to more native graph, timeline, routing, evidence-validation and written-analysis interactions instead of duplicating the same categorisation mechanism.
