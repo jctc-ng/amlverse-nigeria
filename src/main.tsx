@@ -1,3 +1,4 @@
+import {worldAccessible,worldMilestones,sectionUnlockReason} from './LearningTownProgress';
 import React,{useEffect,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {worlds,references} from './data';
@@ -28,8 +29,8 @@ function App(){
  const completed=Object.values(saved).filter(x=>x.complete).length;
  const xp=Object.values(saved).reduce((sum,x)=>sum+x.xp,0);
  const scenario=active.scenarios[index];
- function openCourse(id:CourseKey,section?:string){setResumeTarget(section?{id,section}:null);setScreen(id==='risk'?'risklab':id);window.scrollTo(0,0)}
- function advanceCourse(id:CourseKey){const next=nextLearningWorld(id);if(next)openCourse(next);else{setScreen('capstone');window.scrollTo(0,0)}}
+ function openCourse(id:CourseKey,section?:string){if(!worldAccessible(id)){window.alert(sectionUnlockReason(id,'classic')+' Use the Learning Town Unlock this course button to explore it early.');setScreen('home');return}setResumeTarget(section?{id,section}:null);setScreen(id==='risk'?'risklab':id);window.scrollTo(0,0)}
+ function advanceCourse(id:CourseKey){const next=nextLearningWorld(id);if(next){if(worldAccessible(next))openCourse(next);else{const w=worldMilestones(id);window.alert('This district is '+w.done+'/'+w.total+' complete. Finish its remaining activities to unlock the next district, or use Unlock this course in Learning Town.');setScreen('home');window.scrollTo(0,0)}}else{setScreen('capstone');window.scrollTo(0,0)}}
  function openWorld(w:World){setActive(w);setIndex(0);setAnswer(null);setSubmitted(false);setEarned(0);setScreen('mission');window.scrollTo(0,0)}
  function next(){if(index<active.scenarios.length-1){setIndex(index+1);setAnswer(null);setSubmitted(false)}else{setSaved(prev=>({...prev,[active.id]:{complete:true,xp:Math.max(earned,prev[active.id]?.xp||0)}}));setScreen('home')}window.scrollTo(0,0)}
  function submit(){if(answer===null)return;setSubmitted(true);if(scenario.choices[answer].correct)setEarned(p=>p+100)}
