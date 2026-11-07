@@ -14,6 +14,8 @@ import InteractiveWorldChallenge from './InteractiveWorldChallenge';
 import WorldDecisionLab from './WorldDecisionLab';
 import {readCourse,saveCourse} from './progress';
 import WorldCompletion from './WorldCompletion';
+import WorldProgressOverview,{readWorldSections} from './WorldProgressOverview';
+import {CompletionMeter} from './CompletionMeter';
 
 type Game='risk'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets'|'advancedtrace'|'reportwriting';
 type Topic={title:string;explanation:string;example:string;takeaway:string};
@@ -143,6 +145,20 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
  const item=course.topics[topic];
  const demo=demonstrations[game];
  const mastered=confirmedPass||(showFeedback&&answer!==null&&course.answers[answer].correct);
+ const sections=readWorldSections(game);
+ const section=(id:string)=>sections.find(s=>s.id===id)!;
+ function resumeSection(id:string){
+  if(id==='expanded'){
+   if(game==='risk')setAdvancedOpen(true);
+   if(game==='nigeria')setNigeriaAdvancedOpen(true);
+   if(game==='virtualassets')setVirtualAdvancedOpen(true);
+  } else if(id==='hands'){setWorldInteractive(true)}
+  else if(id==='decision'){setWorldDecision(true)}
+  else if(id==='trace'){setVirtualAdvancedOpen(true)}
+  else {navigate(readCourse(game).lessons.length<3?'learn':!readCourse(game).checkPassed?'check':'play')}
+  window.scrollTo(0,0);
+ }
+
  function submitCheck(){
   if(answer===null)return;
   const isCorrect=course.answers[answer].correct;
@@ -180,11 +196,13 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
  <span className="eyebrow">AMLVERSE • LEARN • QUICK CHECK • PLAY</span>
  <h1 className="title">{course.name}</h1><p className="lead">{course.goal}</p>
  <WorldCompletion game={game} trigger={true} onContinue={onNextCourse}/>
- {game==='virtualassets'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • VIRTUAL ASSET INVESTIGATION ACADEMY 2.0</span><h2>Virtual Asset Academy 2.0 🔗</h2><p>12 lessons · 60 randomized questions · 3 transaction-flow simulations. Continue from level to level with mobile-friendly achievement gifts.</p></div><button className="primary" type="button" onClick={()=>setVirtualAdvancedOpen(true)}>Enter expanded Virtual Asset Academy →</button></section>:null}
- {game==='nigeria'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • EXPANDED NIGERIAN AML/CFT/CPF CURRICULUM</span><h2>Nigeria Compliance Academy 2.0 🇳🇬</h2><p>12 Nigeria-focused lessons · 60 questions · 3 simulations · sequential levels with completion gifts. Original progress is preserved.</p></div><button type="button" className="primary" onClick={()=>setNigeriaAdvancedOpen(true)}>Enter expanded Nigeria Compliance →</button></section>:null}
- {game==='risk'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • RISKLAB EXPANDED CURRICULUM</span><h2>RiskLab Academy 2.0</h2><p>12 lessons · 60 varied questions · 3 case simulations · Foundation to Advanced. Classic RiskLab progress remains unchanged.</p></div><button type="button" className="primary" onClick={()=>setAdvancedOpen(true)}>Enter expanded RiskLab →</button></section>:null}
- <section className="worldinteractivepromo"><div><span className="eyebrow">NEW • INTERACTIVE EVIDENCE INVESTIGATION</span><h2>Practise with real decisions, not just multiple-choice answers</h2><p>Three hands-on cases in this learning world. Select evidence cards, assign classifications, review feedback and continue directly to your game. Completing all three records the Quick Check as passed without removing earlier results.</p></div><button type="button" className="primary" onClick={()=>{setWorldInteractive(true);window.scrollTo(0,0)}}>Open interactive challenges →</button></section>
- <div className="worlddecisionentry"><div><span className="eyebrow">NEW • SUBJECT-SPECIFIC INVESTIGATION</span><h2>Evidence dossier and three-stage decision lab</h2><p>Explore a realistic fictional case file, justify your decisions and receive detailed feedback. Practice risk, lawful cooperation, suspicious patterns, graph attribution or intelligence reporting, depending on the world.</p></div><button type="button" className="primary" onClick={()=>{setWorldDecision(true);window.scrollTo(0,0)}}>Launch decision investigation →</button></div>
+ <WorldProgressOverview game={game} onOpen={resumeSection}/>
+ {game==='virtualassets'?<section className="riskadvancedpromo"><div><CompletionMeter done={section('expanded').done} total={section('expanded').total} caption="Virtual Asset Academy 2.0 completion" compact/><span className="eyebrow">NEW • VIRTUAL ASSET INVESTIGATION ACADEMY 2.0</span><h2>Virtual Asset Academy 2.0 🔗</h2><p>12 lessons · 60 randomized questions · 3 transaction-flow simulations. Continue from level to level with mobile-friendly achievement gifts.</p></div><button className="primary" type="button" onClick={()=>setVirtualAdvancedOpen(true)}>Enter expanded Virtual Asset Academy →</button></section>:null}
+ {game==='nigeria'?<section className="riskadvancedpromo"><div><CompletionMeter done={section('expanded').done} total={section('expanded').total} caption="Nigeria Compliance Academy 2.0 completion" compact/><span className="eyebrow">NEW • EXPANDED NIGERIAN AML/CFT/CPF CURRICULUM</span><h2>Nigeria Compliance Academy 2.0 🇳🇬</h2><p>12 Nigeria-focused lessons · 60 questions · 3 simulations · sequential levels with completion gifts. Original progress is preserved.</p></div><button type="button" className="primary" onClick={()=>setNigeriaAdvancedOpen(true)}>Enter expanded Nigeria Compliance →</button></section>:null}
+ {game==='risk'?<section className="riskadvancedpromo"><div><CompletionMeter done={section('expanded').done} total={section('expanded').total} caption="RiskLab Academy 2.0 completion" compact/><span className="eyebrow">NEW • RISKLAB EXPANDED CURRICULUM</span><h2>RiskLab Academy 2.0</h2><p>12 lessons · 60 varied questions · 3 case simulations · Foundation to Advanced. Classic RiskLab progress remains unchanged.</p></div><button type="button" className="primary" onClick={()=>setAdvancedOpen(true)}>Enter expanded RiskLab →</button></section>:null}
+ <section className="worldinteractivepromo"><div><CompletionMeter done={section('hands').done} total={section('hands').total} caption="Interactive evidence challenges completion" compact/><span className="eyebrow">NEW • INTERACTIVE EVIDENCE INVESTIGATION</span><h2>Practise with real decisions, not just multiple-choice answers</h2><p>Three hands-on cases in this learning world. Select evidence cards, assign classifications, review feedback and continue directly to your game. Completing all three records the Quick Check as passed without removing earlier results.</p></div><button type="button" className="primary" onClick={()=>{setWorldInteractive(true);window.scrollTo(0,0)}}>Open interactive challenges →</button></section>
+ <div className="worlddecisionentry"><div><CompletionMeter done={section('decision').done} total={section('decision').total} caption="Evidence dossier and decision lab completion" compact/><span className="eyebrow">NEW • SUBJECT-SPECIFIC INVESTIGATION</span><h2>Evidence dossier and three-stage decision lab</h2><p>Explore a realistic fictional case file, justify your decisions and receive detailed feedback. Practice risk, lawful cooperation, suspicious patterns, graph attribution or intelligence reporting, depending on the world.</p></div><button type="button" className="primary" onClick={()=>{setWorldDecision(true);window.scrollTo(0,0)}}>Launch decision investigation →</button></div>
+ <div className="worldclassicmeter"><CompletionMeter done={section("classic").done} total={section("classic").total} caption="Original lessons, Quick Check and game"/></div>
  <nav className="knowledgeflow" aria-label="Learning stages">
   <button type="button" className={stage==='learn'?'active':''} aria-current={stage==='learn'?'step':undefined} onClick={()=>navigate('learn')}>① Learn</button>
   <button type="button" className={stage==='check'?'active':''} aria-current={stage==='check'?'step':undefined} onClick={()=>navigate('check')}>② Quick check</button>
