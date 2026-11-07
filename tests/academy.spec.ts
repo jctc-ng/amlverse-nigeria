@@ -320,8 +320,9 @@ test('Project & Research names the independent creator and accurately limits end
  await expect(page.getByRole('heading',{name:/Building better financial investigations/})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Muzammil Adamu'})).toBeVisible();
  await expect(page.getByText(/not an official NFIU, FATF, Egmont Group, UNODC/)).toBeVisible();
- await expect(page.getByText(/No agency endorsement, peer review, formal impact study/)).toBeVisible();
  await expect(page.getByText('Real investigation records required')).toBeVisible();
+ await page.getByRole('tab',{name:'Evidence & review policy'}).click();
+ await expect(page.getByText(/No agency endorsement, peer review, formal impact study/)).toBeVisible();
 });
 test('Research sections and official references are accessible on desktop and mobile',async({page,isMobile})=>{
  await page.goto('./');
