@@ -391,3 +391,37 @@
 .wcinteractivetimelinesteps strong{font-size:12px;color:#a9f4d8}
 .wcinteractivetimelinesteps p{font-size:12px;line-height:1.6;color:#d3eaeb;margin:6px 0 0}
 @media(max-width:760px){.wcinteractivetimeline{grid-template-columns:1fr}.wcinteractivetimeline>section{padding:14px}.wcinteractivetimelinecards button{min-height:58px}}
+
+/* v0.30 — consistent progress panels across every learning world and activity */
+.worldprogresspanel{background:linear-gradient(120deg,#173c48,#18433e);border:1px solid #7ac9ac;border-radius:18px;padding:20px 22px;margin:18px 0 24px;display:grid;gap:15px}
+.worldprogressheading{display:flex;justify-content:space-between;align-items:center;gap:17px}
+.worldprogressheading h2{font-size:21px;margin:7px 0}.worldprogressheading p{font-size:12px;line-height:1.6;color:#c0e4de;margin:0}
+.worldprogressnumber{flex-shrink:0;min-width:108px;border-radius:14px;border:1px solid #7ed9bd;background:#1b5249;padding:13px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.worldprogressnumber strong{color:#b7ffe1;font-size:27px;font-weight:900;line-height:1.3}
+.worldprogressnumber small{color:#cee9e1;font-size:10px;text-align:center}
+.worldprogresssections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.worldprogresssection{background:#153349;border:1px solid #4f7c7e;padding:13px 15px;border-radius:12px;display:grid;gap:9px;text-align:left;color:#e4f9f0;min-width:0;cursor:pointer}
+.worldprogresssection:hover,.worldprogresssection:focus-visible{border-color:#f6d997;outline-offset:2px}
+.worldprogresssectionhead{display:flex;justify-content:space-between;align-items:center;gap:9px}
+.worldprogresssectionhead strong{font-size:12px;line-height:1.45}
+.worldprogresssectionhead span{color:#aaf2d3;white-space:nowrap;font-size:11px;font-weight:850}
+.worldprogresssection small{color:#c0dadc;font-size:11px;line-height:1.55}
+.worldprogressnote{font-size:11px;line-height:1.7;color:#b1d8d9;margin:0}
+.worldmetermini{display:grid;gap:7px;min-width:0}
+.worldmeterline{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#daf9ed}
+.worldmeterline span{font-size:12px;line-height:1.45;font-weight:800}
+.worldmeterline strong{font-size:13px;white-space:nowrap;color:#b3f5d5}
+.worldmetertrack{height:9px;border-radius:100px;overflow:hidden;background:#2b5360}
+.worldmetertrack>div{height:100%;border-radius:100px;background:linear-gradient(90deg,#4cbf9e,#b5f0c5);transition:width .2s}
+.worldmetermini.compact{margin:0 0 13px}
+.worldmetermini.compact .worldmetertrack{height:7px}
+.worldclassicmeter{padding:14px 16px;background:#173a4c;border:1px solid #45767a;border-radius:11px;margin:15px 0}
+.riskadvancedpromo>div,.worldinteractivepromo>div,.worlddecisionentry>div{min-width:0;flex:1}
+.riskadvancedpromo .worldmetermini,.worldinteractivepromo .worldmetermini,.worlddecisionentry .worldmetermini{margin-bottom:13px}
+@media(max-width:760px){.worldprogresspanel{padding:16px 13px;gap:13px}
+.worldprogressheading{align-items:flex-start}.worldprogressheading h2{font-size:18px}
+.worldprogressnumber{min-width:75px;padding:8px}.worldprogressnumber strong{font-size:22px}
+.worldprogresssections{grid-template-columns:1fr}.worldprogresssection{min-height:75px}
+.worldmeterline{align-items:flex-start}.worldmeterline span{font-size:11px}.worldmeterline strong{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){.worldmetertrack>div{transition:none}}
