@@ -43,17 +43,18 @@ export function readWorldSections(game:CourseKey):ProgressSection[]{
   const count=safe(readInteractiveTraceProgress().completed.length,6);
   sections.push({id:'trace',name:'Interactive tracing graph investigations',done:count,total:6,detail:`${count}/6 clickable tracing missions completed`});
  }
- return sections;
+ const order=['classic','hands','decision','expanded','trace'];
+ return sections.sort((a,b)=>order.indexOf(a.id)-order.indexOf(b.id));
 }
 
-export default function WorldProgressOverview({game,onOpen}:{game:CourseKey;onOpen:(id:string)=>void}){
+export default function WorldProgressOverview({game,onOpen,canOpen,reason}:{game:CourseKey;onOpen:(id:string)=>void;canOpen?:(id:string)=>boolean;reason?:(id:string)=>string}){
  const sections=readWorldSections(game);
  const done=sections.reduce((a,s)=>a+s.done,0),total=sections.reduce((a,s)=>a+s.total,0);
  return <section className="worldprogresspanel" aria-label="Learning world completion dashboard">
   <div className="worldprogressheading"><div><span className="eyebrow">MY LEARNING PROGRESS</span><h2>World completion tracker</h2><p>Every activity has its own saved completion record. Select a section to resume it.</p></div><div className="worldprogressnumber"><strong>{Math.round(done/total*100)}%</strong><small>Overall completion</small></div></div>
   <CompletionMeter done={done} total={total} caption="All activities in this world"/>
-  <div className="worldprogresssections">{sections.map(section=><button key={section.id} type="button" onClick={()=>onOpen(section.id)} className="worldprogresssection">
-    <div className="worldprogresssectionhead"><strong>{section.name}</strong><span>{section.done===section.total?'✓ Complete':`${Math.round(section.done/section.total*100)}%`}</span></div>
+  <div className="worldprogresssections">{sections.map(section=><button key={section.id} type="button" onClick={()=>onOpen(section.id)} disabled={canOpen?!canOpen(section.id):false} title={canOpen&&!canOpen(section.id)?reason?.(section.id):undefined} className={"worldprogresssection"+(canOpen&&!canOpen(section.id)?" worldlocked":"")}>
+    <div className="worldprogresssectionhead"><strong>{section.name}</strong><span>{section.done===section.total?'✓ Complete':canOpen&&!canOpen(section.id)?'🔒 Locked':`${Math.round(section.done/section.total*100)}%`}</span></div>
     <div className="worldmetertrack" role="progressbar" aria-label={section.name} aria-valuenow={section.done} aria-valuemin={0} aria-valuemax={section.total}><div style={{width:Math.round(section.done/section.total*100)+'%'}}/></div>
     <small>{section.detail}</small>
   </button>)}</div>
