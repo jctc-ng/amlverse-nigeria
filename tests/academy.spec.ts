@@ -127,3 +127,40 @@ test('FATF Quest preserves previous R1–R10 achievements and progress is shown 
  await page.getByRole('button',{name:/My Progress/}).first().click();
  await expect(page.getByText('Recommendations 1–40')).toBeVisible();
 });
+
+test('Mobile expanded academy keeps Continue below the course information and opens the relevant lesson',async({page,isMobile})=>{
+ test.skip(!isMobile,'Reading-first layout applies to mobile viewport');
+ await page.goto('./');
+ await page.getByRole('button',{name:/RiskLab Arcade/}).last().click();
+ await page.getByRole('button',{name:/Enter expanded RiskLab/}).click();
+ const footer=page.locator('.mobilelessonfooter');
+ await expect(footer).toBeVisible();
+ expect(await page.evaluate(()=>{
+  const previous=document.querySelector('.riskadvancedwelcome');
+  const footer=document.querySelector('.mobilelessonfooter');
+  return !!previous&&!!footer&&!!(previous.compareDocumentPosition(footer)&Node.DOCUMENT_POSITION_FOLLOWING);
+ })).toBe(true);
+ await expect(footer.locator('.nextstepbar')).toHaveCSS('position','static');
+ await footer.getByRole('button',{name:/Resume next required activity/}).click();
+ await expect(page.locator('.riskadvancedlesson')).toBeVisible();
+ await expect.poll(()=>page.locator('.riskadvancedlesson').evaluate(el=>Math.round(el.getBoundingClientRect().top))).toBeLessThan(140);
+});
+test('Mobile lesson Continue reaches knowledge checker and checker advances question by question',async({page,isMobile})=>{
+ test.skip(!isMobile,'Exercise scroll and checker transition on mobile');
+ await page.goto('./');
+ await page.getByRole('button',{name:/RiskLab Arcade/}).last().click();
+ await page.getByRole('button',{name:/Enter expanded RiskLab/}).click();
+ await page.locator('.mobilelessonfooter').getByRole('button',{name:/Resume next required activity/}).click();
+ for(let i=0;i<3;i++){
+   await page.locator('.riskadvancedlesson').getByRole('button',{name:/Continue/}).click();
+ }
+ await page.locator('.riskadvancedlesson').getByRole('button',{name:/Continue to Foundations quiz/}).click();
+ await expect(page.locator('.riskadvancedassessment')).toBeVisible();
+ await expect(page.getByText('Question 1 / 10')).toBeVisible();
+ await page.locator('.riskadvancedassessment .choice').first().click();
+ await page.locator('.riskadvancedassessment').getByRole('button',{name:/Check answer/}).click();
+ await expect(page.locator('.riskadvancedassessment .feedback')).toBeVisible();
+ await page.locator('.riskadvancedassessment').getByRole('button',{name:/Next question/}).click();
+ await expect(page.getByText('Question 2 / 10')).toBeVisible();
+ await expect.poll(()=>page.locator('.riskadvancedassessment').evaluate(el=>Math.round(el.getBoundingClientRect().top))).toBeLessThan(140);
+});
