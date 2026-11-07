@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 test('Academy Overview and My Progress share a full milestone summary',async({page})=>{
  await page.goto('./');
  await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
- await expect(page.getByText(/Version 0\.31/)).toBeVisible();
+ await expect(page.getByText(/Version 0\.33/)).toBeVisible();
  await page.getByRole('button',{name:/My Progress/}).first().click();
  await expect(page.getByRole('heading',{name:/My Progress/})).toBeVisible();
  await expect(page.getByText(/learning activities completed/)).toBeVisible();
@@ -84,4 +84,46 @@ test('Mobile page offers usable navigation without horizontal scrolling',async({
  await page.getByRole('button',{name:/My Progress/}).first().click();
  await expect(page.getByRole('heading',{name:/My Progress/})).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+3)).toBe(true);
+});
+
+
+test('FATF Quest catalogue contains all forty recommendations and seven categories',async({page})=>{
+ await page.goto('./');
+ await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await expect(page.getByRole('heading',{name:'All 40 FATF Recommendations'})).toBeVisible();
+ await expect(page.locator('.fatf40tile')).toHaveCount(40);
+ await expect(page.locator('.fatf40groupbuttons button')).toHaveCount(8);
+ await page.getByLabel('Find a recommendation').fill('beneficial ownership');
+ await expect(page.locator('.fatf40tile').first()).toBeVisible();
+});
+test('FATF 40 provides implementation and analogous learning for new recommendations',async({page})=>{
+ await page.goto('./');
+ await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await page.locator('.fatf40tile').filter({hasText:'R.24'}).click();
+ await expect(page.getByRole('heading',{name:'Understand through an analogy'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Implementation process'})).toBeVisible();
+ await expect(page.locator('.fatf40steps button')).toHaveCount(4);
+ await page.getByRole('button',{name:/Complete study & start 3-question practice/}).click();
+ await expect(page.getByText('Question 1 / 3')).toBeVisible();
+});
+test('FATF Recommendation 6 humanitarian safeguards and Recommendation 16 transition notes',async({page})=>{
+ await page.goto('./');
+ await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await page.locator('.fatf40tile').filter({hasText:'R.6'}).click();
+ await expect(page.getByText(/humanitarian exemptions and basic-needs safeguards/i).first()).toBeVisible();
+ await page.getByRole('button',{name:/All forty Recommendations/}).click();
+ await page.locator('.fatf40tile').filter({hasText:'R.16'}).click();
+ await expect(page.getByText(/end of 2030/i).first()).toBeVisible();
+});
+test('FATF Quest preserves previous R1–R10 achievements and progress is shown in dashboard',async({page})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-fatf-ch1',JSON.stringify({'1':{score:2,total:2},'2':{score:1,total:2}}));
+ });
+ await page.goto('./');
+ await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await expect(page.getByText('1 / 40')).toBeVisible();
+ await page.getByRole('button',{name:/All forty Recommendations/}).count().then(async count=>{if(count)await page.getByRole('button',{name:/All forty Recommendations/}).click()});
+ await page.getByRole('button',{name:/Academy overview/}).first().click();
+ await page.getByRole('button',{name:/My Progress/}).first().click();
+ await expect(page.getByText('Recommendations 1–40')).toBeVisible();
 });
