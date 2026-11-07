@@ -35,7 +35,7 @@ export function readFatf(){
   const merged:Record<string,Outcome>={};
   for(let n=1;n<=40;n++){
    const k=String(n),a=old?.[k],b=extended.outcomes?.[k];
-   const valid=(x:Outcome|undefined)=>!!x&&Number.isFinite(x.score)&&Number.isFinite(x.total)&&x.total>0&&x.score>=0&&x.score<=x.total;
+   const valid=(x:Outcome|undefined):x is Outcome=>!!x&&Number.isFinite(x.score)&&Number.isFinite(x.total)&&x.total>0&&x.score>=0&&x.score<=x.total;
    if(valid(a)&&valid(b))merged[k]=a.score/a.total>=b.score/b.total?a:b;
    else if(valid(a))merged[k]=a;
    else if(valid(b))merged[k]=b;
