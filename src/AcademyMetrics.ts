@@ -1,4 +1,4 @@
-import {modules,readCourse,readScore,readFatf,readLegacy} from './progress';
+import {modules,readScore,readFatf,readLegacy} from './progress';
 import type {CourseKey} from './progress';
 import {readWorldSections} from './WorldProgressOverview';
 
