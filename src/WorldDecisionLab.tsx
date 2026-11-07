@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {decisionFiles} from './WorldDecisionFiles';
+import {CompletionMeter} from './CompletionMeter';
 import type {CourseKey} from './progress';
 
 const PREFIX='amlverse-world-decisions-v1-';
@@ -38,6 +39,8 @@ export default function WorldDecisionLab({game,onBack,onContinue}:{game:CourseKe
  <span className="eyebrow">AMLVERSE • PRACTICAL PROFESSIONAL INVESTIGATION</span>
  <h1 className="title">{data.title}</h1>
  <p className="lead">A three-stage fictional investigation. Examine the evidence, choose a defensible decision and see the analytical explanation before continuing.</p>
+ <CompletionMeter done={Number(saved.passed)} total={1} caption="Decision lab · saved completion"/>
+ <CompletionMeter done={finished?3:step} total={3} caption="Current investigation · decision stages" compact/>
  <div className="worlddecisionbrief">
   <h2>Case briefing</h2><p>{data.brief}</p>
   <div className="worlddecisionanalogy"><strong>💡 Understand the situation</strong><p>{data.analogy}</p></div>
