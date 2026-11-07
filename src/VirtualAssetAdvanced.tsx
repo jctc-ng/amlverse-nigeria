@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect,useState} from 'react';
 import {virtualLessons,virtualQuestions,virtualCases,virtualReferences} from './VirtualAssetContent';
 import type {VirtualTier,VirtualQuestion} from './VirtualAssetContent';
 import VirtualAssetGraphLesson,{TransactionStudyGraph} from './VirtualAssetGraphLesson';
@@ -23,6 +23,15 @@ type Mode='overview'|'lesson'|'quiz'|'simulation'|'interactive';
 export default function VirtualAssetAdvanced({onBack,onClassic,onNextCourse,initialMode}:{onBack:()=>void;onClassic:()=>void;onNextCourse:()=>void;initialMode?:'interactive'}){
  const [progress,setProgress]=useState<Progress>(getProgress);
  const [mode,setMode]=useState<Mode>(initialMode||'overview');
+ useEffect(()=>{
+  if(typeof window==='undefined'||!window.matchMedia('(max-width:760px)').matches)return;
+  if(mode!=='lesson'&&mode!=='quiz'&&mode!=='simulation')return;
+  const frame=window.requestAnimationFrame(()=>{
+   const target=document.querySelector(mode==='lesson'?'.riskadvancedlesson':'.riskadvancedassessment');
+   if(target)target.scrollIntoView({block:'start',behavior:'auto'});
+  });
+  return ()=>window.cancelAnimationFrame(frame);
+ },[mode,lessonIndex,qIndex,simIndex,finished]);
  const interactiveCount=readInteractiveTraceProgress().completed.length;
  const [tier,setTier]=useState<VirtualTier>('Foundations');
  const [lessonIndex,setLessonIndex]=useState(0);
