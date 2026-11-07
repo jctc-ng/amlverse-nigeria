@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 test('Academy Overview and My Progress share a full milestone summary',async({page})=>{
  await page.goto('./');
  await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
- await expect(page.getByText(/Version 0\\.35/)).toBeVisible();
+ await expect(page.getByText(/Version 0\.35/)).toBeVisible();
  await page.getByRole('button',{name:/My Progress/}).first().click();
  await expect(page.getByRole('heading',{name:/My Progress/})).toBeVisible();
  await expect(page.getByText(/learning activities completed/)).toBeVisible();
