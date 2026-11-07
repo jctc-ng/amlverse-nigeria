@@ -2,6 +2,8 @@ import {useState} from 'react';
 import {virtualLessons,virtualQuestions,virtualCases,virtualReferences} from './VirtualAssetContent';
 import type {VirtualTier,VirtualQuestion} from './VirtualAssetContent';
 import VirtualAssetGraphLesson,{TransactionStudyGraph} from './VirtualAssetGraphLesson';
+import InteractiveTracingLab from './InteractiveTracingLab';
+import {readInteractiveTraceProgress} from './InteractiveTracingLab';
 type Progress={lessonChecks:number[];visited:number[];quizBest:Record<VirtualTier,number>;quizPass:Record<VirtualTier,boolean>;simBest:Record<VirtualTier,number>;simPass:Record<VirtualTier,boolean>;attempts:Record<VirtualTier,number>};
 const tiers:VirtualTier[]=['Foundations','Intermediate','Advanced'];
 const key='amlverse-virtual-asset-advanced-v1';
@@ -17,10 +19,11 @@ function quizFor(tier:VirtualTier,attempt:number):QuizItem[]{
  const chosen=arrange(source,attempt*19+tiers.indexOf(tier)*71).slice(0,10);
  return chosen.map((q,i)=>({source:q,choices:arrange(q.options.map((text,original)=>({text,original})),i*21+attempt*17+3)}));
 }
-type Mode='overview'|'lesson'|'quiz'|'simulation';
+type Mode='overview'|'lesson'|'quiz'|'simulation'|'interactive';
 export default function VirtualAssetAdvanced({onBack,onClassic,onNextCourse}:{onBack:()=>void;onClassic:()=>void;onNextCourse:()=>void}){
  const [progress,setProgress]=useState<Progress>(getProgress);
  const [mode,setMode]=useState<Mode>('overview');
+ const interactiveCount=readInteractiveTraceProgress().completed.length;
  const [tier,setTier]=useState<VirtualTier>('Foundations');
  const [lessonIndex,setLessonIndex]=useState(0);
  const [quiz,setQuiz]=useState<QuizItem[]>([]);
@@ -81,8 +84,9 @@ export default function VirtualAssetAdvanced({onBack,onClassic,onNextCourse}:{on
  <span className="eyebrow">AMLVERSE 0.22 • EXPANDED VIRTUAL ASSET INVESTIGATION LEARNING</span><h1 className="title">Virtual Asset Academy 2.0 🔗</h1><p className="lead">Twelve professionally annotated graph lessons, five graph questions in every lesson, sixty tier questions and three expanded tracing simulations. Your original Virtual Asset game score and World Champion gift remain separate and unchanged.</p>
  <div className="riskadvancedtop"><div><small>ADVANCED CURRICULUM PROGRESS</small><strong>{completedSteps} / {totalSteps} milestones</strong></div><div className="riskadvancedprogress"><div style={{width:percent+'%'}}/></div><span>{percent}%</span></div>
  <div className="nextstepbar"><span>{recommendedTier?'Your next step: '+recommendedTier+' level':'All expanded Virtual Asset milestones complete'}</span><button type="button" className="primary" onClick={()=>recommendedTier?nextForTier(recommendedTier):onNextCourse()}>{recommendedTier?'Continue my learning →':'Continue to next world →'}</button></div>
+ <div className="riskadvancedpromo"><div><span className="eyebrow">NEW • CLICKABLE TRANSACTION INVESTIGATION</span><h2>Interactive Tracing Lab — 6 graph missions</h2><p>Select nodes and transaction paths directly, inspect evidence and build an accurate tracing conclusion. {interactiveCount}/6 missions completed. Progress and gifts are saved in this browser.</p></div><button type="button" className="primary" onClick={()=>{setMode('interactive');window.scrollTo(0,0)}}>Open interactive graph missions →</button></div>
  <div className="riskadvancednav"><button type="button" className={mode==='overview'?'active':''} onClick={()=>setMode('overview')}>Course Overview</button><button type="button" onClick={onClassic}>Classic Virtual Asset game →</button></div>
- {mode==='overview'?<>
+ {mode==='interactive'?<InteractiveTracingLab onBack={()=>{setMode('overview');window.scrollTo(0,0)}} onAdvance={()=>{setMode('overview');window.scrollTo(0,0)}}/>:mode==='overview'?<>
  <div className="riskadvancedwelcome"><h2>{mastered?'🏅 Advanced Virtual Asset Mastery Unlocked':'Three progressive learning levels'}</h2><p>Study four analogy-and-graph lessons and answer five graph questions in each (four correct to pass), then pass a 10-question assessment with at least 80%, and complete the tracing investigation simulation in each level. You can review lessons and retry questions at any time.</p></div>
  {tiers.map(t=>{const indexes=virtualLessons.map((l,i)=>l.tier===t?i:-1).filter(i=>i>=0);const count=indexes.filter(i=>progress.visited.includes(i)).length;return <section key={t} className="riskadvancedtier">
  <div className="riskadvancedtierhead"><div><span className="eyebrow">{t.toUpperCase()} LEVEL</span><h2>{t==='Foundations'?'Understand blockchains':t==='Intermediate'?'Trace and evaluate':'Investigate and report'}</h2><p>{count}/4 lessons explored · {indexes.filter(i=>progress.lessonChecks.includes(i)).length}/4 graph checks · Quiz best {progress.quizBest[t]}% · Simulation best {progress.simBest[t]}%</p></div><span>{count===4&&indexes.every(i=>progress.lessonChecks.includes(i))&&progress.quizPass[t]&&progress.simPass[t]?'✓ Completed':'In progress'}</span></div>
