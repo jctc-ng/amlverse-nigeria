@@ -334,11 +334,12 @@ test('Research sections and official references are accessible on desktop and mo
  await page.getByRole('tab',{name:'International pilot protocol'}).click();
  await expect(page.getByText(/This is a proposed evaluation protocol, not a completed study/)).toBeVisible();
  await expect(page.locator('.researchsourcesgrid article')).toHaveCount(4);
- await expect(page.locator('.researchengageactions a')).toHaveCount(2);
+ await expect(page.locator('.researchengageactions a')).toHaveCount(3);
  if(isMobile)expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+3)).toBe(true);
 });
-test('Project page offers copyable professional citation and returns to the learning town',async({page})=>{
+test('Project page offers copyable professional citation and returns to the learning town',async({page,isMobile})=>{
  await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Project & Research',exact:true}).click();
  await expect(page.getByText(/Adamu, M. \(2026\)/)).toBeVisible();
  await page.getByRole('button',{name:/Academy overview/}).click();
