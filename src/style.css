@@ -220,3 +220,39 @@
 .virtualflowarrow{font-size:21px;color:#ffdb8b}
 .virtualflowedge small{flex-basis:100%;text-align:center;color:#bfdae4;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
 @media(max-width:710px){.virtualflow{grid-template-columns:1fr}.virtualflowedge{padding:16px 12px}}
+
+/* v0.26 — Analogy-driven transaction graph lessons and five-question checks */
+.graphstudylesson{display:grid;gap:18px;margin-top:24px}
+.graphstudyexplainer{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.graphstudyanalogy,.graphstudyprofessional{border:1px solid #518881;border-radius:15px;padding:18px;background:linear-gradient(130deg,#1d4e4a,#143346)}
+.graphstudyanalogy{display:flex;gap:12px}.graphstudyanalogy>span{font-size:27px;flex-shrink:0}
+.graphstudyanalogy h3,.graphstudyprofessional h3{font-size:15px;color:#ddfff0;margin:0 0 10px}
+.graphstudyanalogy p,.graphstudyprofessional p{font-size:13px;line-height:1.85;color:#d1e6e6;margin:0}
+.graphstudyprofessional{background:linear-gradient(130deg,#1c374c,#193f4b)}
+.graphstudyfigure{border:1px solid #457c80;border-radius:15px;background:#0d2437;padding:17px;overflow:hidden}
+.graphstudyhead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.graphstudyhead>strong{font-size:15px;color:#dffaf2}
+.graphstudylegend{display:flex;gap:14px;flex-wrap:wrap;color:#b8d6d7;font-size:10px}
+.graphstudylegend>span{display:inline-flex;align-items:center;gap:6px}
+.graphedgeconfirmed,.graphedgeunverified{display:inline-block;width:20px;border-top:3px solid #82e4c7}
+.graphedgeunverified{border-top:3px dashed #e7bb77}
+.graphstudysvg{width:100%;height:auto;display:block;max-width:820px;margin:12px auto;background:#0d2032;border-radius:13px}
+.graphstudyedges{display:grid;gap:5px;padding:10px;border:1px solid #294c5d;border-radius:11px}
+.graphstudyedges>strong{font-size:11px;color:#b4e3df;letter-spacing:.5px}
+.graphstudyedges>div{display:grid;grid-template-columns:minmax(90px,1fr) minmax(100px,2fr) auto;align-items:center;gap:7px;padding:8px;border-bottom:1px solid #274357;font-size:11px}
+.graphstudyedges>div:last-child{border-bottom:0}
+.graphstudyedges b{color:#e8fcf7;overflow-wrap:anywhere}
+.graphstudyedges span{color:#c1d9e5;overflow-wrap:anywhere}
+.graphstudyedges small{padding:5px 9px;border-radius:8px;text-align:center;font-size:10px;white-space:nowrap}
+.graphconfirmed{background:#1b5448;color:#b7f5d6}
+.graphunverified{background:#4e3d2d;color:#ffe0b2}
+.graphstudycaption{font-size:11px!important;line-height:1.7!important;color:#9fbfc7!important;margin:11px 3px 0!important}
+.graphstudyquiz{border:1px solid #509482;background:linear-gradient(135deg,#123b45,#152e43);border-radius:15px;padding:21px}
+.graphstudyquiz h3{font-size:20px;line-height:1.4;margin:10px 0}
+.graphstudyquiz>p{color:#c3d9dc;font-size:13px;line-height:1.65}
+.graphstudyquizhead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.graphstudyquizhead strong{color:#89e7c9}
+.graphstudyquiz>.riskadvancedprogress{margin:15px 0}
+.graphstudyreminder{font-size:12px;color:#b6d8d8;line-height:1.7}
+@media(max-width:720px){.graphstudyexplainer{grid-template-columns:1fr}.graphstudyfigure,.graphstudyquiz{padding:12px}.graphstudyedges>div{grid-template-columns:1fr auto}.graphstudyedges>div span{grid-column:1/-1;grid-row:2}.graphstudyquiz .actions{display:flex;flex-direction:column}.graphstudyquiz .actions button{width:100%;min-height:48px}}
+@media(max-width:420px){.graphstudyhead{flex-direction:column;align-items:flex-start}.graphstudylegend{gap:7px}.graphstudyquiz h3{font-size:17px}}
