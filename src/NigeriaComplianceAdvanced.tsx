@@ -1,3 +1,4 @@
+import {isCourseUnlocked} from './LearningTownProgress';
 import {useEffect,useState} from 'react';
 import {nigeriaLessons,nigeriaQuestions,nigeriaCases,nigeriaReferences} from './NigeriaComplianceContent';
 import type {NigeriaTier,NigeriaQuestion} from './NigeriaComplianceContent';
@@ -53,9 +54,29 @@ export default function NigeriaComplianceAdvanced({onBack,onClassic,onNextCourse
  const completedSteps=progress.visited.length+tiers.filter(t=>progress.quizPass[t]).length+tiers.filter(t=>progress.simPass[t]).length;
  const percent=Math.round(100*completedSteps/totalSteps);
  const mastered=nigeriaAdvancedMastered(progress);
- function openLesson(index:number){setLessonIndex(index);setMode('lesson');setFinished(false);save(p=>({...p,visited:Array.from(new Set([...p.visited,index]))}));window.scrollTo(0,0)}
- function startQuiz(t:NigeriaTier){setTier(t);setQuiz(quizFor(t,progress.attempts[t]+1));setQIndex(0);setPicked(null);setChecked(false);setFinished(false);setCorrectCount(0);setReview([]);setMode('quiz');window.scrollTo(0,0)}
- function startSim(t:NigeriaTier){setTier(t);setSimAttempt(n=>n+1);setSimIndex(0);setSimScore(0);setPicked(null);setChecked(false);setFinished(false);setReview([]);setMode('simulation');window.scrollTo(0,0)}
+ const freeLearning=isCourseUnlocked('nigeria');
+ function tierAvailable(t:NigeriaTier){
+  if(freeLearning)return true;
+  const rank=tiers.indexOf(t);
+  if(rank===0)return true;
+  const prior=tiers[rank-1];
+  return nigeriaLessons.filter(l=>l.tier===prior).every((_,offset)=>progress.visited.includes((rank-1)*4+offset))&&progress.quizPass[prior]&&progress.simPass[prior];
+ }
+ function lessonAvailable(index:number){
+  if(freeLearning)return true;
+  if(!tierAvailable(nigeriaLessons[index].tier))return false;
+  return index%4===0||progress.visited.includes(index-1);
+ }
+ function quizAvailable(t:NigeriaTier){
+  if(freeLearning)return true;
+  return tierAvailable(t)&&nigeriaLessons.map((l,i)=>l.tier===t?i:-1).filter(i=>i>=0).every(i=>progress.visited.includes(i));
+ }
+ function simulationAvailable(t:NigeriaTier){
+  return freeLearning||(quizAvailable(t)&&progress.quizPass[t]);
+ }
+ function openLesson(index:number){if(!lessonAvailable(index))return;setLessonIndex(index);setMode('lesson');setFinished(false);save(p=>({...p,visited:Array.from(new Set([...p.visited,index]))}));window.scrollTo(0,0)}
+ function startQuiz(t:NigeriaTier){if(!quizAvailable(t))return;setTier(t);setQuiz(quizFor(t,progress.attempts[t]+1));setQIndex(0);setPicked(null);setChecked(false);setFinished(false);setCorrectCount(0);setReview([]);setMode('quiz');window.scrollTo(0,0)}
+ function startSim(t:NigeriaTier){if(!simulationAvailable(t))return;setTier(t);setSimAttempt(n=>n+1);setSimIndex(0);setSimScore(0);setPicked(null);setChecked(false);setFinished(false);setReview([]);setMode('simulation');window.scrollTo(0,0)}
  function finishQuiz(){
   const n=correctCount+(picked===question.choices.findIndex(c=>c.original===question.source.correct)?1:0);
   const result=Math.round(n/quiz.length*100);
@@ -92,10 +113,10 @@ export default function NigeriaComplianceAdvanced({onBack,onClassic,onNextCourse
  <div className="riskadvancednav"><button type="button" className={mode==='overview'?'active':''} onClick={()=>setMode('overview')}>Course Overview</button><button type="button" onClick={onClassic}>Classic Nigeria Compliance game →</button></div>
  {mode==='overview'?<>
  <div className="riskadvancedwelcome"><h2>{mastered?'🏅 Advanced Nigeria Compliance Mastery Unlocked':'Three progressive learning levels'}</h2><p>Complete the four lessons, pass a 10-question assessment with at least 80%, and complete the compliance case simulation in each level. You can review lessons and retry questions at any time.</p></div>
- {tiers.map(t=>{const indexes=nigeriaLessons.map((l,i)=>l.tier===t?i:-1).filter(i=>i>=0);const count=indexes.filter(i=>progress.visited.includes(i)).length;return <section key={t} className="riskadvancedtier">
- <div className="riskadvancedtierhead"><div><span className="eyebrow">{t.toUpperCase()} LEVEL</span><h2>{t==='Foundations'?'Understand obligations':t==='Intermediate'?'Apply compliance controls':'Analyse and report'}</h2><p>{count}/4 lessons explored · Quiz best {progress.quizBest[t]}% · Simulation best {progress.simBest[t]}%</p></div><span>{count===4&&progress.quizPass[t]&&progress.simPass[t]?'✓ Completed':'In progress'}</span></div>
- <div className="riskadvancedlessons">{indexes.map(i=><button type="button" key={i} onClick={()=>openLesson(i)}><span>{progress.visited.includes(i)?'✓':'📖'}</span><b>{nigeriaLessons[i].title}</b><small>Lesson {i+1}</small></button>)}</div>
- <div className="riskadvancedtieractions"><button type="button" className="secondary" onClick={()=>startQuiz(t)}>🧠 {progress.quizPass[t]?'Replay':'Take'} 10-question quiz</button><button type="button" className="secondary" onClick={()=>startSim(t)}>🎮 {progress.simPass[t]?'Replay':'Start'} case simulation</button></div>
+ {tiers.map(t=>{const indexes=nigeriaLessons.map((l,i)=>l.tier===t?i:-1).filter(i=>i>=0);const count=indexes.filter(i=>progress.visited.includes(i)).length;return <section key={t} className={"riskadvancedtier"+(!tierAvailable(t)?" riskadvancedtierlocked":"") }>
+ <div className="riskadvancedtierhead"><div><span className="eyebrow">{t.toUpperCase()} LEVEL</span><h2>{t==='Foundations'?'Understand obligations':t==='Intermediate'?'Apply compliance controls':'Analyse and report'}</h2><p>{count}/4 lessons explored · Quiz best {progress.quizBest[t]}% · Simulation best {progress.simBest[t]}%</p></div><span>{count===4&&progress.quizPass[t]&&progress.simPass[t]?'✓ Completed':!tierAvailable(t)?'🔒 Locked':'In progress'}</span></div>
+ <div className="riskadvancedlessons">{indexes.map(i=><button type="button" key={i} onClick={()=>openLesson(i)} disabled={!lessonAvailable(i)} title={!lessonAvailable(i)?"Finish the previous lesson and level first":undefined}><span>{progress.visited.includes(i)?'✓':'📖'}</span><b>{nigeriaLessons[i].title}</b><small>Lesson {i+1}</small></button>)}</div>
+ <div className="riskadvancedtieractions"><button type="button" className="secondary" onClick={()=>startQuiz(t)} disabled={!quizAvailable(t)} title={!quizAvailable(t)?"Finish this level’s four lessons first":undefined}>🧠 {progress.quizPass[t]?'Replay':'Take'} 10-question quiz</button><button type="button" className="secondary" onClick={()=>startSim(t)} disabled={!simulationAvailable(t)} title={!simulationAvailable(t)?"Pass this level’s knowledge check first":undefined}>🎮 {progress.simPass[t]?'Replay':'Start'} case simulation</button></div>
  </section>})}
  <div className="notice"><b>Assessment rules:</b> Each tier draws ten questions from a bank of twenty. Question and answer order change between attempts, with detailed explanations. Passing the expanded curriculum is a separate educational milestone and does not revoke existing Nigeria Compliance completion.</div>
  <div className="mobilelessonfooter"><p className="mobilelessonfootnote">You have reached the end of the course overview. Select Continue to resume the next required lesson, knowledge check or simulation. Passing the relevant assessment is necessary to unlock the next level.</p> <div className="nextstepbar"><span>{recommendedTier?'Current level: '+recommendedTier+' level':'All expanded Nigeria Compliance milestones complete'}</span><button type="button" className="primary" onClick={()=>recommendedTier?nextForTier(recommendedTier):onNextCourse()}>{recommendedTier?'Resume next required activity →':'Continue to next world →'}</button></div></div>
