@@ -351,7 +351,7 @@ test('Competency Lab baseline assesses twelve decisions and stores a private res
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Competency & Impact Lab',exact:true}).click();
  await expect(page.getByRole('heading',{name:'Competency & Learning Impact Lab'})).toBeVisible();
- await expect(page.getByRole('button',{name:/Start follow-up/})).toBeDisabled();
+ await expect(page.getByRole('button',{name:/Complete baseline first/})).toBeDisabled();
  await page.getByRole('button',{name:/Start baseline/}).click();
  await expect(page.getByText('Question 1 of 12')).toBeVisible();
  await expect(page.getByText(/Best response/)).toHaveCount(0);
@@ -404,7 +404,7 @@ test('Competency Lab compares twelve different follow-up items, exposes rubric a
  expect(csvText).toContain('Risk-based assessment');
  if(isMobile)expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+3)).toBe(true);
 });
-test('Competency evaluation reset requires typed confirmation and preserves unrelated academy results',async({page})=>{
+test('Competency evaluation reset requires typed confirmation and preserves unrelated academy results',async({page,isMobile})=>{
  await page.goto('./');
  await page.evaluate(()=>{
   const domains=['risk','ownership','evidence','cooperation','virtualassets','reporting'];
@@ -414,6 +414,7 @@ test('Competency evaluation reset requires typed confirmation and preserves unre
   localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0],checkPassed:false,checkAttempts:0,lastVisited:''}));
  });
  await page.reload();
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Competency & Impact Lab',exact:true}).click();
  await page.getByRole('button',{name:/Reset evaluation/}).click();
  await expect(page.getByRole('button',{name:'Delete evaluation results'})).toBeDisabled();
