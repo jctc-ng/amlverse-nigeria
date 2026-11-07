@@ -124,7 +124,7 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
  advancedtrace:{card:'SIM-TX-001: A → B',destination:'🔗 First traced hop',explanation:'Document the first transfer before exploring downstream flows.'},
  reportwriting:{card:'Five recorded credit transfers',destination:'📑 Documented finding',explanation:'Transaction records support observations; uncertainty and allegations belong in a separate category.'}
 };
-export default function LearningExperience({game,onBack,onNextCourse}:{game:Game;onBack:()=>void;onNextCourse:()=>void}){
+export default function LearningExperience({game,onBack,onNextCourse,initialSection}:{game:Game;onBack:()=>void;onNextCourse:()=>void;initialSection?:string}){
  const [stage,setStage]=useState<Stage>('learn');
  const [worldInteractive,setWorldInteractive]=useState(false);
  const [worldDecision,setWorldDecision]=useState(false);
@@ -159,6 +159,7 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
   window.scrollTo(0,0);
  }
 
+ useEffect(()=>{if(initialSection)resumeSection(initialSection)},[game,initialSection]);
  function submitCheck(){
   if(answer===null)return;
   const isCorrect=course.answers[answer].correct;
@@ -178,7 +179,7 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
  }
  if(worldDecision)return <WorldDecisionLab game={game} onBack={()=>setWorldDecision(false)} onContinue={()=>{setWorldDecision(false);navigate('play')}}/>;
  if(worldInteractive)return <InteractiveWorldChallenge game={game} onBack={()=>setWorldInteractive(false)} onPass={()=>{saveCourse(game,p=>({...p,checkPassed:true,checkAttempts:p.checkAttempts+1}));setConfirmedPass(true)}} onNext={()=>{setWorldInteractive(false);setWorldDecision(true);window.scrollTo(0,0)}}/>;
- if(game==='virtualassets'&&virtualAdvancedOpen)return <VirtualAssetAdvanced onBack={()=>setVirtualAdvancedOpen(false)} onClassic={()=>{setVirtualAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
+ if(game==='virtualassets'&&virtualAdvancedOpen)return <VirtualAssetAdvanced initialMode={initialSection==='trace'?'interactive':undefined} onBack={()=>setVirtualAdvancedOpen(false)} onClassic={()=>{setVirtualAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(game==='nigeria'&&nigeriaAdvancedOpen)return <NigeriaComplianceAdvanced onBack={()=>setNigeriaAdvancedOpen(false)} onClassic={()=>{setNigeriaAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>setAdvancedOpen(false)} onClassic={()=>{setAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(playing){
