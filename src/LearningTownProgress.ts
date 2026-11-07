@@ -44,6 +44,7 @@ export function resetCourseProgress(game:CourseKey){
  'amlverse-world-champion-v1-'+game,
  'amlverse-world-interactions-v1-'+game,
  'amlverse-world-decisions-v1-'+game,
+ 'amlverse-guide-v1-'+game,
  ];
  if(score)specific.push(score);
  if(game==='risk')specific.push('amlverse-risklab-advanced-v1');
