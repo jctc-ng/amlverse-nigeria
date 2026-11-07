@@ -522,3 +522,8 @@
  .riskadvancedlesson .actions,.riskadvancedassessment .actions,.knowledgecard .actions,.knowledgecheck .actions,.fatf40actions{position:static!important;bottom:auto!important;flex-direction:column;align-items:stretch}
  .riskadvancedlesson .actions button,.riskadvancedassessment .actions button,.knowledgecard .actions button,.knowledgecheck .actions button,.fatf40actions button{width:100%;min-height:48px}
 }
+
+/* v0.34 mobile knowledge-check orientation */
+.mobilequizhelp{border-left:3px solid #7bd7b3;background:#153b47;color:#c6e7df;border-radius:0 10px 10px 0;font-size:12px;line-height:1.8;padding:12px 15px;margin:15px 0 18px}
+.mobilequizhelp strong{color:#e9fff1}
+@media(min-width:761px){.mobilequizhelp{display:none}}
