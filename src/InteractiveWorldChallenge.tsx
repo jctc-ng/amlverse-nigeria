@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import type {CourseKey} from './progress';
 import {interactiveWorldCases} from './InteractiveWorldCases';
+import {CompletionMeter} from './CompletionMeter';
 
 const STORE='amlverse-world-interactions-v1-';
 export type WorldInteractionProgress={completed:number[];best:number};
@@ -61,8 +62,10 @@ export default function InteractiveWorldChallenge({game,onBack,onPass,onNext}:{g
   <span className="eyebrow">AMLVERSE • HANDS-ON EVIDENCE CHALLENGE</span>
   <h1 className="title">{worldNames[game]} — Interactive Cases</h1>
   <p className="lead">Study the fictional evidence, select a clue and assign it to the appropriate decision point. Every response requires an evidence-based classification, not a guess at a multiple-choice answer.</p>
+  <CompletionMeter done={progress.completed.length} total={3} caption="Interactive evidence challenges · saved completion"/>
   <div className="wcinteractiveprogress"><div><strong>{progress.completed.length}/3 cases completed</strong><span>Saved in this browser</span></div><div className="riskadvancedprogress"><div style={{width:(progress.completed.length/3*100)+'%'}}/></div></div>
   <div className="wcinteractivetabs" role="group" aria-label="Interactive case selector">{interactiveWorldCases[game].map((x,i)=><button key={i} type="button" className={caseIndex===i?'active':''} aria-current={caseIndex===i?'step':undefined} onClick={()=>{setCaseIndex(i);replay()}}><span>{progress.completed.includes(i)?'✓ ':'◈ '}{i+1}. {x.title}</span></button>)}</div>
+  <CompletionMeter done={done} total={3} caption={"Current case "+(caseIndex+1)+" · evidence decisions"} compact/>
   <section className="wcinteractivebrief"><div className="eyebrow">CASE {caseIndex+1} / 3</div><h2>{c.title}</h2><div className="wcinteractiveanalogy"><strong>💡 Understand the concept</strong><p>{c.analogy}</p></div><p>{c.instruction}</p></section>
   {!finished?<>
   {isTimeline?<div className="wcinteractivetimeline"><section><h3>Construct the investigation timeline</h3><p>Tap the evidence cards in their correct professional order. The cards are intentionally shuffled and each selection is checked before it is added.</p><div className="wcinteractivetimelinecards">{timelineIndices.map(i=><button key={i} type="button" disabled={timeline.includes(i)} onClick={()=>pickTimeline(i)} className={timeline.includes(i)?'assigned':''}><span>{timeline.includes(i)?'✓':'◈'}</span>{c.clues[i]}</button>)}</div></section><section><h3>Your investigation sequence · {timeline.length}/3</h3><div className="wcinteractivetimelinesteps">{c.targets.map((t,i)=><div key={i} className={timeline[i]!==undefined?'complete':''}><strong>{t}</strong><p>{timeline[i]!==undefined?c.clues[timeline[i]]:'Select the next evidence card'}</p></div>)}</div></section></div>:
