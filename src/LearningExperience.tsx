@@ -11,6 +11,7 @@ import RiskLabAdvanced from './RiskLabAdvanced';
 import NigeriaComplianceAdvanced from './NigeriaComplianceAdvanced';
 import VirtualAssetAdvanced from './VirtualAssetAdvanced';
 import InteractiveWorldChallenge from './InteractiveWorldChallenge';
+import WorldDecisionLab from './WorldDecisionLab';
 import {readCourse,saveCourse} from './progress';
 import WorldCompletion from './WorldCompletion';
 
@@ -124,6 +125,7 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
 export default function LearningExperience({game,onBack,onNextCourse}:{game:Game;onBack:()=>void;onNextCourse:()=>void}){
  const [stage,setStage]=useState<Stage>('learn');
  const [worldInteractive,setWorldInteractive]=useState(false);
+ const [worldDecision,setWorldDecision]=useState(false);
  const [playing,setPlaying]=useState(false);
  const [advancedOpen,setAdvancedOpen]=useState(false);
  const [nigeriaAdvancedOpen,setNigeriaAdvancedOpen]=useState(false);
@@ -158,7 +160,8 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
   setPlaying(true);
   window.scrollTo(0,0);
  }
- if(worldInteractive)return <InteractiveWorldChallenge game={game} onBack={()=>setWorldInteractive(false)} onPass={()=>{saveCourse(game,p=>({...p,checkPassed:true,checkAttempts:p.checkAttempts+1}));setConfirmedPass(true)}} onNext={()=>{setWorldInteractive(false);navigate('play')}}/>;
+ if(worldDecision)return <WorldDecisionLab game={game} onBack={()=>setWorldDecision(false)} onContinue={()=>{setWorldDecision(false);navigate('play')}}/>;
+ if(worldInteractive)return <InteractiveWorldChallenge game={game} onBack={()=>setWorldInteractive(false)} onPass={()=>{saveCourse(game,p=>({...p,checkPassed:true,checkAttempts:p.checkAttempts+1}));setConfirmedPass(true)}} onNext={()=>{setWorldInteractive(false);setWorldDecision(true);window.scrollTo(0,0)}}/>;
  if(game==='virtualassets'&&virtualAdvancedOpen)return <VirtualAssetAdvanced onBack={()=>setVirtualAdvancedOpen(false)} onClassic={()=>{setVirtualAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(game==='nigeria'&&nigeriaAdvancedOpen)return <NigeriaComplianceAdvanced onBack={()=>setNigeriaAdvancedOpen(false)} onClassic={()=>{setNigeriaAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>setAdvancedOpen(false)} onClassic={()=>{setAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
@@ -181,6 +184,7 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
  {game==='nigeria'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • EXPANDED NIGERIAN AML/CFT/CPF CURRICULUM</span><h2>Nigeria Compliance Academy 2.0 🇳🇬</h2><p>12 Nigeria-focused lessons · 60 questions · 3 simulations · sequential levels with completion gifts. Original progress is preserved.</p></div><button type="button" className="primary" onClick={()=>setNigeriaAdvancedOpen(true)}>Enter expanded Nigeria Compliance →</button></section>:null}
  {game==='risk'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • RISKLAB EXPANDED CURRICULUM</span><h2>RiskLab Academy 2.0</h2><p>12 lessons · 60 varied questions · 3 case simulations · Foundation to Advanced. Classic RiskLab progress remains unchanged.</p></div><button type="button" className="primary" onClick={()=>setAdvancedOpen(true)}>Enter expanded RiskLab →</button></section>:null}
  <section className="worldinteractivepromo"><div><span className="eyebrow">NEW • INTERACTIVE EVIDENCE INVESTIGATION</span><h2>Practise with real decisions, not just multiple-choice answers</h2><p>Three hands-on cases in this learning world. Select evidence cards, assign classifications, review feedback and continue directly to your game. Completing all three records the Quick Check as passed without removing earlier results.</p></div><button type="button" className="primary" onClick={()=>{setWorldInteractive(true);window.scrollTo(0,0)}}>Open interactive challenges →</button></section>
+ <div className="worlddecisionentry"><div><span className="eyebrow">NEW • SUBJECT-SPECIFIC INVESTIGATION</span><h2>Evidence dossier and three-stage decision lab</h2><p>Explore a realistic fictional case file, justify your decisions and receive detailed feedback. Practice risk, lawful cooperation, suspicious patterns, graph attribution or intelligence reporting, depending on the world.</p></div><button type="button" className="primary" onClick={()=>{setWorldDecision(true);window.scrollTo(0,0)}}>Launch decision investigation →</button></div>
  <nav className="knowledgeflow" aria-label="Learning stages">
   <button type="button" className={stage==='learn'?'active':''} aria-current={stage==='learn'?'step':undefined} onClick={()=>navigate('learn')}>① Learn</button>
   <button type="button" className={stage==='check'?'active':''} aria-current={stage==='check'?'step':undefined} onClick={()=>navigate('check')}>② Quick check</button>
