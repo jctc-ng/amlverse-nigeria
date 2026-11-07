@@ -19,15 +19,7 @@ type Mode='overview'|'lesson'|'quiz'|'simulation';
 export default function NigeriaComplianceAdvanced({onBack,onClassic,onNextCourse}:{onBack:()=>void;onClassic:()=>void;onNextCourse:()=>void}){
  const [progress,setProgress]=useState<Progress>(getProgress);
  const [mode,setMode]=useState<Mode>('overview');
- useEffect(()=>{
-  if(typeof window==='undefined'||!window.matchMedia('(max-width:760px)').matches)return;
-  if(mode!=='lesson'&&mode!=='quiz'&&mode!=='simulation')return;
-  const frame=window.requestAnimationFrame(()=>{
-   const target=document.querySelector(mode==='lesson'?'.riskadvancedlesson':'.riskadvancedassessment');
-   if(target)target.scrollIntoView({block:'start',behavior:'auto'});
-  });
-  return ()=>window.cancelAnimationFrame(frame);
- },[mode,lessonIndex,qIndex,simIndex,finished]);
+
  const [tier,setTier]=useState<NigeriaTier>('Foundations');
  const [lessonIndex,setLessonIndex]=useState(0);
  const [quiz,setQuiz]=useState<QuizItem[]>([]);
@@ -42,6 +34,15 @@ export default function NigeriaComplianceAdvanced({onBack,onClassic,onNextCourse
  const [review,setReview]=useState<{correct:boolean;prompt:string;why:string}[]>([]);
  const [giftTier,setGiftTier]=useState<NigeriaTier|null>(null);
  const [giftOpened,setGiftOpened]=useState(false);
+ useEffect(()=>{
+  if(typeof window==='undefined'||!window.matchMedia('(max-width:760px)').matches)return;
+  if(mode!=='lesson'&&mode!=='quiz'&&mode!=='simulation')return;
+  const frame=window.requestAnimationFrame(()=>{
+   const target=document.querySelector(mode==='lesson'?'.riskadvancedlesson':'.riskadvancedassessment');
+   if(target)target.scrollIntoView({block:'start',behavior:'auto'});
+  });
+  return ()=>window.cancelAnimationFrame(frame);
+ },[mode,lessonIndex,qIndex,simIndex,finished]);
  function save(fn:(x:Progress)=>Progress){setProgress(old=>{const updated=fn(old);try{localStorage.setItem(key,JSON.stringify(updated))}catch{}return updated})}
  const lesson=nigeriaLessons[lessonIndex];
  const caseFile=nigeriaCases.find(c=>c.tier===tier)!;
