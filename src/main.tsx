@@ -34,7 +34,7 @@ function App(){
  function next(){if(index<active.scenarios.length-1){setIndex(index+1);setAnswer(null);setSubmitted(false)}else{setSaved(prev=>({...prev,[active.id]:{complete:true,xp:Math.max(earned,prev[active.id]?.xp||0)}}));setScreen('home')}window.scrollTo(0,0)}
  function submit(){if(answer===null)return;setSubmitted(true);if(scenario.choices[answer].correct)setEarned(p=>p+100)}
  return <div className="shell">
- <AcademyNavigation screen={screen} onNavigate={next=>{setScreen(next);window.scrollTo(0,0)}}/>
+ <AcademyNavigation screen={screen} onNavigate={next=>{setResumeTarget(null);setScreen(next);window.scrollTo(0,0)}}/>
  <div className="page"><header><div className="mobilebrand">✦ AMLVERSE <span>NIGERIA</span></div><div className="headeritems"><span className="demo">● PUBLIC DEMO</span><div className="avatar">LE</div></div></header>
  {screen==='home'?<AcademyOverview openCourse={openCourse} openFatf={()=>setScreen('chapter')} openProgress={()=>setScreen('progress')} openResources={()=>setScreen('resources')} openCapstone={()=>setScreen('capstone')}/>
  :screen==='progress'?<ProgressDashboard onBack={()=>setScreen('home')} onOpen={openCourse} onFatf={()=>setScreen('chapter')} onCapstone={()=>setScreen('capstone')}/>
