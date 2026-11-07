@@ -508,3 +508,17 @@
 .fatf40header,.fatf40lessonmeter{align-items:flex-start}
 }
 @media(max-width:380px){.fatf40stats>div{padding:12px}.fatf40stats strong{font-size:20px}}
+
+/* v0.34: mobile reading-first navigation. Continue follows content, never overlays it. */
+.mobilelessonfooter{margin:25px 0 10px;padding-top:5px}
+.mobilelessonfootnote{font-size:12px;line-height:1.8;color:#b6d9d9;margin:0 0 12px}
+.mobilelessonfooter .nextstepbar{position:static;bottom:auto;box-shadow:none}
+@media(max-width:760px){
+ .nextstepbar{position:static!important;bottom:auto!important;z-index:auto!important;box-shadow:none!important;margin:18px 0 12px!important;padding:14px!important}
+ .nextstepbar button{width:100%;min-height:49px}
+ .championactions{position:static!important;bottom:auto!important}
+ .mobilelessonfooter{margin:25px 0 15px}
+ .mobilelessonfootnote{background:#12364a;border-left:3px solid #80d8b6;padding:12px 14px;border-radius:0 9px 9px 0}
+ .riskadvancedlesson .actions,.riskadvancedassessment .actions,.knowledgecard .actions,.knowledgecheck .actions,.fatf40actions{position:static!important;bottom:auto!important;flex-direction:column;align-items:stretch}
+ .riskadvancedlesson .actions button,.riskadvancedassessment .actions button,.knowledgecard .actions button,.knowledgecheck .actions button,.fatf40actions button{width:100%;min-height:48px}
+}
