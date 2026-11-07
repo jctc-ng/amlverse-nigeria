@@ -202,15 +202,18 @@ test('Guided RiskLab locks future lessons and checker until preceding lessons co
  await expect(page.getByRole('button',{name:/③ Play/})).toBeDisabled();
 });
 test('Reset Course requires RESET and deletes only that course progress',async({page})=>{
- await page.addInitScript(()=>{
+ await page.goto('./');
+ await page.evaluate(()=>{
   localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:4,lastVisited:''}));
   localStorage.setItem('amlverse-arcade-risk','80');
   localStorage.setItem('amlverse-risklab-advanced-v1',JSON.stringify({visited:[0,1]}));
+  localStorage.setItem('amlverse-world-champion-v1-risk','yes');
   localStorage.setItem('amlverse-course-v1-team',JSON.stringify({lessons:[0],checkPassed:false,checkAttempts:0,lastVisited:''}));
   localStorage.setItem('amlverse-fatf-ch1',JSON.stringify({'1':{score:2,total:2}}));
  });
- await page.goto('./');
+ await page.reload();
  await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
+ await page.getByRole('button',{name:/Back to RiskLab/}).click();
  await page.getByRole('button',{name:/Reset course progress/}).click();
  await expect(page.getByRole('button',{name:'Delete this course progress'})).toBeDisabled();
  await page.getByLabel(/Type RESET/).fill('RESET');
@@ -220,15 +223,18 @@ test('Reset Course requires RESET and deletes only that course progress',async({
   risk:localStorage.getItem('amlverse-course-v1-risk'),
   score:localStorage.getItem('amlverse-arcade-risk'),
   advanced:localStorage.getItem('amlverse-risklab-advanced-v1'),
+  champion:localStorage.getItem('amlverse-world-champion-v1-risk'),
   team:localStorage.getItem('amlverse-course-v1-team'),
   fatf:localStorage.getItem('amlverse-fatf-ch1')
  }));
  expect(values.risk).toBeNull();
  expect(values.score).toBeNull();
  expect(values.advanced).toBeNull();
+ expect(values.champion).toBeNull();
  expect(values.team).not.toBeNull();
  expect(values.fatf).not.toBeNull();
 });
+
 test('Unlock all courses exposes all districts and restores guided mode',async({page})=>{
  await page.goto('./');
  await page.getByRole('button',{name:/Unlock all courses/}).click();
