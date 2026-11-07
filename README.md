@@ -294,3 +294,15 @@ Expanded, sequenced Nigeria-focused AML/CFT/CPF educational programme, available
 - The existing three-lesson Nigeria Compliance world, original mission score and World Champion celebration are preserved. This educational prototype does not collect or process real FIU data.
 
 Primary references: [NFIU legislation and regulations](https://nfiu.gov.ng/LawsAndRegulations), [NFIU reporting FAQs](https://nfiu.gov.ng/Faqs), [SCUML regulations](https://scuml.efcc.gov.ng/laws-regulations/), and [Nigeria Sanctions Committee rules](https://nigsac.gov.ng/Regulations). Confirm current legal provisions and sector-specific operational details before institutional use.
+
+## Virtual Asset Academy 2.0 — v0.25
+Expansion of the original beginner Virtual Asset Academy with deeper, **sequential** blockchain investigation training:
+- **12 lessons** across Foundations (ledger records, wallets, keys, transaction hashes and tokens), Intermediate (multi-hop traces, UTXO vs account models, exchange deposit touchpoints and bridges), and Advanced (clustering, privacy indicators, preservation, lawful requests and qualified financial intelligence).
+- **60 original practice questions**, 20 per level. Each ten-question attempt shuffles the question set and answer positions, explains decisions and saves quiz best scores, with an 80% pass requirement.
+- **Three fictional investigation simulations** with explicit mobile-responsive transaction-flow panels: Wallet Identity and Transactions; Branches and Exchange Deposit Lead; Cross-chain Attribution and FIU Reporting. Two correct decisions of three are required for the simulation milestone.
+- **Sequential navigation:** Four lessons → 10-question quiz → synthetic case simulation → level gift → Continue to next level. From the final expanded Virtual Asset level, learners can continue to **Advanced Cryptocurrency Tracing**.
+- **Independent saved progress** via `amlverse-virtual-asset-advanced-v1`, tracking 12 lesson visits, three passed quizzes and three passed simulations (18 milestones). The **Virtual Asset Advanced Master** achievement is visible in My Progress.
+- Original Virtual Asset Academy beginner training, best scores and World Champion gifts remain unchanged. No wallet addresses or real-world financial intelligence are collected.
+- Reference links to [FATF virtual assets](https://www.fatf-gafi.org/en/topics/virtual-assets.html) and [FATF virtual-asset red flags](https://www.fatf-gafi.org/en/publications/Methodsandtrends/Virtual-assets-red-flag-indicators.html).
+
+The exercise demonstrates blockchain concepts and investigative limitations only. It is not a live tracing service, authoritative attribution engine or formal investigation report.
