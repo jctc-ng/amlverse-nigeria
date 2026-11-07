@@ -1,4 +1,4 @@
-import {worldAccessible,worldMilestones,sectionUnlockReason} from './LearningTownProgress';
+import {worldAccessible,worldMilestones,sectionUnlockReason,allCoursesUnlocked} from './LearningTownProgress';
 import React,{useEffect,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {worlds,references} from './data';
@@ -29,16 +29,23 @@ function App(){
  const completed=Object.values(saved).filter(x=>x.complete).length;
  const xp=Object.values(saved).reduce((sum,x)=>sum+x.xp,0);
  const scenario=active.scenarios[index];
+ function canStartCapstone(){return allCoursesUnlocked()||(['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'] as CourseKey[]).every(id=>{const w=worldMilestones(id);return w.done===w.total})}
+ function navigateScreen(next:Screen){
+  const courseId=(next==='risklab'?'risk':['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'].includes(next)?next:null) as CourseKey|null;
+  if(courseId){openCourse(courseId);return}
+  if(next==='capstone'&&!canStartCapstone()){window.alert('Complete all nine learning districts to unlock the Capstone, or select Unlock all courses in Learning Town.');setScreen('home');return}
+  setResumeTarget(null);setScreen(next);window.scrollTo(0,0);
+ }
  function openCourse(id:CourseKey,section?:string){if(!worldAccessible(id)){window.alert(sectionUnlockReason(id,'classic')+' Use the Learning Town Unlock this course button to explore it early.');setScreen('home');return}setResumeTarget(section?{id,section}:null);setScreen(id==='risk'?'risklab':id);window.scrollTo(0,0)}
- function advanceCourse(id:CourseKey){const next=nextLearningWorld(id);if(next){if(worldAccessible(next))openCourse(next);else{const w=worldMilestones(id);window.alert('This district is '+w.done+'/'+w.total+' complete. Finish its remaining activities to unlock the next district, or use Unlock this course in Learning Town.');setScreen('home');window.scrollTo(0,0)}}else{setScreen('capstone');window.scrollTo(0,0)}}
+ function advanceCourse(id:CourseKey){const next=nextLearningWorld(id);if(next){if(worldAccessible(next))openCourse(next);else{const w=worldMilestones(id);window.alert('This district is '+w.done+'/'+w.total+' complete. Finish its remaining activities to unlock the next district, or use Unlock this course in Learning Town.');setScreen('home');window.scrollTo(0,0)}}else{navigateScreen('capstone')}}
  function openWorld(w:World){setActive(w);setIndex(0);setAnswer(null);setSubmitted(false);setEarned(0);setScreen('mission');window.scrollTo(0,0)}
  function next(){if(index<active.scenarios.length-1){setIndex(index+1);setAnswer(null);setSubmitted(false)}else{setSaved(prev=>({...prev,[active.id]:{complete:true,xp:Math.max(earned,prev[active.id]?.xp||0)}}));setScreen('home')}window.scrollTo(0,0)}
  function submit(){if(answer===null)return;setSubmitted(true);if(scenario.choices[answer].correct)setEarned(p=>p+100)}
  return <div className="shell">
- <AcademyNavigation screen={screen} onNavigate={next=>{setResumeTarget(null);setScreen(next);window.scrollTo(0,0)}}/>
+ <AcademyNavigation screen={screen} onNavigate={navigateScreen}/>
  <div className="page"><header><div className="mobilebrand">✦ AMLVERSE <span>NIGERIA</span></div><div className="headeritems"><span className="demo">● PUBLIC DEMO</span><div className="avatar">LE</div></div></header>
- {screen==='home'?<AcademyOverview openCourse={openCourse} openFatf={()=>setScreen('chapter')} openProgress={()=>setScreen('progress')} openResources={()=>setScreen('resources')} openCapstone={()=>setScreen('capstone')}/>
- :screen==='progress'?<ProgressDashboard onBack={()=>setScreen('home')} onOpen={openCourse} onFatf={()=>setScreen('chapter')} onCapstone={()=>setScreen('capstone')}/>
+ {screen==='home'?<AcademyOverview openCourse={openCourse} openFatf={()=>setScreen('chapter')} openProgress={()=>setScreen('progress')} openResources={()=>setScreen('resources')} openCapstone={()=>navigateScreen('capstone')}/>
+ :screen==='progress'?<ProgressDashboard onBack={()=>setScreen('home')} onOpen={openCourse} onFatf={()=>setScreen('chapter')} onCapstone={()=>navigateScreen('capstone')}/>
  :screen==='chapter'?<FatfChapter onBack={()=>setScreen('home')}/>
  :screen==='risklab'?<LearningExperience key={"risk"+(resumeTarget?.id==="risk"?resumeTarget.section:'')} game="risk" initialSection={resumeTarget?.id==="risk"?resumeTarget.section:undefined} onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('risk')}/>
  :screen==='team'?<LearningExperience key={"team"+(resumeTarget?.id==="team"?resumeTarget.section:'')} game="team" initialSection={resumeTarget?.id==="team"?resumeTarget.section:undefined} onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('team')}/>
