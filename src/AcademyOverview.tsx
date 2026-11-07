@@ -5,7 +5,7 @@ import {readAcademyMetrics} from './AcademyMetrics';
 import type {CourseKey} from './progress';
 import {hasCelebrated} from './WorldCompletion';
 
-type Props={openCourse:(id:CourseKey,section?:string)=>void;openFatf:()=>void;openProgress:()=>void;openResources:()=>void;openCapstone:()=>void};
+type Props={openCourse:(id:CourseKey,section?:string)=>void;openFatf:()=>void;openProgress:()=>void;openResources:()=>void;openCapstone:()=>void;openResearch:()=>void};
 const descriptions:Record<CourseKey,{subtitle:string;description:string;color:string;label:string}>={
  risk:{subtitle:'Risk Assessment',description:'Identify threats, vulnerabilities and safeguards with a risk-based approach.',color:'#e4bd72',label:'FOUNDATIONS'},
  team:{subtitle:'Interagency Cooperation',description:'Match FIU analysts, supervisors, investigators and prosecutors to their roles.',color:'#72dcc2',label:'FOUNDATIONS'},
@@ -22,7 +22,7 @@ const tracks:{id:string;label:string;description:string;keys:CourseKey[]}[]=[
 {id:'intelligence',label:'Financial Intelligence & Cooperation',description:'Understand red flags, authorised sharing and Nigerian compliance responsibilities.',keys:['egmont','typologies','nigeria']},
 {id:'investigations',label:'Blockchain Investigation & Reporting',description:'Trace synthetic transactions and communicate evidence-based findings.',keys:['virtualassets','advancedtrace','reportwriting']}
 ];
-export default function AcademyOverview({openCourse,openFatf,openProgress,openResources,openCapstone}:Props){
+export default function AcademyOverview({openCourse,openFatf,openProgress,openResources,openCapstone,openResearch}:Props){
  const metrics=readAcademyMetrics();
  const courseCards=metrics.worlds.map(m=>{const learning=readCourse(m.id);return {...m,...descriptions[m.id],steps:m.done,lessons:learning.lessons.length,passed:learning.checkPassed,done:m.done===m.total,celebrated:hasCelebrated(m.id)}}); 
  const finished=metrics.fullWorlds;
@@ -56,6 +56,7 @@ export default function AcademyOverview({openCourse,openFatf,openProgress,openRe
  <section className="capstonefeature"><div><span className="eyebrow">NEW • VIRTUAL ASSET INVESTIGATION CURRICULUM</span><h2>🔗 Virtual Asset Academy 2.0</h2><p>Twelve analogy-led lessons with annotated graphs and five questions each, plus six interactive tracing investigations where learners tap wallets and transaction edges. Practice routing, change outputs, exchanges, cross-chain links and uncertainty.</p><div className="capstonefeaturefacts"><span>Foundations</span><span>Intermediate</span><span>Advanced</span></div><button className="primary" type="button" onClick={()=>openCourse('virtualassets')}>Explore Virtual Asset Academy →</button></div><span className="capstonefeatureart" aria-hidden="true">🔗</span></section>
  <section className="capstonefeature"><div><span className="eyebrow">NEW • PROFESSIONAL DECISION INVESTIGATIONS</span><h2>🗂️ Nine Evidence Dossier Simulations</h2><p>Go beyond card matching: examine fictional records, assess uncertainty and make three sequential investigative decisions in every world. Each dossier has contextual feedback and a saved competency score.</p><div className="capstonefeaturefacts"><span>9 case files</span><span>27 decisions</span><span>Mobile-friendly</span></div><button className="primary" type="button" onClick={()=>openCourse('typologies')}>Try an investigation →</button></div><span className="capstonefeatureart" aria-hidden="true">🗂️</span></section>
  <section className="academyresources"><div><span className="eyebrow">GROUNDED LEARNING</span><h2>From concepts to responsible decisions</h2><p>Lessons reference authoritative AML/CFT/CPF resources. Practice cases are entirely synthetic, and badges are educational achievements rather than professional certifications.</p></div><button className="secondary" type="button" onClick={openResources}>Explore official resources →</button></section>
+ <section className="researchteaser"><div><span className="eyebrow">FOR INTERNATIONAL EDUCATORS AND REVIEWERS</span><h2>Meet the project. Review the methodology. Help validate the learning.</h2><p>Discover AMLVERSE's independent creator, its evidence-led teaching approach, authoritative sources, and a proposed framework for external evaluation and practitioner collaboration.</p></div><button className="primary" type="button" onClick={openResearch}>Explore Project & Research →</button></section>
  <div className="notice"><b>Independent educational prototype.</b> No real financial intelligence, customer records, wallet investigations or restricted agency data should be entered. Review legal and technical material against current authoritative guidance before institutional use. Progress is saved in this browser.</div>
  </main>;
 }
