@@ -47,7 +47,7 @@ export function resetCourseProgress(game:CourseKey){
  ];
  if(score)specific.push(score);
  if(game==='risk')specific.push('amlverse-risklab-advanced-v1');
- if(game==='nigeria')specific.push('amlverse-nigeria-advanced-v1');
+ if(game==='nigeria')specific.push('amlverse-nigeria-compliance-advanced-v1');
  if(game==='virtualassets')specific.push('amlverse-virtual-asset-advanced-v1','amlverse-interactive-tracing-v1');
  for(const key of specific){try{localStorage.removeItem(key)}catch{}}
  // Legacy tutorial achievements use an independent map. Clear only the matching world key.
