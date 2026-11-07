@@ -6,6 +6,8 @@ Gamified AML/CFT/CPF learning and simulation platform prototype for financial in
 
 **Status:** Public educational prototype, not an official NFIU publication, professional accreditation, or endorsed programme of FATF, Egmont Group or UNODC.
 
+**Professional Competency & Learning Impact Lab (v0.38):** Two independent twelve-question fictional assessment forms across six domains (baseline and follow-up), self-confidence ratings, transparent descriptive percentage-point comparisons, a detailed reasoning review and privacy-safe CSV/JSON summaries. Results remain browser-local and do not imply certification, psychometrically validated scores or proven training effects. [Full methodology and pilot safeguards](docs/COMPETENCY_IMPACT_METHODOLOGY.md).
+
 **Project & Research:** Open the live site and select **Project & Research** for project attribution, training methodology, reviewer invitation, source governance and a proposed institutional pilot protocol.
 
 **International review framework:** [docs/INTERNATIONAL_REVIEW_AND_PILOT.md](docs/INTERNATIONAL_REVIEW_AND_PILOT.md). Submit corrections or pilot proposals via the [public issue templates](https://github.com/jctc-ng/amlverse-nigeria/issues/new/choose). Never include restricted intelligence or personal data.
