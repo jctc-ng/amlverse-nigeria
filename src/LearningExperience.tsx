@@ -9,6 +9,7 @@ import AdvancedTracingLab from './AdvancedTracingLab';
 import ReportWritingLab from './ReportWritingLab';
 import RiskLabAdvanced from './RiskLabAdvanced';
 import NigeriaComplianceAdvanced from './NigeriaComplianceAdvanced';
+import VirtualAssetAdvanced from './VirtualAssetAdvanced';
 import {readCourse,saveCourse} from './progress';
 import WorldCompletion from './WorldCompletion';
 
@@ -124,6 +125,7 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
  const [playing,setPlaying]=useState(false);
  const [advancedOpen,setAdvancedOpen]=useState(false);
  const [nigeriaAdvancedOpen,setNigeriaAdvancedOpen]=useState(false);
+ const [virtualAdvancedOpen,setVirtualAdvancedOpen]=useState(false);
  const [topic,setTopic]=useState(0);
  const [answer,setAnswer]=useState<number|null>(null);
  const [showFeedback,setShowFeedback]=useState(false);
@@ -154,6 +156,7 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
   setPlaying(true);
   window.scrollTo(0,0);
  }
+ if(game==='virtualassets'&&virtualAdvancedOpen)return <VirtualAssetAdvanced onBack={()=>setVirtualAdvancedOpen(false)} onClassic={()=>{setVirtualAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(game==='nigeria'&&nigeriaAdvancedOpen)return <NigeriaComplianceAdvanced onBack={()=>setNigeriaAdvancedOpen(false)} onClassic={()=>{setNigeriaAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>setAdvancedOpen(false)} onClassic={()=>{setAdvancedOpen(false);navigate('play')}} onNextCourse={onNextCourse}/>;
  if(playing){
@@ -171,6 +174,7 @@ export default function LearningExperience({game,onBack,onNextCourse}:{game:Game
  <span className="eyebrow">AMLVERSE • LEARN • QUICK CHECK • PLAY</span>
  <h1 className="title">{course.name}</h1><p className="lead">{course.goal}</p>
  <WorldCompletion game={game} trigger={true} onContinue={onNextCourse}/>
+ {game==='virtualassets'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • VIRTUAL ASSET INVESTIGATION ACADEMY 2.0</span><h2>Virtual Asset Academy 2.0 🔗</h2><p>12 lessons · 60 randomized questions · 3 transaction-flow simulations. Continue from level to level with mobile-friendly achievement gifts.</p></div><button className="primary" type="button" onClick={()=>setVirtualAdvancedOpen(true)}>Enter expanded Virtual Asset Academy →</button></section>:null}
  {game==='nigeria'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • EXPANDED NIGERIAN AML/CFT/CPF CURRICULUM</span><h2>Nigeria Compliance Academy 2.0 🇳🇬</h2><p>12 Nigeria-focused lessons · 60 questions · 3 simulations · sequential levels with completion gifts. Original progress is preserved.</p></div><button type="button" className="primary" onClick={()=>setNigeriaAdvancedOpen(true)}>Enter expanded Nigeria Compliance →</button></section>:null}
  {game==='risk'?<section className="riskadvancedpromo"><div><span className="eyebrow">NEW • RISKLAB EXPANDED CURRICULUM</span><h2>RiskLab Academy 2.0</h2><p>12 lessons · 60 varied questions · 3 case simulations · Foundation to Advanced. Classic RiskLab progress remains unchanged.</p></div><button type="button" className="primary" onClick={()=>setAdvancedOpen(true)}>Enter expanded RiskLab →</button></section>:null}
  <nav className="knowledgeflow" aria-label="Learning stages">
