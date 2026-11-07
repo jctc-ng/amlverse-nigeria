@@ -25,6 +25,10 @@ export function csvProgress(){
   [w.title,'OVERALL',w.done,w.total,w.percent,w.done===w.total?'Complete':'In progress',w.score,w.classicDone?'Yes':'No'],
   ...w.sections.map(s=>[w.title,s.name,s.done,s.total,Math.round(s.done/s.total*100),s.done===s.total?'Complete':s.detail,w.score,w.classicDone?'Yes':'No'])
  ])];
+ try{const x=JSON.parse(localStorage.getItem('amlverse-capstone-v1')||'{}') as {best?:number;passed?:boolean};const pass=x.passed===true;rows.push(['Integrated Capstone','Final challenge',Number(pass),1,pass?100:0,pass?'Passed':'Not yet passed',typeof x.best==='number'?x.best:0,'Not applicable']);}catch{rows.push(['Integrated Capstone','Final challenge',0,1,0,'Not yet passed',0,'Not applicable'])}
+ const fatf=a.fatf;
+ rows.push(['FATF Quest','Recommendation lessons attempted',fatf.attempted,10,Math.min(100,Math.round(fatf.attempted/10*100)),fatf.attempted+'/10 attempted',fatf.earned,'Not applicable']);
+ rows.push(['FATF Quest','Perfect recommendation lessons',fatf.perfect,10,Math.min(100,Math.round(fatf.perfect/10*100)),fatf.perfect+'/10 perfect',fatf.earned,'Not applicable']);
  const esc=(v:string|number)=>'"'+String(v).replace(/"/g,'""')+'"';
  return '\uFEFF'+rows.map(row=>row.map(esc).join(',')).join('\r\n');
 }
