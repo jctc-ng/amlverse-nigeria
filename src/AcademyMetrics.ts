@@ -1,3 +1,4 @@
+import {sectionAccessible,worldAccessible} from './LearningTownProgress';
 import {modules,readScore,readFatf,readLegacy} from './progress';
 import type {CourseKey} from './progress';
 import {readWorldSections} from './WorldProgressOverview';
@@ -9,7 +10,7 @@ export function readAcademyMetrics(){
   const done=sections.reduce((n,s)=>n+s.done,0);
   const total=sections.reduce((n,s)=>n+s.total,0);
   const classic=sections.find(s=>s.id==='classic');
-  const resume=sections.find(s=>s.done<s.total)?.id||null;
+  const resume=worldAccessible(m.id)?sections.find(s=>s.done<s.total&&sectionAccessible(m.id,s.id))?.id||null:null;
   return {id:m.id,title:m.title,icon:m.icon,score:readScore(m.scoreKey),done,total,percent:Math.round(done/total*100),classicDone:classic?.done===classic?.total,sections,resume};
  });
  const done=worlds.reduce((n,w)=>n+w.done,0),total=worlds.reduce((n,w)=>n+w.total,0);
