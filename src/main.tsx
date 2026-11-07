@@ -1,3 +1,5 @@
+import LockedDistrictDialog from './LockedDistrictDialog';
+import {setCourseUnlocked} from './LearningTownProgress';
 import {worldAccessible,worldMilestones,sectionUnlockReason,allCoursesUnlocked} from './LearningTownProgress';
 import React,{useEffect,useState} from 'react';
 import {createRoot} from 'react-dom/client';
@@ -18,6 +20,7 @@ type Screen='home'|'mission'|'resources'|'chapter'|'risklab'|'team'|'evaluation'
 type Saved=Record<string,{xp:number;complete:boolean}>;
 function App(){
  const [screen,setScreen]=useState<Screen>('home');
+ const [lockedTarget,setLockedTarget]=useState<CourseKey|null>(null);
  const [resumeTarget,setResumeTarget]=useState<{id:CourseKey;section:string}|null>(null);
  const [active,setActive]=useState<World>(worlds[0]);
  const [index,setIndex]=useState(0);
@@ -36,8 +39,8 @@ function App(){
   if(next==='capstone'&&!canStartCapstone()){window.alert('Complete all nine learning districts to unlock the Capstone, or select Unlock all courses in Learning Town.');setScreen('home');return}
   setResumeTarget(null);setScreen(next);window.scrollTo(0,0);
  }
- function openCourse(id:CourseKey,section?:string){if(!worldAccessible(id)){window.alert(sectionUnlockReason(id,'classic')+' Use the Learning Town Unlock this course button to explore it early.');setScreen('home');return}setResumeTarget(section?{id,section}:null);setScreen(id==='risk'?'risklab':id);window.scrollTo(0,0)}
- function advanceCourse(id:CourseKey){const next=nextLearningWorld(id);if(next){if(worldAccessible(next))openCourse(next);else{const w=worldMilestones(id);window.alert('This district is '+w.done+'/'+w.total+' complete. Finish its remaining activities to unlock the next district, or use Unlock this course in Learning Town.');setScreen('home');window.scrollTo(0,0)}}else{navigateScreen('capstone')}}
+ function openCourse(id:CourseKey,section?:string){if(!worldAccessible(id)){setLockedTarget(id);return}setLockedTarget(null);setResumeTarget(section?{id,section}:null);setScreen(id==='risk'?'risklab':id);window.scrollTo(0,0)}
+ function advanceCourse(id:CourseKey){const next=nextLearningWorld(id);if(next){if(worldAccessible(next))openCourse(next);else{setLockedTarget(next)}}else{navigateScreen('capstone')}}
  function openWorld(w:World){setActive(w);setIndex(0);setAnswer(null);setSubmitted(false);setEarned(0);setScreen('mission');window.scrollTo(0,0)}
  function next(){if(index<active.scenarios.length-1){setIndex(index+1);setAnswer(null);setSubmitted(false)}else{setSaved(prev=>({...prev,[active.id]:{complete:true,xp:Math.max(earned,prev[active.id]?.xp||0)}}));setScreen('home')}window.scrollTo(0,0)}
  function submit(){if(answer===null)return;setSubmitted(true);if(scenario.choices[answer].correct)setEarned(p=>p+100)}
