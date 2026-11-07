@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 test('Academy Overview and My Progress share a full milestone summary',async({page})=>{
  await page.goto('./');
  await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
- await expect(page.getByText(/Version 0\.37/)).toBeVisible();
+ await expect(page.getByText(/Version 0\.38/)).toBeVisible();
  await page.getByRole('button',{name:/My Progress/}).first().click();
  await expect(page.getByRole('heading',{name:/My Progress/})).toBeVisible();
  await expect(page.getByText(/learning activities completed/)).toBeVisible();
@@ -344,4 +344,82 @@ test('Project page offers copyable professional citation and returns to the lear
  await expect(page.getByText(/Adamu, M. \(2026\)/)).toBeVisible();
  await page.getByRole('button',{name:/Academy overview/}).click();
  await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
+});
+
+test('Competency Lab baseline assesses twelve decisions and stores a private result',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:'Competency & Impact Lab',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Competency & Learning Impact Lab'})).toBeVisible();
+ await expect(page.getByRole('button',{name:/Start follow-up/})).toBeDisabled();
+ await page.getByRole('button',{name:/Start baseline/}).click();
+ await expect(page.getByText('Question 1 of 12')).toBeVisible();
+ await expect(page.getByText(/Best response/)).toHaveCount(0);
+ for(let i=0;i<12;i++){
+  await page.locator('.impactoptions button').first().click();
+  await page.getByRole('radio',{name:'Low'}).check();
+  await page.getByRole('button',{name:i===11?/Submit completed assessment/:/Save decision & continue/}).click();
+ }
+ await expect(page.getByText(/Baseline recorded/)).toBeVisible();
+ await expect(page.getByRole('button',{name:'Baseline saved'})).toBeDisabled();
+ const result=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-competency-impact-v1')||'{}'));
+ expect(result.baseline.answers).toHaveLength(12);
+ expect(result.baseline.correct).toBeGreaterThanOrEqual(0);
+ expect(result.baseline.correct).toBeLessThanOrEqual(12);
+ expect(result.followup).toBeUndefined();
+});
+test('Competency Lab compares twelve different follow-up items, exposes rubric and downloads anonymous reports',async({page,isMobile})=>{
+ await page.goto('./');
+ await page.evaluate(()=>{
+  const domains=['risk','ownership','evidence','cooperation','virtualassets','reporting'];
+  const baselineAnswers=domains.flatMap(id=>[1,2].map(i=>({itemId:id+'-b'+i,selected:0,confidence:2})));
+  const baseline={phase:'baseline',completedAt:'2026-11-01T12:00:00.000Z',answers:baselineAnswers,overall:33,correct:4,domainScores:Object.fromEntries(domains.map(id=>[id,50])),learningMilestones:1,learningMilestoneTotal:153};
+  localStorage.setItem('amlverse-competency-impact-v1',JSON.stringify({version:'impact-paired-v1',baseline}));
+ });
+ await page.reload();
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:'Competency & Impact Lab',exact:true}).click();
+ await page.getByRole('button',{name:/Start follow-up/}).click();
+ for(let i=0;i<12;i++){
+  await page.locator('.impactoptions button').first().click();
+  await page.getByRole('radio',{name:'High'}).check();
+  await page.getByRole('button',{name:i===11?/Submit completed assessment/:/Save decision & continue/}).click();
+ }
+ await expect(page.getByRole('heading',{name:'Six-domain learning profile'})).toBeVisible();
+ await expect(page.locator('.impactdomains article')).toHaveCount(6);
+ await expect(page.getByText(/not proof.*caused|does not establish/i).first()).toBeVisible();
+ await page.getByRole('button',{name:/Review answers and rationale/}).click();
+ await expect(page.getByText(/Best response:/).first()).toBeVisible();
+ const [json]=await Promise.all([page.waitForEvent('download'),page.getByRole('button',{name:/Download methodology JSON/}).click()]);
+ const jsonText=await readFile((await json.path())!,'utf8');
+ const report=JSON.parse(jsonText);
+ expect(report.report_type).toContain('formative');
+ expect(report.domains).toHaveLength(6);
+ expect(report.overall.baseline_percentage).toBe(33);
+ expect(report.overall.followup_percentage).toEqual(expect.any(Number));
+ expect(JSON.stringify(report)).not.toContain('example.com');
+ const [csv]=await Promise.all([page.waitForEvent('download'),page.getByRole('button',{name:/Download summary CSV/}).click()]);
+ const csvText=await readFile((await csv.path())!,'utf8');
+ expect(csvText).toContain('Change in percentage points');
+ expect(csvText).toContain('Risk-based assessment');
+ if(isMobile)expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+3)).toBe(true);
+});
+test('Competency evaluation reset requires typed confirmation and preserves unrelated academy results',async({page})=>{
+ await page.goto('./');
+ await page.evaluate(()=>{
+  const domains=['risk','ownership','evidence','cooperation','virtualassets','reporting'];
+  const answers=domains.flatMap(id=>[1,2].map(i=>({itemId:id+'-b'+i,selected:0,confidence:2})));
+  const baseline={phase:'baseline',completedAt:'2026-11-01T12:00:00.000Z',answers,overall:33,correct:4,domainScores:Object.fromEntries(domains.map(id=>[id,50])),learningMilestones:1,learningMilestoneTotal:153};
+  localStorage.setItem('amlverse-competency-impact-v1',JSON.stringify({version:'impact-paired-v1',baseline}));
+  localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0],checkPassed:false,checkAttempts:0,lastVisited:''}));
+ });
+ await page.reload();
+ await page.getByRole('button',{name:'Competency & Impact Lab',exact:true}).click();
+ await page.getByRole('button',{name:/Reset evaluation/}).click();
+ await expect(page.getByRole('button',{name:'Delete evaluation results'})).toBeDisabled();
+ await page.getByLabel(/Type RESET/).fill('RESET');
+ await page.getByRole('button',{name:'Delete evaluation results'}).click();
+ expect(await page.evaluate(()=>localStorage.getItem('amlverse-competency-impact-v1'))).toBeNull();
+ expect(await page.evaluate(()=>localStorage.getItem('amlverse-course-v1-risk'))).not.toBeNull();
+ await expect(page.getByRole('button',{name:/Start baseline/})).toBeEnabled();
 });
