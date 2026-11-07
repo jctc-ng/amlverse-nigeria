@@ -281,19 +281,21 @@ test('FATF reset requires confirmation and preserves other worlds',async({page})
  expect(data.risk).not.toBeNull();
 });
 
-test('Locked district opens an informative card instead of browser alert',async({page})=>{
+test('Locked district opens an informative card instead of browser alert',async({page,isMobile})=>{
  await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Egmont Exchange',exact:true}).first().click();
  const card=page.getByRole('dialog',{name:/Egmont Exchange is locked/});
  await expect(card).toBeVisible();
- await expect(card.getByText(/Mutual Evaluation Arena/)).toBeVisible();
+ await expect(card.getByText(/Mutual Evaluation Arena/).first()).toBeVisible();
  await expect(card.getByText(/0 of 9 milestones/)).toBeVisible();
  await expect(card.getByRole('button',{name:/Continue RiskLab Arcade/})).toBeVisible();
  await card.getByRole('button',{name:/Not now/}).click();
  await expect(card).toHaveCount(0);
 });
-test('Locked district modal can unlock selected course without awarding completion',async({page})=>{
+test('Locked district modal can unlock selected course without awarding completion',async({page,isMobile})=>{
  await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Egmont Exchange',exact:true}).first().click();
  const card=page.getByRole('dialog',{name:/Egmont Exchange is locked/});
  await card.getByRole('button',{name:/Unlock this course anyway/}).click();
@@ -302,8 +304,9 @@ test('Locked district modal can unlock selected course without awarding completi
  expect(await page.evaluate(()=>localStorage.getItem('amlverse-town-unlocked-v1-egmont'))).toBe('yes');
  expect(await page.evaluate(()=>localStorage.getItem('amlverse-course-v1-egmont'))).toBeNull();
 });
-test('Locked district message can be dismissed with Escape',async({page})=>{
+test('Locked district message can be dismissed with Escape',async({page,isMobile})=>{
  await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Egmont Exchange',exact:true}).first().click();
  await expect(page.getByRole('dialog',{name:/Egmont Exchange is locked/})).toBeVisible();
  await page.keyboard.press('Escape');
