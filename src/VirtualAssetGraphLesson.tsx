@@ -32,13 +32,12 @@ export default function VirtualAssetGraphLesson({index,passed,onPass,onContinue}
  const [finished,setFinished]=useState(false);
  const current=d.questions[position];
  const correct=answers.filter(x=>x.correct).length;
- const result=correct===5?100:Math.round(correct/5*100);
  function next(){
   const answer={correct:picked===current.correct};
   const all=[...answers,answer];setAnswers(all);
   if(position===4){setFinished(true);if(all.filter(x=>x.correct).length>=4)onPass();return}
   setPosition(x=>x+1);setPicked(null);setChecked(false);
-  window.scrollTo({top:0,behavior:'instant'});
+  window.scrollTo(0,0);
  }
  function retry(){setPosition(0);setAnswers([]);setPicked(null);setChecked(false);setFinished(false)}
  return <div className="graphstudylesson">
