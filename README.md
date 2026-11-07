@@ -306,3 +306,17 @@ Expansion of the original beginner Virtual Asset Academy with deeper, **sequenti
 - Reference links to [FATF virtual assets](https://www.fatf-gafi.org/en/topics/virtual-assets.html) and [FATF virtual-asset red flags](https://www.fatf-gafi.org/en/publications/Methodsandtrends/Virtual-assets-red-flag-indicators.html).
 
 The exercise demonstrates blockchain concepts and investigative limitations only. It is not a live tracing service, authoritative attribution engine or formal investigation report.
+
+## Professional analogy and graph-based learning — v0.26
+Virtual Asset Academy 2.0 lessons are now more substantial. Each of the **12 lessons** adds:
+- An accessible **everyday analogy** (e.g., public shipment ledger vs blockchain, delivery tracking number vs transaction hash, banknote change vs UTXO, warehouse entry vs custodial exchange deposit, ports vs cross-chain bridges).
+- A **professional interpretation** explaining the analogy's limits, relevant technical mechanics and investigative safeguards.
+- An **annotated SVG transaction graph** with a visual legend distinguishing observed edges from unverified relationships, plus a textual evidence ledger that stays readable on mobile.
+- **Five graph-specific multiple-choice questions** with immediate feedback and explanations. Four correct answers are needed to record that lesson's graph check before sequential continuation.
+- A **Graph Tracing Scholar** badge for passing all twelve five-question lesson checks. These 12 new records are added to existing saved progress under `amlverse-virtual-asset-advanced-v1`, bringing the expanded curriculum display to 30 milestones (12 visited lessons, 12 passed graph checks, 3 tier assessment passes, 3 case passes).
+
+The tier's existing 60-question bank remains, giving **120 authored practice questions** across the twelve in-lesson checks and original tier-bank questions (10 drawn per tier attempt). Three visual tracing simulations now contain **seven decisions each**, bringing the simulation collection to 21 case decisions.
+
+All diagram addresses, hashes, amounts and cases are fictitious. A recorded transfer does not establish criminal intent, service-customer attribution or legal identity. Historical progress, previous quiz scores, simulation passes and gifts are preserved; new graph-check results are tracked separately.
+
+Content is for educational use and should undergo domain and regulatory review before use as an official FIU investigative training resource.
