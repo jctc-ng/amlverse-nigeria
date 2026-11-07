@@ -46,6 +46,6 @@ https://github.com/jctc-ng/amlverse-nigeria/issues/new/choose
 
 ## Suggested acknowledgement and citation
 
-Adamu, M. (2026). *AMLVERSE Nigeria: Interactive AML/CFT/CPF and Financial Intelligence Learning Town* [Educational web application]. https://jctc-ng.github.io/amlverse-nigeria/
+Adamu, M. (2026). *AMLVERSE Nigeria: Interactive AML/CFT/CPF and Financial Intelligence Learning Town* [Educational web application]. https://m-analyst.github.io/amlverse-nigeria/
 
 This is a suggested project citation, not a scholarly publication DOI or proof of peer review.
