@@ -20,9 +20,9 @@ function quizFor(tier:VirtualTier,attempt:number):QuizItem[]{
  return chosen.map((q,i)=>({source:q,choices:arrange(q.options.map((text,original)=>({text,original})),i*21+attempt*17+3)}));
 }
 type Mode='overview'|'lesson'|'quiz'|'simulation'|'interactive';
-export default function VirtualAssetAdvanced({onBack,onClassic,onNextCourse}:{onBack:()=>void;onClassic:()=>void;onNextCourse:()=>void}){
+export default function VirtualAssetAdvanced({onBack,onClassic,onNextCourse,initialMode}:{onBack:()=>void;onClassic:()=>void;onNextCourse:()=>void;initialMode?:'interactive'}){
  const [progress,setProgress]=useState<Progress>(getProgress);
- const [mode,setMode]=useState<Mode>('overview');
+ const [mode,setMode]=useState<Mode>(initialMode||'overview');
  const interactiveCount=readInteractiveTraceProgress().completed.length;
  const [tier,setTier]=useState<VirtualTier>('Foundations');
  const [lessonIndex,setLessonIndex]=useState(0);
