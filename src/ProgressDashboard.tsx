@@ -1,3 +1,4 @@
+import {readImpact,impactDelta} from './CompetencyImpactStore';
 import {useState} from 'react';
 import {modules,readCourse,readScore,readFatf,readLegacy} from './progress';
 import type {CourseKey} from './progress';
@@ -10,10 +11,12 @@ import {readWorldInteractionProgress} from './InteractiveWorldChallenge';
 import {readDecisionProgress} from './WorldDecisionLab';
 import {readAcademyMetrics,csvProgress} from './AcademyMetrics';
 
-type Props={onBack:()=>void;onOpen:(id:CourseKey,section?:string)=>void;onFatf:()=>void;onCapstone:()=>void};
-export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone}:Props){
+type Props={onBack:()=>void;onOpen:(id:CourseKey,section?:string)=>void;onFatf:()=>void;onCapstone:()=>void;onImpact:()=>void};
+export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone,onImpact}:Props){
  const [refresh,setRefresh]=useState(0);
  const metrics=readAcademyMetrics();
+ const impact=readImpact();
+ const impactChange=impactDelta(impact);
  const courses=modules.map(m=>({...m,learning:readCourse(m.id),score:readScore(m.scoreKey)}));
  const fatf=readFatf();
  const legacy=readLegacy();
@@ -82,6 +85,7 @@ export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone}:Prop
  <div className="progresshero"><div><span className="eyebrow">COMPLETE LEARNING RECORD · V0.31</span><h2>{level}</h2><p>{earned.toLocaleString()} learning points · {metrics.fullWorlds}/9 worlds fully complete · {metrics.classicWorlds}/9 World Champion requirements met</p></div><div className="progressring" style={{background:'conic-gradient(#64e9c7 '+percent+'%,#254d57 '+percent+'%)'}}><span>{percent}%<small>overall</small></span></div></div>
  <div className="academy31headline"><strong>{metrics.done} / {metrics.total} learning activities completed</strong><p>Includes classic lessons and games, interactive cases, expanded academies, decision labs and cryptocurrency graph missions. FATF Quest and the Capstone are tracked separately.</p>{metrics.resume?<button type="button" className="primary" onClick={()=>onOpen(metrics.resume!.id,metrics.resume!.resume||undefined)}>Resume next: {metrics.resume.title} →</button>:<button type="button" className="primary" onClick={()=>onOpen('risk')}>Review completed worlds →</button>}</div>
  <div className="progressstats"><div><small>ORIGINAL LESSONS</small><strong>{seen}<span> / {totalLessons}</span></strong></div><div><small>QUICK CHECKS PASSED</small><strong>{passed}<span> / {modules.length}</span></strong></div><div><small>ORIGINAL GAMES</small><strong>{played}<span> / {modules.length}</span></strong></div><div><small>FATF QUEST PERFECT</small><strong>{fatf.perfect}<span> / 40</span></strong></div></div>
+ <section className="progresssection impactdashboard"><div className="progressworldhead"><div><span className="eyebrow">PROFESSIONAL LEARNING EVALUATION</span><h2>Competency & Impact Lab</h2><p>Private formative baseline and follow-up evaluation across six domains, separate from course completion and awards.</p></div></div><div className="impactdashboardstats"><div><small>BASELINE</small><strong>{impact.baseline?impact.baseline.overall+'%':'Not started'}</strong></div><div><small>FOLLOW-UP</small><strong>{impact.followup?impact.followup.overall+'%':'Not started'}</strong></div><div><small>OBSERVED CHANGE</small><strong>{impactChange===null?'Pending':(impactChange>0?'+':'')+impactChange+' pp'}</strong></div></div><p>Scores describe decisions on two purpose-designed forms. Any change is not proof that AMLVERSE caused an improvement.</p><button className="secondary" type="button" onClick={onImpact}>{impact.followup?'Review learning comparison →':impact.baseline?'Continue to follow-up →':'Start private baseline evaluation →'}</button></section>
  <section className="progresssection"><h2>Learning worlds — complete activity tracking</h2><p>Every row uses the same milestone calculation as Academy Overview and the individual world completion tracker. Expand a world to review sections, or resume the next unfinished activity.</p><div className="progressworlds">{metrics.worlds.map(w=><article className="progressworld" key={w.id}>
   <div className="progressworldhead"><div className="progressworldname"><span>{w.icon}</span><div><b>{w.title}</b><small>{w.classicDone?'✓ Original World Champion requirements met':'Original course still in progress'}</small></div></div><strong>{w.percent}%</strong></div>
   <div className="arcadeprogress" role="progressbar" aria-label={w.title+' completion'} aria-valuenow={w.done} aria-valuemin={0} aria-valuemax={w.total}><div style={{width:w.percent+'%'}}/></div>
