@@ -1,3 +1,4 @@
+import ProjectResearch from './ProjectResearch';
 import LockedDistrictDialog from './LockedDistrictDialog';
 import {setCourseUnlocked} from './LearningTownProgress';
 import {worldAccessible,worldMilestones,allCoursesUnlocked} from './LearningTownProgress';
@@ -16,7 +17,7 @@ import {nextLearningWorld} from './progress';
 import type {CourseKey} from './progress';
 
 
-type Screen='home'|'mission'|'resources'|'chapter'|'risklab'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'progress'|'virtualassets'|'advancedtrace'|'reportwriting'|'capstone';
+type Screen='home'|'mission'|'resources'|'chapter'|'risklab'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'progress'|'virtualassets'|'advancedtrace'|'reportwriting'|'capstone'|'about';
 type Saved=Record<string,{xp:number;complete:boolean}>;
 function App(){
  const [screen,setScreen]=useState<Screen>('home');
@@ -48,6 +49,7 @@ function App(){
  <AcademyNavigation screen={screen} onNavigate={navigateScreen}/>
  <div className="page"><header><div className="mobilebrand">✦ AMLVERSE <span>NIGERIA</span></div><div className="headeritems"><span className="demo">● PUBLIC DEMO</span><div className="avatar">LE</div></div></header>
  {screen==='home'?<AcademyOverview openCourse={openCourse} openFatf={()=>setScreen('chapter')} openProgress={()=>setScreen('progress')} openResources={()=>setScreen('resources')} openCapstone={()=>navigateScreen('capstone')}/>
+ :screen==='about'?<ProjectResearch onBack={()=>{setScreen('home');window.scrollTo(0,0)}} onStart={()=>{setScreen('home');window.scrollTo(0,0)}}/>
  :screen==='progress'?<ProgressDashboard onBack={()=>setScreen('home')} onOpen={openCourse} onFatf={()=>setScreen('chapter')} onCapstone={()=>navigateScreen('capstone')}/>
  :screen==='chapter'?<FatfChapter onBack={()=>setScreen('home')}/>
  :screen==='risklab'?<LearningExperience key={"risk"+(resumeTarget?.id==="risk"?resumeTarget.section:'')} game="risk" initialSection={resumeTarget?.id==="risk"?resumeTarget.section:undefined} onBack={()=>setScreen('home')} onNextCourse={()=>advanceCourse('risk')}/>
