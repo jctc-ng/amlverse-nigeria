@@ -139,8 +139,8 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  const [tutorialStep,setTutorialStep]=useState(0);
  const [demoSelected,setDemoSelected]=useState(false);
  const [demoMatched,setDemoMatched]=useState(false);
- useEffect(()=>{saveCourse(game,old=>({...old,lessons:Array.from(new Set([...old.lessons,0]))}))},[game]);
- useEffect(()=>{if(stage==='learn')saveCourse(game,old=>({...old,lessons:Array.from(new Set([...old.lessons,topic]))}))},[game,stage,topic]);
+ useEffect(()=>{if(!initialSection||initialSection==='classic')saveCourse(game,old=>({...old,lessons:Array.from(new Set([...old.lessons,0]))}))},[game,initialSection]);
+ useEffect(()=>{if(stage==='learn'&&(!initialSection||initialSection==='classic'))saveCourse(game,old=>({...old,lessons:Array.from(new Set([...old.lessons,topic]))}))},[game,stage,topic,initialSection]);
  const course=courses[game];
  const item=course.topics[topic];
  const demo=demonstrations[game];
