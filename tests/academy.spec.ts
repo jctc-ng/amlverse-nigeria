@@ -298,7 +298,7 @@ test('Locked district modal can unlock selected course without awarding completi
  const card=page.getByRole('dialog',{name:/Egmont Exchange is locked/});
  await card.getByRole('button',{name:/Unlock this course anyway/}).click();
  await expect(card).toHaveCount(0);
- await expect(page.getByRole('heading',{name:'FIU Information Exchange'}).first()).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Secure FIU Cooperation'}).first()).toBeVisible();
  expect(await page.evaluate(()=>localStorage.getItem('amlverse-town-unlocked-v1-egmont'))).toBe('yes');
  expect(await page.evaluate(()=>localStorage.getItem('amlverse-course-v1-egmont'))).toBeNull();
 });
