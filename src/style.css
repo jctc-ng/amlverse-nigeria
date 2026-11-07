@@ -596,3 +596,12 @@
  .towncontrolsbuttons button,.townresetactions button{width:100%;min-height:48px}
 }
 @media(max-width:390px){.townbuilding{flex-direction:column}.townscenery{min-height:38px}}
+
+/* v0.35 FATF Quest follows the guided unlock/reset semantics of Learning Town */
+.fatftowncontrols{border:1px solid #609d91;background:#183f49;border-radius:14px;padding:17px 19px;margin:17px 0 22px;display:grid;gap:11px}
+.fatftowncontrols>div:first-child strong{font-size:15px;color:#dbfff0}
+.fatftowncontrols>div:first-child p{font-size:12px;line-height:1.75;color:#bfded9;margin:7px 0 0}
+.fatftowncontrols .townresetconfirm{margin-top:6px}
+.fatf40tile:disabled{opacity:.56;filter:saturate(.4);cursor:not-allowed;background:#152b3c}
+.fatf40tile:disabled:hover{border-color:#37677a}
+@media(max-width:700px){.fatftowncontrols{padding:14px 13px}.fatftowncontrols button{min-height:48px}}
