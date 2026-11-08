@@ -126,8 +126,7 @@ test('Crypto tracing practice is interactive, touch-friendly and preserves score
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  const virtual=page.locator('.townstop').nth(6);
- await virtual.getByRole('button',{name:/Enter district/}).click();
- await page.getByRole('button',{name:/Enter expanded Virtual Asset Academy/}).click();
+ await virtual.getByRole('button',{name:/Resume journey/}).click();
  await page.getByRole('button',{name:/Open interactive graph missions/}).click();
  const practice=page.locator('.itracepractice');
  await practice.getByRole('button',{name:/Try guided tracing/}).click();
