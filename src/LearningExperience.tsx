@@ -1,5 +1,5 @@
 import CourseAccessControls from './CourseAccessControls';
-import {isCourseUnlocked,sectionAccessible,sectionUnlockReason} from './LearningTownProgress';
+import {sectionAccessible,sectionUnlockReason} from './LearningTownProgress';
 import {useEffect,useState} from 'react';
 import GameArcade from './GameArcade';
 import EvaluationArena from './EvaluationArena';
@@ -128,7 +128,6 @@ const demonstrations:Record<Game,{card:string;destination:string;explanation:str
 };
 export default function LearningExperience({game,onBack,onNextCourse,initialSection}:{game:Game;onBack:()=>void;onNextCourse:()=>void;initialSection?:string}){
  const [stage,setStage]=useState<Stage>('learn');
- const [,setAccessVersion]=useState(0);
  const [worldInteractive,setWorldInteractive]=useState(false);
  const [worldDecision,setWorldDecision]=useState(false);
  const [playing,setPlaying]=useState(false);
@@ -148,12 +147,11 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  const mastered=confirmedPass||(showFeedback&&answer!==null&&course.answers[answer].correct);
  const sections=readWorldSections(game);
  const section=(id:string)=>sections.find(s=>s.id===id)!;
- const free=isCourseUnlocked(game);
  const canOpen=(id:string)=>sectionAccessible(game,id);
  const reason=(id:string)=>sectionUnlockReason(game,id);
- const lessonUnlocked=(i:number)=>free||i===0||readCourse(game).lessons.includes(i-1);
- const classicReady=free||readCourse(game).lessons.length>=3;
- const gameReady=free||readCourse(game).checkPassed;
+ const lessonUnlocked=(i:number)=>i===0||readCourse(game).lessons.includes(i-1);
+ const classicReady=readCourse(game).lessons.length>=3;
+ const gameReady=readCourse(game).checkPassed;
  function resumeSection(id:string){
   if(!canOpen(id))return;
   if(id==='expanded'){
@@ -208,23 +206,11 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  <span className="eyebrow">AMLVERSE • LEARN • QUICK CHECK • PLAY</span>
  <h1 className="title">{course.name}</h1><p className="lead">{course.goal}</p>
  <WorldCompletion game={game} trigger={true} onContinue={()=>{if(canOpen('hands')){setWorldInteractive(true);window.scrollTo(0,0)}else onNextCourse()}}/>
- <WorldProgressOverview game={game} onOpen={resumeSection} canOpen={canOpen} reason={reason}/>
- <CourseAccessControls game={game} onChange={()=>{setAccessVersion(v=>v+1);setStage('learn')}}/>
- {game==='virtualassets'?<section className="riskadvancedpromo"><div><CompletionMeter done={section('expanded').done} total={section('expanded').total} caption="Virtual Asset Academy 2.0 completion" compact/><span className="eyebrow">NEW • VIRTUAL ASSET INVESTIGATION ACADEMY 2.0</span><h2>Virtual Asset Academy 2.0 🔗</h2><p>12 lessons · 60 randomized questions · 3 transaction-flow simulations. Continue from level to level with mobile-friendly achievement gifts.</p></div><button className="primary" type="button" onClick={()=>resumeSection("expanded")} disabled={!canOpen("expanded")} title={!canOpen("expanded")?reason("expanded"):undefined}>🔒 Enter expanded Virtual Asset Academy →</button></section>:null}
- {game==='nigeria'?<section className="riskadvancedpromo"><div><CompletionMeter done={section('expanded').done} total={section('expanded').total} caption="Nigeria Compliance Academy 2.0 completion" compact/><span className="eyebrow">NEW • EXPANDED NIGERIAN AML/CFT/CPF CURRICULUM</span><h2>Nigeria Compliance Academy 2.0 🇳🇬</h2><p>12 Nigeria-focused lessons · 60 questions · 3 simulations · sequential levels with completion gifts. Original progress is preserved.</p></div><button type="button" className="primary" onClick={()=>resumeSection("expanded")} disabled={!canOpen("expanded")} title={!canOpen("expanded")?reason("expanded"):undefined}>🔒 Enter expanded Nigeria Compliance →</button></section>:null}
- {game==='risk'?<section className="riskadvancedpromo"><div><CompletionMeter done={section('expanded').done} total={section('expanded').total} caption="RiskLab Academy 2.0 completion" compact/><span className="eyebrow">NEW • RISKLAB EXPANDED CURRICULUM</span><h2>RiskLab Academy 2.0</h2><p>12 lessons · 60 varied questions · 3 case simulations · Foundation to Advanced. Classic RiskLab progress remains unchanged.</p></div><button type="button" className="primary" onClick={()=>resumeSection("expanded")} disabled={!canOpen("expanded")} title={!canOpen("expanded")?reason("expanded"):undefined}>🔒 Enter expanded RiskLab →</button></section>:null}
- <section className="worldinteractivepromo"><div><CompletionMeter done={section('hands').done} total={section('hands').total} caption="Interactive evidence challenges completion" compact/><span className="eyebrow">NEW • INTERACTIVE EVIDENCE INVESTIGATION</span><h2>Practise with real decisions, not just multiple-choice answers</h2><p>Three hands-on cases in this learning world. Select evidence cards, assign classifications, review feedback and continue directly to your game. Completing all three records the Quick Check as passed without removing earlier results.</p></div><button type="button" className="primary" onClick={()=>resumeSection("hands")} disabled={!canOpen("hands")} title={!canOpen("hands")?reason("hands"):undefined}>Open interactive challenges →</button></section>
- <div className="worlddecisionentry"><div><CompletionMeter done={section('decision').done} total={section('decision').total} caption="Evidence dossier and decision lab completion" compact/><span className="eyebrow">NEW • SUBJECT-SPECIFIC INVESTIGATION</span><h2>Evidence dossier and three-stage decision lab</h2><p>Explore a realistic fictional case file, justify your decisions and receive detailed feedback. Practice risk, lawful cooperation, suspicious patterns, graph attribution or intelligence reporting, depending on the world.</p></div><button type="button" className="primary" onClick={()=>resumeSection("decision")} disabled={!canOpen("decision")} title={!canOpen("decision")?reason("decision"):undefined}>Launch decision investigation →</button></div>
  <div className="worldclassicmeter"><CompletionMeter done={section("classic").done} total={section("classic").total} caption="Original lessons, Quick Check and game"/></div>
- <nav className="knowledgeflow" aria-label="Learning stages">
-  <button type="button" className={stage==='learn'?'active':''} aria-current={stage==='learn'?'step':undefined} onClick={()=>navigate('learn')}>① Learn</button>
-  <button type="button" className={stage==='check'?'active':''} aria-current={stage==='check'?'step':undefined} onClick={()=>navigate('check')} disabled={!classicReady} title={!classicReady?"Finish the three lessons first":undefined}>② Quick check</button>
-  <button type="button" className={stage==='play'?'active':''} aria-current={stage==='play'?'step':undefined} onClick={()=>navigate('play')} disabled={!gameReady} title={!gameReady?"Pass the Quick Check first":undefined}>③ Play</button>
- </nav>
  {stage==='learn'?<>
   <div className="knowledgeintro"><span className="knowledgeemoji" aria-hidden="true">📚</span><div><small>LEARNING ROOM</small><h2>{course.subtitle}</h2><p>Read three short lessons and see examples before trying a game.</p></div></div>
-  <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>{if(!lessonUnlocked(i))return;recordLesson(topic);setTopic(i);window.scrollTo(0,0)}} disabled={!lessonUnlocked(i)} title={!lessonUnlocked(i)?"Finish the previous lesson first":undefined} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
   <section className="knowledgecard"><small>LESSON {topic+1} OF {course.topics.length}</small><h2>{item.title}</h2><p>{item.explanation}</p><div className="knowledgeexample"><b>Example</b><p>{item.example}</p></div><div className="knowledgetakeaway"><b>Remember:</b> {item.takeaway}</div><div className="actions">{topic>0?<button className="secondary" type="button" onClick={()=>{recordLesson(topic);setTopic(i=>i-1);window.scrollTo(0,0)}}>← Previous</button>:null}{topic<course.topics.length-1?<button className="primary" type="button" onClick={()=>{recordLesson(topic);setTopic(i=>i+1);window.scrollTo(0,0)}}>Next lesson →</button>:<button className="primary" type="button" onClick={()=>{recordLesson(topic);setStage("check");setAnswer(null);setShowFeedback(false);window.scrollTo(0,0)}}>Continue to Quick Check →</button>}</div></section>
+  <div className="knowledgetabs" role="group" aria-label="Learning topics">{course.topics.map((t,i)=><button key={i} className={topic===i?'on':''} onClick={()=>{if(!lessonUnlocked(i))return;recordLesson(topic);setTopic(i);window.scrollTo(0,0)}} disabled={!lessonUnlocked(i)} title={!lessonUnlocked(i)?"Finish the previous lesson first":undefined} type="button"><span>Lesson {i+1}</span><b>{t.title}</b></button>)}</div>
  </>:stage==='check'?<>
   <section className="knowledgecheck"><span className="eyebrow">STEP 2 • QUICK UNDERSTANDING CHECK</span><h2>{course.question}</h2>
   <p className="checkstatus" role="status">{confirmedPass?'✓ Quick Check passed and saved in this browser':'Quick Check not yet recorded as passed. Choose an answer and press Check understanding to save a correct result.'}</p><div className="knowledgeanswers">{course.answers.map((a,i)=><button key={i} type="button" className={answer===i?'selected':''} onClick={()=>{setAnswer(i);setShowFeedback(false)}}><span>{String.fromCharCode(65+i)}</span>{a.text}</button>)}</div>
@@ -247,6 +233,20 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
   <div className="actions"><button className="secondary" onClick={()=>navigate('check')}>← Back to quick check</button><button className="secondary" onClick={launch}>Skip tutorial and play →</button></div>
   </section>
  </>}
+ <nav className="knowledgeflow" aria-label="Learning stages">
+  <button type="button" className={stage==='learn'?'active':''} aria-current={stage==='learn'?'step':undefined} onClick={()=>navigate('learn')}>① Learn</button>
+  <button type="button" className={stage==='check'?'active':''} aria-current={stage==='check'?'step':undefined} onClick={()=>navigate('check')} disabled={!classicReady} title={!classicReady?"Finish the three lessons first":undefined}>② Quick check</button>
+  <button type="button" className={stage==='play'?'active':''} aria-current={stage==='play'?'step':undefined} onClick={()=>navigate('play')} disabled={!gameReady} title={!gameReady?"Pass the Quick Check first":undefined}>③ Play</button>
+ </nav>
+ <section className="learning-next-sections" aria-label="Next learning activities"><h2>Continue your learning journey</h2><p>Complete each section to unlock the next automatically. Locked activities cannot be skipped.</p>
+ {game==='virtualassets'?<section className="riskadvancedpromo"><div><CompletionMeter done={section('expanded').done} total={section('expanded').total} caption="Virtual Asset Academy 2.0 completion" compact/><span className="eyebrow">NEW • VIRTUAL ASSET INVESTIGATION ACADEMY 2.0</span><h2>Virtual Asset Academy 2.0 🔗</h2><p>12 lessons · 60 randomized questions · 3 transaction-flow simulations. Continue from level to level with mobile-friendly achievement gifts.</p></div><button className="primary" type="button" onClick={()=>resumeSection("expanded")} disabled={!canOpen("expanded")} title={!canOpen("expanded")?reason("expanded"):undefined}>🔒 Enter expanded Virtual Asset Academy →</button></section>:null}
+ {game==='nigeria'?<section className="riskadvancedpromo"><div><CompletionMeter done={section('expanded').done} total={section('expanded').total} caption="Nigeria Compliance Academy 2.0 completion" compact/><span className="eyebrow">NEW • EXPANDED NIGERIAN AML/CFT/CPF CURRICULUM</span><h2>Nigeria Compliance Academy 2.0 🇳🇬</h2><p>12 Nigeria-focused lessons · 60 questions · 3 simulations · sequential levels with completion gifts. Original progress is preserved.</p></div><button type="button" className="primary" onClick={()=>resumeSection("expanded")} disabled={!canOpen("expanded")} title={!canOpen("expanded")?reason("expanded"):undefined}>🔒 Enter expanded Nigeria Compliance →</button></section>:null}
+ {game==='risk'?<section className="riskadvancedpromo"><div><CompletionMeter done={section('expanded').done} total={section('expanded').total} caption="RiskLab Academy 2.0 completion" compact/><span className="eyebrow">NEW • RISKLAB EXPANDED CURRICULUM</span><h2>RiskLab Academy 2.0</h2><p>12 lessons · 60 varied questions · 3 case simulations · Foundation to Advanced. Classic RiskLab progress remains unchanged.</p></div><button type="button" className="primary" onClick={()=>resumeSection("expanded")} disabled={!canOpen("expanded")} title={!canOpen("expanded")?reason("expanded"):undefined}>🔒 Enter expanded RiskLab →</button></section>:null}
+ <section className="worldinteractivepromo"><div><CompletionMeter done={section('hands').done} total={section('hands').total} caption="Interactive evidence challenges completion" compact/><span className="eyebrow">NEW • INTERACTIVE EVIDENCE INVESTIGATION</span><h2>Practise with real decisions, not just multiple-choice answers</h2><p>Three hands-on cases in this learning world. Select evidence cards, assign classifications, review feedback and continue directly to your game. Completing all three records the Quick Check as passed without removing earlier results.</p></div><button type="button" className="primary" onClick={()=>resumeSection("hands")} disabled={!canOpen("hands")} title={!canOpen("hands")?reason("hands"):undefined}>Open interactive challenges →</button></section>
+ <div className="worlddecisionentry"><div><CompletionMeter done={section('decision').done} total={section('decision').total} caption="Evidence dossier and decision lab completion" compact/><span className="eyebrow">NEW • SUBJECT-SPECIFIC INVESTIGATION</span><h2>Evidence dossier and three-stage decision lab</h2><p>Explore a realistic fictional case file, justify your decisions and receive detailed feedback. Practice risk, lawful cooperation, suspicious patterns, graph attribution or intelligence reporting, depending on the world.</p></div><button type="button" className="primary" onClick={()=>resumeSection("decision")} disabled={!canOpen("decision")} title={!canOpen("decision")?reason("decision"):undefined}>Launch decision investigation →</button></div>
+ </section>
+ <CourseAccessControls game={game} onChange={()=>setStage('learn')}/>
+ <details className="worldprogressdrawer"><summary><span>World completion tracker</span><span>View progress ▾</span></summary><WorldProgressOverview game={game} onOpen={resumeSection} canOpen={canOpen} reason={reason}/></details>
  <div className="notice"><b>Learning source:</b> <a href={course.source} target="_blank" rel="noopener noreferrer">{course.sourceName} ↗</a>. Educational summaries only, with fictional examples. Check current authoritative publications before formal institutional use.</div>
  </main>;
 }
