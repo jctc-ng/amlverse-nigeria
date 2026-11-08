@@ -794,3 +794,7 @@
 .impactteaser button{flex-shrink:0;min-height:47px}
 @media(max-width:850px){.impactteaser{flex-direction:column;align-items:stretch}.impactteaser button{width:100%}.impactstep{grid-template-columns:40px minmax(0,1fr)}.impactstep button{grid-column:2;width:100%;max-width:100%}}
 @media(max-width:650px){.impacthero{padding:18px}.impactheroart{display:none}.impactstatrow{grid-template-columns:1fr}.impactstatrow>div{padding:13px}.impactdomains{grid-template-columns:1fr}.impactassessment,.impactcomparison,.impactrubric,.impactprivacy,.impactreset{padding:15px}.impactstep{padding:13px;gap:10px}.impactstep h2{font-size:16px}.impactquestionactions,.impactexportactions{display:grid}.impactquestionactions button,.impactexportactions button{width:100%}.impactdashboardstats{grid-template-columns:1fr}.impactconfidence>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.impactconfidence label{padding:9px 6px;font-size:11px}.impactdomainmeter{grid-template-columns:65px minmax(0,1fr) 35px}.impactreview>article{padding:12px}}
+
+/* Creator's verified professional profile link */
+.researchlinkedin{display:inline-flex;align-items:center;justify-content:flex-start;gap:7px;width:fit-content;min-height:38px;padding:7px 12px;border:1px solid #94cbbf;border-radius:9px;background:#123c4b;color:#e7fff7;font-size:13px;font-weight:750;text-decoration:none;line-height:1.4}
+.researchlinkedin:hover,.researchlinkedin:focus-visible{background:#205e65;color:#fff;border-color:#a8e7d1}
