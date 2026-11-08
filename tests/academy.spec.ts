@@ -126,7 +126,7 @@ test('Mutual Evaluation Assessor game stays readable across introduction, sortin
  });
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
- await page.getByRole('button',{name:'Mutual Evaluation',exact:true}).click();
+ await page.locator('.anavitem').filter({hasText:'Mutual Evaluation'}).click();
  await page.getByRole('button',{name:/③ Play/}).click();
  await page.getByRole('button',{name:/Skip tutorial and play/}).click();
  const game=page.locator('.evaluationgame');
