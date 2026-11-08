@@ -185,6 +185,59 @@ test('Mutual Evaluation Assessor game stays readable across introduction, sortin
   {foreground:'.evaluationgame .feedback p',background:'.evaluationgame .feedback'}
  ]);
 });
+test('Expanded academy lesson examples, takeaway and quiz question cards have readable contrast',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+  localStorage.setItem('amlverse-arcade-risk','100');
+  localStorage.setItem('amlverse-world-interactions-v1-risk',JSON.stringify({completed:[0,1,2],best:100}));
+  localStorage.setItem('amlverse-world-decisions-v1-risk',JSON.stringify({passed:true,best:100}));
+  localStorage.setItem('amlverse-risklab-advanced-v1',JSON.stringify({visited:[0,1,2,3]}));
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
+ const academy=page.locator('main.riskadvanced');
+ await expect(academy).toBeVisible();
+ const audit=async(pairs:{text:string;surface:string}[])=>{
+  const results=await page.evaluate(pairs=>{
+   const luminance=(css:string)=>{
+    const rgb=Array.from(css.matchAll(/\d+(?:\.\d+)?/g),v=>Number(v[0])).slice(0,3);
+    if(rgb.length!==3)throw new Error('Invalid color '+css);
+    const [r,g,b]=rgb.map(x=>{const n=x/255;return n<=.04045?n/12.92:((n+.055)/1.055)**2.4});
+    return r*.2126+g*.7152+b*.0722;
+   };
+   return pairs.map(pair=>{
+    const a=document.querySelector(pair.text),b=document.querySelector(pair.surface);
+    if(!a||!b)throw new Error('Selector not found: '+JSON.stringify(pair));
+    const fg=luminance(getComputedStyle(a).color),bg=luminance(getComputedStyle(b).backgroundColor);
+    return {selector:pair.text,contrast:(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05)};
+   });
+  },pairs);
+  for(const item of results)expect(item.contrast,item.selector).toBeGreaterThanOrEqual(4.5);
+ };
+ await academy.locator('.riskadvancedlessons button').first().click();
+ await expect(academy.locator('.riskadvancedlesson')).toBeVisible();
+ await audit([
+  {text:'.riskadvancedlesson .knowledgeexample b',surface:'.riskadvancedlesson .knowledgeexample'},
+  {text:'.riskadvancedlesson .knowledgeexample p',surface:'.riskadvancedlesson .knowledgeexample'},
+  {text:'.riskadvancedlesson .knowledgetakeaway b',surface:'.riskadvancedlesson .knowledgetakeaway'},
+  {text:'.riskadvancedlesson .riskadvancedstep>span',surface:'.riskadvancedlesson'}
+ ]);
+ await academy.getByRole('button',{name:'All lessons'}).click();
+ await academy.locator('.riskadvancedtieractions button').first().click();
+ await expect(academy.locator('.riskadvancedassessment')).toBeVisible();
+ await audit([
+  {text:'.riskadvancedassessment .riskadvancedprompt',surface:'.riskadvancedassessment .riskadvancedprompt'},
+  {text:'.riskadvancedassessment .choices>.choice',surface:'.riskadvancedassessment .choices>.choice'},
+  {text:'.riskadvancedassessment .choices>.choice .letter',surface:'.riskadvancedassessment .choices>.choice .letter'},
+  {text:'.riskadvancedassessment .riskadvancedstep>span',surface:'.riskadvancedassessment'}
+ ]);
+ const button=academy.getByRole('button',{name:/Check answer/});
+ await expect(button).toBeDisabled();
+ await academy.locator('.riskadvancedassessment .choices>.choice').first().click();
+ await expect(button).toBeEnabled();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+4)).toBe(true);
+});
 test('Original learning world meter remains readable in every course',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
