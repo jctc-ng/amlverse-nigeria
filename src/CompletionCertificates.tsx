@@ -40,7 +40,7 @@ export default function CompletionCertificates({worldOnly,autoOpen=false}:{world
   try{localStorage.setItem(NAME_KEY,name.trim())}catch{}
   window.print();
  };
- return <section className="progresssection certificates" aria-labelledby="certificates-title">
+ return <section className={"progresssection certificates"+(worldOnly?" certificates-world":"")} aria-labelledby="certificates-title">
   <div className="certificates-head"><div><span className="eyebrow">PERSONAL ACHIEVEMENTS</span><h2 id="certificates-title">{worldOnly?'Your course certificate':'Certificates of completion'}</h2>
    <p>{worldOnly?'Complete all required activities in this world to receive its own course certificate. You do not need to finish any other world.':'Earn separate certificates for finished games, fully completed learning worlds, FATF Quest and the integrated Capstone. Only earned certificates can be printed.'}</p></div>
    <strong>{earned.length} / {awards.length} earned</strong></div>
