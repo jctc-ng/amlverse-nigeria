@@ -257,7 +257,7 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  <div className="worlddecisionentry"><div><CompletionMeter done={section('decision').done} total={section('decision').total} caption="Evidence dossier and decision lab completion" compact/><span className="eyebrow">NEW • SUBJECT-SPECIFIC INVESTIGATION</span><h2>Evidence dossier and three-stage decision lab</h2><p>Explore a realistic fictional case file, justify your decisions and receive detailed feedback. Practice risk, lawful cooperation, suspicious patterns, graph attribution or intelligence reporting, depending on the world.</p></div><button type="button" className="primary" onClick={()=>resumeSection("decision")} disabled={!canOpen("decision")} title={!canOpen("decision")?reason("decision"):undefined}>Launch decision investigation →</button></div>
  </section>
  <CourseAccessControls game={game} onChange={()=>setStage('learn')}/>
- <details className="worldprogressdrawer"><summary><span>World completion tracker</span><span>View progress ▾</span></summary><WorldProgressOverview game={game} onOpen={resumeSection} canOpen={canOpen} reason={reason}/></details>
  <div className="notice"><b>Learning source:</b> <a href={course.source} target="_blank" rel="noopener noreferrer">{course.sourceName} ↗</a>. Educational summaries only, with fictional examples. Check current authoritative publications before formal institutional use.</div>
+ <details className="worldprogressdrawer"><summary><span>World completion tracker</span><span>View progress ▾</span></summary><WorldProgressOverview game={game} onOpen={resumeSection} canOpen={canOpen} reason={reason}/></details>
  </main>;
 }
