@@ -326,3 +326,201 @@ main .worldclassicmeter .worldmetertrack>div{
  main .worldclassicmeter .worldmeterline>span,
  main .worldclassicmeter .worldmeterline>strong{font-size:14px!important}
 }
+
+
+/* v1.9 — Mutual Evaluation Arena, complete four-stage game readability.
+   Shared across all learners; avoid the old navy-on-navy introductory scene. */
+.evaluationgame .back {
+  color:#0c5c7e!important;
+  -webkit-text-fill-color:#0c5c7e!important;
+  font-size:14px!important;
+  font-weight:800!important;
+}
+.evaluationgame .evalhud {
+  background:#eef5fa!important;
+  background-image:none!important;
+  border:1px solid #b9d1df!important;
+  color:#16425e!important;
+  border-radius:14px!important;
+  box-shadow:0 3px 12px rgba(18,63,105,.04)!important;
+}
+.evaluationgame .evalhud>span {
+  color:#16425e!important;
+  -webkit-text-fill-color:#16425e!important;
+  font-size:14px!important;
+  font-weight:850!important;
+}
+.evaluationgame .evalhud>button {
+  background:#fff!important;
+  border:1px solid #a7c2d2!important;
+  color:#16425e!important;
+  -webkit-text-fill-color:#16425e!important;
+  min-height:44px;
+  font-size:14px!important;
+  font-weight:800!important;
+}
+.evaluationgame .evalscene {
+  background:linear-gradient(115deg,#fff 0%,#f1f8fc 65%,#e8f6f0 100%)!important;
+  border:1px solid #b8d2e1!important;
+  color:#183e58!important;
+  border-radius:20px!important;
+  box-shadow:0 7px 23px rgba(18,63,105,.065)!important;
+  padding:clamp(21px,3vw,31px)!important;
+  gap:22px!important;
+}
+.evaluationgame .evalscene .eyebrow {
+  color:#0c6171!important;
+  -webkit-text-fill-color:#0c6171!important;
+  font-size:13px!important;
+  font-weight:900!important;
+}
+.evaluationgame .evalscene h2 {
+  color:#103757!important;
+  -webkit-text-fill-color:#103757!important;
+  font-size:clamp(24px,3.2vw,30px)!important;
+  line-height:1.3!important;
+}
+.evaluationgame .evalscene p,
+.evaluationgame .evalscene p b,
+.evaluationgame .evalscene p strong {
+  color:#2d5065!important;
+  -webkit-text-fill-color:#2d5065!important;
+  font-size:16px!important;
+  line-height:1.75!important;
+  opacity:1!important;
+}
+.evaluationgame .evalscene p b,
+.evaluationgame .evalscene p strong {
+  color:#123e5d!important;
+  -webkit-text-fill-color:#123e5d!important;
+  font-weight:850!important;
+}
+.evaluationgame .evalmascot {
+  background:#dfecf6!important;
+  border:1px solid #b2d2df!important;
+  border-radius:20px!important;
+  padding:15px!important;
+  text-align:center;
+}
+.evaluationgame .evalscene .primary {
+  background:#123f69!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid #123f69!important;
+  border-radius:11px!important;
+  min-height:48px!important;
+  font-size:15px!important;
+  font-weight:850!important;
+}
+.evaluationgame .arcadeinstruction {
+  background:#f1f8fb!important;
+  background-image:none!important;
+  border:1px solid #bdd5e1!important;
+  border-radius:16px!important;
+  color:#163d58!important;
+}
+.evaluationgame .arcadeinstruction strong {
+  color:#0e5d6b!important;
+  -webkit-text-fill-color:#0e5d6b!important;
+  font-size:14px!important;
+  font-weight:850!important;
+}
+.evaluationgame .arcadeinstruction p {
+  color:#305268!important;
+  -webkit-text-fill-color:#305268!important;
+  font-size:16px!important;
+  opacity:1!important;
+}
+.evaluationgame .arcadeprogress {background:#d9e8f0!important}
+.evaluationgame .arcadeprogress>div {background:#0c8576!important}
+.evaluationgame .evaldialog {
+  background:#eff6fa!important;
+  background-image:none!important;
+  border:1px solid #b6d2df!important;
+  border-radius:16px!important;
+  color:#173e5b!important;
+}
+.evaluationgame .evaldialog p {
+  color:#173e5b!important;
+  -webkit-text-fill-color:#173e5b!important;
+  font-size:17px!important;
+  line-height:1.7!important;
+}
+.evaluationgame .evalbins .arcadebin {
+  background:#fff!important;
+  border:2px dashed #a7c6d4!important;
+  color:#173e5a!important;
+}
+.evaluationgame .evalbins .arcadebin:hover {
+  background:#edf8f4!important;
+  border-color:#0d846e!important;
+}
+.evaluationgame .evalbins .arcadebin :is(b,small) {
+  color:#19425b!important;
+  -webkit-text-fill-color:#19425b!important;
+  opacity:1!important;
+}
+.evaluationgame .evalbins .arcadecount {
+  color:#0c6454!important;
+  -webkit-text-fill-color:#0c6454!important;
+  font-size:13px!important;
+}
+.evaluationgame .arcadecards .arcadecard {
+  background:#fff!important;
+  border:1px solid #b7cfe0!important;
+  border-radius:15px!important;
+  color:#173f5b!important;
+}
+.evaluationgame .arcadecards .arcadecard>strong {
+  color:#123e5c!important;
+  -webkit-text-fill-color:#123e5c!important;
+}
+.evaluationgame .arcadecards .arcadecard>span {
+  color:#36566c!important;
+  -webkit-text-fill-color:#36566c!important;
+  font-size:14px!important;
+  opacity:1!important;
+}
+.evaluationgame .arcadecards .arcadecard>small {
+  color:#0a6072!important;
+  -webkit-text-fill-color:#0a6072!important;
+  font-size:12px!important;
+  font-weight:850!important;
+}
+.evaluationgame .arcadecards .arcadecard.selected {
+  background:#e6f6ec!important;
+  border:2px solid #0a806c!important;
+}
+.evaluationgame .arcadefeedback,
+.evaluationgame .feedback {
+  background:#e7f5ec!important;
+  border:1px solid #9acbb3!important;
+  border-radius:14px!important;
+  color:#16485a!important;
+  opacity:1!important;
+}
+.evaluationgame :is(.arcadefeedback,.feedback) :is(strong,small,p,span){
+  color:#21475c!important;
+  -webkit-text-fill-color:#21475c!important;
+  opacity:1!important;
+}
+.evaluationgame .arcadewin {
+  background:#f0f8f5!important;
+  background-image:none!important;
+  border:1px solid #99cdb8!important;
+  color:#143e59!important;
+}
+.evaluationgame .arcadewin :is(h2,p,strong) {
+  color:#133f59!important;
+  -webkit-text-fill-color:#133f59!important;
+}
+.evaluationgame .question small {
+  color:#365469!important;
+  font-size:14px!important;
+}
+@media(max-width:700px){
+  .evaluationgame .evalscene{gap:12px!important}
+  .evaluationgame .evalmascot{max-width:95px}
+  .evaluationgame .evalhud>span{font-size:13px!important}
+  .evaluationgame .evaldialog p{font-size:16px!important}
+}
