@@ -17,24 +17,38 @@ function seen(id:Game){try{return localStorage.getItem('amlverse-guide-v1-'+id)=
 export default function TutorialGuide({game}:{game:Game}){
  const [open,setOpen]=useState(()=>!seen(game));
  const [step,setStep]=useState(0);
+ const [selected,setSelected]=useState(false);
+ const [matched,setMatched]=useState(false);
+ const [feedback,setFeedback]=useState('');
  const g=guides[game];
+ function resetPractice(){setStep(0);setSelected(false);setMatched(false);setFeedback('')}
+ function close(){try{localStorage.setItem('amlverse-guide-v1-'+game,'yes')}catch{}setOpen(false);resetPractice()}
  useEffect(()=>{
   if(!open)return;
   const esc=(e:KeyboardEvent)=>{if(e.key==='Escape')close()};
   document.addEventListener('keydown',esc);
   return ()=>document.removeEventListener('keydown',esc);
- },[open]);
- function close(){try{localStorage.setItem('amlverse-guide-v1-'+game,'yes')}catch{}setOpen(false);setStep(0)}
+ },[open,game]);
+ function advance(){
+  if(step===0&&selected){setStep(1);setFeedback('')}
+  else if(step===1&&matched){setStep(2);setFeedback('')}
+  else if(step===2)close();
+ }
+ function chooseTarget(target:string){
+  if(target===g.target){setMatched(true);setFeedback('Correct match. '+g.reason)}
+  else{setMatched(false);setFeedback('Try again. The right category is the one that matches the evidence, not an unsupported assumption.')}
+ }
  return <>
- <button type="button" className="guidehelp" onClick={()=>{setStep(0);setOpen(true)}} aria-label={'How to play '+g.name}>❔ How to play</button>
+ <button type="button" className="guidehelp" onClick={()=>{resetPractice();setOpen(true)}} aria-label={'How to play '+g.name}>❔ How to play</button>
  {open?<div className="guideshade" role="presentation">
   <section className="guidepanel" role="dialog" aria-modal="true" aria-label={'How to play '+g.name}>
-   <div className="guidehead"><span>🎮 QUICK TUTORIAL</span><button type="button" className="guideclose" onClick={close} aria-label="Skip tutorial">✕</button></div>
+   <div className="guidehead"><span>🎮 INTERACTIVE QUICK TUTORIAL</span><button type="button" className="guideclose" onClick={close} aria-label="Skip tutorial">✕</button></div>
    <div className="guidedots" aria-label={'Tutorial step '+(step+1)+' of 3'}>{[0,1,2].map(n=><span key={n} className={n===step?'on':''}/>)}</div>
-   {step===0?<><div className="guidestage"><div className="guidebig">🎴</div><div className="guidecard preview"><strong>{g.example}</strong><small>YOUR CLUE CARD</small></div></div><h2>Step 1 — Pick a clue</h2><p>Tap any clue card to select it. On a computer, you can also hold and drag the card.</p></>
-   :step===1?<><div className="guidestage"><div className="guidemoving" aria-hidden="true"><div className="guidecard"><strong>{g.example}</strong><small>SELECTED ✓</small></div><span className="guidearrow">➜</span><div className="guidetarget">{g.target}</div></div></div><h2>Step 2 — Put it in a box</h2><p>Tap the category that best matches your clue. On desktop, you can drag the card directly into the box.</p></>
-   :<><div className="guidestage"><div className="guidebig">🌟</div><div className="guidesuccess">✓ CORRECT MATCH!</div></div><h2>Step 3 — Learn and win</h2><p>{g.reason} Get an instant explanation after every move, then unlock the final challenge.</p></>}
-   <div className="guideactions"><button type="button" className="secondary" onClick={close}>Skip tutorial</button><div>{step>0?<button type="button" className="secondary" onClick={()=>setStep(s=>s-1)}>Back</button>:null}<button type="button" className="primary" onClick={()=>step===2?close():setStep(s=>s+1)}>{step===2?'Play the game →':'Next →'}</button></div></div>
+   {step===0?<><div className="guidestage"><div className="guidebig" aria-hidden="true">🎴</div><button type="button" className={'guidecard guidepracticecard'+(selected?' is-selected':'')} onClick={()=>setSelected(true)} aria-pressed={selected}><strong>{g.example}</strong><small>{selected?'✓ SELECTED — READY TO MATCH':'TAP TO SELECT THIS CLUE'}</small></button></div><h2>Step 1 — Pick a clue</h2><p>Tap the sample evidence card. Its selection state changes, exactly as it will during your real mission.</p></>
+   :step===1?<><div className="guidestage"><div className="guidemoving"><div className="guidecard"><strong>{g.example}</strong><small>SELECTED ✓</small></div><span className="guidearrow" aria-hidden="true">➜</span><div className="guidetarget">{g.target}</div></div></div><h2>Step 2 — Match the evidence</h2><p>Choose the most appropriate category for your clue. A wrong answer is safe to retry.</p><div className="guidematchoptions" role="group" aria-label="Practice evidence classification">{[g.target,'Ignore this evidence','Assume an identity without proof'].map(value=><button key={value} type="button" className={matched&&value===g.target?'correct':''} onClick={()=>chooseTarget(value)} aria-pressed={matched&&value===g.target}>{value}</button>)}</div></>
+   :<><div className="guidestage"><div className="guidebig" aria-hidden="true">🌟</div><div className="guidesuccess">✓ PRACTICE COMPLETED!</div></div><h2>Step 3 — Ready for the mission</h2><p>{g.reason} In the real game, each selection provides feedback. These tutorial steps do not change your score or progress.</p></>}
+   {feedback&&step===1?<p className={'guidefeedback'+(matched?' correct':'')} role="status">{feedback}</p>:null}
+   <div className="guideactions"><button type="button" className="secondary" onClick={close}>Skip tutorial</button><div>{step>0?<button type="button" className="secondary" onClick={()=>{setStep(s=>s-1);setFeedback('')}}>Back</button>:null}<button type="button" className="primary" disabled={step===0?!selected:step===1?!matched:false} onClick={advance}>{step===2?'Play the game →':step===0?'Next: match the clue →':'Next: finish practice →'}</button></div></div>
   </section>
  </div>:null}
  </>;
