@@ -285,8 +285,8 @@ test('FATF reset requires confirmation and preserves other worlds',async({page})
 test('Locked Capstone shows a professional progress dialog and guided resume',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
- await page.getByRole('button',{name:/Capstone Challenge/}).first().click();
- const dialog=page.getByRole('dialog',{name:'Capstone Challenge is locked'});
+ await page.getByRole('button',{name:'Launch Capstone Challenge →',exact:true}).click();
+ const dialog=page.locator('.capstonelockdialog');
  await expect(dialog).toBeVisible();
  await expect(dialog).toContainText('0 of 9 worlds');
  await expect(dialog).toContainText('9 districts remaining');
@@ -298,10 +298,10 @@ test('Locked Capstone shows a professional progress dialog and guided resume',as
 test('Capstone dialog closes with Escape without changing the current page',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
- await page.getByRole('button',{name:/Capstone Challenge/}).first().click();
- await expect(page.getByRole('dialog',{name:'Capstone Challenge is locked'})).toBeVisible();
+ await page.getByRole('button',{name:'Launch Capstone Challenge →',exact:true}).click();
+ await expect(page.locator('.capstonelockdialog')).toBeVisible();
  await page.keyboard.press('Escape');
- await expect(page.getByRole('dialog',{name:'Capstone Challenge is locked'})).toHaveCount(0);
+ await expect(page.locator('.capstonelockdialog')).toHaveCount(0);
  await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
 });
 test('Locked district opens an informative card instead of browser alert',async({page,isMobile})=>{
