@@ -144,7 +144,7 @@ test('All interactive evidence challenge panels are legible in classification an
   {fg:'.wcinteractivetargets button>small',bg:'.wcinteractivetargets button'},
   {fg:'.wcinteractivelog>strong',bg:'.wcinteractivelog'},
   {fg:'.wcinteractivelog>p',bg:'.wcinteractivelog'},
-  {fg:'.wcinteractive .worldmeterline strong',bg:'.wcinteractive'}
+  {fg:'.wcinteractive .worldmeterline strong',bg:'body'}
  ]);
  for(const result of standard)expect(result.contrast,result.selector).toBeGreaterThanOrEqual(4.5);
  await page.locator('.wcinteractivetabs button').nth(2).click();
