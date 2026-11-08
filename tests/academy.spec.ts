@@ -123,6 +123,7 @@ test('Mutual Evaluation Assessor game stays readable across introduction, sortin
   const advanced={visited:Array.from({length:12},(_,i)=>i),quizPass:{Foundations:true,Intermediate:true,Advanced:true},simPass:{Foundations:true,Intermediate:true,Advanced:true}};
   localStorage.setItem('amlverse-risklab-advanced-v1',JSON.stringify(advanced));
   localStorage.setItem('amlverse-guide-v1-evaluation','yes');
+  localStorage.setItem('amlverse-world-champion-v1-evaluation','yes');
  });
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
