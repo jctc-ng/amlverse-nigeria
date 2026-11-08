@@ -14,6 +14,26 @@ function useProgress(){
  function save(fn:(old:InteractiveTraceProgress)=>InteractiveTraceProgress){setProgress(old=>{const next=fn(old);try{localStorage.setItem(KEY,JSON.stringify(next))}catch{}return next})}
  return {progress,save};
 }
+function TracingPractice(){
+ const [phase,setPhase]=useState(0);
+ const [feedback,setFeedback]=useState('');
+ const [expanded,setExpanded]=useState(false);
+ function reset(){setPhase(0);setFeedback('')}
+ const labels=['Observe the source wallet','Follow the confirmed transaction','Review the receiving wallet'];
+ return <section className="itracepractice" aria-labelledby="itracepractice-title">
+  <div className="itracepracticehead"><div><span className="eyebrow">INTERACTIVE PRACTICE · NO SCORES</span><h2 id="itracepractice-title">Learn to follow a transaction</h2><p>Tap the highlighted evidence in order. The flow builds progressively, just like a real blockchain tracing exercise.</p></div><button className="secondary" type="button" aria-expanded={expanded} onClick={()=>setExpanded(x=>!x)}>{expanded?'Hide practice':'Try guided tracing →'}</button></div>
+  {expanded?<div className="itracepracticebody">
+   <div className="itracepracticestep"><strong>Step {Math.min(3,phase+1)} of 3 · {labels[Math.min(phase,2)]}</strong><span>{phase===3?'✓ Practice complete':'Select the highlighted item below'}</span></div>
+   <div className="itracepracticeflow" aria-label="Interactive sample transaction from Wallet A to Wallet B">
+    <button type="button" className={'itracepracticenode'+(phase>0?' completed':'')+(phase===0?' active':'')} onClick={()=>{if(phase===0){setPhase(1);setFeedback('Source wallet identified. The transaction is the next piece of evidence.')}}} aria-label="Sample source wallet A" disabled={phase!==0}>◉<strong>Wallet A</strong><small>Source wallet</small></button>
+    <button type="button" className={'itracepracticeedge'+(phase>1?' completed':'')+(phase===1?' active':'')} onClick={()=>{if(phase===1){setPhase(2);setFeedback('Confirmed transfer followed. Now inspect its receiving wallet.')}}} aria-label="Follow sample confirmed transaction TX-01" disabled={phase!==1}><span className="itracepracticeflowline" aria-hidden="true"/><strong>TX-01</strong><small>0.25 BTC · confirmed</small><span aria-hidden="true">➜</span></button>
+    <button type="button" className={'itracepracticenode'+(phase===3?' completed':'')+(phase===2?' active':'')} onClick={()=>{if(phase===2){setPhase(3);setFeedback('Well done. You traced the recorded transfer from A to B. Ownership and criminality are not established by the transaction alone.')}}} aria-label="Sample receiving wallet B" disabled={phase!==2}>◎<strong>Wallet B</strong><small>Receiving wallet</small></button>
+   </div>
+   <p className="itracepracticefeedback" role="status">{phase===0?'Start by selecting Wallet A.':feedback}</p>
+   {phase===3?<div className="itracepracticefinish"><strong>✓ Practice complete — ready to investigate.</strong><p>The main graph below remains fully interactive. Select any wallet or transaction to inspect evidence, and follow each mission question.</p><button type="button" className="secondary" onClick={reset}>↻ Replay practice</button><button type="button" className="primary" onClick={()=>setExpanded(false)}>Start investigation ↓</button></div>:<button type="button" className="secondary" onClick={reset}>↻ Restart practice</button>}
+  </div>:null}
+ </section>;
+}
 function Graph({mission,selected,onPick}:{mission:TraceMission;selected:string[];onPick:(type:'node'|'edge',id:string)=>void}){
  const byId=new Map(mission.nodes.map(n=>[n.id,n]));
  return <div className="itracegraphpanel">
@@ -25,16 +45,16 @@ function Graph({mission,selected,onPick}:{mission:TraceMission;selected:string[]
    const x1=a.x+nx*47,y1=a.y+ny*35,x2=b.x-nx*49,y2=b.y-ny*35;
    const mx=(x1+x2)/2,my=(y1+y2)/2;
    const chosen=selected.includes('edge:'+e.id);
-   return <g key={e.id} tabIndex={0} role="button" aria-label={'Select transaction '+e.id+', '+e.from+' to '+e.to+', '+e.amount+', '+e.status} aria-pressed={chosen} className="itraceedgehit" onClick={()=>onPick('edge',e.id)} onKeyDown={ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();onPick('edge',e.id)}}}>
+   return <g key={e.id} tabIndex={0} role="button" aria-label={'Select transaction '+e.id+', '+e.from+' to '+e.to+', '+e.amount+', '+e.status} aria-pressed={chosen} className={chosen?"itraceedgehit is-selected":"itraceedgehit"} onClick={()=>onPick('edge',e.id)} onKeyDown={ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();onPick('edge',e.id)}}}>
     <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="transparent" strokeWidth="25"/>
-    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={chosen?'#f9da8b':e.status==='confirmed'?'#7fdcbf':'#d9a66c'} strokeDasharray={e.status==='provisional'?'7 5':undefined} strokeWidth={chosen?5:3} markerEnd={e.status==='confirmed'?'url(#itrace-arrow)':undefined} pointerEvents="none"/>
+    <line x1={x1} y1={y1} x2={x2} y2={y2} className={chosen?"itraceanimatededge":""} stroke={chosen?'#f9da8b':e.status==='confirmed'?'#7fdcbf':'#d9a66c'} strokeDasharray={e.status==='provisional'?'7 5':undefined} strokeWidth={chosen?5:3} markerEnd={e.status==='confirmed'?'url(#itrace-arrow)':undefined} pointerEvents="none"/>
     <rect x={mx-42} y={my-15} width="84" height="28" rx="9" fill={chosen?'#58603b':'#1b4053'} stroke={chosen?'#f9da8b':'#4d7e81'} pointerEvents="none"/>
     <text x={mx} y={my+3} fontSize="12" fontWeight="bold" fill="#fff" textAnchor="middle" pointerEvents="none">{e.id} · {e.amount.length>8?e.amount.slice(0,7)+'…':e.amount}</text>
    </g>;
   })}
   {mission.nodes.map(n=>{
    const chosen=selected.includes('node:'+n.id);
-   return <g key={n.id} tabIndex={0} role="button" aria-label={'Select node '+n.label+', '+n.kind+', '+n.detail} aria-pressed={chosen} className="itracenodehit" onClick={()=>onPick('node',n.id)} onKeyDown={ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();onPick('node',n.id)}}}>
+   return <g key={n.id} tabIndex={0} role="button" aria-label={'Select node '+n.label+', '+n.kind+', '+n.detail} aria-pressed={chosen} className={chosen?"itracenodehit is-selected":"itracenodehit"} onClick={()=>onPick('node',n.id)} onKeyDown={ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();onPick('node',n.id)}}}>
     <rect x={n.x-49} y={n.y-34} width="98" height="68" rx="12" fill={chosen?'#4a684a':n.kind==='service'?'#276054':'#1d455c'} stroke={chosen?'#ffdd8f':'#77dcca'} strokeWidth={chosen?3:2}/>
     <text x={n.x} y={n.y-3} fontSize="13" fontWeight="bold" fill="#fff" textAnchor="middle" pointerEvents="none">{n.label.length>12?n.label.slice(0,11)+'…':n.label}</text>
     <text x={n.x} y={n.y+17} fontSize="10" fill="#d0ebe9" textAnchor="middle" pointerEvents="none">{n.kind.toUpperCase()}</text>
@@ -84,6 +104,7 @@ export default function InteractiveTracingLab({onBack,onAdvance}:{onBack:()=>voi
   <div className="itracetop"><button className="back" onClick={onBack}>← Virtual Asset Academy</button><span className="eyebrow">INTERACTIVE INVESTIGATION GRAPH LAB</span></div>
   <h1 className="title">Trace the Funds — Interactive Missions 🕸️</h1>
   <p className="lead">Select wallets and individual transaction edges yourself. Each case challenges your ability to follow evidence without assuming identities or inventing fund flows.</p>
+  <TracingPractice/>
   <div className="itracemissiontabs" role="group" aria-label="Choose an investigation case">
    {traceMissions.map((m,i)=><button key={m.id} type="button" className={missionIndex===i?'active':''} onClick={()=>begin(i)} aria-current={missionIndex===i?'step':undefined}><span>{progress.completed.includes(m.id)?'✓':'◈'} {i+1}</span><small>{m.level}</small></button>)}
   </div>
