@@ -220,7 +220,6 @@ main .worldprogresssection.worldlocked,main .impactstep.locked{filter:none!impor
 .certificate-tile :is(small,h3,p),.certificates-head p,.certificate-privacy{color:#314d63!important}
 .certificate-tile h3{color:#103757!important}
 .certificate-dialog{background:#fff!important}
-.certificate-paper,.certificate-paper *{color:revert-layer}
 
 /* Dark celebration overlays are separate from the light workspace. */
 .championmodal{color:#fff!important}
