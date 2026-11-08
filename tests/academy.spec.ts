@@ -238,6 +238,52 @@ test('Expanded academy lesson examples, takeaway and quiz question cards have re
  await expect(button).toBeEnabled();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+4)).toBe(true);
 });
+test('Learners may select blockchain-first while preserving the foundations pathway and records',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await expect(page.locator('.townstop').first()).toContainText('Risk Academy');
+ const start=page.getByRole('button',{name:/Start with Virtual Assets & Blockchain/});
+ await expect(start).toBeVisible();
+ await start.click();
+ await expect(page.getByRole('heading',{name:/Virtual Asset Investigation/})).toBeVisible();
+ await page.getByRole('button',{name:/Academy overview/}).click();
+ await expect(page.locator('.townstop').first()).toContainText('Blockchain Harbour');
+ await expect(page.locator('.townstop').nth(1)).toContainText('Tracing Laboratory');
+ await expect(page.locator('.townstop').nth(1)).toContainText('LOCKED');
+ await expect(page.getByText('Current pathway: Virtual Assets & Blockchain first')).toBeVisible();
+ await page.getByRole('button',{name:/Start with Foundations & Standards/}).click();
+ await expect(page.getByRole('heading',{name:/RiskLab Arcade/})).toBeVisible();
+ await page.getByRole('button',{name:/Academy overview/}).click();
+ await expect(page.locator('.townstop').first()).toContainText('Risk Academy');
+ await expect(page.getByText('Current pathway: Foundations & Standards first')).toBeVisible();
+});
+test('Clickable fictional crypto route reveals readable evidence limitations',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-learning-path-v1','blockchain');
+  localStorage.setItem('amlverse-course-v1-virtualassets',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+  localStorage.setItem('amlverse-guide-v1-virtualassets','yes');
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
+ await page.getByRole('button',{name:/③ Play/}).click();
+ await page.getByRole('button',{name:/Skip tutorial and play/}).click();
+ await page.getByRole('button',{name:/View fictional transfer route/}).click();
+ const map=page.locator('main.virtualassetgame .chaincase');
+ await expect(map.getByRole('heading',{name:'Two linked transactions'})).toBeVisible();
+ await map.getByRole('button',{name:/WAL-B/}).click();
+ await expect(map.getByRole('status')).toContainText('intermediary received 12 units');
+ const styles=await map.locator('.chainnode.inspected').evaluate(node=>{
+  const parent=getComputedStyle(node),name=node.querySelector('strong')!;
+  const vals=(str:string)=>Array.from(str.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3);
+  const lum=(str:string)=>{const [r,g,b]=vals(str).map(x=>{const v=x/255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});return r*.2126+g*.7152+b*.0722};
+  const a=lum(getComputedStyle(name).color),b=lum(parent.backgroundColor);
+  return {contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),radius:parseFloat(parent.borderTopLeftRadius)};
+ });
+ expect(styles.contrast).toBeGreaterThanOrEqual(4.5);
+ expect(styles.radius).toBeGreaterThanOrEqual(12);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+4)).toBe(true);
+});
 test('Original learning world meter remains readable in every course',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
