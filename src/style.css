@@ -794,3 +794,74 @@
 .impactteaser button{flex-shrink:0;min-height:47px}
 @media(max-width:850px){.impactteaser{flex-direction:column;align-items:stretch}.impactteaser button{width:100%}.impactstep{grid-template-columns:40px minmax(0,1fr)}.impactstep button{grid-column:2;width:100%;max-width:100%}}
 @media(max-width:650px){.impacthero{padding:18px}.impactheroart{display:none}.impactstatrow{grid-template-columns:1fr}.impactstatrow>div{padding:13px}.impactdomains{grid-template-columns:1fr}.impactassessment,.impactcomparison,.impactrubric,.impactprivacy,.impactreset{padding:15px}.impactstep{padding:13px;gap:10px}.impactstep h2{font-size:16px}.impactquestionactions,.impactexportactions{display:grid}.impactquestionactions button,.impactexportactions button{width:100%}.impactdashboardstats{grid-template-columns:1fr}.impactconfidence>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.impactconfidence label{padding:9px 6px;font-size:11px}.impactdomainmeter{grid-template-columns:65px minmax(0,1fr) 35px}.impactreview>article{padding:12px}}
+
+
+/* AMLVERSE v0.39 — accessible NFIU-inspired light learning mode */
+:root{color:#132c4a;background:#fff;color-scheme:light}
+html,body,#root,.shell,.page{background:#fff;color:#132c4a}
+body{font-size:16px;line-height:1.65}
+header,footer{background:#fff;border-color:#d8e2ef;color:#284361}
+.sidebar{background:#102f59;color:#fff;border-color:#244b7b}
+.brand b span,.mobilebrand span{color:#173f75}
+.sidebar .brand b span{color:#d0e7ff}
+.mobilebrand,.title,.sectionhead h2{color:#102f59}
+.eyebrow{color:#174e91;font-size:12px;letter-spacing:.08em}
+.lead,.muted,.back{color:#405a75;font-size:16px;line-height:1.75}
+.primary{background:#133c70;color:#fff;font-size:15px;min-height:48px}
+.primary:hover:not(:disabled){background:#245a99;color:#fff}
+.secondary{background:#fff;color:#163c69;border-color:#8ea8c5;font-size:15px;min-height:48px}
+.secondary:hover:not(:disabled){background:#edf4fc}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #e4a32b;outline-offset:3px}
+button:disabled{opacity:.7}
+.demo{background:#eaf2fc;color:#153d70}
+.avatar{background:#e1ecfa;color:#173f75}
+.hero,.stat,.world,.notice,.resource,.situation,.choice,.questtile,.lessonbox,.knowledgecard,.knowledgecheck,.knowledgeplay,.knowledgeintro,.worldprogresspanel,.worldprogresssection,.towncontrols,.townbuilding,.townnotice,.worldinteractivepromo,.worlddecisionentry,.riskadvancedpromo,.worldclassicmeter,.researchhero,.impacthero{background:#fff;color:#163552;border-color:#cbd9e9;box-shadow:0 2px 9px rgba(22,57,103,.04)}
+.hero{background:linear-gradient(120deg,#f1f6fd,#fff)}
+.hero h1,.hero h1 em,.hero p,.worldtext h3,.worldtext p,.stat strong,.stat p,.stat small,.notice,.notice b,.worldtext small,.worldtext strong{color:#163c6c}
+.knowledgepath{max-width:960px}
+.knowledgepath h1,.knowledgepath h2,.knowledgepath h3{color:#133962}
+.knowledgepath p,.knowledgepath small{line-height:1.75}
+.knowledgepath .knowledgecard,.knowledgepath .knowledgecheck,.knowledgepath .minitutorial{background:#fff;color:#173552;border:1px solid #c6d7e8}
+.knowledgepath .knowledgecard p,.knowledgepath .knowledgecheck p,.knowledgepath .knowledgeintro p,.knowledgepath .knowledgeplay p{color:#2d4c6a;font-size:16px;line-height:1.85}
+.knowledgepath .knowledgeexample,.knowledgepath .knowledgetakeaway,.knowledgepath .arcadefeedback{background:#eff5fc;color:#193c68;border-color:#bbd0e8}
+.knowledgepath .knowledgeexample p,.knowledgepath .knowledgetakeaway{color:#193c68}
+.knowledgepath .knowledgetabs button,.knowledgepath .knowledgeflow button{background:#f1f6fc;color:#173f70;border:1px solid #bed0e4;font-size:14px;line-height:1.5}
+.knowledgepath .knowledgetabs button.on,.knowledgepath .knowledgeflow button.active{background:#153f75;color:#fff;border-color:#153f75}
+.knowledgepath .knowledgetabs button:disabled,.knowledgepath .knowledgeflow button:disabled{background:#f4f6f9;color:#63778a;border-color:#d9e0e8;opacity:1}
+.knowledgepath .knowledgeanswers button,.knowledgepath .minidrop,.knowledgepath .arcadecard{background:#f7faff;color:#163c6b;border:1px solid #a9c0d9;font-size:15px}
+.knowledgepath .knowledgeanswers button.selected{background:#dfeeff;border-color:#245d9b;color:#123862}
+.knowledgepath .knowledgeflow{margin:30px 0 18px}
+.knowledgepath .notice{background:#f3f7fd;color:#2f4d68;border-color:#cedcec;font-size:14px}
+.learning-next-sections{margin-top:30px;border-top:2px solid #cfdbeb;padding-top:24px}
+.learning-next-sections>h2{font-size:22px;margin:0 0 8px}
+.learning-next-sections>p{font-size:15px;color:#34536f;margin:0 0 20px}
+.learning-next-sections button:disabled{background:#eaf0f7;color:#55708c;border-color:#cbd6e3}
+.worldprogressdrawer{margin:28px 0 18px;border:1px solid #aabfd8;border-radius:15px;background:#fff;overflow:hidden}
+.worldprogressdrawer>summary{list-style:none;cursor:pointer;background:#edf4fc;color:#143c6c;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:16px;font-weight:800}
+.worldprogressdrawer>summary::-webkit-details-marker{display:none}
+.worldprogressdrawer>summary span:last-child{font-size:13px;font-weight:650}
+.worldprogressdrawer[open]>summary{border-bottom:1px solid #cbd9e9}
+.worldprogressdrawer .worldprogresspanel{margin:0;border:0;box-shadow:none}
+.towncontrols,.townresetconfirm{background:#fff;color:#173b68;border-color:#cbd9e9}
+.towncontrols p,.worldprogressdrawer p{color:#355371}
+.townresetopen{color:#143c6b}
+.townroad .townbuildingbody h3,.townroad .townbuildingbody p,.townroad .townbuildingbody span,.townfootnote{color:#1c416b}
+.townroad .townstop.locked .townbuilding{background:#f1f5fa}
+.townroad .townstop.locked button{display:none}
+@media(max-width:760px){
+ body{font-size:16px}
+ main{padding:20px 16px 38px}
+ .knowledgepath h1{font-size:clamp(27px,7vw,36px);line-height:1.25}
+ .knowledgepath .lead{font-size:16px}
+ .knowledgepath .knowledgecard,.knowledgepath .knowledgecheck{padding:20px 16px}
+ .knowledgepath .knowledgecard p,.knowledgepath .knowledgecheck p{font-size:16px}
+ .knowledgepath .actions{display:grid;grid-template-columns:1fr}
+ .knowledgepath .actions button,.knowledgepath .knowledgeplay button,.learning-next-sections button{width:100%;min-height:50px;white-space:normal}
+ .knowledgepath .knowledgetabs{display:grid;grid-template-columns:1fr;gap:9px}
+ .knowledgepath .knowledgetabs button{text-align:left;min-height:48px}
+ .knowledgepath .knowledgeflow{display:grid;grid-template-columns:1fr;gap:8px}
+ .worldprogressdrawer>summary{padding:16px}
+ .worldprogressdrawer>summary span:last-child{white-space:nowrap}
+ .learning-next-sections{margin-top:24px}
+ .towncontrolsbuttons{display:grid;grid-template-columns:1fr}
+}
