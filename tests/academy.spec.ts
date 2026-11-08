@@ -109,6 +109,32 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
  await audit('.worldinteractivepromo','.worldinteractivepromo p');
  await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
 });
+test('Original learning world meter remains readable in every course',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Enter district/}).click();
+ const meter=page.locator('.worldclassicmeter');
+ await expect(meter).toBeVisible();
+ await expect(meter).toContainText('Original lessons, Quick Check and game');
+ const result=await meter.evaluate(el=>{
+  const lum=(v:string)=>{
+   const channels=Array.from(v.matchAll(/\d+(?:\.\d+)?/g),x=>Number(x[0])).slice(0,3);
+   if(channels.length!==3)throw Error('Cannot parse color '+v);
+   const [r,g,b]=channels.map(x=>{const c=x/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4});
+   return .2126*r+.7152*g+.0722*b;
+  };
+  const bg=lum(getComputedStyle(el).backgroundColor);
+  return [...el.querySelectorAll('.worldmeterline>span,.worldmeterline>strong')].map(node=>{
+   const fg=lum(getComputedStyle(node).color);
+   return {contrast:(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05),fontSize:parseFloat(getComputedStyle(node).fontSize)};
+  });
+ });
+ expect(result).toHaveLength(2);
+ for(const label of result){
+  expect(label.contrast).toBeGreaterThanOrEqual(4.5);
+  expect(label.fontSize).toBeGreaterThanOrEqual(14);
+ }
+});
 test('Decision Lab meters, controls and post-answer explanation meet readable contrast',async({page,isMobile})=>{
  await page.addInitScript(()=>{
   localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
