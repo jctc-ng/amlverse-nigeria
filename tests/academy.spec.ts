@@ -161,7 +161,7 @@ test('Arcade clue card descriptions remain readable and clue selections animate'
  await expect(cards.first()).toBeVisible();
  const info=await cards.first().evaluate(el=>{
   const text=el.querySelector('span')!;
-  const rgb=(v:string)=>{const parts=Array.from(v.matchAll(/\\d+(?:\\.\\d+)?/g),m=>Number(m[0])).slice(0,3);if(parts.length!==3)throw Error('Invalid color '+v);const [r,g,b]=parts.map(k=>{const a=k/255;return a<=.04045?a/12.92:((a+.055)/1.055)**2.4});return .2126*r+.7152*g+.0722*b};
+  const rgb=(v:string)=>{const parts=Array.from(v.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3);if(parts.length!==3)throw Error('Invalid color '+v);const [r,g,b]=parts.map(k=>{const a=k/255;return a<=.04045?a/12.92:((a+.055)/1.055)**2.4});return .2126*r+.7152*g+.0722*b};
   const a=rgb(getComputedStyle(text).color),b=rgb(getComputedStyle(el).backgroundColor);
   return {contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),font:parseFloat(getComputedStyle(text).fontSize)};
  });
