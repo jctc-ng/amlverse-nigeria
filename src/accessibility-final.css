@@ -866,3 +866,108 @@ main.arcade .arcadefeedback,main.arcade .feedback{animation:aml-stage-fade .24s 
  main.arcade .arcadewin,main.arcade .arcadefeedback,main.arcade .feedback{animation:none!important}
  main.arcade .arcadebin,main.arcade .choices>.choice{transform:none!important;transition:none!important}
 }
+
+
+/* v2.2 — non-arcade investigation challenges retain the same design language. */
+main.advancedtrace .arcadehud,
+main.advancedtrace .chaincase,
+main.advancedtrace .advancedgraph,
+main.advancedtrace .confidenceitem,
+main.teamchallenge .teamrating,
+main.teamchallenge .teamcard,
+main.teamchallenge .situation,
+main.teamchallenge .resultpanel,
+main.capstonepage .capstoneheader,
+main.capstonepage .capstoneintro,
+main.capstonepage .capstonequestion,
+main.capstonepage .capstoneresults,
+main.capstonepage .capstonemetrics>div{
+ background:#f3f8fb!important;background-image:none!important;
+ color:#153e59!important;border:1px solid #bcd3e1!important;
+ border-radius:16px!important;box-shadow:0 4px 15px rgba(15,63,96,.04)!important;
+}
+main.advancedtrace .advancedgraph :is(h2,h3,p,strong),
+main.advancedtrace .chaincase :is(h2,p,strong),
+main.advancedtrace .confidenceitem :is(h3,p,strong),
+main.teamchallenge :is(.teamcard,.teamrating,.situation,.resultpanel) :is(h2,h3,strong,p,small,span,label),
+main.capstonepage :is(.capstoneintro,.capstonequestion,.capstoneresults,.capstonemetrics>div) :is(h2,h3,p,strong,small){
+ color:#244b61!important;-webkit-text-fill-color:#244b61!important;opacity:1!important;
+ line-height:1.65!important;
+}
+main.advancedtrace .chaincase h2,
+main.advancedtrace .advancedgraph h2,
+main.teamchallenge .resultpanel h2,
+main.capstonepage .capstoneintro h2{
+ color:#123e59!important;-webkit-text-fill-color:#123e59!important;
+}
+main.advancedtrace .arcadehud>span,
+main.capstonepage .capstoneheader :is(strong,small,span),
+main.teamchallenge .teamrating strong{
+ color:#125166!important;-webkit-text-fill-color:#125166!important;font-size:14px!important;font-weight:850!important;
+}
+main.advancedtrace .arcadehud button,
+main.capstonepage .capstoneheader button{
+ color:#15435e!important;-webkit-text-fill-color:#15435e!important;
+ background:#fff!important;border:1px solid #abc5d7!important;border-radius:10px!important;
+}
+main.advancedtrace .confchoices button,
+main.teamchallenge .teamprogress button{
+ background:#fff!important;color:#16425d!important;
+ -webkit-text-fill-color:#16425d!important;border:1px solid #bcd3df!important;
+ border-radius:12px!important;opacity:1!important;font-size:14px!important;
+ transition:transform .18s,border-color .18s,background-color .18s!important;
+}
+main.advancedtrace .confchoices button.active,
+main.teamchallenge .teamprogress button.active,
+main.teamchallenge .teamprogress button.done{
+ background:#e4f5ec!important;border:2px solid #0c826e!important;
+ color:#105b4d!important;-webkit-text-fill-color:#105b4d!important;opacity:1!important;
+}
+main.teamchallenge .teamprogress button span{color:#0c6860!important;-webkit-text-fill-color:#0c6860!important}
+main.advancedtrace .confchoices button:hover:not(:disabled),
+main.teamchallenge .teamprogress button:hover{background:#e9f7f1!important;border-color:#0b866f!important;transform:translateY(-2px)}
+main.advancedtrace .chainnote,
+main.capstonepage .chainnote{
+ background:#edf6fa!important;border:1px solid #bad2df!important;
+ color:#2a5066!important;-webkit-text-fill-color:#2a5066!important;
+ border-radius:12px!important;font-size:14px!important;line-height:1.75!important;
+}
+main.advancedtrace .choices>.choice,
+main.capstonepage .choices>.choice{
+ background:#fff!important;color:#173e59!important;
+ -webkit-text-fill-color:#173e59!important;border:1px solid #b9d1df!important;
+ border-radius:13px!important;opacity:1!important;font-size:15px!important;
+}
+main.advancedtrace .choices>.choice.picked,
+main.capstonepage .choices>.choice.picked{
+ background:#e6f5ed!important;border:2px solid #0c8670!important;
+}
+main.advancedtrace .choices>.choice .letter,
+main.capstonepage .choices>.choice .letter{
+ background:#e4eff5!important;color:#16435c!important;-webkit-text-fill-color:#16435c!important;
+}
+main.capstonepage .capstonereviewitem strong{
+ color:#0b6657!important;-webkit-text-fill-color:#0b6657!important;font-size:14px!important;
+}
+main.capstonepage .capstonereviewitem p{
+ color:#34566b!important;-webkit-text-fill-color:#34566b!important;font-size:14px!important;
+}
+main.capstonepage .capstonemetrics>div strong{
+ color:#0a5b70!important;-webkit-text-fill-color:#0a5b70!important;font-size:24px!important
+}
+main.capstonepage .capstonemetrics>div small{
+ color:#34566b!important;-webkit-text-fill-color:#34566b!important;font-size:13px!important
+}
+main.advancedtrace .chaincase,main.advancedtrace .confidenceitem,
+main.teamchallenge .situation,main.teamchallenge .resultpanel,
+main.capstonepage .capstoneintro,main.capstonepage .capstonequestion,
+main.capstonepage .capstoneresults{animation:aml-stage-fade .3s ease-out both}
+@media(prefers-reduced-motion:reduce){
+ main.advancedtrace .chaincase,main.advancedtrace .confidenceitem,
+ main.teamchallenge .situation,main.teamchallenge .resultpanel,
+ main.capstonepage .capstoneintro,main.capstonepage .capstonequestion,
+ main.capstonepage .capstoneresults{animation:none!important}
+ main.advancedtrace .confchoices button,main.teamchallenge .teamprogress button{
+ transition:none!important;transform:none!important
+ }
+}
