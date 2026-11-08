@@ -196,6 +196,11 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
   if(sections.every(part=>part.done===part.total)){setCertificateScreen(true);window.scrollTo(0,0);return}
   onNextCourse();
  }
+ function returnFromActivity(close:()=>void){
+  close();
+  const parts=readWorldSections(game);
+  if(parts.every(part=>part.done===part.total)){setCertificateScreen(true);window.scrollTo(0,0)}
+ }
  function launch(){
   try{localStorage.setItem('amlverse-guide-v1-'+game,'yes')}catch{}
   setPlaying(true);
@@ -209,20 +214,20 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
   <CompletionCertificates worldOnly={game} autoOpen/>
   <div className="actions"><button type="button" className="primary" onClick={onNextCourse}>Continue to the next world →</button><button type="button" className="secondary" onClick={()=>setCertificateScreen(false)}>Review completed course</button></div>
  </main>;
- if(worldDecision)return <WorldDecisionLab game={game} onBack={()=>setWorldDecision(false)} onContinue={continueGuidedPath}/>;
- if(worldInteractive)return <InteractiveWorldChallenge game={game} onBack={()=>setWorldInteractive(false)} onPass={()=>{saveCourse(game,p=>({...p,checkPassed:true,checkAttempts:p.checkAttempts+1}));setConfirmedPass(true)}} onNext={()=>{setWorldInteractive(false);setWorldDecision(true);window.scrollTo(0,0)}}/>;
- if(game==='virtualassets'&&virtualAdvancedOpen)return <VirtualAssetAdvanced initialMode={initialSection==='trace'?'interactive':undefined} onBack={()=>setVirtualAdvancedOpen(false)} onClassic={()=>{setVirtualAdvancedOpen(false);navigate('play')}} onNextCourse={continueGuidedPath}/>;
- if(game==='nigeria'&&nigeriaAdvancedOpen)return <NigeriaComplianceAdvanced onBack={()=>setNigeriaAdvancedOpen(false)} onClassic={()=>{setNigeriaAdvancedOpen(false);navigate('play')}} onNextCourse={continueGuidedPath}/>;
- if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>setAdvancedOpen(false)} onClassic={()=>{setAdvancedOpen(false);navigate('play')}} onNextCourse={continueGuidedPath}/>;
+ if(worldDecision)return <WorldDecisionLab game={game} onBack={()=>returnFromActivity(()=>setWorldDecision(false))} onContinue={continueGuidedPath}/>;
+ if(worldInteractive)return <InteractiveWorldChallenge game={game} onBack={()=>returnFromActivity(()=>setWorldInteractive(false))} onPass={()=>{saveCourse(game,p=>({...p,checkPassed:true,checkAttempts:p.checkAttempts+1}));setConfirmedPass(true)}} onNext={()=>{setWorldInteractive(false);setWorldDecision(true);window.scrollTo(0,0)}}/>;
+ if(game==='virtualassets'&&virtualAdvancedOpen)return <VirtualAssetAdvanced initialMode={initialSection==='trace'?'interactive':undefined} onBack={()=>returnFromActivity(()=>setVirtualAdvancedOpen(false))} onClassic={()=>{setVirtualAdvancedOpen(false);navigate('play')}} onNextCourse={continueGuidedPath}/>;
+ if(game==='nigeria'&&nigeriaAdvancedOpen)return <NigeriaComplianceAdvanced onBack={()=>returnFromActivity(()=>setNigeriaAdvancedOpen(false))} onClassic={()=>{setNigeriaAdvancedOpen(false);navigate('play')}} onNextCourse={continueGuidedPath}/>;
+ if(game==='risk'&&advancedOpen)return <RiskLabAdvanced onBack={()=>returnFromActivity(()=>setAdvancedOpen(false))} onClassic={()=>{setAdvancedOpen(false);navigate('play')}} onNextCourse={continueGuidedPath}/>;
  if(playing){
-  if(game==='risk'||game==='team')return <GameArcade key={game} mode={game} onBack={()=>setPlaying(false)} onContinue={continueGuidedPath}/>;
-  if(game==='evaluation')return <EvaluationArena onBack={()=>setPlaying(false)} onContinue={continueGuidedPath}/>;
-  if(game==='typologies')return <TypologyDetective onBack={()=>setPlaying(false)} onContinue={continueGuidedPath}/>;
-  if(game==='nigeria')return <NigeriaCompliance onBack={()=>setPlaying(false)} onContinue={continueGuidedPath}/>;
-  if(game==='virtualassets')return <VirtualAssetLab onBack={()=>setPlaying(false)} onContinue={continueGuidedPath}/>;
-  if(game==='advancedtrace')return <AdvancedTracingLab onBack={()=>setPlaying(false)} onContinue={continueGuidedPath}/>;
-  if(game==='reportwriting')return <ReportWritingLab onBack={()=>setPlaying(false)} onContinue={continueGuidedPath}/>;
-  return <EgmontExchange onBack={()=>setPlaying(false)} onContinue={continueGuidedPath}/>;
+  if(game==='risk'||game==='team')return <GameArcade key={game} mode={game} onBack={()=>returnFromActivity(()=>setPlaying(false))} onContinue={continueGuidedPath}/>;
+  if(game==='evaluation')return <EvaluationArena onBack={()=>returnFromActivity(()=>setPlaying(false))} onContinue={continueGuidedPath}/>;
+  if(game==='typologies')return <TypologyDetective onBack={()=>returnFromActivity(()=>setPlaying(false))} onContinue={continueGuidedPath}/>;
+  if(game==='nigeria')return <NigeriaCompliance onBack={()=>returnFromActivity(()=>setPlaying(false))} onContinue={continueGuidedPath}/>;
+  if(game==='virtualassets')return <VirtualAssetLab onBack={()=>returnFromActivity(()=>setPlaying(false))} onContinue={continueGuidedPath}/>;
+  if(game==='advancedtrace')return <AdvancedTracingLab onBack={()=>returnFromActivity(()=>setPlaying(false))} onContinue={continueGuidedPath}/>;
+  if(game==='reportwriting')return <ReportWritingLab onBack={()=>returnFromActivity(()=>setPlaying(false))} onContinue={continueGuidedPath}/>;
+  return <EgmontExchange onBack={()=>returnFromActivity(()=>setPlaying(false))} onContinue={continueGuidedPath}/>;
  }
  return <main className="narrow knowledgepath">
  <button className="back" onClick={onBack}>← Academy overview</button>
