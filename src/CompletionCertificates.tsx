@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {modules,readFatf,readScore} from './progress';
 import {readAcademyMetrics} from './AcademyMetrics';
-import {worldComplete} from './WorldCompletion';
 
 type Award={id:string;title:string;kind:'Game'|'Course'|'Academy'|'Special';earned:boolean;detail:string};
 const NAME_KEY='amlverse-certificate-name-v1';
@@ -28,10 +27,10 @@ export function certificateAwards():Award[]{
  return [...gameAwards,...courseAwards,...special];
 }
 
-export default function CompletionCertificates(){
+export default function CompletionCertificates({worldOnly,autoOpen=false}:{worldOnly?:import('./progress').CourseKey;autoOpen?:boolean}={}){
  const [name,setName]=useState(readName);
- const [selected,setSelected]=useState<string|null>(null);
- const awards=certificateAwards();
+ const [selected,setSelected]=useState<string|null>(autoOpen&&worldOnly?'course-'+worldOnly:null);
+ const awards=certificateAwards().filter(a=>!worldOnly||(a.id==='course-'+worldOnly));
  const earned=awards.filter(a=>a.earned);
  const award=earned.find(a=>a.id===selected)||null;
  const validName=name.trim().length>=2&&name.trim().length<=100;
@@ -42,8 +41,8 @@ export default function CompletionCertificates(){
   window.print();
  };
  return <section className="progresssection certificates" aria-labelledby="certificates-title">
-  <div className="certificates-head"><div><span className="eyebrow">PERSONAL ACHIEVEMENTS</span><h2 id="certificates-title">Certificates of completion</h2>
-   <p>Earn separate certificates for finished games, fully completed learning worlds, FATF Quest and the integrated Capstone. Only earned certificates can be printed.</p></div>
+  <div className="certificates-head"><div><span className="eyebrow">PERSONAL ACHIEVEMENTS</span><h2 id="certificates-title">{worldOnly?'Your course certificate':'Certificates of completion'}</h2>
+   <p>{worldOnly?'Complete all required activities in this world to receive its own course certificate. You do not need to finish any other world.':'Earn separate certificates for finished games, fully completed learning worlds, FATF Quest and the integrated Capstone. Only earned certificates can be printed.'}</p></div>
    <strong>{earned.length} / {awards.length} earned</strong></div>
   <label className="certificate-name-label" htmlFor="certificate-learner-name">Learner name for your certificates</label>
   <input id="certificate-learner-name" className="certificate-name" value={name} onChange={e=>{setName(e.target.value);try{localStorage.setItem(NAME_KEY,e.target.value)}catch{}}} maxLength={100} autoComplete="name" placeholder="Enter your full name"/>
