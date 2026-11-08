@@ -1,4 +1,3 @@
-import {allCoursesUnlocked} from './LearningTownProgress';
 import {useState} from 'react';
 import {FATF40,FATF_GROUPS,FATF_STANDARD_URL,FATF_IMPLEMENTATION_NOTE} from './Fatf40Content';
 import type {FatfDeepLesson} from './Fatf40Content';
@@ -49,9 +48,7 @@ export default function FatfChapter({onBack}:{onBack:()=>void}){
  const completed=Array.from({length:40},(_,i)=>i+1).filter(n=>{const o=best(n,record);return !!o&&o.total>0&&o.score===o.total}).length;
  const attempted=Array.from({length:40},(_,i)=>i+1).filter(n=>!!best(n,record)).length;
  const studied=new Set(record.studied);
- const free=allCoursesUnlocked()||fatfFree;
- function canOpen(n:number){if(free||n===1)return true;const preceding=best(n-1,record);return !!preceding&&preceding.total>0&&preceding.score===preceding.total}
- function toggleAccess(){setFatfFree(previous=>{const now=!previous;try{if(now)localStorage.setItem('amlverse-fatf-free-v1','yes');else localStorage.removeItem('amlverse-fatf-free-v1')}catch{}return now})}
+ function canOpen(n:number){if(n===1)return true;const preceding=best(n-1,record);return !!preceding&&preceding.total>0&&preceding.score===preceding.total}
  function resetFatf(){if(resetPhrase!=='RESET')return;try{localStorage.removeItem('amlverse-fatf-ch1');localStorage.removeItem(NEW_KEY)}catch{}setRecord({studied:[],outcomes:{}});setActive(null);setView('study');setResetOpen(false);setResetPhrase('');window.scrollTo(0,0)}
  const shown=FATF40.filter(x=>(group==='All 40'||x.group===group)&&(!query.trim()||('r.'+x.number+' '+x.title+' '+x.group+' '+x.explanation).toLowerCase().includes(query.trim().toLowerCase())));
  function start(n:number){
@@ -92,7 +89,7 @@ export default function FatfChapter({onBack}:{onBack:()=>void}){
   <button type="button" className="back" onClick={current?returnToMap:onBack}>← {current?'All forty Recommendations':'Academy overview'}</button>
   {!current?<><span className="eyebrow">FATF QUEST · COMPLETE LEARNING CURRICULUM</span><h1 className="title">All 40 FATF Recommendations</h1>
    <p className="lead">A professionally structured guide across seven policy areas. Each Recommendation includes an explanatory study, everyday analogy, four implementation actions, a fictional case and three application questions.</p>
-   <section className="fatftowncontrols"><div><strong>🔐 Guided FATF learning path</strong><p>R.1 is open by default. Master each Recommendation to unlock the next, or select free exploration to study any topic. Existing R.1–R.10 results remain saved unless you choose to reset.</p></div><div className="towncontrolsbuttons"><button type="button" className="secondary" disabled={allCoursesUnlocked()} onClick={toggleAccess}>{free?'🔒 Restore guided FATF locks':'🔓 Unlock FATF course'}</button><button type="button" className="townresetopen" onClick={()=>{setResetOpen(v=>!v);setResetPhrase('')}}>{resetOpen?'Cancel reset':'↻ Reset FATF course'}</button></div>{free?<p className="towncontrolnote">Free exploration is active. No assessment is passed automatically.</p>:null}
+   <section className="fatftowncontrols"><div><strong>🔐 Guided FATF learning path</strong><p>R.1 is open by default. Master each Recommendation to unlock the next automatically. Manual unlocking is disabled. Existing R.1–R.10 results remain saved unless you reset.</p></div><div className="towncontrolsbuttons"><button type="button" className="townresetopen" onClick={()=>{setResetOpen(v=>!v);setResetPhrase('')}}>{resetOpen?'Cancel reset':'↻ Reset FATF course'}</button></div>
 {resetOpen?<div className="townresetconfirm"><h3>Reset all FATF Quest progress?</h3><p>This deletes saved study records and assessments for Recommendations R.1–R.40, including results from the original R.1–R.10 pilot, on this browser only. Other worlds and the Capstone are unaffected.</p><label htmlFor="fatf-reset-confirm">Type <strong>RESET</strong> to confirm</label><input id="fatf-reset-confirm" value={resetPhrase} onChange={e=>setResetPhrase(e.target.value)} placeholder="RESET" autoComplete="off"/><div className="townresetactions"><button type="button" className="townresetdanger" disabled={resetPhrase!=='RESET'} onClick={resetFatf}>Delete FATF course progress</button><button type="button" className="secondary" onClick={()=>{setResetOpen(false);setResetPhrase('')}}>Keep my progress</button></div></div>:null}</section>
    <div className="fatf40stats"><div><small>RECOMMENDATIONS MASTERED</small><strong>{completed} / 40</strong></div><div><small>LEARNING CONTENT STUDIED</small><strong>{studied.size} / 40</strong></div><div><small>ASSESSMENTS ATTEMPTED</small><strong>{attempted} / 40</strong></div><div><small>LEARNING POINTS</small><strong>{combined.earned.toLocaleString()}</strong></div></div>
    <div className="fatf40progress"><div style={{width:(completed/40*100)+'%'}}/></div>
