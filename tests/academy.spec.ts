@@ -106,6 +106,7 @@ test('Global accessibility fixes keep FATF study, progress chips and impact scor
   {foreground:'.fatf40studyheading h2',background:'.fatf40study'}
  ]);
  for(const item of fatf)expect(item.ratio,'FATF contrast '+JSON.stringify(item)).toBeGreaterThanOrEqual(4.5);
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:/My Progress/}).first().click();
  const progress=await inspect('.progressdash',[
   {foreground:'.academy31headline strong',background:'.academy31headline'},
@@ -114,6 +115,7 @@ test('Global accessibility fixes keep FATF study, progress chips and impact scor
   {foreground:'.impactdashboardstats strong',background:'.impactdashboardstats>div'}
  ]);
  for(const item of progress)expect(item.ratio,'Progress contrast '+JSON.stringify(item)).toBeGreaterThanOrEqual(4.5);
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:/Competency & Impact Lab/}).first().click();
  const impact=await inspect('.impactpage',[
   {foreground:'.impactstatrow strong',background:'.impactstatrow>div'},
