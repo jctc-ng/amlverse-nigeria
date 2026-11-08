@@ -2,9 +2,9 @@
 
 **Creator and project lead:** Muzammil Adamu
 
-**Platform:** https://jctc-ng.github.io/amlverse-nigeria/
+**Platform:** https://m-analyst.github.io/amlverse-nigeria/
 
-**Project source:** https://github.com/jctc-ng/amlverse-nigeria
+**Project source:** https://github.com/m-analyst/amlverse-nigeria
 
 **Status:** Independent open-access educational prototype. No formal institutional endorsement, accreditation, independent peer review or measured educational effectiveness is claimed.
 
@@ -60,7 +60,7 @@ The presentation would demonstrate the design and seek external feedback on tech
 
 ## Suggested attribution
 
-Adamu, M. (2026). *AMLVERSE Nigeria: Interactive AML/CFT/CPF and Financial Intelligence Learning Town* [Educational web application]. https://jctc-ng.github.io/amlverse-nigeria/
+Adamu, M. (2026). *AMLVERSE Nigeria: Interactive AML/CFT/CPF and Financial Intelligence Learning Town* [Educational web application]. https://m-analyst.github.io/amlverse-nigeria/
 
 This citation identifies the project, not a peer-reviewed publication or DOI. Future academic citations should identify a specific release, review date and archived version.
 
