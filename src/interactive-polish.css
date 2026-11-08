@@ -908,3 +908,60 @@
  .wcinteractive .wcinteractivetargets button,
  .wcinteractive .wcinteractivetimelinecards button{transform:none!important;transition:none!important}
 }
+
+
+/* v1.6 shared audit: remaining dark islands in decision labs and advanced courses. */
+.worlddecisionoptions button,
+.riskadvanced .riskadvancedstep button,
+.riskadvanced .riskadvancedreview>div,
+.riskadvanced .riskadvancedlessons button,
+.riskadvanced .riskadvancednav button{
+ background:#fff!important;color:#173e59!important;
+ border:1px solid #b9d1df!important;
+ border-radius:12px!important;
+ font-size:15px!important;
+ opacity:1!important;
+}
+.worlddecisionoptions button{padding:15px!important;min-height:62px}
+.worlddecisionoptions button :is(b,strong,span),.riskadvanced .riskadvancedstep button,
+.riskadvanced .riskadvancedreview>div strong,.riskadvanced .riskadvancedreview>div p{
+ color:#153f5c!important;font-size:14px!important;
+}
+.worlddecisionoptions button b{background:#dfedf4!important;color:#14516a!important;border:1px solid #b9d4e0!important}
+.worlddecisionoptions button:hover:not(:disabled),
+.riskadvanced .riskadvancedlessons button:hover:not(:disabled){
+ background:#ebf6f2!important;border-color:#13836f!important;
+}
+.worlddecisionoptions button.right{background:#e2f6eb!important;border-color:#149370!important}
+.worlddecisionoptions button.wrong{background:#fff0ed!important;border-color:#b97870!important}
+.worlddecisionstages>div,
+.worlddecisionstages>div.active,.worlddecisionstages>div.done{
+ background:#f3f8fc!important;border:1px solid #c0d5e2!important;
+ color:#163c57!important;opacity:1!important;
+}
+.worlddecisionstages>div.active{background:#e9f5ef!important;border-color:#0f8975!important}
+.worlddecisionstages>div.done{background:#e4f5ed!important;border-color:#8cc5ae!important}
+.worlddecisionstages>div small{color:#355168!important;font-size:13px!important}
+.worlddecisionstages>div span{background:#deebf4!important;color:#163e58!important}
+.worlddecisionreview article,.worlddecisionaward{
+ background:#f6fafc!important;border:1px solid #c2d8e5!important;
+ border-radius:13px!important;color:#1b415b!important;
+}
+.worlddecisionreview article :is(h3,strong,b){color:#113c5c!important}
+.worlddecisionreview article :is(p,span,small){color:#355569!important;font-size:14px!important}
+.worlddecisionaward{background:#eaf7ef!important;border-color:#9dd0ba!important}
+.worlddecisionaward :is(h2,h3,strong){color:#105c4d!important}
+.riskadvanced .riskadvancedreview>div{padding:16px!important}
+.riskadvanced .riskadvancedreview>div strong{font-size:15px!important}
+.riskadvanced .riskadvancedreview>div p{font-size:14px!important;line-height:1.7!important}
+.riskadvanced .riskadvancedstep{color:#145c6a!important;font-size:14px!important}
+.riskadvanced .riskadvancedstep button{min-height:43px}
+.riskadvanced .riskadvancedlessons button{font-size:15px!important}
+.graphstudyanalogy,.graphstudyprofessional{
+ background:#eef7f2!important;background-image:none!important;
+ border:1px solid #add5c6!important;color:#183f57!important;
+ border-radius:16px!important;
+}
+.graphstudyprofessional{background:#eef5fa!important;border-color:#bbd4e3!important}
+.graphstudyanalogy h3,.graphstudyprofessional h3{color:#113f5b!important;font-size:17px!important}
+.graphstudyanalogy p,.graphstudyprofessional p{color:#335368!important;font-size:15px!important}
