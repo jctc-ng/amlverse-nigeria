@@ -1,0 +1,353 @@
+/* AMLVERSE interactive learning release: accessible and animated where useful.
+   Loaded after readability-fixes.css; no changes to existing learner records. */
+.guideshade{
+  background:rgba(7,26,44,.76)!important;
+  padding:clamp(12px,3vw,25px)!important;
+  backdrop-filter:blur(4px);
+}
+.guideshade .guidepanel{
+  background:#fff!important;
+  background-image:none!important;
+  color:#163a55!important;
+  border:1px solid #adc8d9!important;
+  border-radius:23px!important;
+  padding:clamp(19px,3vw,29px)!important;
+  box-shadow:0 24px 80px rgba(4,31,54,.27)!important;
+}
+.guideshade .guidehead{
+  color:#0b5d71!important;
+  font-size:13px!important;
+  font-weight:850!important;
+}
+.guideshade .guidehead span{color:#0b5d71!important}
+.guideshade .guideclose{
+  background:#ebf3f8!important;
+  color:#123f5d!important;
+  border:1px solid #bdd1df!important;
+  border-radius:11px!important;
+  min-width:43px;
+  min-height:43px;
+}
+.guideshade .guideclose:hover{background:#deedf6!important}
+.guideshade .guidedots span{background:#cbdde6!important}
+.guideshade .guidedots span.on{background:#087e70!important}
+.guideshade .guidestage{
+  background:linear-gradient(140deg,#eef7fb,#e6f4ef)!important;
+  border:1px solid #bad7df!important;
+  border-radius:18px!important;
+  min-height:195px;
+  padding:20px!important;
+}
+.guideshade .guidepanel h2{
+  color:#103757!important;
+  font-size:clamp(22px,3.5vw,26px)!important;
+  line-height:1.35!important;
+  margin:17px 0 10px!important;
+}
+.guideshade .guidepanel p{
+  color:#34526a!important;
+  font-size:16px!important;
+  line-height:1.75!important;
+  min-height:0!important;
+}
+.guideshade .guidecard{
+  background:#fff!important;
+  border:1.5px solid #8ebbaa!important;
+  color:#173c58!important;
+  border-radius:14px!important;
+  min-height:90px;
+  box-shadow:0 5px 17px rgba(18,63,105,.07)!important;
+}
+.guideshade .guidecard strong{color:#123a57!important;font-size:15px!important;line-height:1.45!important}
+.guideshade .guidecard small{color:#31536a!important;font-size:12px!important;font-weight:850!important}
+.guideshade .guidepracticecard{
+  cursor:pointer;max-width:330px;min-width:200px;width:min(100%,330px);
+  transition:transform .18s ease,background .18s ease,box-shadow .18s ease;
+}
+.guideshade .guidepracticecard:hover,.guideshade .guidepracticecard:focus-visible{
+  transform:translateY(-3px);
+  box-shadow:0 9px 22px rgba(18,63,105,.13)!important;
+  border-color:#087e70!important;
+}
+.guideshade .guidepracticecard.is-selected{
+  background:#e3f5eb!important;
+  border:2px solid #108572!important;
+  box-shadow:0 0 0 3px rgba(12,133,109,.11)!important;
+}
+.guideshade .guidemoving{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;width:100%}
+.guideshade .guidearrow{color:#0a7365!important;font-size:28px}
+.guideshade .guidetarget{
+  background:#dff3e9!important;
+  border:1.5px dashed #1b806c!important;
+  border-radius:13px!important;
+  color:#0c5e50!important;
+  width:auto;min-width:125px;
+  padding:14px!important;
+  font-size:14px!important;
+}
+.guideshade .guidesuccess{
+  color:#0a6555!important;
+  background:#dff4e9!important;
+  border:1px solid #9bcbb4!important;
+  border-radius:12px!important;
+  padding:11px 14px;
+  font-size:16px!important;
+}
+.guideshade .guidematchoptions{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:9px;
+  margin:15px 0;
+}
+.guideshade .guidematchoptions button{
+  background:#fff!important;
+  color:#173f5c!important;
+  border:1px solid #b4cddd!important;
+  border-radius:11px!important;
+  min-height:49px;
+  text-align:left;
+  padding:12px 14px;
+  font-weight:750;
+  font-size:15px;
+}
+.guideshade .guidematchoptions button:hover,.guideshade .guidematchoptions button:focus-visible{
+  background:#edf7f4!important;border-color:#16816f!important;
+}
+.guideshade .guidematchoptions button.correct{
+  background:#dff4e7!important;border-color:#178267!important;
+}
+.guideshade .guidefeedback{
+  background:#fff5e8!important;
+  border:1px solid #d9bb8d!important;
+  border-radius:11px;
+  padding:12px 14px;
+  color:#65471e!important;
+  font-weight:650;
+  font-size:14px!important;
+}
+.guideshade .guidefeedback.correct{
+  background:#e5f6eb!important;
+  border-color:#a6ceaf!important;
+  color:#0d614c!important;
+}
+.guideshade .guideactions{gap:14px!important}
+.guideshade .guideactions button{min-height:46px;font-size:14px!important;border-radius:11px!important;white-space:normal!important}
+.guideshade .guideactions .primary:disabled{background:#d9e3eb!important;color:#34566a!important;border-color:#a9c2d1!important}
+.guideshade .guideactions>div{gap:8px;flex-wrap:wrap}
+
+/* Interactive tracing: actual existing SVG graph and evidence inspector. */
+.itracelab :is(.itracebrief,.itraceinspector,.itracequestion,.itracecompleted,.itraceanalogy,.itraceobjective,.itracegraphpanel,.itracedetail,.itraceaward){
+  background:#fff!important;
+  background-image:none!important;
+  border:1px solid #bfd4e3!important;
+  border-radius:18px!important;
+  box-shadow:0 5px 16px rgba(18,63,105,.045)!important;
+  color:#183e59!important;
+}
+.itracelab :is(.itracebrief,.itraceinspector,.itracequestion,.itracecompleted) :is(h2,h3,h4,strong){
+  color:#103b5a!important;
+}
+.itracelab :is(.itracebrief,.itraceinspector,.itracequestion,.itracecompleted,.itraceanalogy,.itraceobjective) :is(p,small,span){
+  color:#335368!important;font-size:15px!important;line-height:1.7!important;
+}
+.itracelab .itraceanalogy{background:#eff8f4!important;border-color:#a8d4c2!important}
+.itracelab .itraceobjective{background:#eff5fa!important}
+.itracelab .itraceanalogy strong,.itracelab .itraceobjective strong{color:#104c5b!important;font-size:15px!important}
+.itracelab .itracebrief h2,.itracelab .itracequestion h2{font-size:clamp(21px,3vw,25px)!important}
+.itracelab .itracemissiontabs button{
+  background:#fff!important;
+  color:#18415f!important;
+  border:1px solid #b4cddd!important;
+  min-height:70px;
+  border-radius:12px!important;
+  font-size:14px!important;
+}
+.itracelab .itracemissiontabs button.active{background:#e0f4ec!important;border-color:#087b6c!important}
+.itracelab .itracemissiontabs button small{color:#36596b!important;font-size:12px!important}
+.itracelab .itracehud{color:#325569!important;font-size:14px!important;margin:18px 0 12px}
+.itracelab .itracehud button{background:#fff!important;color:#134760!important;border:1px solid #9ab8ca!important}
+.itracelab .itraceprogress{background:#dce9f1!important}
+.itracelab .itraceprogress>div{background:#078373!important}
+.itracelab .itracegraphpanel{background:#edf5fa!important;padding:15px!important}
+.itracelab .itracesvg{
+  background:#153950!important;
+  border:1px solid #7ea7b6;
+  border-radius:14px!important;
+  max-width:100%;
+  overflow:visible!important;
+}
+/* SVG has its own deliberately dark backing; white labels inside the graph remain readable. */
+.itracelab .itracelegend{color:#2a4b62!important;font-size:13px!important;font-weight:700;gap:12px}
+.itracelab .itracelegend span{color:#2e5266!important}
+.itracelab .itraceinspector>p{color:#36566b!important;font-size:15px!important}
+.itracelab .itraceevidencegrid h4{color:#0b6371!important;font-size:16px!important}
+.itracelab .itraceevidenceitem{
+  background:#fff!important;
+  border:1px solid #b7cedd!important;
+  border-radius:11px!important;
+  padding:14px!important;
+  min-height:58px;
+  color:#153e5b!important;
+  font-size:14px!important;
+  gap:10px;
+  transition:background .16s,border-color .16s,transform .16s;
+}
+.itracelab .itraceevidenceitem:hover,.itracelab .itraceevidenceitem:focus-visible{
+  background:#ebf6f3!important;
+  border-color:#0d8974!important;
+  transform:translateY(-2px);
+}
+.itracelab .itraceevidenceitem.selected{
+  background:#e3f6ea!important;
+  border:2px solid #0c8971!important;
+}
+.itracelab .itraceevidenceitem strong{color:#153e59!important}
+.itracelab .itraceevidenceitem span{color:#37566c!important;font-size:13px!important}
+.itracelab .itracedetail{background:#eaf4fa!important;color:#173d57!important;font-size:15px!important;line-height:1.7!important}
+.itracelab .itracedetail strong{color:#103c5a!important}
+.itracelab .itracequestion details{
+  background:#eef5fa!important;
+  border:1px solid #bfd4e1!important;
+  border-radius:12px;
+  padding:13px 16px;
+  font-size:14px!important;
+  color:#325269!important;
+}
+.itracelab .itracequestion details summary{color:#134560!important;font-size:15px!important;font-weight:800}
+.itracelab .itracefeedback{
+  background:#fff5e8!important;border:1px solid #d7b487!important;border-radius:12px!important;
+}
+.itracelab .itracefeedback.right{background:#e3f7ec!important;border-color:#8fc7ad!important}
+.itracelab .itracefeedback :is(strong,p){color:#21465b!important}
+.itracelab .itracefeedback.right strong{color:#09624e!important}
+.itracelab .itracecompleted{background:#f1faf5!important}
+.itracelab .itracecompleted>strong{font-size:20px!important;color:#0b604e!important}
+.itracelab .itraceaward{background:#eaf6ef!important}
+.itracelab .itraceaward h3{color:#123d5a!important}
+.itracelab .itracenodehit,.itracelab .itraceedgehit{
+  cursor:pointer;transition:filter .16s ease;
+}
+.itracelab .itracenodehit:hover,.itracelab .itraceedgehit:hover{filter:brightness(1.17)}
+.itracelab .itracenodehit.is-selected rect{
+  stroke:#f8d986!important;
+  stroke-width:4px;
+  animation:itrace-node-pulse 1.8s ease-in-out infinite;
+}
+.itracelab .itraceanimatededge{
+  stroke-dasharray:14 8;
+  animation:itrace-flow-dash 1.35s linear infinite;
+  stroke-linecap:round;
+}
+@keyframes itrace-node-pulse{
+  0%,100%{stroke-width:3px;filter:drop-shadow(0 0 1px rgba(251,210,109,.3))}
+  50%{stroke-width:5px;filter:drop-shadow(0 0 7px rgba(251,210,109,.8))}
+}
+@keyframes itrace-flow-dash{from{stroke-dashoffset:44}to{stroke-dashoffset:0}}
+
+/* Guided tracing practice: genuine click-to-progress simulation before the scored graph. */
+.itracelab .itracepractice{
+  margin:23px 0 26px;
+  padding:clamp(17px,2.6vw,25px);
+  background:linear-gradient(115deg,#f3f9fd,#eaf7f2);
+  border:1px solid #a9cfce;
+  border-radius:20px;
+  box-shadow:0 6px 20px rgba(18,63,105,.04);
+}
+.itracelab .itracepracticehead{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+}
+.itracelab .itracepracticehead h2{
+  color:#123f5f!important;font-size:clamp(19px,2.8vw,25px)!important;margin:6px 0 8px;
+}
+.itracelab .itracepracticehead p{color:#35546a!important;font-size:15px!important;margin:0;max-width:670px}
+.itracelab .itracepracticehead button{min-height:46px;flex-shrink:0}
+.itracelab .itracepracticebody{
+  margin-top:20px;padding-top:20px;border-top:1px solid #bed9de;
+}
+.itracelab .itracepracticestep{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;
+  padding:0 0 15px;
+}
+.itracelab .itracepracticestep strong{color:#13435f!important;font-size:15px!important}
+.itracelab .itracepracticestep span{color:#34566c!important;font-size:13px!important}
+.itracelab .itracepracticeflow{
+  display:grid;
+  grid-template-columns:minmax(120px,1fr) minmax(130px,1.3fr) minmax(120px,1fr);
+  align-items:center;gap:10px;
+}
+.itracelab .itracepracticenode,.itracelab .itracepracticeedge{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:7px;padding:14px 10px;
+  min-width:0;min-height:124px;
+  border:1px solid #a9c3d3;
+  border-radius:15px;
+  background:#fff!important;
+  color:#173f5e!important;
+  font-size:22px;
+  transition:transform .2s,border-color .2s,box-shadow .2s;
+}
+.itracelab .itracepracticenode strong,.itracelab .itracepracticeedge strong{color:#123f5b!important;font-size:16px!important}
+.itracelab .itracepracticenode small,.itracelab .itracepracticeedge small{color:#3c5769!important;font-size:13px!important}
+.itracelab .itracepracticenode.active,.itracelab .itracepracticeedge.active{
+  border:2px solid #087c6b!important;
+  background:#e6f6ed!important;
+  box-shadow:0 0 0 4px rgba(8,124,107,.12)!important;
+  cursor:pointer;
+  animation:itrace-practice-pulse 1.8s ease-in-out infinite;
+}
+.itracelab .itracepracticenode.completed,.itracelab .itracepracticeedge.completed{
+  border-color:#8ec9b0!important;
+  background:#effaf3!important;
+}
+.itracelab .itracepracticenode:disabled,.itracelab .itracepracticeedge:disabled{
+  opacity:1!important;color:#183e56!important;
+}
+.itracelab .itracepracticeflowline{height:5px;width:70%;background:#8bbdad;border-radius:50px;position:relative;overflow:hidden}
+.itracelab .itracepracticeedge.active .itracepracticeflowline::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,#048675,transparent);
+  animation:itrace-practice-flow 1.15s linear infinite;
+}
+.itracelab .itracepracticefeedback{
+  background:#e9f3f8;
+  border:1px solid #bdd3e0;
+  padding:12px 15px;
+  border-radius:11px;
+  color:#264961!important;
+  font-size:15px!important;
+  min-height:49px;
+}
+.itracelab .itracepracticefinish{
+  display:flex;align-items:center;flex-wrap:wrap;gap:11px;
+  padding:14px 0 0;
+}
+.itracelab .itracepracticefinish strong{color:#0e644f!important;font-size:16px!important}
+.itracelab .itracepracticefinish p{flex-basis:100%;color:#31536a!important;font-size:15px!important;margin:0}
+.itracelab .itracepracticefinish button{min-height:44px}
+@keyframes itrace-practice-flow{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@keyframes itrace-practice-pulse{
+  0%,100%{box-shadow:0 0 0 2px rgba(8,124,107,.08)}
+  50%{box-shadow:0 0 0 8px rgba(8,124,107,.14)}
+}
+@media(max-width:760px){
+  .guideshade .guideactions{flex-direction:column}
+  .guideshade .guideactions>div{width:100%}
+  .guideshade .guideactions>div .primary{flex:1}
+  .guideshade .guideactions>button{width:100%}
+  .itracelab .itracepracticeflow{grid-template-columns:1fr;max-width:520px;margin-inline:auto}
+  .itracelab .itracepracticenode,.itracelab .itracepracticeedge{min-height:85px}
+  .itracelab .itracepracticehead button{width:100%}
+  .itracelab .itracemissiontabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .itracelab .itracegraphpanel{padding:8px!important}
+  .itracelab .itraceevidenceitem{min-height:55px}
+}
+@media(prefers-reduced-motion:reduce){
+ .itracelab .itracenodehit.is-selected rect,
+ .itracelab .itraceanimatededge,
+ .itracelab .itracepracticenode.active,
+ .itracelab .itracepracticeedge.active,
+ .itracelab .itracepracticeedge.active .itracepracticeflowline::after{
+  animation:none!important;
+ }
+ .guideshade .guidepracticecard{transition:none!important;transform:none!important}
+}
