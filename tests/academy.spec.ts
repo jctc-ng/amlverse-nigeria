@@ -117,7 +117,7 @@ test('All interactive evidence challenge panels are legible in classification an
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
- await page.getByRole('button',{name:/Open interactive challenges/}).click();
+ await expect(page.locator('.wcinteractive')).toBeVisible();
  const audit=async (pairs:{fg:string,bg:string}[])=>{
   return page.evaluate((pairs)=>{
    const lum=(value:string)=>{
