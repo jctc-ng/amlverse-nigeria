@@ -1,0 +1,213 @@
+/* AMLVERSE Nigeria · Institutional light theme
+   Accessible, consistent white/navy/teal surfaces. Original layouts and progression untouched.
+   This file is imported AFTER legacy style.css. */
+:root{color-scheme:light;--nfi-ink:#142d45;--nfi-heading:#103757;--nfi-muted:#3e5669;--nfi-link:#075b88;--nfi-navy:#123f69;--nfi-teal:#087f70;--nfi-bg:#f5f8fc;--nfi-paper:#fff;--nfi-soft:#edf4fa;--nfi-border:#cedbe6;--nfi-track:#e0eaf2;font-size:16px}
+html{background:var(--nfi-bg)!important}
+body,.shell,.page{background:var(--nfi-bg)!important;color:var(--nfi-ink)!important}
+body{font-size:16px;line-height:1.65;text-rendering:optimizeLegibility;-webkit-font-smoothing:auto}
+.page{min-width:0}
+main{color:var(--nfi-ink);font-size:16px;line-height:1.65}
+main h1,main h2,main h3,main h4,main h5,main h6{color:var(--nfi-heading)!important;line-height:1.3}
+main p,main li,main dd,main dt,main summary,main label,main small,main .lead,main .muted,main .chainnote{color:var(--nfi-muted)!important;line-height:1.7}
+main p,main li,main dd,main dt{font-size:max(15px,1rem)}
+main small,main .muted,main .eyebrow{font-size:max(12px,.82rem)}
+main .eyebrow{color:#075c71!important;font-weight:850;letter-spacing:.07em}
+main a:not(.primary):not(.secondary){color:var(--nfi-link)}
+main a:hover{color:#064568}
+main button{font-size:max(14px,.92rem);font-weight:700}
+main button:disabled{opacity:.72}
+main .primary,.primary{background:var(--nfi-navy)!important;color:#fff!important;border:1px solid var(--nfi-navy)!important;font-weight:800}
+main .primary:hover:not(:disabled),.primary:hover:not(:disabled){background:#0a2e50!important;border-color:#0a2e50!important}
+main .secondary,.secondary{background:#fff!important;color:var(--nfi-navy)!important;border:1.5px solid #7893aa!important;font-weight:750}
+main .secondary:hover:not(:disabled),.secondary:hover:not(:disabled){background:#eaf4f8!important;border-color:var(--nfi-teal)!important}
+main button:focus-visible,main a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.anavitem:focus-visible{outline:3px solid #086eaa!important;outline-offset:3px!important}
+main input,main select,main textarea{background:#fff!important;color:var(--nfi-ink)!important;border:1px solid #8ba4b8!important;font-size:16px}
+main input::placeholder,main textarea::placeholder{color:#526a7c!important}
+button,a{-webkit-tap-highlight-color:transparent}
+header{background:#fff!important;border-bottom:1px solid var(--nfi-border)!important;color:var(--nfi-ink)!important}
+header .demo{background:#e4f4f0!important;color:#075947!important;font-size:12px}
+header .avatar{background:#dcebf7!important;color:#113f6a!important}
+
+/* Navigation: bright institutional workspace with readable contrast. */
+.academynavigation.sidebar,.sidebar{background:#fff!important;border-right:1px solid var(--nfi-border)!important;color:var(--nfi-ink)!important}
+.brand b{color:#173c5b!important}.brand b span{color:#067c72!important}
+.brand small{color:#3b5d70!important;font-size:11px!important}
+.brandmark{background:#0e6684!important;color:#fff!important}
+.anavsearchlabel,.anavgrouplabel,.menulabel{color:#3f5668!important;font-size:12px!important}
+.anavsearch{background:#fff!important;border:1px solid #8ca4b8!important;color:var(--nfi-ink)!important;font-size:15px!important;min-height:44px}
+.anavsearch::placeholder{color:#5b7284!important}
+.anavgroupbutton{background:#fff!important;color:var(--nfi-heading)!important;font-size:14px!important;font-weight:800}
+.anavitem,.nav{background:transparent!important;color:#253d50!important;font-size:14px!important;min-height:46px}
+.anavitem:hover,.anavitem.active,.nav:hover,.nav.on{background:#e6f1f8!important;color:#0b4f78!important}
+.anavitem.active{box-shadow:inset 3px 0 #087f70;font-weight:850}
+.anavicon{color:#135b78!important}
+.anavdone{background:#dcf4e7!important;color:#076c46!important}
+.anavdivider{border-color:#d9e5ee!important}
+.sidenote{background:#f3f8fb!important;border-color:#d4e2eb!important;color:#365367!important;font-size:12px!important}
+.anavmobiletoggle{background:#fff!important;color:#133852!important;border-bottom:1px solid var(--nfi-border)!important;font-size:15px!important;min-height:50px}
+.mobilebrand{color:#113d65!important}.mobilebrand span{color:var(--nfi-teal)!important}
+
+/* Academy introduction, statistics and learning town. */
+.academyhero,.hero{background:linear-gradient(115deg,#fff 0%,#f4f9fd 70%,#e8f5f4 100%)!important;border:1px solid #c6dbe9!important;box-shadow:0 12px 28px rgba(16,56,88,.06)!important;color:var(--nfi-ink)!important}
+.academyhero h1,.hero h1{color:var(--nfi-heading)!important}
+.academyhero h1 em,.hero h1 em{color:#08786c!important}
+.academyhero p,.hero p,.academyheronote{color:#344e62!important;font-size:16px!important}
+.academyorb{color:#126a86!important;text-shadow:none!important}
+.academyorbitword{color:#174b67!important}
+.sectionhead h2,.academytrackhead h3{color:var(--nfi-heading)!important}
+.sectionhead .muted,.academytrackhead p,.academytrackhead>span{color:#375166!important;font-size:14px!important}
+.academystat,.stat,.academynext{background:#fff!important;border:1px solid var(--nfi-border)!important;box-shadow:0 5px 15px rgba(16,56,88,.05);color:var(--nfi-ink)!important}
+.academystat>small,.stat small{color:#34556d!important;font-size:12px!important}
+.academystat strong,.stat strong{color:#10395c!important}
+.academystat strong span,.stat strong span{color:#31526b!important}
+.academystat p,.stat p,.academynext p{color:#3f596e!important;font-size:14px!important}
+.academynext b{color:var(--nfi-heading)!important;font-size:16px}
+.academyprogressbar,.academyworldprogress,.arcadeprogress,.track,.worldmetertrack,.fatf40progress,.riskadvancedprogress{background:var(--nfi-track)!important}
+.academyprogressbar>div,.academyworldprogress>div,.arcadeprogress>div,.worldmetertrack>div,.fatf40progress>div{background:#108777!important}
+.learningtown{background:linear-gradient(120deg,#f4f9fd,#eef6f8)!important;border:1px solid #c7dce7!important;color:var(--nfi-ink)!important}
+.learningtownhead h2{color:var(--nfi-heading)!important}
+.learningtownhead p,.townfootnote,.towncontrolnote{color:#3e586c!important;font-size:14px!important}
+.townroad:before{background:repeating-linear-gradient(to bottom,#78a9b6 0 18px,#c2dce4 18px 29px)!important}
+.townbuilding,.townstop.locked .townbuilding{background:#fff!important;border:1px solid #c6d7e4!important;box-shadow:0 5px 16px rgba(16,56,88,.06)!important;filter:none!important}
+.townbuildingbody h3{color:#143b5a!important;font-size:18px!important}
+.townbuildingbody p,.townbuildingbody>span,.townbuildingbody small{color:#3b5368!important;font-size:13px!important}
+.townstop.locked .townbuilding{background:#f5f8fb!important}
+.townstop.locked .townbuildingbody{opacity:1!important}
+.townmarker{background:#e5f2f8!important;border-color:#2b8290!important;color:#123d60!important}
+.townscenery,.townstop.locked .townscenery{background:#e5f3f6!important;filter:none!important}
+.towncontrols{background:#fff!important;border:1px solid var(--nfi-border)!important}
+.towncontrolstitle h2{color:var(--nfi-heading)!important}
+.towncontrolstitle p,.towncontrols p{color:#3b586b!important;font-size:14px!important}
+.townbuilding button:not(.primary){color:#123f67!important}
+.townbuilding button:disabled{opacity:.75}
+
+/* Card catalog: white surfaces but keep decorative banner gradients as gentle blue accents. */
+.academyworldcard,.world,.progressworld,.resource{background:#fff!important;border:1px solid var(--nfi-border)!important;color:var(--nfi-ink)!important;box-shadow:0 6px 19px rgba(16,56,88,.06)!important}
+.academyworldcard:hover,.world:hover,.resource:hover{border-color:#168879!important;box-shadow:0 10px 23px rgba(16,56,88,.11)!important}
+.academyworldvisual{background:linear-gradient(115deg,#dcecfb,#edf8f6)!important;border-bottom:1px solid #d5e2eb}
+.academyworldicon{filter:none!important}
+.academyworldtag{background:#fff!important;color:#16445f!important;border:1px solid #9db8c8!important;font-size:11px!important}
+.academyworldbody h4,.worldtext h3{color:var(--nfi-heading)!important;font-size:19px!important}
+.academyworldbody>small{color:#0a6b71!important;font-size:12px!important}
+.academyworldbody>p,.worldtext p{color:#3b566c!important;font-size:15px!important}
+.academyworldmeta,.academyworldmeta span,.academyworldbottom,.academyworldbottom strong,.academyworldbottom span{color:#24485e!important;font-size:13px!important}
+.academytrackhead>span{color:#076c5b!important}
+.academyfeaturemain,.academyfeaturesecondary,.academyresources,.capstonefeature,.impactteaser,.researchteaser{background:#fff!important;border:1px solid var(--nfi-border)!important;box-shadow:0 5px 18px rgba(16,56,88,.04)!important}
+.academyfeaturemain p,.academyfeaturesecondary p,.academyresources p,.capstonefeature p,.impactteaser p,.researchteaser p{color:#3b566a!important;font-size:15px!important}
+.academyfeaturemain h2,.academyfeaturesecondary h3,.academyresources h2,.capstonefeature h2{color:var(--nfi-heading)!important}
+.capstonefeaturefacts span,.impactteaserfacts span{background:#eaf4f8!important;border:1px solid #cadde7!important;color:#174864!important;font-size:13px!important}
+
+/* Learning rooms, quizzes, interactions and specialist academies. */
+.knowledgeintro,.knowledgeflow span,.knowledgeflow button,.worldprogresspanel,.worldprogresssection,.worlddecisionbrief,.worlddecisionfile,.worlddecisionquestion,.worlddecisionresult,.worlddecisionentry,.riskadvancedtop,.riskadvancedtier,.riskadvancedassessment,.arcadehud,.arcadeinstruction,.situation,.feedback,.notice,.capstoneheader,.capstoneintro,.capstonequestion,.capstoneresults{background:#fff!important;border:1px solid var(--nfi-border)!important;color:var(--nfi-ink)!important;box-shadow:none!important}
+.knowledgeintro small,.knowledgeintro h2,.knowledgeintro p{color:var(--nfi-ink)!important}
+.knowledgeintro p,.worlddecisionentry p,.worlddecisionbrief p,.worlddecisionfile p,.worlddecisionquestion p,.worlddecisionresult p,.capstoneintro p,.notice,.situation{color:#3a566b!important;font-size:15px!important}
+.knowledgeflow span,.knowledgeflow button{color:#335168!important;font-size:14px!important}
+.knowledgeflow .active,.knowledgeflow button.active{background:#d9f0e9!important;border-color:#168877!important;color:#075c52!important}
+.worldprogresspanel{background:#eef5fa!important}
+.worldprogresssection{background:#fff!important;color:var(--nfi-ink)!important;min-height:85px}
+.worldprogresssectionhead strong{color:var(--nfi-heading)!important;font-size:15px!important}
+.worldprogresssectionhead span,.worldprogresssection small,.worldprogressnumber small{color:#31566c!important;font-size:13px!important}
+.worldprogressnumber{background:#fff!important;border:1px solid var(--nfi-border)!important;color:var(--nfi-heading)!important}
+.worldprogressnumber strong{color:var(--nfi-heading)!important}
+.worldprogressheading h2,.worldprogressheading p,.worldprogressnote{color:var(--nfi-ink)!important}
+.worldprogressdrawer,.worldprogressdrawer summary{color:#143a55!important}
+.choice,.option,.answer,.questionchoice{background:#fff!important;border:1.5px solid #a6bacb!important;color:#163c5b!important;font-size:16px!important;line-height:1.6!important;min-height:49px}
+.choice:hover:not(:disabled),.choice.picked{background:#eaf6f3!important;border-color:#0a8b7b!important}
+.choice.correct,.choice.correct:disabled{background:#e0f6e9!important;border-color:#25895e!important;color:#105537!important}
+.choice.incorrect{background:#fff0f0!important;border-color:#c56b72!important;color:#883337!important}
+.feedback{background:#e9f7f1!important;border-color:#aad5c5!important}
+.feedback p,.feedback strong{color:#153d51!important;font-size:15px!important}
+.feedback a{color:#075b86!important;font-size:14px!important}
+.notice{background:#eaf4fa!important;color:#304e64!important}
+.notice b{color:#173e5d!important}
+.situation small{color:#086a73!important;font-size:13px!important}
+.arcadehud button,.capstoneheader button{background:#eaf3f9!important;color:#164869!important;border:1px solid #a9c3d1!important}
+.arcadeinstruction strong{color:#075e70!important;font-size:13px!important}
+.arcadeinstruction p{color:#203e56!important;font-size:16px!important}
+.riskadvancedtop strong,.riskadvancedtop small,.riskadvancedtop>span{color:var(--nfi-heading)!important}
+.worlddecisionfile h2,.worlddecisionbrief h2,.worlddecisionquestion h2{color:var(--nfi-heading)!important}
+.riskadvancedtierhead h2,.riskadvancedtierhead p,.riskadvancedtierhead>span{color:var(--nfi-ink)!important}
+
+/* FATF recommendations, interactive labs and assessment surfaces. */
+.fatf40stats>div,.fatf40tile,.fatf40lesson,.fatf40panel,.fatf40question,.fatf40review,.fatf40intro,.fatf40summary,.fatf40card,.fatf40quest,.fatf40challenge{background:#fff!important;border-color:var(--nfi-border)!important;color:var(--nfi-ink)!important}
+.fatf40stats strong,.fatf40stats small{color:var(--nfi-heading)!important}
+.fatf40tile{color:var(--nfi-ink)!important}
+.fatf40tile:disabled{background:#f2f6fa!important;color:#345168!important;opacity:.8}
+.fatf40tile h3,.fatf40tile strong,.fatf40lesson h2{color:var(--nfi-heading)!important}
+.fatf40tile p,.fatf40lesson p,.fatf40stats p{color:#3e5668!important;font-size:15px!important}
+.capstonemetrics>div,.capstonereviewitem{background:#fff!important;border:1px solid var(--nfi-border)!important;color:var(--nfi-ink)!important}
+.capstonereviewitem p,.capstonemetrics small{color:#3b5567!important}
+.capstonemetrics strong{color:var(--nfi-heading)!important}
+
+/* Progress dashboard: no faint or washed-out unreadable results. */
+.progresshero,.academy31headline,.progressstats>div,.progresssection,.progressworld,.achievement,.achievement.unlocked,.badgegrid .achievement,.impactdashboardstats>div{background:#fff!important;border:1px solid var(--nfi-border)!important;color:var(--nfi-ink)!important;opacity:1!important}
+.progresshero h2,.progresshero p,.progressworldname b,.progressworldname small,.progressworldhead strong{color:var(--nfi-heading)!important}
+.progresssection>p,.progressworld p,.progressmarks span,.achievement small,.achievementprogress{color:#3f576b!important;font-size:14px!important}
+.progressstats small,.progressstats strong,.progressstats span{color:var(--nfi-heading)!important}
+.achievement b{color:var(--nfi-heading)!important;font-size:15px!important}
+.achievement.unlocked{border-color:#2b8a74!important;background:#edf9f4!important}
+.achievementfilters button{color:var(--nfi-heading)!important;background:#fff!important;border:1px solid #9db3c5!important}
+.achievementfilters button.active{background:#dcefeb!important;border-color:#087f70!important}
+.progressring>span{background:#fff!important;color:var(--nfi-heading)!important}
+.progressring small{color:#365469!important}
+.progressworld .arcadeprogress,.progressstats .arcadeprogress{background:var(--nfi-track)!important}
+.progress31details summary{color:var(--nfi-heading)!important;font-size:15px!important}
+
+/* Research, credentials, sources and professional attribution. */
+.researchhero,.researchidentity,.researchstatement,.researchsources,.researchtabs,.researchengage,.researchcitation,.researchtabpanel,.researchsourcesgrid article,.researchreviewlist article,.researchprocess article,.researchcredentials,.researchcredential,.researchcite,.researchengageactions a{background:#fff!important;border-color:var(--nfi-border)!important;color:var(--nfi-ink)!important;box-shadow:none!important}
+.researchhero h1,.researchhero h1 em,.researchidentity h2,.researchsourcesgrid h3,.researchcredential h3,.researchcredentialshead h2{color:var(--nfi-heading)!important}
+.researchhero p,.researchidentity p,.researchidentity span:last-child,.researchstatement p,.researchsectionhead p,.researchengage p,.researchsourcesgrid p,.researchsourcesgrid small,.researchcredential p,.researchcredentialshead>p,.researchtabpanel>p{color:#3d566a!important;font-size:15px!important}
+.researchidentity small,.researchidentity strong,.researchsourcesgrid a,.researchcredential a{color:#085c74!important;font-size:13px!important}
+.researchidentityicon{background:#e0f1ee!important;color:#087f70!important}
+.researchidentityrule{background:#cedde5!important}
+.researchlinkedin{background:#e9f3f8!important;border-color:#a5bdcd!important;color:#124b6f!important;font-size:14px!important}
+.researchtabbar button{background:#eaf3f9!important;color:#274c67!important;font-size:14px!important}
+.researchtabbar button[aria-selected="true"]{background:#d5eee8!important;color:#075d52!important}
+.researchengageactions a,.researchengageactions a:first-child,.researchengageactions a:last-child{background:#eaf4f8!important;color:#124a71!important;border:1px solid #9fbacb!important}
+.researchcredentialimage{background:#f7fbfe!important}
+.researchfineprint,.researchdisclaimer{color:#3f5669!important;font-size:13px!important}
+
+/* Locked-course and Capstone dialogs use the SAME accessible light surface. */
+.districtdialog{background:#fff!important;border:2px solid #b2ceda!important;color:var(--nfi-ink)!important;box-shadow:0 24px 75px rgba(7,32,54,.25)!important}
+.districtdialog h2{color:var(--nfi-heading)!important}
+.districtdialog>p,.districtdialog>p strong,.districtdialog .districtdialogfooter{color:#3b5367!important;font-size:15px!important}
+.districtdialogsymbol{background:#e4f3f8!important;border-color:#bbd7e3!important;color:#125375!important}
+.districtdialogclose{background:#eff5f9!important;color:#143e5c!important;border-color:#9eb6c9!important;font-size:16px!important}
+.districtdialogprogress{background:#f3f8fb!important;border-color:var(--nfi-border)!important}
+.districtdialogprogressrow strong{color:var(--nfi-heading)!important;font-size:15px!important}
+.districtdialogprogressrow span,.districtdialogprogress small{color:#345369!important;font-size:13px!important}
+.districtdialogcancel{background:#fff!important;color:var(--nfi-navy)!important;border-color:#7897aa!important}
+.districtdialogfooter{border-top-color:#d7e3eb!important}
+
+/* Certificate gallery light, printable certificate itself preserved. */
+.certificates-head h2,.certificate-tile h3,.certificate-name-label,.certificate-tile small{color:var(--nfi-heading)!important}
+.certificates-head p,.certificate-privacy,.certificate-tile p{color:#39566a!important;font-size:14px!important}
+.certificates-head>strong,.certificate-tile,.certificate-tile.locked{background:#fff!important;border:1px solid var(--nfi-border)!important;color:var(--nfi-heading)!important}
+.certificate-tile.locked{background:#f4f7fa!important}
+.certificate-tile button:disabled{opacity:.7!important}
+.certificate-name{background:#fff!important;border:1px solid #829eb2!important;color:var(--nfi-ink)!important}
+.certificate-dialog{background:#fff!important;border-color:#b7ceda!important}
+.certificate-dialog-controls h2{color:var(--nfi-heading)!important}
+.certificate-dialog .certificate-privacy{color:#364e60!important}
+.certificate-dialog .certificate-error{color:#873623!important}
+
+/* Smaller-screen legibility, large tap targets and no blurred ghost text. */
+@media(max-width:760px){
+ main{padding-left:16px;padding-right:16px;font-size:16px}
+ main p,main li{font-size:15px}
+ .academyhero h1{font-size:clamp(30px,7vw,40px)!important}
+ .academystat strong{font-size:26px!important}
+ .academystat p,.townbuildingbody p,.academyworldmeta{font-size:13px!important}
+ .townbuildingbody h3{font-size:17px!important}
+ .anavmobiletoggle{min-height:53px}
+ .districtdialog{padding:23px 18px!important}
+ .certificate-tile button,.districtdialogactions button,.primary,.secondary{min-height:46px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+@media print{
+ html,body,.page,.shell{background:#fff!important}
+ .certificate-paper,.certificate-paper *{color:initial}
+ .certificate-paper{background:#fff!important}
+}
