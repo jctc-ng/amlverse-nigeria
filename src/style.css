@@ -865,3 +865,95 @@ button:disabled{opacity:.7}
  .learning-next-sections{margin-top:24px}
  .towncontrolsbuttons{display:grid;grid-template-columns:1fr}
 }
+
+
+/* v0.40 — contrast-corrected, NFIU-inspired white/navy academy surfaces.
+   These explicit home selectors supersede older dark-theme rules. */
+.academyhome{color:#143454}
+.academyhome h1,.academyhome h2,.academyhome h3,.academyhome h4{color:#102f59}
+.academyhome .eyebrow,.academyhome .eyebrow.gold{color:#21538d;font-size:12px;letter-spacing:.06em}
+.academyhero{background:linear-gradient(118deg,#eff5fc 0%,#fff 67%,#e4effb 100%);border:1px solid #bdcfe5;box-shadow:0 9px 32px rgba(23,58,99,.08);color:#122f51}
+.academyhero h1{color:#102f59;font-weight:850;text-wrap:balance}
+.academyhero h1 em{color:#14619b}
+.academyhero p{color:#284865;font-size:17px;line-height:1.8}
+.academyheronote{color:#3e5b78;font-size:13px}
+.academyorb{border-color:#4a83ba;color:#1d609e;box-shadow:0 0 0 26px #dce9f8,0 0 0 52px #eef4fb}
+.academyorbitword{color:#173f6a;border-color:#a2bfdc;background:#fff;font-size:11px}
+.academystat{background:#fff;border:1px solid #c5d6e9;box-shadow:0 3px 12px rgba(15,49,88,.05);color:#173d69}
+.academystat>small{color:#315477;font-size:12px;letter-spacing:.04em}
+.academystat strong{color:#123b6a}
+.academystat strong span{color:#365e88}
+.academystat p{color:#3e5b76;font-size:13px;line-height:1.7}
+.academyprogressbar,.academyworldprogress{background:#dce7f2}
+.academyprogressbar>div,.academyworldprogress>div{background:#2764a3}
+.academynext{background:#edf5ff;border:1px solid #a9c7e6;color:#153b69}
+.academynext b{color:#153b69;font-size:16px}
+.academynext p{color:#365675;font-size:14px}
+.academynext .secondary{background:#fff;color:#153d70;border-color:#a7bfdc}
+.learningtown{background:linear-gradient(145deg,#f4f8fe,#fff 50%,#edf4fc);border:1px solid #b5cce4;box-shadow:0 6px 26px rgba(15,51,91,.06);color:#163d6a}
+.learningtownhead h2{color:#102f59;font-weight:800}
+.learningtownhead p,.learningtown .townfootnote{color:#355877;font-size:15px;line-height:1.75}
+.learningtown .eyebrow{color:#21538d}
+.townroad:before{background:repeating-linear-gradient(to bottom,#3572ae 0,#3572ae 22px,transparent 22px,transparent 39px);opacity:.7}
+.townmarker{background:#174a80;border-color:#6396c9;color:#fff;box-shadow:0 0 0 5px #e5f0fa}
+.townstop.locked .townmarker{background:#e6ecf4;border-color:#a1b2c5;color:#274867}
+.townbuilding,.townstop.locked .townbuilding,.townroad .townstop.locked .townbuilding{background:#fff;border:1px solid #b8cde2;filter:none;box-shadow:0 4px 14px rgba(18,59,99,.06)}
+.townstop.locked .townbuilding,.townroad .townstop.locked .townbuilding{background:#f2f5f9;border-color:#cbd6e2}
+.townstop.complete .townbuilding{border-color:#3c81b8}
+.townscenery,.townstop.locked .townscenery{background:#e6f0fa}
+.townbuildingbody small{color:#2e5b88;font-size:12px;letter-spacing:.03em}
+.townroad .townbuildingbody h3{color:#123b6b;font-size:18px;line-height:1.4}
+.townroad .townbuildingbody p{color:#365877;font-size:14px;line-height:1.6}
+.townroad .townbuildingbody>span{color:#315372;font-size:12px}
+.townmeter{background:#d2deec;height:8px}
+.townmeter>div{background:#2466a4}
+.townroad .townlockreason{font-size:13px!important;color:#47617c!important;line-height:1.65!important}
+.townfootnote{border-color:#cfdaea}
+.townactions button{font-size:14px;font-weight:750}
+.academytrackhead{border-color:#d0ddea}
+.academytrackhead h3{color:#143c6b}
+.academytrackhead p,.academytrackhead>span{color:#45617e;font-size:14px}
+.academyworldcard,.academyworldcard:disabled{background:#fff;color:#13395f;border:1px solid #c5d6e8;opacity:1}
+.academyworldcard:disabled{background:#f5f7fa}
+.academyworldcard:hover:not(:disabled){border-color:#3976b2}
+.academyworldvisual{border-bottom:1px solid #d1dfed}
+.academyworldtag{background:#fff;color:#245281;border:1px solid #b5cce3;font-size:10px}
+.academyworldbody>small{color:#285d93;font-size:11px}
+.academyworldbody h4{color:#14375b;font-size:18px}
+.academyworldbody>p{color:#3a5571;font-size:14px;line-height:1.7}
+.academyworldmeta span{color:#315475;background:#eef4fb;font-size:12px}
+.academyworldbottom strong,.academyworldbottom span{color:#1d5187;font-size:12px}
+.academyworldcard:disabled .academyworldbottom span{color:#60778f}
+.academyfeaturemain,.academyfeaturesecondary,.academyresources,.capstonefeature,.impactteaser,.researchteaser{background:#f3f7fd;border:1px solid #c2d5ea;color:#173e6b;box-shadow:none}
+.academyfeaturemain h2,.academyfeaturesecondary h3,.academyresources h2,.capstonefeature h2,.impactteaser h2,.researchteaser h2{color:#123966}
+.academyfeaturemain p,.academyfeaturesecondary p,.academyresources p,.capstonefeature p,.impactteaser p,.researchteaser p{color:#385875;font-size:15px;line-height:1.75}
+.capstonefeaturefacts span,.impactteaserfacts span{border-color:#b4cbe1;color:#234c77;background:#fff}
+.capstonefeatureart{color:#235d94}
+.academyhome .secondary{background:#fff;color:#173f72;border-color:#a7bed8}
+.academyhome .primary{background:#174779;color:#fff}
+.academyhome .primary:hover:not(:disabled){background:#255d96}
+.academyhome button{line-height:1.5}
+@media(max-width:760px){
+ .academyhero{padding:26px 20px}
+ .academyhero h1{font-size:clamp(30px,8vw,42px);line-height:1.2}
+ .academyhero p{font-size:16px}
+ .academyheroactions{display:grid;grid-template-columns:1fr}
+ .academyheroactions button{width:100%;min-height:50px}
+ .academystat{padding:16px 13px}
+ .academystat>small{font-size:11px}
+ .academystat p{font-size:12px}
+ .learningtown{padding:20px 14px}
+ .townbuilding{padding:16px}
+ .townroad .townbuildingbody h3{font-size:16px}
+ .townroad .townbuildingbody p{font-size:14px}
+ .academyworldbody>p{font-size:14px}
+ .academynext{align-items:flex-start}
+ .academyhome .primary,.academyhome .secondary{min-height:48px}
+}
+@media(max-width:430px){
+ .academystats{grid-template-columns:1fr 1fr}
+ .academystat strong{font-size:26px}
+ .academyhero h1{font-size:31px}
+ .townbuilding{gap:10px}
+ .townscenery{min-width:39px;min-height:39px}
+}
