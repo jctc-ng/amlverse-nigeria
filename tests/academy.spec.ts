@@ -109,6 +109,39 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
  await audit('.worldinteractivepromo','.worldinteractivepromo p');
  await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
 });
+test('RiskLab practice and How to Play tutorial require genuine interaction',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Enter district/}).click();
+ await page.getByRole('button',{name:/③ Play/}).click();
+ await expect(page.getByRole('heading',{name:'Practice a move before your mission'})).toBeVisible();
+ const next=page.getByRole('button',{name:'Next: place the card →'});
+ await expect(next).toBeDisabled();
+ await page.locator('.miniclue').click();
+ await expect(next).toBeEnabled();
+ await next.click();
+ await page.locator('.minidrop').click();
+ await page.getByRole('button',{name:'Next: launch mission →'}).click();
+ await page.getByRole('button',{name:/Start the game/}).click();
+ await page.getByRole('button',{name:/How to play RiskLab Arcade/}).click();
+ const guide=page.getByRole('dialog',{name:'How to play RiskLab Arcade'});
+ await expect(guide).toBeVisible();
+ await expect(guide.getByRole('heading',{name:'Step 1 — Pick a clue'})).toBeVisible();
+ await expect(guide.getByRole('button',{name:/Next: match the clue/})).toBeDisabled();
+ await guide.getByRole('button',{name:/Unknown company owners/}).click();
+ await guide.getByRole('button',{name:/Next: match the clue/}).click();
+ await guide.getByRole('button',{name:'Ignore this evidence'}).click();
+ await expect(guide.getByText(/Try again/)).toBeVisible();
+ await guide.getByRole('button',{name:/Weakness/}).click();
+ await expect(guide.getByRole('button',{name:/Next: finish practice/})).toBeEnabled();
+ await guide.getByRole('button',{name:/Next: finish practice/}).click();
+ await expect(guide.getByText(/PRACTICE COMPLETED/)).toBeVisible();
+ await guide.getByRole('button',{name:/Play the game/}).click();
+ await expect(guide).toHaveCount(0);
+});
 test('Achievements, certificates, and expanded progress labels use readable cards',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
