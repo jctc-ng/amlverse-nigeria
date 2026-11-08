@@ -109,6 +109,21 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
  await audit('.worldinteractivepromo','.worldinteractivepromo p');
  await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
 });
+test('My Progress sections use rounded institutional cards on desktop and mobile',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/My Progress/}).first().click();
+ const cards=page.locator('.progressdash>.progresssection');
+ await expect(cards.first()).toBeVisible();
+ await expect(page.locator('.progressdash .impactdashboardstats>div')).toHaveCount(3);
+ const radii=await page.evaluate(()=>{
+  function radius(selector:string){const node=document.querySelector(selector);if(!node)throw new Error('Missing '+selector);return parseFloat(getComputedStyle(node).borderTopLeftRadius)}
+  return {section:radius('.progressdash>.progresssection'),impactCard:radius('.progressdash .impactdashboardstats>div'),world:radius('.progressdash .progressworld')};
+ });
+ expect(radii.section).toBeGreaterThanOrEqual(18);
+ expect(radii.impactCard).toBeGreaterThanOrEqual(14);
+ expect(radii.world).toBeGreaterThanOrEqual(15);
+});
 test('Global accessibility fixes keep FATF study, progress chips and impact scores readable',async({page,isMobile})=>{
  const inspect=async (parent:string,pairs:{foreground:string;background:string}[])=>page.evaluate(({parent,pairs})=>{
   function channels(c:string){const values=Array.from(c.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3);if(values.length!==3)throw Error('Unparseable CSS color '+c);return values.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4})}
