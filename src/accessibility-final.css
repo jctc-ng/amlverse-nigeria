@@ -533,3 +533,180 @@ main .worldclassicmeter .worldmetertrack>div{
   background-image:none!important;
   background-color:#f3f9fc!important;
 }
+
+
+/* v2.0 — Shared interactive challenge states: solid, readable, animated.
+   This is intentionally loaded after the original dark-theme modules. */
+
+/* Mutual evaluation: stronger selector than legacy backgrounds on every stage. */
+main.evaluationgame .evalhud,
+main.evaluationgame .evaldialog,
+main.evaluationgame .evalscene,
+main.evaluationgame .arcadeinstruction{
+ background:#f2f8fc!important;background-image:none!important;
+ border:1px solid #bad3e1!important;border-radius:17px!important;
+ color:#163d58!important;
+ box-shadow:0 5px 17px rgba(15,63,96,.045)!important;
+}
+main.evaluationgame .evaldialog{background:#edf6fa!important;display:flex!important;align-items:center!important}
+main.evaluationgame .evaldialog p,
+main.evaluationgame .evaldialog p:first-child{
+ color:#163e5c!important;-webkit-text-fill-color:#163e5c!important;
+ opacity:1!important;font-weight:750!important;font-size:17px!important;
+ line-height:1.7!important;
+}
+main.evaluationgame .evalhud>span{
+ color:#16445d!important;-webkit-text-fill-color:#16445d!important;opacity:1!important;
+ font-size:14px!important;font-weight:850!important;
+}
+main.evaluationgame .evalhud button{
+ background:#fff!important;border:1px solid #b4cbdc!important;
+ color:#16445d!important;-webkit-text-fill-color:#16445d!important;
+ border-radius:10px!important;min-height:45px;
+}
+main.evaluationgame .arcadeinstruction :is(strong,p){
+ color:#214c64!important;-webkit-text-fill-color:#214c64!important;opacity:1!important;
+}
+main.evaluationgame .arcadeinstruction strong{color:#0d6172!important;-webkit-text-fill-color:#0d6172!important}
+main.evaluationgame .arcadeprogress{height:10px!important;background:#dce8f0!important;border-radius:999px!important}
+main.evaluationgame .arcadeprogress>div{background:#0a846e!important;transition:width .45s ease!important}
+main.evaluationgame .arcadecards>.arcadecard,
+main.evaluationgame .arcadecards>.arcadecard.selected{
+ background:#fff!important;background-image:none!important;
+ border:1.5px solid #b4d0e1!important;border-radius:15px!important;
+ box-shadow:0 3px 14px rgba(15,63,96,.045)!important;
+ color:#173e58!important;
+ transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease,border-color .2s ease!important;
+}
+main.evaluationgame .arcadecards>.arcadecard>span,
+main.evaluationgame .arcadecards>.arcadecard>span:not(.icon),
+main.evaluationgame .arcadecards>.arcadecard.selected>span{
+ color:#2c4f66!important;-webkit-text-fill-color:#2c4f66!important;
+ opacity:1!important;font-size:15px!important;line-height:1.6!important;font-weight:600!important;
+}
+main.evaluationgame .arcadecards>.arcadecard strong{
+ color:#103c59!important;-webkit-text-fill-color:#103c59!important;font-size:16px!important
+}
+main.evaluationgame .arcadecards>.arcadecard small{
+ color:#0d6374!important;-webkit-text-fill-color:#0d6374!important;
+ opacity:1!important;font-size:12px!important;font-weight:850!important
+}
+main.evaluationgame .arcadecards>.arcadecard:hover,
+main.evaluationgame .arcadecards>.arcadecard:focus-visible{
+ background:#ecf8f3!important;border-color:#0b8975!important;
+ transform:translateY(-4px)!important;
+ box-shadow:0 10px 24px rgba(15,63,96,.13)!important;
+}
+main.evaluationgame .arcadecards>.arcadecard.selected,
+main.evaluationgame .arcadecards>.arcadecard[aria-pressed="true"]{
+ background:#e4f7eb!important;border:2px solid #078775!important;
+ box-shadow:0 0 0 3px rgba(8,129,104,.14)!important;
+ transform:translateY(-4px)!important;
+}
+main.evaluationgame .evalbins .arcadebin{
+ background:#fff!important;border:2px dashed #b0cbda!important;border-radius:15px!important;
+ color:#143e5b!important;
+ transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background-color .2s ease!important;
+}
+main.evaluationgame .evalbins .arcadebin :is(b,small,.arcadecount){
+ color:#214c61!important;-webkit-text-fill-color:#214c61!important;
+ opacity:1!important;font-size:14px!important
+}
+main.evaluationgame .evalbins .arcadebin b{font-size:16px!important}
+main.evaluationgame .evalbins .arcadebin:hover,
+main.evaluationgame .evalbins .arcadebin.dropready:hover{
+ background:#e8f7f0!important;border-color:#078976!important;
+ transform:translateY(-3px);
+ box-shadow:0 8px 21px rgba(17,74,96,.1)!important;
+}
+main.evaluationgame .choices>.choice,
+main.evaluationgame .choices>.choice:disabled{
+ background:#fff!important;border:1.5px solid #bad2e0!important;
+ color:#123e5c!important;-webkit-text-fill-color:#123e5c!important;
+ border-radius:14px!important;opacity:1!important;
+ min-height:66px!important;font-size:16px!important;font-weight:700!important;
+ transition:transform .17s ease,background-color .17s ease,box-shadow .17s ease,border-color .17s ease!important;
+}
+main.evaluationgame .choices>.choice .letter,
+main.evaluationgame .choices>.choice .letter:first-child{
+ color:#16415f!important;-webkit-text-fill-color:#16415f!important;
+ background:#e3eff5!important;border:1px solid #b0ccdc!important;
+ font-weight:900!important;
+}
+main.evaluationgame .choices>.choice:hover:not(:disabled){
+ background:#edf7fa!important;border-color:#0a8173!important;transform:translateY(-2px)!important;
+ box-shadow:0 6px 15px rgba(15,63,96,.08)!important;
+}
+main.evaluationgame .choices>.choice.picked,
+main.evaluationgame .choices>.choice.picked:disabled,
+main.evaluationgame .choices>.choice[aria-pressed="true"]{
+ background:#e5f6ec!important;border:2px solid #078573!important;
+ box-shadow:0 0 0 3px rgba(8,127,107,.09)!important;
+}
+main.evaluationgame .choices>.choice.correct,
+main.evaluationgame .choices>.choice.correct:disabled{
+ background:#e1f6e9!important;border:2px solid #087963!important;
+ color:#0e4d45!important;-webkit-text-fill-color:#0e4d45!important;
+}
+main.evaluationgame .choices>.choice.correct .letter{background:#d5efe0!important;color:#0b5b4d!important;-webkit-text-fill-color:#0b5b4d!important}
+
+/* All arcade games, professional case quizzes and report challenges: consistent hover and selection. */
+main .arcadecards>.arcadecard:not(:disabled){
+ transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background-color .2s ease!important;
+}
+main .arcadecards>.arcadecard>span{
+ color:#305369!important;-webkit-text-fill-color:#305369!important;
+ font-size:14px!important;line-height:1.6!important;opacity:1!important;
+}
+main .choices>.choice{
+ transition:background-color .17s ease,transform .17s ease,border-color .17s ease!important;
+}
+main .choices>.choice:hover:not(:disabled){transform:translateY(-2px)}
+main .choices>.choice:focus-visible,
+main .arcadecards>.arcadecard:focus-visible,
+main .arcadebin:focus-visible{outline:3px solid #0c8977!important;outline-offset:3px!important}
+
+/* Smooth, instructional stages: entrance animation, feedback and selections. */
+main.evaluationgame .evalstage{
+ animation:aml-stage-fade .34s cubic-bezier(.23,.8,.22,1) both;
+}
+main.evaluationgame .arcadecards>.arcadecard.selected{
+ animation:aml-answer-lift .3s ease-out both!important;
+}
+main.evaluationgame .feedback,
+main.evaluationgame .arcadefeedback{
+ background:#e6f5ec!important;color:#214b61!important;
+ border:1px solid #9fccb4!important;border-left:5px solid #0b846e!important;
+ border-radius:14px!important;
+ animation:aml-stage-fade .24s ease-out both;
+}
+main.evaluationgame .feedback :is(strong,p,small),
+main.evaluationgame .arcadefeedback{
+ color:#20465b!important;-webkit-text-fill-color:#20465b!important;opacity:1!important;font-size:15px!important;
+}
+main.evaluationgame .feedback strong{color:#0a5e4e!important;-webkit-text-fill-color:#0a5e4e!important;font-size:16px!important}
+@keyframes aml-stage-fade{
+ from{opacity:.35;transform:translateY(14px)}
+ to{opacity:1;transform:translateY(0)}
+}
+@keyframes aml-answer-lift{
+ from{transform:translateY(0) scale(1)}
+ 60%{transform:translateY(-7px) scale(1.02)}
+ to{transform:translateY(-4px) scale(1)}
+}
+@media(max-width:760px){
+ main.evaluationgame .evaldialog{gap:13px!important;padding:16px!important}
+ main.evaluationgame .evaldialog p{font-size:16px!important}
+ main.evaluationgame .arcadecards>.arcadecard>span{font-size:14px!important}
+ main.evaluationgame .choices>.choice{font-size:15px!important;min-height:60px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ main.evaluationgame .evalstage,
+ main.evaluationgame .arcadecards>.arcadecard.selected,
+ main.evaluationgame .feedback,main.evaluationgame .arcadefeedback{
+ animation:none!important;
+ }
+ main.evaluationgame .arcadecards>.arcadecard,
+ main.evaluationgame .evalbins .arcadebin,
+ main.evaluationgame .choices>.choice{transition:none!important;transform:none!important}
+}
