@@ -1,0 +1,278 @@
+/* AMLVERSE Nigeria — shared light-theme accessibility contracts.
+   Loaded last. Preserves graphical canvases, certificates and deliberate visual art.
+   Use consistent navy-on-white for learning content and both result states. */
+:root {
+  --aml-paper:#ffffff;
+  --aml-surface:#f2f7fb;
+  --aml-ink:#123952;
+  --aml-body:#2d4e63;
+  --aml-meta:#365769;
+  --aml-border:#bfd4e2;
+  --aml-teal:#0b7868;
+  --aml-success-bg:#e6f6ed;
+  --aml-success-text:#0b5847;
+  --aml-error-bg:#fff2e9;
+  --aml-error-text:#814322;
+}
+
+/* Every progress-meter implementation shares the same readable typography.
+   This is intentionally global: meters appear in 9 courses, all interactive
+   cases, FATF, decision labs, tracing, dashboards and capstone. */
+main .worldmetermini,
+main .worldclassicmeter {
+  color:var(--aml-ink)!important;
+  opacity:1!important;
+}
+main .worldmeterline,
+main .worldmeterline>span,
+main .worldmeterline>strong,
+main .worldmetermini .worldmeterline>span,
+main .worldmetermini .worldmeterline>strong {
+  color:#16465f!important;
+  -webkit-text-fill-color:#16465f!important;
+  opacity:1!important;
+  font-size:14px!important;
+  line-height:1.6!important;
+  font-weight:800!important;
+}
+main .worldmeterline>strong {color:#086656!important;-webkit-text-fill-color:#086656!important}
+main .worldmetertrack {background:#dce8ef!important}
+main .worldmetertrack>div {background:#087b70!important}
+main .worldclassicmeter,
+main .worldclassicmeter :is(span,small,strong) {
+  color:#193f59!important;
+  -webkit-text-fill-color:#193f59!important;
+}
+
+/* Shared bottom-of-lesson action strip — eliminate the dark island once,
+   rather than adding overrides for individual learning worlds. */
+main .nextstepbar,
+main .worlddecision .nextstepbar,
+main .wcinteractive .nextstepbar,
+main .knowledgepath .nextstepbar,
+main .fatf40page .nextstepbar,
+main .itracelab .nextstepbar {
+  background:#eaf4f9!important;
+  background-image:none!important;
+  border:1px solid #bad1df!important;
+  color:#143e5a!important;
+  border-radius:15px!important;
+  box-shadow:none!important;
+  opacity:1!important;
+}
+main .nextstepbar>span,
+main .nextstepbar>p,
+main .nextstepbar>strong,
+main .nextstepbar :is(small,label) {
+  color:#234c64!important;
+  -webkit-text-fill-color:#234c64!important;
+  font-size:15px!important;
+  font-weight:750!important;
+  line-height:1.7!important;
+  opacity:1!important;
+}
+main .nextstepbar .primary:disabled {
+  background:#d2e0e9!important;
+  border:1px solid #a5bfce!important;
+  color:#25465c!important;
+  -webkit-text-fill-color:#25465c!important;
+  opacity:1!important;
+}
+main .nextstepbar .primary:not(:disabled) {
+  background:#123f69!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid #123f69!important;
+}
+
+/* Professional investigative decision exercise, in all nine courses. */
+.worlddecision .back{color:#0b5976!important;font-weight:750!important;font-size:14px!important}
+.worlddecision>.eyebrow{color:#0c6371!important}
+.worlddecision .worlddecisionbrief,
+.worlddecision .worlddecisionfile,
+.worlddecision .worlddecisionquestion,
+.worlddecision .worlddecisionresult{
+  background:#fff!important;
+  background-image:none!important;
+  border:1px solid var(--aml-border)!important;
+  color:var(--aml-ink)!important;
+  border-radius:19px!important;
+  box-shadow:0 4px 18px rgba(18,63,105,.05)!important;
+}
+.worlddecision :is(.worlddecisionbrief,.worlddecisionfile,.worlddecisionquestion,.worlddecisionresult) :is(h2,h3,h4){
+  color:#103757!important;
+  -webkit-text-fill-color:#103757!important;
+}
+.worlddecision :is(.worlddecisionbrief,.worlddecisionfile,.worlddecisionquestion,.worlddecisionresult)>p,
+.worlddecision .worlddecisiondisclaimer{
+  color:var(--aml-body)!important;
+  -webkit-text-fill-color:var(--aml-body)!important;
+  font-size:15px!important;
+  line-height:1.75!important;
+}
+.worlddecision .worlddecisionanalogy {
+  background:#ecf6f1!important;
+  border:1px solid #abd5c3!important;
+  border-radius:13px!important;
+}
+.worlddecision .worlddecisionanalogy :is(p,strong){
+  color:#224e5e!important;
+  -webkit-text-fill-color:#224e5e!important;
+  opacity:1!important;
+  font-size:15px!important;
+  line-height:1.7!important;
+}
+.worlddecision .worlddecisionanalogy strong {
+  color:#0b5d50!important;
+  -webkit-text-fill-color:#0b5d50!important;
+}
+.worlddecision .worlddecisionrecords article {
+  background:#fff!important;
+  border:1px solid #c4d7e5!important;
+  border-radius:13px!important;
+}
+.worlddecision .worlddecisionrecords article span{
+  color:#115a70!important;
+  -webkit-text-fill-color:#115a70!important;
+  opacity:1!important;
+  font-size:12px!important;
+  font-weight:850!important;
+}
+.worlddecision .worlddecisionrecords article p{
+  color:#315269!important;
+  -webkit-text-fill-color:#315269!important;
+  opacity:1!important;
+  font-size:15px!important;
+}
+.worlddecision .worlddecisionstages>div {
+  background:#f2f7fa!important;
+  color:#183f58!important;
+  border:1px solid #b9d0df!important;
+}
+.worlddecision .worlddecisionstages>div.active {
+  background:#e5f4ee!important;
+  border-color:#0c8b75!important;
+}
+.worlddecision .worlddecisionstages>div.done {
+  background:#edf7f2!important;
+  border-color:#87c4aa!important;
+}
+.worlddecision .worlddecisionstages>div :is(span,small) {
+  color:#173e59!important;
+  -webkit-text-fill-color:#173e59!important;
+  opacity:1!important;
+  font-size:14px!important;
+  font-weight:850!important;
+}
+.worlddecision .worlddecisionoptions button,
+.worlddecision .worlddecisionoptions button.picked,
+.worlddecision .worlddecisionoptions button.right {
+  background:#fff!important;
+  color:#173e59!important;
+  -webkit-text-fill-color:#173e59!important;
+  border:1px solid #b5cddd!important;
+  opacity:1!important;
+  font-size:16px!important;
+  transition:background .17s,border-color .17s,transform .17s;
+}
+.worlddecision .worlddecisionoptions button.picked{background:#e7f3f8!important;border:2px solid #0c7e78!important}
+.worlddecision .worlddecisionoptions button.right{background:#e3f6ea!important;border:2px solid #147f66!important}
+.worlddecision .worlddecisionoptions button :is(b,span) {
+  color:#153f5a!important;
+  -webkit-text-fill-color:#153f5a!important;
+  opacity:1!important;
+  font-size:15px!important;
+}
+.worlddecision .worlddecisionoptions button b {
+  background:#e1eef4!important;
+  border:1px solid #afccdb!important;
+  font-weight:900!important;
+}
+.worlddecision .worlddecisionoptions button:hover:not(:disabled){
+  background:#edf8f4!important;
+  border-color:#0b806c!important;
+  transform:translateY(-2px);
+}
+.worlddecision .worlddecisionquestion>.eyebrow{color:#0b5d6f!important}
+.worlddecision .worlddecisionresult>strong{color:#0b644f!important;font-size:19px!important}
+.worlddecision .worlddecisionreview article{
+  background:#f8fbfd!important;
+  border:1px solid #c5d8e5!important;
+  color:#143f59!important;
+  border-radius:13px!important;
+}
+.worlddecision .worlddecisionreview article :is(b,strong){color:#103d59!important}
+.worlddecision .worlddecisionreview article p{color:#315168!important;font-size:15px!important}
+
+/* Shared feedback used by decision, tracing and evidence challenges.
+   A correct/incorrect result is distinct without sacrificing text contrast. */
+main .itracefeedback.right,
+main .itracefeedback.wrong {
+  border-radius:14px!important;
+  background:var(--aml-success-bg)!important;
+  background-image:none!important;
+  color:#20485b!important;
+  border:1px solid #91c9ae!important;
+  border-left:5px solid #08765b!important;
+  box-shadow:0 4px 15px rgba(16,60,72,.05)!important;
+  opacity:1!important;
+}
+main .itracefeedback.wrong {
+  background:var(--aml-error-bg)!important;
+  border-color:#d7aa87!important;
+  border-left-color:#a76a32!important;
+}
+main .itracefeedback :is(strong,p,span,small){
+  color:#24485e!important;
+  -webkit-text-fill-color:#24485e!important;
+  opacity:1!important;
+}
+main .itracefeedback strong{
+  color:var(--aml-success-text)!important;
+  -webkit-text-fill-color:var(--aml-success-text)!important;
+  font-weight:850!important;
+  font-size:16px!important;
+}
+main .itracefeedback.wrong strong {
+  color:var(--aml-error-text)!important;
+  -webkit-text-fill-color:var(--aml-error-text)!important;
+}
+main .itracefeedback p{font-size:15px!important;line-height:1.75!important}
+
+/* Prevent faded locked/completed badges, without making all buttons active. */
+main :is(.worldprogresssection,.progress31details,.achievement,.certificate-tile) :is(small,span,p,strong,b) {
+  opacity:1!important;
+}
+main .academyworldcard:disabled,
+main .fatf40tile:disabled,
+main .wcinteractiveclue:disabled {
+  opacity:1!important;
+}
+
+/* Shared secondary controls, explanatory notices and section labels. */
+main .back,
+main .worlddecision .back {color:#0a5a78!important;-webkit-text-fill-color:#0a5a78!important}
+main .back:hover{color:#083c59!important;-webkit-text-fill-color:#083c59!important}
+main .notice,
+main .worlddecision .notice {
+  background:#edf5fa!important;
+  border:1px solid #bfd4e2!important;
+  color:#264d62!important;
+  opacity:1!important;
+}
+main .notice b,main .notice strong{color:#123d5a!important}
+main .notice p{color:#315168!important}
+
+/* Keep long status labels and progress controls usable on small screens. */
+@media(max-width:760px){
+  main .worldmeterline{gap:8px;flex-wrap:wrap}
+  main .worldmeterline>span,main .worldmeterline>strong{font-size:13px!important}
+  .worlddecision .worlddecisionrecords{grid-template-columns:1fr!important}
+  .worlddecision .worlddecisionrecords article{padding:15px!important}
+  .worlddecision .worlddecisionquestion{padding:18px!important}
+  .worlddecision .worlddecisionoptions button{min-height:55px!important}
+  main .nextstepbar{padding:14px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .worlddecision .worlddecisionoptions button{transition:none!important;transform:none!important}
+}
