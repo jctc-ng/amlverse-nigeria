@@ -83,6 +83,32 @@ test('Learning world card badges and locked labels remain legible on white',asyn
   expect(result.badgeFont).toBeGreaterThanOrEqual(13);
  }
 });
+test('Guided FATF panel and interactive challenge promo use accessible colors',async({page,isMobile})=>{
+ const audit=async (surface:string,foreground:string)=>{
+  const colors=await page.evaluate(({surface,foreground})=>{
+   const b=document.querySelector(surface),f=document.querySelector(foreground);
+   if(!b||!f)throw new Error('Missing audited element '+surface+' '+foreground);
+   const parse=(v:string)=>Array.from(v.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3).map(n=>{const x=n/255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4});
+   const lum=(v:string)=>{const [r,g,b]=parse(v);return r*.2126+g*.7152+b*.0722};
+   const bg=getComputedStyle(b).backgroundColor,fg=getComputedStyle(f).color;
+   const a=lum(bg),c=lum(fg);
+   return {contrast:(Math.max(a,c)+.05)/(Math.min(a,c)+.05),bg,fg};
+  },{surface,foreground});
+  expect(colors.contrast,foreground+' on '+surface+': '+JSON.stringify(colors)).toBeGreaterThanOrEqual(4.5);
+ };
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await expect(page.locator('.fatftowncontrols')).toBeVisible();
+ await audit('.fatftowncontrols','.fatftowncontrols>div:first-child strong');
+ await audit('.fatftowncontrols','.fatftowncontrols>div:first-child p');
+ await page.getByRole('button',{name:/Academy overview/}).first().click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Enter district/}).click();
+ await expect(page.locator('.worldinteractivepromo')).toBeVisible();
+ await audit('.worldinteractivepromo','.worldinteractivepromo h2');
+ await audit('.worldinteractivepromo','.worldinteractivepromo p');
+ await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
+});
 test('Global accessibility fixes keep FATF study, progress chips and impact scores readable',async({page,isMobile})=>{
  const inspect=async (parent:string,pairs:{foreground:string;background:string}[])=>page.evaluate(({parent,pairs})=>{
   function channels(c:string){const values=Array.from(c.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3);if(values.length!==3)throw Error('Unparseable CSS color '+c);return values.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4})}
