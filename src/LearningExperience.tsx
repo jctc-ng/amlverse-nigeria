@@ -1,3 +1,4 @@
+import CompletionCertificates from './CompletionCertificates';
 import CourseAccessControls from './CourseAccessControls';
 import {sectionAccessible,sectionUnlockReason} from './LearningTownProgress';
 import {useEffect,useState} from 'react';
@@ -130,6 +131,7 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  const [stage,setStage]=useState<Stage>('learn');
  const [worldInteractive,setWorldInteractive]=useState(false);
  const [worldDecision,setWorldDecision]=useState(false);
+ const [certificateScreen,setCertificateScreen]=useState(false);
  const [playing,setPlaying]=useState(false);
  const [advancedOpen,setAdvancedOpen]=useState(false);
  const [nigeriaAdvancedOpen,setNigeriaAdvancedOpen]=useState(false);
@@ -190,6 +192,8 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
   setVirtualAdvancedOpen(false);
   const next=readWorldSections(game).find(part=>part.done<part.total&&sectionAccessible(game,part.id));
   if(next){resumeSection(next.id);return}
+  const sections=readWorldSections(game);
+  if(sections.every(part=>part.done===part.total)){setCertificateScreen(true);window.scrollTo(0,0);return}
   onNextCourse();
  }
  function launch(){
@@ -197,6 +201,14 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
   setPlaying(true);
   window.scrollTo(0,0);
  }
+ if(certificateScreen)return <main className="narrow knowledgepath coursecertificatefinish">
+  <button type="button" className="back" onClick={()=>{setCertificateScreen(false);window.scrollTo(0,0)}}>← Return to completed course</button>
+  <span className="eyebrow">COURSE COMPLETE · CERTIFICATE UNLOCKED</span>
+  <h1 className="title">Congratulations on completing this learning world!</h1>
+  <p className="lead">You have finished the required activities in {course.name}. Your course certificate is now available, independently of progress in any other world.</p>
+  <CompletionCertificates worldOnly={game} autoOpen/>
+  <div className="actions"><button type="button" className="primary" onClick={onNextCourse}>Continue to the next world →</button><button type="button" className="secondary" onClick={()=>setCertificateScreen(false)}>Review completed course</button></div>
+ </main>;
  if(worldDecision)return <WorldDecisionLab game={game} onBack={()=>setWorldDecision(false)} onContinue={continueGuidedPath}/>;
  if(worldInteractive)return <InteractiveWorldChallenge game={game} onBack={()=>setWorldInteractive(false)} onPass={()=>{saveCourse(game,p=>({...p,checkPassed:true,checkAttempts:p.checkAttempts+1}));setConfirmedPass(true)}} onNext={()=>{setWorldInteractive(false);setWorldDecision(true);window.scrollTo(0,0)}}/>;
  if(game==='virtualassets'&&virtualAdvancedOpen)return <VirtualAssetAdvanced initialMode={initialSection==='trace'?'interactive':undefined} onBack={()=>setVirtualAdvancedOpen(false)} onClassic={()=>{setVirtualAdvancedOpen(false);navigate('play')}} onNextCourse={continueGuidedPath}/>;
@@ -258,6 +270,7 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  </section>
  <CourseAccessControls game={game} onChange={()=>setStage('learn')}/>
  <div className="notice"><b>Learning source:</b> <a href={course.source} target="_blank" rel="noopener noreferrer">{course.sourceName} ↗</a>. Educational summaries only, with fictional examples. Check current authoritative publications before formal institutional use.</div>
+ {readWorldSections(game).every(part=>part.done===part.total)?<CompletionCertificates worldOnly={game}/>:null}
  <details className="worldprogressdrawer"><summary><span>World completion tracker</span><span>View progress ▾</span></summary><WorldProgressOverview game={game} onOpen={resumeSection} canOpen={canOpen} reason={reason}/></details>
  </main>;
 }
