@@ -109,6 +109,81 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
  await audit('.worldinteractivepromo','.worldinteractivepromo p');
  await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
 });
+test('Mutual Evaluation Assessor game stays readable across introduction, sorting and interview',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  const ids=['risk','team','evaluation'];
+  const scores=['amlverse-arcade-risk','amlverse-arcade-team','amlverse-evaluation-arena-best'];
+  for(let i=0;i<ids.length;i++){
+   const id=ids[i];
+   localStorage.setItem('amlverse-course-v1-'+id,JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+   localStorage.setItem(scores[i],'100');
+   localStorage.setItem('amlverse-world-interactions-v1-'+id,JSON.stringify({completed:[0,1,2],best:100}));
+   localStorage.setItem('amlverse-world-decisions-v1-'+id,JSON.stringify({passed:true,best:100}));
+  }
+  const advanced={visited:Array.from({length:12},(_,i)=>i),quizPass:{Foundations:true,Intermediate:true,Advanced:true},simPass:{Foundations:true,Intermediate:true,Advanced:true}};
+  localStorage.setItem('amlverse-risklab-advanced-v1',JSON.stringify(advanced));
+  localStorage.setItem('amlverse-guide-v1-evaluation','yes');
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:'Mutual Evaluation',exact:true}).click();
+ await page.getByRole('button',{name:/③ Play/}).click();
+ await page.getByRole('button',{name:/Skip tutorial and play/}).click();
+ const game=page.locator('.evaluationgame');
+ await expect(game.getByRole('heading',{name:"The Assessor's Challenge"})).toBeVisible();
+ const check=async(pairs:{foreground:string;background:string}[])=>{
+  const values=await page.evaluate(pairs=>{
+   const lum=(value:string)=>{
+    const rgb=Array.from(value.matchAll(/\d+(?:\.\d+)?/g),x=>Number(x[0])).slice(0,3);
+    if(rgb.length!==3)throw Error('Unparseable color '+value);
+    const [r,g,b]=rgb.map(n=>{const x=n/255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4});
+    return .2126*r+.7152*g+.0722*b;
+   };
+   return pairs.map(({foreground,background})=>{
+    const text=document.querySelector(foreground),surface=document.querySelector(background);
+    if(!text||!surface)throw Error('Missing '+foreground+' or '+background);
+    const fg=lum(getComputedStyle(text).color),bg=lum(getComputedStyle(surface).backgroundColor);
+    return {selector:foreground,ratio:(Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05)};
+   });
+  },pairs);
+  for(const item of values)expect(item.ratio,item.selector).toBeGreaterThanOrEqual(4.5);
+ };
+ await check([
+  {foreground:'.evaluationgame .evalscene h2',background:'.evaluationgame .evalscene'},
+  {foreground:'.evaluationgame .evalscene p',background:'.evaluationgame .evalscene'},
+  {foreground:'.evaluationgame .evalscene .eyebrow',background:'.evaluationgame .evalscene'},
+  {foreground:'.evaluationgame .evalhud>span',background:'.evaluationgame .evalhud'}
+ ]);
+ await game.getByRole('button',{name:/Start sorting evidence/}).click();
+ await check([
+  {foreground:'.evaluationgame .arcadeinstruction p',background:'.evaluationgame .arcadeinstruction'},
+  {foreground:'.evaluationgame .arcadecards .arcadecard>span',background:'.evaluationgame .arcadecards .arcadecard'},
+  {foreground:'.evaluationgame .evalbins .arcadebin b',background:'.evaluationgame .evalbins .arcadebin'}
+ ]);
+ const pairs=[
+  ['AML/CFT legislation','Technical compliance'],
+  ['Financial intelligence outcomes','Effectiveness'],
+  ['Written cooperation procedure','Technical compliance'],
+  ['Dissemination and use records','Effectiveness'],
+  ['Agency publicity poster','Needs evidence'],
+  ['Unverified success story','Needs evidence']
+ ];
+ for(const [card,bin] of pairs){
+  await game.locator('.arcadecards .arcadecard').filter({hasText:card}).click();
+  await game.locator('.evalbins .arcadebin').filter({hasText:bin}).click();
+ }
+ await game.getByRole('button',{name:/Enter assessor interview/}).click();
+ await check([
+  {foreground:'.evaluationgame .evaldialog p',background:'.evaluationgame .evaldialog'},
+  {foreground:'.evaluationgame .arcadeinstruction p',background:'.evaluationgame .arcadeinstruction'}
+ ]);
+ await game.locator('.choices .choice').nth(1).click();
+ await game.getByRole('button',{name:/Check my answer/}).click();
+ await check([
+  {foreground:'.evaluationgame .feedback strong',background:'.evaluationgame .feedback'},
+  {foreground:'.evaluationgame .feedback p',background:'.evaluationgame .feedback'}
+ ]);
+});
 test('Original learning world meter remains readable in every course',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
