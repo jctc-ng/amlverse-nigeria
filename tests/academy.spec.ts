@@ -53,7 +53,7 @@ test('Learning world card badges and locked labels remain legible on white',asyn
  await expect(cards.nth(2)).toBeDisabled();
  const measurements=await cards.evaluateAll(nodes=>{
   function rgb(value:string){
-   const numbers=(value.match(/\\d+(?:\\.\\d+)?/g)||[]).slice(0,3).map(Number);
+   const numbers=(value.match(/\d+(?:\.\d+)?/g)||[]).slice(0,3).map(Number);
    if(numbers.length!==3)throw new Error('Bad CSS color: '+value);
    return numbers.map(v=>{const c=v/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4});
   }
