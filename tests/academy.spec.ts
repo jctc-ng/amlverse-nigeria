@@ -109,6 +109,55 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
  await audit('.worldinteractivepromo','.worldinteractivepromo p');
  await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
 });
+test('Decision Lab meters, controls and post-answer explanation meet readable contrast',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+  localStorage.setItem('amlverse-arcade-risk','100');
+  localStorage.setItem('amlverse-world-interactions-v1-risk',JSON.stringify({completed:[0,1,2],best:100}));
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
+ const decision=page.locator('.worlddecision');
+ await expect(decision).toBeVisible();
+ const audit=async(pairs:{text:string;surface:string}[])=>{
+  const values=await page.evaluate((pairs)=>{
+   const luminance=(raw:string)=>{
+    const channels=Array.from(raw.matchAll(/\d+(?:\.\d+)?/g),v=>Number(v[0])).slice(0,3);
+    if(channels.length!==3)throw Error('Invalid CSS color '+raw);
+    const [r,g,b]=channels.map(n=>{const v=n/255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});
+    return .2126*r+.7152*g+.0722*b;
+   };
+   return pairs.map(({text,surface})=>{
+    const a=document.querySelector(text),b=document.querySelector(surface);
+    if(!a||!b)throw Error('Missing selector '+text+' '+surface);
+    const x=luminance(getComputedStyle(a).color),y=luminance(getComputedStyle(b).backgroundColor);
+    return {text,surface,ratio:(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+   });
+  },pairs);
+  for(const item of values)expect(item.ratio,JSON.stringify(item)).toBeGreaterThanOrEqual(4.5);
+ };
+ await audit([
+  {text:'.worlddecision .worldmeterline>span',surface:'body'},
+  {text:'.worlddecision .worldmeterline>strong',surface:'body'},
+  {text:'.worlddecisionanalogy p',surface:'.worlddecisionanalogy'},
+  {text:'.worlddecisionrecords article p',surface:'.worlddecisionrecords article'},
+  {text:'.worlddecisionstages>div.active small',surface:'.worlddecisionstages>div.active'},
+  {text:'.worlddecision .nextstepbar>span',surface:'.worlddecision .nextstepbar'},
+  {text:'.worlddecision .nextstepbar .primary',surface:'.worlddecision .nextstepbar .primary'}
+ ]);
+ await expect(decision.getByRole('button',{name:/Evaluate decision/})).toBeDisabled();
+ await decision.locator('.worlddecisionoptions button').first().click();
+ await expect(decision.getByRole('button',{name:/Evaluate decision/})).toBeEnabled();
+ await decision.getByRole('button',{name:/Evaluate decision/}).click();
+ await expect(decision.locator('.itracefeedback')).toBeVisible();
+ await audit([
+  {text:'.worlddecision .itracefeedback strong',surface:'.worlddecision .itracefeedback'},
+  {text:'.worlddecision .itracefeedback p',surface:'.worlddecision .itracefeedback'},
+  {text:'.worlddecision .nextstepbar>span',surface:'.worlddecision .nextstepbar'}
+ ]);
+ await expect(decision.getByRole('button',{name:/Continue to next stage/})).toBeVisible();
+});
 test('Correct and incorrect classification feedback remains readable after answering',async({page,isMobile})=>{
  await page.addInitScript(()=>{
   localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
