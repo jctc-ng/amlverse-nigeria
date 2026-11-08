@@ -109,6 +109,54 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
  await audit('.worldinteractivepromo','.worldinteractivepromo p');
  await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
 });
+test('All interactive evidence challenge panels are legible in classification and timeline cases',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+   localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+   localStorage.setItem('amlverse-arcade-risk','100');
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
+ await page.getByRole('button',{name:/Open interactive challenges/}).click();
+ const audit=async (pairs:{fg:string,bg:string}[])=>{
+  return page.evaluate((pairs)=>{
+   const lum=(value:string)=>{
+    const nums=Array.from(value.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3);
+    if(nums.length!==3)throw Error('Unreadable color data: '+value);
+    const [r,g,b]=nums.map(c=>{const x=c/255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4});
+    return r*.2126+g*.7152+b*.0722;
+   };
+   return pairs.map(pair=>{
+    const fg=document.querySelector(pair.fg),bg=document.querySelector(pair.bg);
+    if(!fg||!bg)throw Error('Missing '+pair.fg+' '+pair.bg);
+    const a=lum(getComputedStyle(fg).color),b=lum(getComputedStyle(bg).backgroundColor);
+    return {selector:pair.fg,contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),font:parseFloat(getComputedStyle(fg).fontSize)};
+   });
+  },pairs);
+ };
+ const standard=await audit([
+  {fg:'.wcinteractiveanalogy strong',bg:'.wcinteractiveanalogy'},
+  {fg:'.wcinteractiveanalogy p',bg:'.wcinteractiveanalogy'},
+  {fg:'.wcinteractiveworkshop h3',bg:'.wcinteractiveworkshop>section'},
+  {fg:'.wcinteractiveworkshop>section>p',bg:'.wcinteractiveworkshop>section'},
+  {fg:'.wcinteractiveclue>span:last-child',bg:'.wcinteractiveclue'},
+  {fg:'.wcinteractivetargets button>strong',bg:'.wcinteractivetargets button'},
+  {fg:'.wcinteractivetargets button>small',bg:'.wcinteractivetargets button'},
+  {fg:'.wcinteractivelog>strong',bg:'.wcinteractivelog'},
+  {fg:'.wcinteractivelog>p',bg:'.wcinteractivelog'},
+  {fg:'.wcinteractive .worldmeterline strong',bg:'.wcinteractive'}
+ ]);
+ for(const result of standard)expect(result.contrast,result.selector).toBeGreaterThanOrEqual(4.5);
+ await page.locator('.wcinteractivetabs button').nth(2).click();
+ const timeline=await audit([
+  {fg:'.wcinteractivetimeline h3',bg:'.wcinteractivetimeline>section'},
+  {fg:'.wcinteractivetimeline>section>p',bg:'.wcinteractivetimeline>section'},
+  {fg:'.wcinteractivetimelinecards button',bg:'.wcinteractivetimelinecards button'},
+  {fg:'.wcinteractivetimelinesteps strong',bg:'.wcinteractivetimelinesteps>div'}
+ ]);
+ for(const result of timeline)expect(result.contrast,result.selector).toBeGreaterThanOrEqual(4.5);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+4)).toBe(true);
+});
 test('Crypto tracing practice is interactive, touch-friendly and preserves scored missions',async({page,isMobile})=>{
  await page.addInitScript(()=>{
   const ids=['risk','team','evaluation','egmont','typologies','nigeria','virtualassets'];
