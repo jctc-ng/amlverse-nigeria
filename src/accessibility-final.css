@@ -971,3 +971,122 @@ main.capstonepage .capstoneresults{animation:aml-stage-fade .3s ease-out both}
  transition:none!important;transform:none!important
  }
 }
+
+
+/* v2.3 — Clear, accessible destructive-action confirmations across AMLVERSE.
+   Shared by Competency & Impact Lab, FATF and course reset controls. */
+main .townresetconfirm,
+main .impactpage .townresetconfirm,
+main .fatf40page .townresetconfirm{
+  background:#fff7f5!important;
+  background-image:none!important;
+  border:1.5px solid #d1a39c!important;
+  border-left:5px solid #ad564a!important;
+  border-radius:16px!important;
+  box-shadow:0 5px 18px rgba(93,48,43,.07)!important;
+  padding:clamp(17px,2.4vw,24px)!important;
+  color:#482f31!important;
+  display:grid;
+  gap:13px;
+  opacity:1!important;
+}
+main .townresetconfirm h3,
+main .impactpage .townresetconfirm h3,
+main .fatf40page .townresetconfirm h3{
+  color:#713329!important;
+  -webkit-text-fill-color:#713329!important;
+  font-size:19px!important;
+  line-height:1.4!important;
+  font-weight:850!important;
+  margin:0!important;
+}
+main .townresetconfirm :is(p,label,strong,small,span),
+main .impactpage .townresetconfirm :is(p,label,strong,small,span),
+main .fatf40page .townresetconfirm :is(p,label,strong,small,span){
+  color:#5a3e3e!important;
+  -webkit-text-fill-color:#5a3e3e!important;
+  font-size:15px!important;
+  font-weight:650!important;
+  line-height:1.65!important;
+  opacity:1!important;
+}
+main .townresetconfirm label strong{
+  color:#813b2e!important;
+  -webkit-text-fill-color:#813b2e!important;
+  font-weight:900!important;
+  letter-spacing:.03em;
+}
+main .townresetconfirm input,
+main .impactpage .townresetconfirm input,
+main .fatf40page .townresetconfirm input{
+  background:#fff!important;
+  background-image:none!important;
+  border:1.5px solid #af8d89!important;
+  border-radius:11px!important;
+  color:#263d4d!important;
+  -webkit-text-fill-color:#263d4d!important;
+  padding:13px 15px!important;
+  min-height:49px!important;
+  font-size:16px!important;
+  font-weight:650!important;
+  opacity:1!important;
+}
+main .townresetconfirm input::placeholder{color:#536c78!important;opacity:1!important}
+main .townresetconfirm input:focus-visible{
+  outline:3px solid #087d75!important;
+  outline-offset:3px!important;
+  border-color:#087d75!important;
+}
+main .townresetconfirm .townresetactions{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:11px!important;
+}
+main .townresetconfirm .townresetdanger{
+  background:#a63831!important;
+  background-image:none!important;
+  border:1px solid #922c27!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:15px!important;
+  font-weight:850!important;
+  min-height:47px!important;
+  border-radius:11px!important;
+  padding:12px 17px!important;
+  transition:background-color .17s ease,transform .17s ease!important;
+}
+main .townresetconfirm .townresetdanger:hover:not(:disabled){
+  background:#842a26!important;
+  transform:translateY(-2px);
+}
+main .townresetconfirm .townresetdanger:disabled{
+  background:#ead6d3!important;
+  color:#5d4d4c!important;
+  -webkit-text-fill-color:#5d4d4c!important;
+  border:1px solid #c7b5b1!important;
+  opacity:1!important;
+  cursor:not-allowed;
+}
+main .townresetconfirm .secondary{
+  background:#fff!important;
+  color:#173d59!important;
+  -webkit-text-fill-color:#173d59!important;
+  border:1px solid #9fbcca!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  min-height:47px!important;
+  border-radius:11px!important;
+}
+main .townresetconfirm .secondary:hover{
+  background:#edf5f9!important;
+  border-color:#4c91a8!important;
+}
+@media(max-width:560px){
+  main .townresetconfirm .townresetactions{display:grid!important;grid-template-columns:minmax(0,1fr)}
+  main .townresetconfirm .townresetactions button{width:100%!important}
+  main .townresetconfirm input{max-width:100%!important;width:100%!important}
+}
+@media(prefers-reduced-motion:reduce){
+  main .townresetconfirm .townresetdanger{transition:none!important;transform:none!important}
+}
