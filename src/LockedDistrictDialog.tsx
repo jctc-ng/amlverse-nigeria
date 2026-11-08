@@ -1,15 +1,16 @@
 import {useEffect,useRef} from 'react';
-import {learningSequence,modules} from './progress';
+import {getLearningSequence,modules} from './progress';
 import type {CourseKey} from './progress';
 import {worldAccessible,worldMilestones} from './LearningTownProgress';
 
 export default function LockedDistrictDialog({target,onClose,onReview,}:{target:CourseKey;onClose:()=>void;onReview:(id:CourseKey)=>void}){
  const ref=useRef<HTMLButtonElement>(null);
- const index=learningSequence.indexOf(target);
- const previous=index>0?learningSequence[index-1]:null;
+ const sequence=getLearningSequence();
+ const index=sequence.indexOf(target);
+ const previous=index>0?sequence[index-1]:null;
  const previousName=previous?modules.find(m=>m.id===previous)?.title||'Previous learning world':'Previous learning world';
  const targetName=modules.find(m=>m.id===target)?.title||'Learning district';
- const nextAvailable=learningSequence.slice(0,index).reverse().find(id=>worldAccessible(id))||learningSequence[0];
+ const nextAvailable=sequence.slice(0,index).reverse().find(id=>worldAccessible(id))||sequence[0];
  const availableName=modules.find(m=>m.id===nextAvailable)?.title||'available learning world';
  const progress=previous?worldMilestones(previous):null;
  const count=progress?.done||0;
