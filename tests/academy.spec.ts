@@ -53,7 +53,7 @@ test('Institutional theme has legible dark text on white surfaces on desktop and
    const el=document.querySelector(selector);
    if(!el)throw new Error('Theme element missing: '+selector);
    const raw=getComputedStyle(el)[property];
-   const rgb=Array.from(raw.matchAll(/\\d+(?:\\.\\d+)?/g),match=>Number(match[0])).slice(0,3);
+   const rgb=Array.from(raw.matchAll(/\d+(?:\.\d+)?/g),match=>Number(match[0])).slice(0,3);
    if(rgb.length!==3||rgb.some(x=>!Number.isFinite(x)))throw new Error('Unparseable color '+selector+' '+raw);
    const linear=rgb.map(x=>{const v=x/255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});
    return .2126*linear[0]+.7152*linear[1]+.0722*linear[2];
@@ -78,7 +78,7 @@ test('Institutional theme has legible dark text on white surfaces on desktop and
   const styles=getComputedStyle(el);
   return {background:styles.backgroundColor,title:getComputedStyle(el.querySelector('h2')!).color};
  });
- expect(dialog.background).toMatch(/rgb\\(255, 255, 255\\)/);
+ expect(dialog.background).toMatch(/rgb\(255, 255, 255\)/);
  expect(dialog.title).not.toBe(dialog.background);
 });
 test('Academy Overview and My Progress share a full milestone summary',async({page})=>{
