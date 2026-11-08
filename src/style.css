@@ -814,3 +814,59 @@
 .researchcredential a:hover,.researchcredential a:focus-visible{color:#fff}
 @media(max-width:760px){.researchcredentials{padding:18px 13px}.researchcredentialgrid{grid-template-columns:1fr;gap:12px}.researchcredential{padding:16px}.researchcredentialimage{min-height:145px}.researchcredentialimage img{max-width:140px;max-height:140px}.researchcredentialshead>p{font-size:14px}}
 @media(min-width:761px) and (max-width:980px){.researchcredentialimage img{max-width:130px;max-height:130px}}
+
+
+/* AMLVERSE — earned educational completion certificates */
+.certificates{margin-top:28px}
+.certificates-head{display:flex;align-items:start;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.certificates-head h2{font-size:23px;margin:6px 0}
+.certificates-head p{font-size:13px;color:#bed3df;line-height:1.75;max-width:690px}
+.certificates-head>strong{border:1px solid #628b8c;background:#1b484d;color:#c5ffe7;padding:8px 12px;border-radius:20px;white-space:nowrap;font-size:13px}
+.certificate-name-label{display:block;font-size:14px;font-weight:800;color:#e6f5f8;margin:16px 0 8px}
+.certificate-name{display:block;max-width:470px;width:100%;min-height:48px;border:1px solid #6894a5;background:#0f263a;color:#fff;border-radius:10px;padding:11px 14px;font:inherit;font-size:16px}
+.certificate-name:focus-visible{outline:3px solid #f4d487;outline-offset:2px}
+.certificate-privacy{color:#b4cad5;font-size:12px;line-height:1.75}
+.certificate-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.certificate-tile{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:start;border:1px solid #436d7b;background:#153549;border-radius:13px;padding:16px}
+.certificate-tile.locked{background:#122b3b;border-color:#365566}
+.certificate-tile-icon{font-size:26px}
+.certificate-tile small{font-size:10px;color:#a1daca;font-weight:850;letter-spacing:.6px}
+.certificate-tile h3{font-size:16px;color:#f0fff8;margin:6px 0;line-height:1.4}
+.certificate-tile p{font-size:12px;line-height:1.6;color:#bed6df;margin:0}
+.certificate-tile button{grid-column:2;justify-self:start;min-height:43px;min-width:135px}
+.certificate-tile button:disabled{opacity:.65}
+.certificate-modal-backdrop{position:fixed;inset:0;z-index:10000;background:#041422eF;overflow:auto;padding:24px 12px;display:flex;align-items:flex-start;justify-content:center}
+.certificate-dialog{width:min(900px,100%);border:1px solid #5a8b9b;border-radius:17px;background:#112a40;padding:18px;box-shadow:0 20px 70px #0009}
+.certificate-dialog-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.certificate-dialog-controls h2{margin:0;font-size:20px;color:#e9fff6}
+.certificate-paper{background:#fff;color:#172f4d;width:100%;padding:17px;border:9px solid #123e69}
+.certificate-paper-inner{border:2px solid #cfaa5a;text-align:center;padding:28px 24px 18px;min-height:540px;display:flex;flex-direction:column;align-items:center}
+.certificate-mark{width:52px;height:52px;border-radius:50%;background:#123e69;color:#d9be70;display:grid;place-items:center;font-size:36px}
+.certificate-brand{font-size:24px;font-weight:900;letter-spacing:2px;color:#123b67;margin:14px 0 3px}
+.certificate-brand span{color:#265f86}
+.certificate-kicker{font-size:11px;font-weight:850;letter-spacing:2px;color:#52728c;margin:8px 0 14px}
+.certificate-paper h2{font-family:Georgia,serif;font-size:clamp(24px,3.5vw,37px);line-height:1.25;color:#173c64;margin:9px 0 17px}
+.certificate-presented{font-size:15px;color:#526982;margin:8px 0}
+.certificate-recipient{font-family:Georgia,serif;font-size:clamp(23px,3.3vw,34px);font-weight:700;color:#153e68;border-bottom:2px solid #cda455;padding:0 8px 9px;max-width:100%;overflow-wrap:anywhere;margin:8px 0}
+.certificate-paper h3{font-size:clamp(19px,2.7vw,26px);color:#133f69;margin:10px 0}
+.certificate-description{font-size:14px;line-height:1.6;color:#3a5873;max-width:650px;margin:0 0 20px}
+.certificate-bottom{display:flex;justify-content:space-around;gap:18px;flex-wrap:wrap;width:100%;margin-top:auto;border-top:1px solid #d7e1e9;padding-top:16px}
+.certificate-bottom>div{display:grid;gap:6px;max-width:45%}
+.certificate-bottom strong{font-size:11px;color:#597084;text-transform:uppercase}
+.certificate-bottom span{font-size:13px;color:#163f69}
+.certificate-disclaimer{font-size:10px;line-height:1.55;color:#5f6e7c;max-width:690px;margin:20px 0 7px}
+.certificate-site{font-size:11px;color:#235c8c;margin:0}
+.certificate-dialog-actions{display:flex;flex-wrap:wrap;gap:12px;margin:17px 0}
+.certificate-error{color:#ffd9b4;font-size:13px}
+@media(max-width:680px){.certificate-list{grid-template-columns:1fr}.certificate-dialog{padding:10px}.certificate-paper{border-width:5px;padding:7px}.certificate-paper-inner{padding:20px 10px 14px;min-height:500px}.certificate-paper h2{font-size:24px}.certificate-recipient{font-size:24px}.certificate-bottom>div{max-width:100%}.certificate-dialog-actions{display:grid}.certificate-dialog-actions button{width:100%}.certificate-dialog-controls h2{font-size:17px}}
+@media print{
+ @page{size:A4 landscape;margin:10mm}
+ body *{visibility:hidden!important}
+ .certificate-modal-backdrop,.certificate-modal-backdrop .certificate-paper,.certificate-modal-backdrop .certificate-paper *{visibility:visible!important}
+ .certificate-modal-backdrop{position:static!important;padding:0!important;background:#fff!important;display:block!important;overflow:visible!important}
+ .certificate-dialog{background:#fff!important;border:0!important;padding:0!important;box-shadow:none!important;width:100%!important}
+ .certificate-dialog-controls,.certificate-dialog-actions,.certificate-dialog>.certificate-privacy,.certificate-dialog>.certificate-error{display:none!important}
+ .certificate-paper{position:absolute;top:0;left:0;width:100%;height:180mm;margin:0;padding:10mm;border:6px solid #123e69!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .certificate-paper-inner{min-height:100%;padding:10mm;border:2px solid #cba65f!important}
+ .certificate-paper h2{font-size:31px}.certificate-recipient{font-size:29px}
+}
