@@ -997,6 +997,45 @@ test('Competency Lab compares twelve different follow-up items, exposes rubric a
  expect(csvText).toContain('Risk-based assessment');
  if(isMobile)expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+3)).toBe(true);
 });
+test('Evaluation reset confirmation is accessible and preserves results on cancellation',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:'Competency & Impact Lab',exact:true}).click();
+ await page.getByRole('button',{name:/Reset evaluation/}).click();
+ const confirmation=page.locator('.impactpage .townresetconfirm');
+ await expect(confirmation.getByRole('heading',{name:'Confirm evaluation reset'})).toBeVisible();
+ const colors=await confirmation.evaluate(el=>{
+  const luminance=(css:string)=>{
+   const rgb=Array.from(css.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3);
+   if(rgb.length!==3)throw new Error('Unable to read '+css);
+   const [r,g,b]=rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});
+   return .2126*r+.7152*g+.0722*b;
+  };
+  function contrast(fg:Element,bg:Element){
+   const a=luminance(getComputedStyle(fg).color),b=luminance(getComputedStyle(bg).backgroundColor);
+   return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+  }
+  const title=el.querySelector('h3')!,instruction=el.querySelector('label')!,input=el.querySelector('input')!;
+  const reset=el.querySelector('.townresetdanger')!,cancel=el.querySelector('.secondary')!;
+  return {
+   title:contrast(title,el),
+   instruction:contrast(instruction,el),
+   input:contrast(input,input),
+   disabled:contrast(reset,reset),
+   cancel:contrast(cancel,cancel),
+   radius:parseFloat(getComputedStyle(el).borderTopLeftRadius)
+  };
+ });
+ for(const key of ['title','instruction','input','disabled','cancel'] as const)expect(colors[key],key).toBeGreaterThanOrEqual(4.5);
+ expect(colors.radius).toBeGreaterThanOrEqual(14);
+ const deleteButton=confirmation.getByRole('button',{name:'Delete evaluation results'});
+ await expect(deleteButton).toBeDisabled();
+ await confirmation.getByRole('button',{name:'Keep my results'}).click();
+ await expect(confirmation).toHaveCount(0);
+ await page.getByRole('button',{name:/Reset evaluation/}).click();
+ await page.getByLabel(/Type RESET/).fill('RESET');
+ await expect(deleteButton).toBeEnabled();
+});
 test('Competency evaluation reset requires typed confirmation and preserves unrelated academy results',async({page,isMobile})=>{
  await page.goto('./');
  await page.evaluate(()=>{
