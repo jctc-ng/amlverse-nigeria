@@ -1,6 +1,23 @@
 import {test,expect} from '@playwright/test';
 import {readFile} from 'node:fs/promises';
 
+test('Completing one world reveals its course certificate within that world',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+  localStorage.setItem('amlverse-arcade-risk','100');
+  localStorage.setItem('amlverse-world-interactions-v1-risk',JSON.stringify({completed:[0,1,2],best:100}));
+  localStorage.setItem('amlverse-world-decisions-v1-risk',JSON.stringify({passed:true,best:100}));
+  localStorage.setItem('amlverse-risklab-advanced-v1',JSON.stringify({visited:Array.from({length:12},(_,i)=>i),quizPass:{Foundations:true,Intermediate:true,Advanced:true},simPass:{Foundations:true,Intermediate:true,Advanced:true}}));
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Review district/}).click();
+ const section=page.locator('.coursecertificatefinish, .knowledgepath .certificates');
+ await expect(section.first()).toBeVisible();
+ await expect(page.locator('.certificate-tile.earned')).toHaveCount(1);
+ await expect(page.locator('.certificate-tile.earned')).toContainText('RiskLab Arcade');
+ await expect(page.getByRole('button',{name:'View certificate'})).toBeVisible();
+});
 test('Certificates start locked until a game or course is actually completed',async({page})=>{
  await page.goto('./');
  await page.getByRole('button',{name:/My Progress/}).first().click();
