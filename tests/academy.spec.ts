@@ -266,6 +266,16 @@ test('Locked district message can be dismissed with Escape',async({page,isMobile
  await expect(page.getByRole('dialog')).toHaveCount(0);
 });
 
+test('Project research shows current academic citation and creator LinkedIn profile',async({page})=>{
+ await page.goto('./');
+ await page.getByRole('button',{name:'Project & Research',exact:true}).click();
+ const citation=page.locator('.researchcite');
+ await expect(citation).toContainText('https://m-analyst.github.io/amlverse-nigeria/');
+ await expect(citation).not.toContainText('jctc-ng.github.io');
+ const profile=page.getByRole('link',{name:/View Muzammil Adamu on LinkedIn/});
+ await expect(profile).toHaveAttribute('href','https://www.linkedin.com/in/muzammil-adamu-cfe-411747172');
+ await expect(page.getByRole('link',{name:/View project repository/})).toHaveAttribute('href','https://github.com/m-analyst/amlverse-nigeria');
+});
 test('Project & Research names the independent creator and accurately limits endorsement claims',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
