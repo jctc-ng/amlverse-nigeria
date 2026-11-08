@@ -252,7 +252,7 @@ test('Learners may select blockchain-first while preserving the foundations path
  await expect(page.locator('.townstop').nth(1)).toContainText('LOCKED');
  await expect(page.getByText('Current pathway: Virtual Assets & Blockchain first')).toBeVisible();
  await page.getByRole('button',{name:/Start with Foundations & Standards/}).click();
- await expect(page.getByRole('heading',{name:/RiskLab Arcade/})).toBeVisible();
+ await expect(page.getByRole('heading',{name:/Risk Assessment Basics/})).toBeVisible();
  await page.getByRole('button',{name:/Academy overview/}).click();
  await expect(page.locator('.townstop').first()).toContainText('Risk Academy');
  await expect(page.getByText('Current pathway: Foundations & Standards first')).toBeVisible();
