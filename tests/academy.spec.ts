@@ -142,6 +142,34 @@ test('Crypto tracing practice is interactive, touch-friendly and preserves score
  await expect(page.locator('.itraceevidenceitem').first()).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+4)).toBe(true);
 });
+test('Arcade clue card descriptions remain readable and clue selections animate',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
+ await page.getByRole('button',{name:/③ Play/}).click();
+ const clue=page.locator('.miniclue');
+ await expect(clue).toBeVisible();
+ await clue.click();
+ await expect(clue).toHaveClass(/selected/);
+ const anim=await clue.evaluate(el=>({name:getComputedStyle(el).animationName,duration:getComputedStyle(el).animationDuration}));
+ expect(anim.name).toContain('aml-clue-confirm');
+ await page.getByRole('button',{name:/Skip tutorial and play/}).click();
+ const cards=page.locator('.arcadecards>.arcadecard');
+ await expect(cards.first()).toBeVisible();
+ const info=await cards.first().evaluate(el=>{
+  const text=el.querySelector('span')!;
+  const rgb=(v:string)=>{const parts=Array.from(v.matchAll(/\\d+(?:\\.\\d+)?/g),m=>Number(m[0])).slice(0,3);if(parts.length!==3)throw Error('Invalid color '+v);const [r,g,b]=parts.map(k=>{const a=k/255;return a<=.04045?a/12.92:((a+.055)/1.055)**2.4});return .2126*r+.7152*g+.0722*b};
+  const a=rgb(getComputedStyle(text).color),b=rgb(getComputedStyle(el).backgroundColor);
+  return {contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),font:parseFloat(getComputedStyle(text).fontSize)};
+ });
+ expect(info.contrast).toBeGreaterThanOrEqual(4.5);
+ expect(info.font).toBeGreaterThanOrEqual(14);
+ await cards.first().click();
+ await expect(cards.first()).toHaveClass(/selected/);
+});
 test('RiskLab practice and How to Play tutorial require genuine interaction',async({page,isMobile})=>{
  await page.addInitScript(()=>{
   localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
