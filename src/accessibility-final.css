@@ -1544,3 +1544,85 @@ main.virtualassetgame .chainnote{
  main.virtualassetgame .chainnode,
  main.riskadvanced .riskadvancedreview>div{transition:none!important;transform:none!important}
 }
+
+
+/* v2.6 — choose a blockchain-first or foundations-first academy pathway. */
+.academyhome .academypathchoice{
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr);
+  gap:24px;
+  align-items:center;
+  margin:26px 0 30px;
+  padding:clamp(22px,3vw,31px);
+  background:linear-gradient(120deg,#f5fafd,#e9f6f3);
+  border:1px solid #b6d3dd;
+  border-radius:22px;
+  box-shadow:0 8px 23px rgba(15,63,96,.06);
+  color:#153e5b;
+}
+.academyhome .academypathchoice .eyebrow{
+  color:#0c6574!important;
+  -webkit-text-fill-color:#0c6574!important;
+}
+.academyhome .academypathchoice h2{
+  color:#103b5b!important;
+  font-size:clamp(22px,2.5vw,28px);
+  line-height:1.3;
+  margin:8px 0 12px;
+}
+.academyhome .academypathchoice p{
+  color:#2d5064!important;
+  font-size:16px!important;
+  line-height:1.75!important;
+  margin:0 0 13px;
+}
+.academyhome .academypathchoice small{
+  display:inline-block;
+  padding:9px 13px;
+  color:#0d6053!important;
+  -webkit-text-fill-color:#0d6053!important;
+  background:#e0f2e9;
+  border:1px solid #a8d2c0;
+  border-radius:999px;
+  font-size:13px!important;
+  font-weight:850;
+}
+.academyhome .academypathactions{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.academyhome .academypathactions button{
+  min-height:58px!important;
+  padding:14px 18px!important;
+  border-radius:13px!important;
+  text-align:left;
+  white-space:normal;
+  font-size:15px!important;
+  font-weight:850!important;
+  line-height:1.5;
+  transition:transform .18s ease,box-shadow .18s ease!important;
+}
+.academyhome .academypathactions button.primary{
+  background:#143f67!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid #143f67!important;
+}
+.academyhome .academypathactions button.secondary{
+  background:#fff!important;
+  color:#16435d!important;
+  -webkit-text-fill-color:#16435d!important;
+  border:1px solid #a6c7d9!important;
+}
+.academyhome .academypathactions button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 7px 16px rgba(15,63,96,.09);
+}
+@media(max-width:790px){
+ .academyhome .academypathchoice{grid-template-columns:1fr;gap:17px}
+ .academyhome .academypathactions button{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+ .academyhome .academypathactions button{transition:none!important;transform:none!important}
+}
