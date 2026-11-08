@@ -109,6 +109,39 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
  await audit('.worldinteractivepromo','.worldinteractivepromo p');
  await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
 });
+test('Correct and incorrect classification feedback remains readable after answering',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+  localStorage.setItem('amlverse-arcade-risk','100');
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
+ await expect(page.locator('.wcinteractive')).toBeVisible();
+ const verify=async(expected:'right'|'wrong')=>{
+  const element=page.locator('.wcinteractive .itracefeedback.'+expected);
+  await expect(element).toBeVisible();
+  return element.evaluate(el=>{
+   const luminance=(raw:string)=>{
+    const values=Array.from(raw.matchAll(/\d+(?:\.\d+)?/g),x=>Number(x[0])).slice(0,3);
+    if(values.length!==3)throw Error('Cannot parse '+raw);
+    const [r,g,b]=values.map(v=>{const c=v/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4});
+    return .2126*r+.7152*g+.0722*b;
+   };
+   const bg=luminance(getComputedStyle(el).backgroundColor);
+   return Array.from(el.querySelectorAll('strong,p')).map(node=>{
+    const fg=luminance(getComputedStyle(node).color);
+    return (Math.max(bg,fg)+.05)/(Math.min(bg,fg)+.05);
+   });
+  });
+ };
+ await page.locator('.wcinteractiveclue').first().click();
+ await page.locator('.wcinteractivetargets button').filter({hasText:'Vulnerability'}).click();
+ for(const contrast of await verify('wrong'))expect(contrast).toBeGreaterThanOrEqual(4.5);
+ await page.locator('.wcinteractivetargets button').filter({hasText:'Threat'}).click();
+ for(const contrast of await verify('right'))expect(contrast).toBeGreaterThanOrEqual(4.5);
+ await expect(page.locator('.wcinteractivelog')).toContainText('A fraud network attempts to use accounts');
+});
 test('All interactive evidence challenge panels are legible in classification and timeline cases',async({page,isMobile})=>{
  await page.addInitScript(()=>{
    localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
