@@ -83,6 +83,44 @@ test('Learning world card badges and locked labels remain legible on white',asyn
   expect(result.badgeFont).toBeGreaterThanOrEqual(13);
  }
 });
+test('Global accessibility fixes keep FATF study, progress chips and impact scores readable',async({page,isMobile})=>{
+ const inspect=async (parent:string,pairs:{foreground:string;background:string}[])=>page.evaluate(({parent,pairs})=>{
+  function channels(c:string){const values=Array.from(c.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3);if(values.length!==3)throw Error('Unparseable CSS color '+c);return values.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4})}
+  function lum(c:string){const [r,g,b]=channels(c);return .2126*r+.7152*g+.0722*b}
+  const root=document.querySelector(parent);
+  if(!root)throw Error('Missing section '+parent);
+  return pairs.map(pair=>{
+   const f=root.querySelector(pair.foreground),b=root.querySelector(pair.background);
+   if(!f||!b)throw Error('Missing '+JSON.stringify(pair));
+   const fl=lum(getComputedStyle(f).color),bl=lum(getComputedStyle(b).backgroundColor);
+   return {foreground:pair.foreground,background:pair.background,ratio:(Math.max(fl,bl)+.05)/(Math.min(fl,bl)+.05),text:getComputedStyle(f).color,bg:getComputedStyle(b).backgroundColor};
+  });
+ },{parent,pairs});
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/FATF Quest/}).first().click();
+ await page.getByRole('button',{name:'Open Recommendation 1',exact:true}).click();
+ const fatf=await inspect('.fatf40page',[
+  {foreground:'.fatf40study>p',background:'.fatf40study'},
+  {foreground:'.fatf40why p',background:'.fatf40why'},
+  {foreground:'.fatf40studyheading h2',background:'.fatf40study'}
+ ]);
+ for(const item of fatf)expect(item.ratio,'FATF contrast '+JSON.stringify(item)).toBeGreaterThanOrEqual(4.5);
+ await page.getByRole('button',{name:/My Progress/}).first().click();
+ const progress=await inspect('.progressdash',[
+  {foreground:'.academy31headline strong',background:'.academy31headline'},
+  {foreground:'.progressmarks>span',background:'.progressmarks>span'},
+  {foreground:'.progress31details summary',background:'.progress31details summary'},
+  {foreground:'.impactdashboardstats strong',background:'.impactdashboardstats>div'}
+ ]);
+ for(const item of progress)expect(item.ratio,'Progress contrast '+JSON.stringify(item)).toBeGreaterThanOrEqual(4.5);
+ await page.getByRole('button',{name:/Competency & Impact Lab/}).first().click();
+ const impact=await inspect('.impactpage',[
+  {foreground:'.impactstatrow strong',background:'.impactstatrow>div'},
+  {foreground:'.impactstatrow small',background:'.impactstatrow>div'}
+ ]);
+ for(const item of impact)expect(item.ratio,'Impact contrast '+JSON.stringify(item)).toBeGreaterThanOrEqual(4.5);
+});
 test('Institutional theme has legible dark text on white surfaces on desktop and mobile',async({page})=>{
  await page.goto('./');
  const measured=await page.evaluate(()=>{
