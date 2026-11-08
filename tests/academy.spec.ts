@@ -266,6 +266,18 @@ test('Locked district message can be dismissed with Escape',async({page,isMobile
  await expect(page.getByRole('dialog')).toHaveCount(0);
 });
 
+test('Professional credentials gallery shows three badges on desktop and mobile',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:'Project & Research',exact:true}).click();
+ const gallery=page.locator('.researchcredentialgrid');
+ await expect(gallery.locator('.researchcredential')).toHaveCount(3);
+ await expect(gallery.locator('img')).toHaveCount(3);
+ await expect(page.getByRole('heading',{name:'TRM Crypto Compliance Specialist'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Certified Fraud Examiner'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'TRM Advanced Crypto Investigator'})).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+3)).toBe(true);
+});
 test('Project research shows current academic citation and creator LinkedIn profile',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
