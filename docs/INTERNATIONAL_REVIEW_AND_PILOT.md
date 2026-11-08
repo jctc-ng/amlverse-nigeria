@@ -34,7 +34,7 @@ AMLVERSE Nigeria uses fictional investigations and decisions to teach AML/CFT/CP
 ## How external reviewers can contribute
 
 Use the public repository's issue templates for an expert accuracy review or pilot proposal:
-https://github.com/jctc-ng/amlverse-nigeria/issues/new/choose
+https://github.com/m-analyst/amlverse-nigeria/issues/new/choose
 
 **Do not upload sensitive data, customer information, restricted FIU messages, proprietary case materials, classified records, personal identity documents or confidential agency documents.**
 
