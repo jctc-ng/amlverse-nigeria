@@ -276,3 +276,53 @@ main .notice p{color:#315168!important}
 @media(prefers-reduced-motion:reduce){
   .worlddecision .worlddecisionoptions button{transition:none!important;transform:none!important}
 }
+
+
+/* Original five-milestone learning progress — shared by every course world.
+   Both foreground and background must be updated together. */
+main .knowledgepath .worldclassicmeter,
+main .worldclassicmeter {
+  display:block;
+  background:#f0f7fb!important;
+  background-image:none!important;
+  border:1px solid #b6d0df!important;
+  border-radius:15px!important;
+  box-shadow:0 3px 13px rgba(18,63,105,.04)!important;
+  color:#153d59!important;
+  padding:17px 19px!important;
+}
+main .worldclassicmeter .worldmetermini,
+main .worldclassicmeter .worldmeterline {
+  background:transparent!important;
+  color:#153e59!important;
+}
+main .worldclassicmeter .worldmeterline>span {
+  color:#163f5a!important;
+  -webkit-text-fill-color:#163f5a!important;
+  font-size:15px!important;
+  line-height:1.6!important;
+  font-weight:850!important;
+  opacity:1!important;
+}
+main .worldclassicmeter .worldmeterline>strong {
+  color:#0a685b!important;
+  -webkit-text-fill-color:#0a685b!important;
+  font-size:15px!important;
+  line-height:1.6!important;
+  font-weight:850!important;
+  opacity:1!important;
+}
+main .worldclassicmeter .worldmetertrack {
+  height:10px;
+  margin-top:8px;
+  background:#d4e4ef!important;
+  border-radius:999px!important;
+}
+main .worldclassicmeter .worldmetertrack>div{
+  background:#0b8575!important;
+}
+@media(max-width:760px){
+ main .worldclassicmeter{padding:15px!important}
+ main .worldclassicmeter .worldmeterline>span,
+ main .worldclassicmeter .worldmeterline>strong{font-size:14px!important}
+}
