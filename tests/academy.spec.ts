@@ -109,6 +109,79 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
  await audit('.worldinteractivepromo','.worldinteractivepromo p');
  await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
 });
+test('Achievements, certificates, and expanded progress labels use readable cards',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/My Progress/}).first().click();
+ const result=await page.evaluate(()=>{
+  const color=(value:string)=>{
+   const nums=Array.from(value.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3);
+   if(nums.length!==3)throw Error('Unexpected color '+value);
+   const [r,g,b]=nums.map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4});
+   return .2126*r+.7152*g+.0722*b;
+  };
+  const check=(fgSelector:string,bgSelector:string)=>{
+   const f=document.querySelector(fgSelector),b=document.querySelector(bgSelector);
+   if(!f||!b)throw Error('Missing '+fgSelector+' or '+bgSelector);
+   const fg=color(getComputedStyle(f).color),bg=color(getComputedStyle(b).backgroundColor);
+   return (Math.max(fg,bg)+.05)/(Math.min(fg,bg)+.05);
+  };
+  const radius=(selector:string)=>{const el=document.querySelector(selector);if(!el)throw Error('Missing '+selector);return parseFloat(getComputedStyle(el).borderTopLeftRadius)};
+  return {
+   badgeContrast:check('.achievementprogress','.achievementprogress'),
+   achievementTitle:check('.achievement b','.achievement'),
+   certificateTitle:check('.certificate-tile h3','.certificate-tile'),
+   certificateMeta:check('.certificate-tile small','.certificate-tile'),
+   achievementRadius:radius('.achievement'),
+   certificateRadius:radius('.certificate-tile'),
+   certificateSectionRadius:radius('.certificates')
+  };
+ });
+ expect(result.badgeContrast).toBeGreaterThanOrEqual(4.5);
+ expect(result.achievementTitle).toBeGreaterThanOrEqual(4.5);
+ expect(result.certificateTitle).toBeGreaterThanOrEqual(4.5);
+ expect(result.certificateMeta).toBeGreaterThanOrEqual(4.5);
+ expect(result.achievementRadius).toBeGreaterThanOrEqual(14);
+ expect(result.certificateRadius).toBeGreaterThanOrEqual(15);
+ expect(result.certificateSectionRadius).toBeGreaterThanOrEqual(18);
+ await page.locator('.progress31details').first().locator('summary').click();
+ await expect(page.locator('.progress31details').first()).toHaveAttribute('open','');
+ const rows=page.locator('.progress31details').first().locator('.progress31sections>div');
+ await expect(rows.first()).toBeVisible();
+ const rowRadius=await rows.first().evaluate(el=>parseFloat(getComputedStyle(el).borderTopLeftRadius));
+ expect(rowRadius).toBeGreaterThanOrEqual(11);
+});
+test('Learning world tracker disclosure is formatted and completion details have contrast',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Enter district/}).click();
+ const drawer=page.locator('.worldprogressdrawer');
+ await expect(drawer.locator('summary')).toContainText('World completion tracker');
+ await expect(drawer.locator('summary')).toContainText('View progress');
+ await drawer.locator('summary').click();
+ await expect(drawer).toHaveAttribute('open','');
+ const results=await drawer.evaluate(el=>{
+  const rgb=(value:string)=>{
+   const numbers=Array.from(value.matchAll(/\d+(?:\.\d+)?/g),m=>Number(m[0])).slice(0,3);
+   if(numbers.length!==3)throw Error('Invalid color '+value);
+   const [r,g,b]=numbers.map(n=>{const c=n/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4});
+   return r*.2126+g*.7152+b*.0722;
+  };
+  const contrast=(text:string,background:string)=>{const a=rgb(text),b=rgb(background);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)};
+  const label=el.querySelector('.worldprogresssectionhead strong')!;
+  const tile=el.querySelector('.worldprogresssection')!;
+  const progress=el.querySelector('.worldmeterline strong')!;
+  const panel=el.querySelector('.worldprogresspanel')!;
+  return {tileContrast:contrast(getComputedStyle(label).color,getComputedStyle(tile).backgroundColor),
+   meterContrast:contrast(getComputedStyle(progress).color,getComputedStyle(panel).backgroundColor),
+   tileRadius:parseFloat(getComputedStyle(tile).borderTopLeftRadius),
+   drawerRadius:parseFloat(getComputedStyle(el).borderTopLeftRadius)};
+ });
+ expect(results.tileContrast).toBeGreaterThanOrEqual(4.5);
+ expect(results.meterContrast).toBeGreaterThanOrEqual(4.5);
+ expect(results.tileRadius).toBeGreaterThanOrEqual(12);
+ expect(results.drawerRadius).toBeGreaterThanOrEqual(16);
+});
 test('My Progress sections use rounded institutional cards on desktop and mobile',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
