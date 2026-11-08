@@ -1,6 +1,7 @@
 import CompetencyImpact from './CompetencyImpact';
 import ProjectResearch from './ProjectResearch';
 import LockedDistrictDialog from './LockedDistrictDialog';
+import LockedCapstoneDialog from './LockedCapstoneDialog';
 import {worldAccessible,worldMilestones} from './LearningTownProgress';
 import React,{useEffect,useState} from 'react';
 import {createRoot} from 'react-dom/client';
@@ -22,6 +23,7 @@ type Saved=Record<string,{xp:number;complete:boolean}>;
 function App(){
  const [screen,setScreen]=useState<Screen>('home');
  const [lockedTarget,setLockedTarget]=useState<CourseKey|null>(null);
+ const [capstoneLocked,setCapstoneLocked]=useState(false);
  const [resumeTarget,setResumeTarget]=useState<{id:CourseKey;section:string}|null>(null);
  const [active,setActive]=useState<World>(worlds[0]);
  const [index,setIndex]=useState(0);
@@ -37,7 +39,7 @@ function App(){
  function navigateScreen(next:Screen){
   const courseId=(next==='risklab'?'risk':['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'].includes(next)?next:null) as CourseKey|null;
   if(courseId){openCourse(courseId);return}
-  if(next==='capstone'&&!canStartCapstone()){window.alert('Complete all nine learning districts to unlock the Capstone automatically.');setScreen('home');return}
+  if(next==='capstone'&&!canStartCapstone()){setCapstoneLocked(true);return}
   setResumeTarget(null);setScreen(next);window.scrollTo(0,0);
  }
  function openCourse(id:CourseKey,section?:string){if(!worldAccessible(id)){setLockedTarget(id);return}setLockedTarget(null);setResumeTarget(section?{id,section}:null);setScreen(id==='risk'?'risklab':id);window.scrollTo(0,0)}
