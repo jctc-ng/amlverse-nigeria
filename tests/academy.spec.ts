@@ -282,9 +282,8 @@ test('FATF reset requires confirmation and preserves other worlds',async({page})
  expect(data.risk).not.toBeNull();
 });
 
-test('Locked Capstone shows a professional progress dialog and guided resume',async({page,isMobile})=>{
+test('Locked Capstone shows a professional progress dialog and guided resume',async({page})=>{
  await page.goto('./');
- if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Launch Capstone Challenge →',exact:true}).click();
  const dialog=page.locator('.capstonelockdialog');
  await expect(dialog).toBeVisible();
@@ -295,9 +294,8 @@ test('Locked Capstone shows a professional progress dialog and guided resume',as
  await expect(dialog).toHaveCount(0);
  await expect(page.getByRole('heading',{name:/RiskLab Learning Room/})).toBeVisible();
 });
-test('Capstone dialog closes with Escape without changing the current page',async({page,isMobile})=>{
+test('Capstone dialog closes with Escape without changing the current page',async({page})=>{
  await page.goto('./');
- if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Launch Capstone Challenge →',exact:true}).click();
  await expect(page.locator('.capstonelockdialog')).toBeVisible();
  await page.keyboard.press('Escape');
