@@ -5,9 +5,9 @@ import {readWorldSections} from './WorldProgressOverview';
 const OPEN_ALL='amlverse-town-open-v1';
 const OPEN_WORLD='amlverse-town-unlocked-v1-';
 export const learningPathOrder=['classic','hands','decision','expanded','trace'] as const;
-export function allCoursesUnlocked(){try{return localStorage.getItem(OPEN_ALL)==='yes'}catch{return false}}
+export function allCoursesUnlocked(){return false}
 export function setAllCoursesUnlocked(value:boolean){try{if(value)localStorage.setItem(OPEN_ALL,'yes');else localStorage.removeItem(OPEN_ALL)}catch{}}
-export function isCourseUnlocked(id:CourseKey){try{return allCoursesUnlocked()||localStorage.getItem(OPEN_WORLD+id)==='yes'}catch{return false}}
+export function isCourseUnlocked(_id:CourseKey){return false}
 export function setCourseUnlocked(id:CourseKey,value:boolean){try{if(value)localStorage.setItem(OPEN_WORLD+id,'yes');else localStorage.removeItem(OPEN_WORLD+id)}catch{}}
 export function worldMilestones(id:CourseKey){const parts=readWorldSections(id);return {parts,done:parts.reduce((n,s)=>n+s.done,0),total:parts.reduce((n,s)=>n+s.total,0)}}
 export function worldAccessible(id:CourseKey){
