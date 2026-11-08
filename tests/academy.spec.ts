@@ -84,7 +84,7 @@ test('FATF 40 provides implementation and analogous learning for unlocked recomm
  await page.addInitScript(()=>localStorage.setItem('amlverse-fatf-ch1',JSON.stringify(Object.fromEntries(Array.from({length:23},(_,i)=>[String(i+1),{score:3,total:3}])))));
  await page.goto('./');
  await page.getByRole('button',{name:/FATF Quest/}).first().click();
- await page.locator('.fatf40tile').filter({hasText:'R.24'}).click();
+ await page.getByRole('button',{name:'Open Recommendation 24',exact:true}).click();
  await expect(page.getByRole('heading',{name:'Understand through an analogy'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Implementation process'})).toBeVisible();
  await expect(page.locator('.fatf40steps button')).toHaveCount(4);
@@ -93,10 +93,10 @@ test('FATF Recommendation 6 humanitarian safeguards and Recommendation 16 transi
  await page.addInitScript(()=>localStorage.setItem('amlverse-fatf-ch1',JSON.stringify(Object.fromEntries(Array.from({length:15},(_,i)=>[String(i+1),{score:3,total:3}])))));
  await page.goto('./');
  await page.getByRole('button',{name:/FATF Quest/}).first().click();
- await page.locator('.fatf40tile').filter({hasText:'R.6'}).click();
+ await page.getByRole('button',{name:'Open Recommendation 6',exact:true}).click();
  await expect(page.getByText(/humanitarian exemptions and basic-needs safeguards/i).first()).toBeVisible();
  await page.getByRole('button',{name:/All forty Recommendations/}).click();
- await page.locator('.fatf40tile').filter({hasText:'R.16'}).click();
+ await page.getByRole('button',{name:'Open Recommendation 16',exact:true}).click();
  await expect(page.getByText(/end of 2030/i).first()).toBeVisible();
 });
 test('FATF Quest preserves previous R1–R10 achievements and progress is shown in dashboard',async({page})=>{
