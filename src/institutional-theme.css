@@ -211,3 +211,96 @@ header .avatar{background:#dcebf7!important;color:#113f6a!important}
  .certificate-paper,.certificate-paper *{color:initial}
  .certificate-paper{background:#fff!important}
 }
+
+
+/* v1.1 — Learning-world readability: explicit tokens for badges and locked cards.
+   Do not fade entire cards or use legacy navy chips on a light surface. */
+.academyworldcard,
+.academyworldcard:disabled,
+.academyworldcard[disabled]{
+  opacity:1!important;
+  filter:none!important;
+  -webkit-text-fill-color:initial;
+}
+.academyworldcard:disabled,
+.academyworldcard[disabled]{
+  cursor:not-allowed;
+  background:#f7fafc!important;
+  border-color:#cfdae4!important;
+}
+.academyworldcard:disabled .academyworldbody,
+.academyworldcard:disabled .academyworldvisual{
+  opacity:1!important;
+  filter:none!important;
+}
+.academyworldcard .academyworldmeta{
+  display:flex;
+  gap:7px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.academyworldcard .academyworldmeta span,
+.academyworldcard:disabled .academyworldmeta span{
+  display:inline-flex;
+  align-items:center;
+  background:#e9f2f8!important;
+  color:#173f5b!important;
+  -webkit-text-fill-color:#173f5b!important;
+  border:1px solid #b9d0df!important;
+  border-radius:7px;
+  padding:6px 9px;
+  font-size:13px!important;
+  line-height:1.4;
+  font-weight:750;
+  opacity:1!important;
+}
+.academyworldcard:disabled .academyworldmeta span{background:#edf2f6!important}
+.academyworldcard .academyworldbody h4,
+.academyworldcard:disabled .academyworldbody h4{
+  color:#113b5b!important;
+  -webkit-text-fill-color:#113b5b!important;
+  opacity:1!important;
+}
+.academyworldcard .academyworldbody>p,
+.academyworldcard:disabled .academyworldbody>p{
+  color:#2c4c63!important;
+  -webkit-text-fill-color:#2c4c63!important;
+  font-size:15px!important;
+  font-weight:500;
+  opacity:1!important;
+}
+.academyworldcard .academyworldbody>small,
+.academyworldcard:disabled .academyworldbody>small{
+  color:#075f70!important;
+  -webkit-text-fill-color:#075f70!important;
+  opacity:1!important;
+}
+.academyworldcard .academyworldbottom strong,
+.academyworldcard .academyworldbottom span,
+.academyworldcard:disabled .academyworldbottom strong,
+.academyworldcard:disabled .academyworldbottom span{
+  color:#17435f!important;
+  -webkit-text-fill-color:#17435f!important;
+  opacity:1!important;
+  font-size:13px!important;
+  font-weight:800;
+}
+.academyworldcard:disabled .academyworldtag{
+  background:#eaf1f7!important;
+  color:#294e65!important;
+  -webkit-text-fill-color:#294e65!important;
+  border-color:#aebfcb!important;
+  opacity:1!important;
+}
+.academyworldcard .academyworldtag{
+  font-size:12px!important;
+  font-weight:800;
+}
+.academyworldcard .academyworldprogress{
+  background:#e1eaf1!important;
+}
+.academyworldcard .academyworldprogress>div{background:#078878!important}
+@media(max-width:530px){
+ .academyworldcard .academyworldmeta span{font-size:13px!important;padding:7px 9px}
+ .academyworldcard .academyworldbody h4{font-size:19px!important}
+}
