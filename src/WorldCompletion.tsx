@@ -32,13 +32,13 @@ export default function WorldCompletion({game,trigger,onContinue}:{game:CourseKe
   <section className="championmodal" role="dialog" aria-modal="true" aria-labelledby="champion-title" aria-describedby="champion-description">
    <div className="championconfetti" aria-hidden="true">{bursts.map((b,i)=><i key={i} style={{left:b.left,animationDelay:b.delay,animationDuration:b.duration,backgroundColor:b.color}}/>)}</div>
    <button ref={closeRef} className="championclose" type="button" aria-label="Close celebration" onClick={()=>setOpen(false)}>✕</button>
-   <span className="championkicker">🎊 WORLD COMPLETE! 🎊</span>
+   <span className="championkicker">🎊 CORE MISSION COMPLETE! 🎊</span>
    <h2 id="champion-title">BOOM! You did it! 💥</h2>
-   <p id="champion-description">Congratulations! You have mastered the learning journey in <strong>{title}</strong>.</p>
+   <p id="champion-description">You have completed the introductory lessons, Quick Check and original game in <strong>{title}</strong>. Continue the remaining activities to earn your course certificate.</p>
    <div className="championsteps"><span>✓ 3 Lessons</span><span>✓ Quick Check</span><span>✓ Game Finished</span></div>
    {!unwrapped?<><button type="button" className="championgift" onClick={()=>{setUnwrapped(true);try{localStorage.setItem(flag(game),'yes')}catch{}}} aria-label="Open your achievement gift"><span aria-hidden="true">🎁</span><small>Tap to open your gift</small></button><p className="championprompt">A special learning achievement is waiting inside.</p></>
-   :<div className="championreward" role="status"><span aria-hidden="true">🏅</span><h3>WORLD CHAMPION</h3><p>{title} achievement unlocked!</p><small>Personal learning milestone — not an official qualification.</small></div>}
-   <div className="championactions">{!unwrapped?<button type="button" className="primary" onClick={()=>{setUnwrapped(true);try{localStorage.setItem(flag(game),'yes')}catch{}}}>🎁 Open my gift</button>:<button type="button" className="primary" onClick={()=>{setOpen(false);onContinue?.()}}>{onContinue?"Continue to next world →":"Continue learning →"}</button>}<button type="button" className="secondary" onClick={()=>setOpen(false)}>Close</button></div>
+   :<div className="championreward" role="status"><span aria-hidden="true">🏅</span><h3>CORE MISSION CHAMPION</h3><p>{title} achievement unlocked!</p><small>Core learning achievement only. The full course certificate unlocks after every required activity in this world.</small></div>}
+   <div className="championactions">{!unwrapped?<button type="button" className="primary" onClick={()=>{setUnwrapped(true);try{localStorage.setItem(flag(game),'yes')}catch{}}}>🎁 Open my gift</button>:<button type="button" className="primary" onClick={()=>{setOpen(false);onContinue?.()}}>{onContinue?"Continue to next activity →":"Continue learning →"}</button>}<button type="button" className="secondary" onClick={()=>setOpen(false)}>Close</button></div>
   </section>
  </div>;
 }
