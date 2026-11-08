@@ -1,0 +1,239 @@
+
+/* AMLVERSE Nigeria — comprehensive WCAG-minded visual cleanup.
+   Loaded last. Use scoped light-surface styles; never globally recolor SVG,
+   learning illustrations, print certificates or deliberately dark success overlays. */
+:root{
+ --read-bg:#ffffff;
+ --read-soft:#f0f6fb;
+ --read-success:#e9f7ef;
+ --read-warn:#fff7e8;
+ --read-text:#17384f;
+ --read-title:#103757;
+ --read-meta:#365568;
+ --read-border:#c5d7e4;
+ --read-accent:#087568;
+ --read-blue:#123f69;
+}
+body,.page,main{color:var(--read-text)!important}
+main h1,main h2,main h3,main h4,main h5,main h6{color:var(--read-title)!important}
+main .eyebrow,main .lead{color:var(--read-meta)!important}
+main .eyebrow{font-weight:850!important}
+main .title,main .question{color:var(--read-title)!important}
+main .notice,main .modehint,main .chainnote{background:var(--read-soft)!important;color:var(--read-meta)!important;border:1px solid var(--read-border)!important}
+main .notice strong,main .notice b{color:var(--read-title)!important}
+main button:disabled{opacity:1!important}
+main button:disabled:not(.primary):not(.secondary){background:#f2f6fa!important;color:#496074!important;border-color:#c0d0db!important}
+main button:disabled.primary{background:#a1b4c3!important;border-color:#a1b4c3!important;color:#102d43!important}
+main p,main li{line-height:1.72}
+main :is(input,select,textarea)::placeholder{color:#4f6678!important}
+main :is(button,input,select,textarea,summary,a):focus-visible{outline:3px solid #1277aa!important;outline-offset:3px!important}
+main :is(button,a):hover{filter:none}
+main .worldprogresssection.worldlocked,main .impactstep.locked{filter:none!important;opacity:1!important}
+
+/* FATF 40: each lesson, analogy, professional relevance and assessment. */
+.fatf40page :is(.fatf40study,.fatf40analogy,.fatf40scenario,.fatf40quiz,.fatf40result,.fatf40finish,.fatf40review>div,.fatf40footer,.fatf40lessonmeter,.fatf40tile,.fatf40stats>div,.fatf40steps button,.fatf40why,.fatf40caution){
+ background:var(--read-bg)!important;
+ background-image:none!important;
+ color:var(--read-text)!important;
+ border-color:var(--read-border)!important;
+ box-shadow:none!important;
+ opacity:1!important;
+ filter:none!important;
+}
+.fatf40page :is(.fatf40why,.fatf40analogy){background:#edf7f4!important;border-color:#a7d7c9!important}
+.fatf40page .fatf40caution{background:var(--read-warn)!important;border-color:#ddb878!important}
+.fatf40page :is(.fatf40study,.fatf40analogy,.fatf40scenario,.fatf40quiz,.fatf40result,.fatf40review,.fatf40steps,.fatf40finish,.fatf40lessonmeter,.fatf40header,.fatf40footer,.fatf40tile,.fatf40tilebody,.fatf40stepprogress,.fatf40summary,.fatf40why,.fatf40caution) :is(p,span,small,b,strong,label,li){
+ color:var(--read-meta)!important;
+}
+.fatf40page :is(.fatf40study,.fatf40analogy,.fatf40scenario,.fatf40quiz,.fatf40result,.fatf40review,.fatf40steps,.fatf40finish,.fatf40why,.fatf40caution,.fatf40tilebody) :is(h2,h3,h4,strong,b){color:var(--read-title)!important}
+.fatf40page :is(.fatf40study>p,.fatf40analogy>p,.fatf40scenario>p,.fatf40why p,.fatf40caution p,.fatf40steps button p,.fatf40review p,.fatf40result p,.fatf40footer){
+ font-size:15px!important;line-height:1.8!important;color:#2e4b5e!important;
+}
+.fatf40page .fatf40studyheading h2{font-size:clamp(19px,2vw,23px)!important}
+.fatf40page .fatf40studyheading span,.fatf40page .fatf40number,.fatf40page .fatf40steps button>span{
+ background:#d9eee8!important;color:#105d52!important;border:1px solid #a8d3c4!important;
+ font-weight:850!important;font-size:14px!important;
+}
+.fatf40page .fatf40review>div{background:#f5f9fc!important}
+.fatf40page .fatf40review>div strong{font-size:15px!important}
+.fatf40page .fatf40tile{background:#fff!important;color:#1a3d57!important}
+.fatf40page .fatf40tile:disabled{background:#f1f5f9!important;opacity:1!important;filter:none!important}
+.fatf40page .fatf40tilebody strong{font-size:15px!important}
+.fatf40page .fatf40tilebody small,.fatf40page .fatf40tilebody span{font-size:13px!important}
+.fatf40page .fatf40arrow{color:#155b70!important}
+.fatf40page .fatf40header,.fatf40page .fatf40header span,.fatf40page .fatf40summary,.fatf40page .fatf40summary strong,.fatf40page .fatf40quizhead strong,.fatf40page .fatf40stepprogress{color:var(--read-title)!important;font-size:14px!important}
+.fatf40page .fatf40lessonmeter{background:#eef5fa!important;font-size:14px!important}
+.fatf40page .fatf40groupbuttons button{background:#fff!important;color:#224b65!important;border:1px solid #a4bece!important;font-size:13px!important}
+.fatf40page .fatf40groupbuttons button.active{background:#dcefeb!important;color:#075d52!important;border-color:#168675!important}
+.fatf40page .fatf40filters label{color:var(--read-title)!important;font-size:14px!important}
+.fatf40page .fatf40filters input{background:#fff!important;color:var(--read-text)!important;border:1px solid #8faabd!important}
+.fatf40page .fatf40steps button.checked{background:#e5f5ec!important;border-color:#6aa994!important}
+.fatf40page .fatf40steps button strong{font-size:15px!important}
+.fatf40page .fatf40result>strong{color:#165c4f!important}
+.fatf40page .fatf40footer a{color:#095f83!important}
+
+/* My Progress cards and every milestone label. */
+.progressdash :is(.progressstats>div,.progresshero,.progressworld,.progress31details,.progress31sections>div,.achievement,.achievement.unlocked,.progresssection,.academy31headline,.impactdashboardstats>div){
+ background:#fff!important;background-image:none!important;border:1px solid var(--read-border)!important;color:var(--read-text)!important;opacity:1!important;filter:none!important;
+}
+.progressdash .progress31details{background:#f5f9fc!important}
+.progressdash .progress31details summary{background:#e7f2f7!important;color:#143e5b!important;font-size:15px!important;font-weight:800!important}
+.progressdash .progress31sections :is(small,span,p){color:#33566c!important;font-size:13px!important}
+.progressdash .progressmarks>span{
+ background:#e9f2f8!important;border:1px solid #bed2e1!important;color:#18425f!important;font-size:13px!important;font-weight:750!important;line-height:1.55!important;opacity:1!important;
+}
+.progressdash .progressworldname :is(b,small),.progressdash .progressworldhead strong,
+.progressdash .progressstats :is(small,strong,strong span),
+.progressdash .progresshero :is(h2,p),
+.progressdash .progressachievementhead :is(p,strong),
+.progressdash .progresssection>p,
+.progressdash .achievement :is(b,small),
+.progressdash .academy31headline :is(h2,h3,p,small,span,strong),
+.progressdash .impactdashboardstats :is(small,strong,span,p){
+ color:var(--read-title)!important;
+}
+.progressdash .progressworldname b{font-size:16px!important}
+.progressdash .progressworldname small,.progressdash .progressstats small,
+.progressdash .impactdashboardstats small{font-size:13px!important;color:#39576a!important}
+.progressdash .progressworld p,.progressdash .progresssection>p{font-size:15px!important;color:#365468!important}
+.progressdash .impactdashboardstats strong{font-size:clamp(21px,2.6vw,28px)!important;color:#103b5b!important}
+.progressdash .progressachievementhead>strong{background:#e8f6ef!important;border:1px solid #afd8c8!important;color:#0d5f4d!important}
+.progressdash .progressring>span{background:#fff!important;color:#103757!important}
+.progressdash .progressring small{color:#37536a!important;font-size:12px!important}
+
+/* Competency & Impact: all score tiles, options, confidence and result comparisons. */
+.impactpage :is(.impacthero,.impactstatrow>div,.impactdashboardstats>div,.impactstep,.impactstep.done,.impactassessment,.impactcomparison,.impactrubric,.impactprivacy,.impactreset,.impactdomains article,.impactreview>article,.impactreviewitem,.impactactivity,.impactdelta,.impactrubriclist>div,.impactnotice,.impactdisclaimer,.impactquestiondomain,.impactwarning,.impactoptions button,.impactconfidence label,.impactherofoot span){
+ background:#fff!important;background-image:none!important;border:1px solid var(--read-border)!important;color:var(--read-text)!important;opacity:1!important;filter:none!important;
+}
+.impactpage :is(.impactstep.done,.impactoptions button.selected,.impactoptions button[aria-pressed="true"],.impactconfidence label.chosen){background:#e9f6ef!important;border-color:#7cb7a4!important}
+.impactpage .impactwarning{background:#fff4e5!important;border-color:#d4b88c!important}
+.impactpage :is(.impactstatrow,.impactdashboardstats,.impactstep,.impactassessment,.impactcomparison,.impactrubric,.impactprivacy,.impactreset,.impactdelta,.impactdomains,.impactreview,.impactreviewitem,.impactactivity,.impactrubriclist,.impactnotice,.impactdisclaimer,.impactherofoot,.impactquestiondomain,.impactconfidence) :is(small,span,p,label,b,strong,legend){
+ color:#315066!important;
+}
+.impactpage :is(.impactstatrow,.impactdashboardstats,.impactdelta,.impactstep,.impactdomains,.impactassessment) strong{color:#123e5d!important}
+.impactpage .impactstatrow strong,.impactpage .impactdashboardstats strong{font-size:clamp(21px,2.4vw,29px)!important}
+.impactpage .impactstatrow small,.impactpage .impactdashboardstats small,
+.impactpage .impactstep small,.impactpage .impactquestiondomain small{font-size:13px!important;color:#3c5a6e!important}
+.impactpage .impactstep p,.impactpage .impactdomains article>p,
+.impactpage .impactprivacy p,.impactpage .impactreset p,
+.impactpage .impactactivity p,.impactpage .impactrubriclist p,
+.impactpage .impactdisclaimer,.impactpage .impactmethodnote,.impactpage .impactsectionheading p,
+.impactpage .impactnotice,.impactpage .impactwarning{font-size:15px!important;color:#304d61!important;line-height:1.75!important}
+.impactpage .impacthero p{color:#344e63!important;font-size:16px!important}
+.impactpage .impactherofoot span{font-size:13px!important}
+.impactpage .impactoptions button{font-size:16px!important;line-height:1.65!important;min-height:55px}
+.impactpage .impactoptions button>span:first-child,.impactpage .impactrubriclist span,.impactpage .impactstepnumber{background:#dfeef4!important;color:#174967!important;border:1px solid #b7d1df!important}
+.impactpage .impactoptions button.selected>span:first-child{background:#cce7dd!important;color:#0b584a!important}
+.impactpage .impactconfidence legend{font-size:15px!important;color:#123d5b!important}
+.impactpage .impactconfidence label{font-size:15px!important}
+.impactpage .impactreview h4,.impactpage .impactdomainheader strong{color:#164861!important;font-size:15px!important}
+.impactpage .impactreviewitem :is(p,small),.impactpage .impactactivity small,
+.impactpage .impactdomainmeter :is(span,small){color:#365368!important;font-size:13px!important}
+.impactpage .impacttrack,.impactpage .impactdomainmeter{background:#e1eaf2!important}
+.impactpage .impactdelta{background:#ecf7f2!important}
+.impactpage .impactdelta strong{font-size:26px!important;color:#0a5c51!important}
+
+/* Learning room and lesson cards, including active tabs and response choices. */
+.knowledgepath :is(.knowledgeintro,.knowledgecard,.knowledgeexample,.knowledgetakeaway,.knowledgecheck,.knowledgeplay,.knowledgetabs button,.knowledgeanswers button,.miniarea,.ministeps){
+ background:#fff!important;background-image:none!important;border:1px solid var(--read-border)!important;color:var(--read-text)!important;
+}
+.knowledgepath :is(.knowledgeexample,.knowledgetakeaway){background:#eef7f4!important;border-color:#b7dccd!important}
+.knowledgepath .knowledgetabs button.on{background:#dcefe9!important;border-color:#168b78!important;color:#0b5b51!important}
+.knowledgepath .knowledgetabs button span{color:#0a6372!important;font-size:13px!important}
+.knowledgepath .knowledgetabs button b{color:#173f5a!important;font-size:15px!important}
+.knowledgepath :is(.knowledgecard,.knowledgeexample,.knowledgetakeaway,.knowledgeplay,.knowledgeintro) :is(p,small,b,strong,span){color:#2e5065!important}
+.knowledgepath :is(.knowledgecard,.knowledgeintro,.knowledgeplay,.knowledgecheck) :is(h2,h3){color:#103757!important}
+.knowledgepath .knowledgecard>p,.knowledgepath .knowledgeexample p,.knowledgepath .knowledgeplay p{font-size:16px!important}
+.knowledgepath .knowledgetakeaway{font-size:15px!important}
+.knowledgepath .knowledgeanswers button{font-size:16px!important;min-height:55px}
+.knowledgepath .knowledgeanswers button span{background:#e1eff5!important;color:#17455f!important}
+.knowledgepath .knowledgeanswers button.selected{background:#e5f5ed!important;border-color:#168574!important}
+.knowledgepath .knowledgeflow button,.knowledgepath .knowledgeflow span{background:#fff!important;color:#2b4a61!important}
+.knowledgepath .knowledgeflow .active,.knowledgepath .knowledgeflow button.active{background:#def0e9!important;color:#0a6256!important}
+.knowledgepath .knowledgeflow button{font-size:14px!important}
+.knowledgepath .knowledgecard>small{color:#076778!important}
+.knowledgepath .worldprogresssection.worldlocked{opacity:1!important;filter:none!important;background:#f6f9fc!important}
+.worldprogressdrawer,.worldprogressdrawer>summary{color:#153e5d!important;background:#fff!important}
+.worldprogressdrawer>summary{font-size:15px!important}
+
+/* Specialist labs and professional simulations. Avoid redrawing SVG charts. */
+.riskadvanced :is(.riskadvancedwelcome,.riskadvancedtier,.riskadvancedlesson,.riskadvancedassessment,.riskadvancedtop,.riskadvancedreview,.riskadvancedprompt,.riskadvancedlessons button,.riskadvancednav button,.riskadvancedpromo),
+.worlddecisionentry,.worlddecisionbrief,.worlddecisionfile,.worlddecisionquestion,.worlddecisionresult,
+.worlddecisionanalogy,.worlddecisionrecords article,.worlddecisionstages>div,
+.reportbrief,.reportdraft,.reportfacts>div,.virtualflowedge,.traceedge,.trace-report{
+ background:#fff!important;background-image:none!important;border:1px solid var(--read-border)!important;color:var(--read-text)!important;opacity:1!important;filter:none!important;
+}
+.riskadvanced :is(.riskadvancedwelcome,.riskadvancedtier,.riskadvancedlesson,.riskadvancedassessment,.riskadvancedtop,.riskadvancedreview,.riskadvancedprompt,.riskadvancedpromo) :is(p,small,span,em),
+.worlddecisionentry :is(p,small,span),.worlddecisionbrief :is(p,small,span),
+.worlddecisionfile :is(p,small,span),.worlddecisionquestion :is(p,small,span),
+.worlddecisionresult :is(p,small,span),.worlddecisionanalogy :is(p,small,span),
+.worlddecisionrecords article :is(p,small,span),.reportbrief :is(p,small,span),
+.reportdraft :is(p,small,span),.reportfacts :is(small,span){
+ color:#365468!important;
+}
+.riskadvanced :is(.riskadvancedwelcome,.riskadvancedtier,.riskadvancedlesson,.riskadvancedassessment,.riskadvancedtop,.riskadvancedreview,.riskadvancedprompt,.riskadvancedpromo) :is(h2,h3,strong),
+.worlddecisionentry :is(h2,h3,strong),.worlddecisionbrief :is(h2,h3,strong),
+.worlddecisionfile :is(h2,h3,strong),.worlddecisionquestion :is(h2,h3,strong),
+.worlddecisionresult :is(h2,h3,strong),.reportbrief :is(h2,h3,strong),
+.reportdraft :is(h2,h3,strong),.reportfacts strong{color:#103d5d!important}
+.riskadvanced .riskadvancedlessons button,.riskadvanced .riskadvancednav button,
+.riskadvanced .riskadvancedtierhead>span{background:#eaf3f8!important;color:#193e5a!important;border-color:#b8cddd!important;font-size:15px!important}
+.riskadvanced .riskadvancednav button.active{background:#d8f0e8!important;color:#0b604f!important}
+.riskadvanced .riskadvancedwelcome p,.riskadvanced .riskadvancedtier p,
+.riskadvanced .riskadvancedlesson p,.riskadvanced .riskadvancedassessment p,
+.worlddecisionbrief p,.worlddecisionfile p,.worlddecisionquestion p,
+.worlddecisionresult p,.reportbrief p,.reportdraft p{font-size:15px!important}
+.worlddecisionanalogy{background:#ecf7f2!important}
+.worlddecisionanalogy strong{color:#0d6053!important}
+.worlddecisionrecords article span,.worlddecisiondisclaimer,.virtualflowwallet,
+.virtualflowedge small,.traceedge :is(span,small,strong){color:#285168!important;font-size:13px!important}
+.worlddecisionstages>div.active,.worlddecisionstages>div.done{background:#e8f5ed!important}
+.worlddecisionstages span{background:#d8eaf3!important;color:#174760!important}
+.traceedge.traced{background:#fff4e2!important;border-color:#c9a363!important}
+.trace-report{white-space:pre-wrap;overflow-wrap:anywhere;color:#17384f!important;font-size:13px!important}
+.reportfacts strong{font-size:clamp(19px,2.5vw,25px)!important}
+.reportfacts small,.reportfacts span{font-size:13px!important}
+
+/* Arcade instructions and interactive objects. */
+.arcadehud,.arcadeinstruction,.arcadebin,.arcadecard,.arcadefinish,.arcadewin{
+ background:#fff!important;background-image:none!important;border:1px solid var(--read-border)!important;color:var(--read-text)!important;opacity:1!important;
+}
+.arcadebin:hover{background:#eaf6f2!important}
+.arcadebin b,.arcadehud strong,.arcadeinstruction strong{color:#123d5c!important}
+.arcadebin small,.arcadecount,.arcadepile h2 small,.arcadehud span,.arcadeinstruction p{color:#345369!important}
+.arcadebin small,.arcadecount{font-size:13px!important}
+.arcadeinstruction strong{font-size:14px!important}
+.arcadeinstruction p{font-size:16px!important}
+.arcadebin{border-style:dashed!important}
+.arcadecard{color:#16415d!important}
+.arcadehud button{background:#e8f2f8!important;color:#153d5c!important}
+
+/* Capstone panels and certificate gallery retain readable contrast. */
+.capstonepage :is(.capstoneintro,.capstonequestion,.capstoneresults,.capstonemetrics>div,.capstonereviewitem,.capstoneheader,.capstonehint){
+ background:#fff!important;background-image:none!important;border:1px solid var(--read-border)!important;color:var(--read-text)!important;
+}
+.capstonepage :is(.capstoneintro,.capstonequestion,.capstoneresults,.capstonereviewitem,.capstonemetrics) :is(p,small,span){color:#365168!important}
+.capstonepage :is(.capstoneintro,.capstonequestion,.capstoneresults,.capstonemetrics) :is(h2,h3,strong){color:#103757!important}
+.capstonepage :is(.capstoneintro,.capstonequestion,.capstoneresults) p{font-size:15px!important}
+.capstonepage .capstonemetrics small{font-size:13px!important}
+.certificate-tile,.certificate-tile.locked{opacity:1!important;filter:none!important}
+.certificate-tile :is(small,h3,p),.certificates-head p,.certificate-privacy{color:#314d63!important}
+.certificate-tile h3{color:#103757!important}
+.certificate-dialog{background:#fff!important}
+.certificate-paper,.certificate-paper *{color:revert-layer}
+
+/* Dark celebration overlays are separate from the light workspace. */
+.championmodal{color:#fff!important}
+.championmodal h2,.championreward h3{color:#fff3c5!important}
+.championmodal>p,.championmodal .championprompt{color:#f0faf8!important}
+.championmodal .championactions .primary{color:#fff!important}
+.championmodal .championactions .secondary{color:#123f69!important}
+
+/* Very small labels are a readability barrier for older learners. */
+@media(max-width:760px){
+ .fatf40page :is(.fatf40study,.fatf40analogy,.fatf40scenario,.fatf40quiz){padding:18px 16px}
+ .fatf40page .fatf40studyheading h2{font-size:20px!important}
+ .impactpage .impactstatrow strong,.progressdash .impactdashboardstats strong{font-size:23px!important}
+ .progressdash .progressmarks>span{font-size:13px!important}
+ .knowledgepath .knowledgetabs button b{font-size:14px!important}
+}
