@@ -369,3 +369,77 @@ main .choices .choice .indicator{color:#086a53!important;font-weight:800!importa
  .fatf40page .fatftowncontrols{padding:17px 15px!important}
  .knowledgepath .worldinteractivepromo p{font-size:15px!important}
 }
+
+
+/* My Progress — cohesive institutional card architecture.
+   Section-level surfaces have the same visual language as inner course cards. */
+.progressdash>.progresssection{
+  border-radius:22px!important;
+  padding:clamp(20px,2.7vw,32px)!important;
+  margin-block:24px!important;
+  background:#fff!important;
+  border:1px solid #cbdce8!important;
+  box-shadow:0 9px 30px rgba(18,63,105,.065)!important;
+  overflow:clip;
+}
+.progressdash>.progresssection>h2,
+.progressdash>.progresssection .progressworldhead h2{
+  margin-top:0;
+  margin-bottom:10px;
+  line-height:1.35;
+}
+.progressdash>.progresssection>p{
+  max-width:900px;
+  margin:10px 0 18px;
+  line-height:1.75!important;
+  font-size:15px!important;
+}
+.progressdash .impactdashboardstats{
+  gap:14px;
+  margin:20px 0 18px;
+}
+.progressdash .impactdashboardstats>div{
+  min-width:0;
+  border-radius:16px!important;
+  padding:20px!important;
+  background:#f7fafc!important;
+  border:1px solid #c9dce8!important;
+  box-shadow:0 2px 8px rgba(18,63,105,.025);
+}
+.progressdash .progressworlds{
+  gap:17px;
+  margin-top:20px;
+}
+.progressdash .progressworld{
+  border-radius:18px!important;
+  padding:22px!important;
+  background:#fff!important;
+  border:1px solid #c5d8e6!important;
+  box-shadow:0 5px 17px rgba(18,63,105,.055)!important;
+  min-width:0;
+}
+.progressdash .progressworld .progressworldhead{gap:12px}
+.progressdash .progressmarks>span{
+  border-radius:9px!important;
+  min-height:31px;
+}
+.progressdash .progress31details{
+  border-radius:12px!important;
+  overflow:hidden;
+  background:#f7fafc!important;
+  border-color:#c5d8e6!important;
+}
+.progressdash .progress31details summary{
+  border-radius:9px!important;
+}
+.progressdash>.progresssection .secondary{
+  border-radius:11px!important;
+  min-height:45px;
+  font-size:14px!important;
+}
+@media(max-width:760px){
+ .progressdash>.progresssection{padding:19px 16px!important;border-radius:18px!important}
+ .progressdash .progressworld{padding:17px!important;border-radius:15px!important}
+ .progressdash .impactdashboardstats>div{padding:17px!important}
+ .progressdash .progressworlds{gap:12px}
+}
