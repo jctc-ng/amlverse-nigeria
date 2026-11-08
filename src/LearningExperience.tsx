@@ -276,6 +276,6 @@ export default function LearningExperience({game,onBack,onNextCourse,initialSect
  <CourseAccessControls game={game} onChange={()=>setStage('learn')}/>
  <div className="notice"><b>Learning source:</b> <a href={course.source} target="_blank" rel="noopener noreferrer">{course.sourceName} ↗</a>. Educational summaries only, with fictional examples. Check current authoritative publications before formal institutional use.</div>
  {readWorldSections(game).every(part=>part.done===part.total)?<CompletionCertificates worldOnly={game}/>:null}
- <details className="worldprogressdrawer"><summary><span>World completion tracker</span><span>View progress ▾</span></summary><WorldProgressOverview game={game} onOpen={resumeSection} canOpen={canOpen} reason={reason}/></details>
+ <details className="worldprogressdrawer"><summary><span>World completion tracker</span><span className="worldprogressdraweraction">View progress</span></summary><WorldProgressOverview game={game} onOpen={resumeSection} canOpen={canOpen} reason={reason}/></details>
  </main>;
 }
