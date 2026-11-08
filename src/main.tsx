@@ -1,8 +1,7 @@
 import CompetencyImpact from './CompetencyImpact';
 import ProjectResearch from './ProjectResearch';
 import LockedDistrictDialog from './LockedDistrictDialog';
-import {setCourseUnlocked} from './LearningTownProgress';
-import {worldAccessible,worldMilestones,allCoursesUnlocked} from './LearningTownProgress';
+import {worldAccessible,worldMilestones} from './LearningTownProgress';
 import React,{useEffect,useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {worlds,references} from './data';
@@ -34,11 +33,11 @@ function App(){
  const completed=Object.values(saved).filter(x=>x.complete).length;
  const xp=Object.values(saved).reduce((sum,x)=>sum+x.xp,0);
  const scenario=active.scenarios[index];
- function canStartCapstone(){return allCoursesUnlocked()||(['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'] as CourseKey[]).every(id=>{const w=worldMilestones(id);return w.done===w.total})}
+ function canStartCapstone(){return (['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'] as CourseKey[]).every(id=>{const w=worldMilestones(id);return w.done===w.total})}
  function navigateScreen(next:Screen){
   const courseId=(next==='risklab'?'risk':['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'].includes(next)?next:null) as CourseKey|null;
   if(courseId){openCourse(courseId);return}
-  if(next==='capstone'&&!canStartCapstone()){window.alert('Complete all nine learning districts to unlock the Capstone, or select Unlock all courses in Learning Town.');setScreen('home');return}
+  if(next==='capstone'&&!canStartCapstone()){window.alert('Complete all nine learning districts to unlock the Capstone automatically.');setScreen('home');return}
   setResumeTarget(null);setScreen(next);window.scrollTo(0,0);
  }
  function openCourse(id:CourseKey,section?:string){if(!worldAccessible(id)){setLockedTarget(id);return}setLockedTarget(null);setResumeTarget(section?{id,section}:null);setScreen(id==='risk'?'risklab':id);window.scrollTo(0,0)}
@@ -66,7 +65,7 @@ function App(){
  :screen==='capstone'?<CapstoneChallenge onBack={()=>setScreen('home')} onProgress={()=>setScreen('progress')}/>
  :screen==='resources'?<main className="narrow"><button className="back" onClick={()=>setScreen('home')}>← Academy overview</button><span className="eyebrow">OFFICIAL SOURCES</span><h1 className="title">Resource library</h1><p className="lead">Explore original publications. Future releases will add versioned, section-linked explanations and approval workflows.</p><div className="resourcegrid">{references.map(r=><a className="resource" target="_blank" rel="noopener noreferrer" href={r.url} key={r.url}><div>▤</div><span><strong>{r.title}</strong><small>{r.org} • Official website</small></span><b>↗</b></a>)}</div></main>
  :<main className="narrow"><button className="back" onClick={()=>setScreen('home')}>← Learning worlds</button><div className="missionmeta"><span className="eyebrow">{active.title.toUpperCase()} • MISSION {index+1}/{active.scenarios.length}</span><strong>{earned} XP</strong></div><h1 className="title">{scenario.title}</h1><div className="track"><div style={{width:((index+1)/active.scenarios.length*100)+'%',background:active.color}}/></div><div className="situation"><small>YOUR SCENARIO</small><p>{scenario.context}</p></div><h2 className="question">{scenario.question}</h2><div className="choices">{scenario.choices.map((c,i)=><button key={i} disabled={submitted} onClick={()=>setAnswer(i)} className={'choice'+(answer===i?' picked':'')+(submitted&&c.correct?' correct':'')+(submitted&&answer===i&&!c.correct?' incorrect':'')}><span className="letter">{String.fromCharCode(65+i)}</span>{c.text}{submitted&&c.correct?<span className="indicator">✓</span>:null}</button>)}</div>{submitted&&answer!==null?<div className="feedback"><strong>{scenario.choices[answer].correct?'Excellent! +100 XP':'Learning opportunity'}</strong><p>{scenario.explanation}</p><a href={scenario.url} target="_blank" rel="noopener noreferrer">Read source: {scenario.reference} ↗</a></div>:null}<div className="actions">{!submitted?<button className="primary" disabled={answer===null} onClick={submit}>Submit decision →</button>:<button className="primary" onClick={next}>{index===active.scenarios.length-1?'Complete world':'Next mission'} →</button>}<button className="secondary" onClick={()=>openWorld(active)}>↻ Restart world</button></div><div className="notice">Synthetic educational exercises only. Guidance and explanations require subject-matter review.</div></main>}
- {lockedTarget?<LockedDistrictDialog target={lockedTarget} onClose={()=>setLockedTarget(null)} onReview={id=>{setLockedTarget(null);openCourse(id)}} onUnlock={id=>{setCourseUnlocked(id,true);setLockedTarget(null);openCourse(id)}}/>:null}
+ {lockedTarget?<LockedDistrictDialog target={lockedTarget} onClose={()=>setLockedTarget(null)} onReview={id=>{setLockedTarget(null);openCourse(id)}}/>:null}
  <footer>AMLVERSE Nigeria — independent educational prototype <span>Learn • Play • Apply • Master</span></footer></div></div>;
 }
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
