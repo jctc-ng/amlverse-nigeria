@@ -965,3 +965,103 @@
 .graphstudyprofessional{background:#eef5fa!important;border-color:#bbd4e3!important}
 .graphstudyanalogy h3,.graphstudyprofessional h3{color:#113f5b!important;font-size:17px!important}
 .graphstudyanalogy p,.graphstudyprofessional p{color:#335368!important;font-size:15px!important}
+
+
+/* v1.7 — answer feedback must remain readable AFTER every interaction.
+   Shared result styles use pale surfaces + dark text, with distinct status accents.
+   Covers case classifications in all worlds and tracing feedback elsewhere. */
+.wcinteractive .itracefeedback,
+.wcinteractive .itracefeedback.right,
+.wcinteractive .itracefeedback.wrong,
+.itracelab .itracefeedback,
+.itracelab .itracefeedback.right,
+.itracelab .itracefeedback.wrong{
+  background:#e5f5eb!important;
+  background-image:none!important;
+  border:1.5px solid #78bba0!important;
+  border-left:5px solid #08765b!important;
+  border-radius:14px!important;
+  box-shadow:0 3px 13px rgba(19,61,69,.06)!important;
+  color:#173b4e!important;
+  opacity:1!important;
+  padding:17px 19px!important;
+  animation:aml-feedback-enter .25s ease-out both;
+}
+.wcinteractive .itracefeedback.wrong,
+.itracelab .itracefeedback.wrong{
+  background:#fff3e8!important;
+  border-color:#d4a577!important;
+  border-left-color:#a75d25!important;
+}
+.wcinteractive .itracefeedback :is(strong,p,span,small),
+.itracelab .itracefeedback :is(strong,p,span,small){
+  color:#204a57!important;
+  -webkit-text-fill-color:#204a57!important;
+  opacity:1!important;
+}
+.wcinteractive .itracefeedback strong,
+.itracelab .itracefeedback strong{
+  display:block;
+  color:#0a5947!important;
+  -webkit-text-fill-color:#0a5947!important;
+  font-size:16px!important;
+  font-weight:850!important;
+  line-height:1.5!important;
+}
+.wcinteractive .itracefeedback.wrong strong,
+.itracelab .itracefeedback.wrong strong{
+  color:#83401e!important;
+  -webkit-text-fill-color:#83401e!important;
+}
+.wcinteractive .itracefeedback p,
+.itracelab .itracefeedback p{
+  font-size:15px!important;
+  font-weight:500!important;
+  line-height:1.75!important;
+  margin:8px 0 0!important;
+  color:#24475c!important;
+  -webkit-text-fill-color:#24475c!important;
+}
+/* Explicit common feedback states so no screen inherits dark-on-dark legacy colors. */
+main .feedback,
+main .feedback.correct,
+main .feedback.success,
+main .feedback.incorrect,
+main .arcadefeedback,
+main .worlddecisionresult,
+main .riskadvancedreview,
+main .riskadvancedassessment,
+main .fatf40result{
+  color:#173d55!important;
+}
+main .feedback,
+main .feedback.correct,
+main .feedback.success,
+main .arcadefeedback{
+  background:#e6f5ec!important;
+  border:1px solid #9ccbb3!important;
+  border-radius:13px!important;
+}
+main .feedback.incorrect{
+  background:#fff3ec!important;
+  border-color:#d2aa90!important;
+}
+main .feedback :is(h2,h3,strong,b,p,small,span),
+main .arcadefeedback :is(h2,h3,strong,b,p,small,span){
+  color:#20475b!important;
+  -webkit-text-fill-color:#20475b!important;
+  opacity:1!important;
+}
+main .feedback :is(strong,b),
+main .arcadefeedback :is(strong,b){color:#0c5d4a!important;-webkit-text-fill-color:#0c5d4a!important}
+main .feedback.incorrect :is(strong,b){color:#8a462a!important;-webkit-text-fill-color:#8a462a!important}
+main .feedback p,main .arcadefeedback p{font-size:15px!important;line-height:1.7!important}
+main .feedback a{color:#075d83!important;-webkit-text-fill-color:#075d83!important;text-decoration:underline}
+@keyframes aml-feedback-enter{
+ from{opacity:.55;transform:translateY(7px)}
+ to{opacity:1;transform:translateY(0)}
+}
+@media(prefers-reduced-motion:reduce){
+ .wcinteractive .itracefeedback,
+ .itracelab .itracefeedback{animation:none!important}
+}
