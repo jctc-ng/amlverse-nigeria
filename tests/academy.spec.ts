@@ -136,7 +136,7 @@ test('Crypto tracing practice is interactive, touch-friendly and preserves score
  await practice.getByRole('button',{name:'Follow sample confirmed transaction TX-01'}).click();
  await expect(practice.getByText(/Step 3 of 3/)).toBeVisible();
  await practice.getByRole('button',{name:'Sample receiving wallet B'}).click();
- await expect(practice.getByText(/Practice complete/)).toBeVisible();
+ await expect(practice.getByText('✓ Practice complete',{exact:true})).toBeVisible();
  await practice.getByRole('button',{name:/Start investigation/}).click();
  await expect(page.locator('.itracegraphpanel')).toBeVisible();
  await expect(page.locator('.itraceevidenceitem').first()).toBeVisible();
@@ -148,7 +148,7 @@ test('RiskLab practice and How to Play tutorial require genuine interaction',asy
  });
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
- await page.locator('.townstop').first().getByRole('button',{name:/Enter district/}).click();
+ await page.locator('.townstop').first().getByRole('button',{name:/Resume journey/}).click();
  await page.getByRole('button',{name:/③ Play/}).click();
  await expect(page.getByRole('heading',{name:'Practice a move before your mission'})).toBeVisible();
  const next=page.getByRole('button',{name:'Next: place the card →'});
