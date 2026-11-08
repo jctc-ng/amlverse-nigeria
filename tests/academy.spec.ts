@@ -1,6 +1,34 @@
 import {test,expect} from '@playwright/test';
 import {readFile} from 'node:fs/promises';
 
+test('Certificates start locked until a game or course is actually completed',async({page})=>{
+ await page.goto('./');
+ await page.getByRole('button',{name:/My Progress/}).first().click();
+ const gallery=page.locator('.certificates');
+ await expect(gallery.getByRole('heading',{name:'Certificates of completion'})).toBeVisible();
+ await expect(gallery.locator('.certificate-tile')).toHaveCount(21);
+ await expect(gallery.locator('.certificate-tile.earned')).toHaveCount(0);
+ await expect(gallery.locator('.certificate-tile.locked button').first()).toBeDisabled();
+});
+test('Finished game unlocks printable certificate but not the full-course certificate',async({page})=>{
+ await page.addInitScript(()=>localStorage.setItem('amlverse-arcade-risk','85'));
+ await page.goto('./');
+ await page.getByRole('button',{name:/My Progress/}).first().click();
+ const gallery=page.locator('.certificates');
+ const game=gallery.locator('.certificate-tile').filter({hasText:'GAME COMPLETION'}).filter({hasText:'RiskLab Arcade'});
+ const course=gallery.locator('.certificate-tile').filter({hasText:'FULL COURSE COMPLETION'}).filter({hasText:'RiskLab Arcade'});
+ await expect(game).toHaveClass(/earned/);
+ await expect(course).toHaveClass(/locked/);
+ await game.getByRole('button',{name:'View certificate'}).click();
+ await expect(page.getByRole('dialog',{name:'Certificate preview'})).toBeVisible();
+ await expect(page.getByRole('button',{name:'Print / Save as PDF'})).toBeDisabled();
+ await page.getByRole('button',{name:'Close certificate preview'}).click();
+ await gallery.getByLabel('Learner name for your certificates').fill('Training Learner');
+ await game.getByRole('button',{name:'View certificate'}).click();
+ await expect(page.locator('.certificate-recipient')).toHaveText('Training Learner');
+ await expect(page.getByRole('button',{name:'Print / Save as PDF'})).toBeEnabled();
+ await expect(page.getByText(/not an accredited qualification/i).first()).toBeVisible();
+});
 test('Academy Overview and My Progress share a full milestone summary',async({page})=>{
  await page.goto('./');
  await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
