@@ -1,3 +1,4 @@
+import CompletionCertificates from './CompletionCertificates';
 import {readImpact,impactDelta} from './CompetencyImpactStore';
 import {useState} from 'react';
 import {modules,readCourse,readScore,readFatf,readLegacy} from './progress';
@@ -107,6 +108,7 @@ export default function ProgressDashboard({onBack,onOpen,onFatf,onCapstone,onImp
   {!visibleBadges.length?<p className="chainnote">No achievements match this filter.</p>:null}
   <p className="achievementnote">World Champion awards require all five learning milestones; finishing the game alone does not unlock them. Achievements are based on locally saved progress and are not professional certifications.</p>
  </section>
+ <CompletionCertificates/>
  <div className="progressactions"><button className="secondary" type="button" onClick={()=>setRefresh(refresh+1)}>↻ Refresh progress</button><button className="secondary" type="button" onClick={()=>{const blob=new Blob([csvProgress()],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='amlverse-complete-learning-record.csv';link.click();URL.revokeObjectURL(url)}}>↓ Export all activities (CSV)</button></div>
  <div className="notice"><b>Local progress only.</b> Scores and activities are saved to this device's browser storage and may disappear when browser data is cleared. These achievements are informal learning milestones, not professional qualifications. Game completion is recorded after a game result; world completion also requires all lessons and the Quick Check. Older lesson visits and Quick Check passes were not previously tracked, but earlier saved game and FATF scores are included. If your game score is complete but Quick Check says Not recorded, open that learning room, select Quick Check, answer correctly and press Check understanding.</div>
  </main>;
