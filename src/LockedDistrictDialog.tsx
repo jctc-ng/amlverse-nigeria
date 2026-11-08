@@ -3,7 +3,7 @@ import {learningSequence,modules} from './progress';
 import type {CourseKey} from './progress';
 import {worldAccessible,worldMilestones} from './LearningTownProgress';
 
-export default function LockedDistrictDialog({target,onClose,onReview,onUnlock}:{target:CourseKey;onClose:()=>void;onReview:(id:CourseKey)=>void;onUnlock:(id:CourseKey)=>void}){
+export default function LockedDistrictDialog({target,onClose,onReview,}:{target:CourseKey;onClose:()=>void;onReview:(id:CourseKey)=>void}){
  const ref=useRef<HTMLButtonElement>(null);
  const index=learningSequence.indexOf(target);
  const previous=index>0?learningSequence[index-1]:null;
@@ -27,7 +27,7 @@ export default function LockedDistrictDialog({target,onClose,onReview,onUnlock}:
    <div className="districtdialogsymbol" aria-hidden="true">🔒</div>
    <span className="eyebrow">LEARNING TOWN · GUIDED PATH</span>
    <h2 id="districtdialog-title">{targetName} is locked</h2>
-   <p id="districtdialog-description">To enter this district, complete the activities in <strong>{previousName}</strong>. Your progress is saved. You can continue along the guided path or unlock this district for free exploration.</p>
+   <p id="districtdialog-description">To enter this district, complete the activities in <strong>{previousName}</strong>. Your progress is saved. The next district unlocks automatically when you finish the preceding district.</p>
    {progress?<div className="districtdialogprogress">
     <div className="districtdialogprogressrow"><strong>{previousName}</strong><span>{percent}% complete</span></div>
     <div className="worldmetertrack" role="progressbar" aria-label={previousName+' completion'} aria-valuemin={0} aria-valuemax={total} aria-valuenow={count}><div style={{width:percent+'%'}}/></div>
@@ -35,10 +35,9 @@ export default function LockedDistrictDialog({target,onClose,onReview,onUnlock}:
    </div>:null}
    <div className="districtdialogactions">
     {previous?<button type="button" className="primary" onClick={()=>onReview(nextAvailable)}>Continue {previous===nextAvailable?previousName:availableName} →</button>:null}
-    <button type="button" className="secondary" onClick={()=>onUnlock(target)}>🔓 Unlock this course anyway</button>
     <button type="button" className="districtdialogcancel" onClick={onClose}>Not now</button>
    </div>
-   <p className="districtdialogfooter">Unlocking a course lets you explore freely. It does not award completion, scores or achievements.</p>
+   <p className="districtdialogfooter">Follow the pathway in order. No manual unlock is required or available.</p>
   </section>
  </div>;
 }
