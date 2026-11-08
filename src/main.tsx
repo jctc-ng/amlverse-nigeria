@@ -10,6 +10,7 @@ import type {World} from './data';
 import './style.css';
 import './institutional-theme.css';
 import './readability-fixes.css';
+import './interactive-polish.css';
 import FatfChapter from './FatfChapter';
 import LearningExperience from './LearningExperience';
 import ProgressDashboard from './ProgressDashboard';
