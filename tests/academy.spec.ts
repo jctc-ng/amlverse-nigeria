@@ -266,8 +266,9 @@ test('Locked district message can be dismissed with Escape',async({page,isMobile
  await expect(page.getByRole('dialog')).toHaveCount(0);
 });
 
-test('Project research shows current academic citation and creator LinkedIn profile',async({page})=>{
+test('Project research shows current academic citation and creator LinkedIn profile',async({page,isMobile})=>{
  await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Project & Research',exact:true}).click();
  const citation=page.locator('.researchcite');
  await expect(citation).toContainText('https://m-analyst.github.io/amlverse-nigeria/');
