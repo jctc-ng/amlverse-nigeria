@@ -1,6 +1,35 @@
 import {test,expect} from '@playwright/test';
 import {readFile} from 'node:fs/promises';
 
+test('Academy home uses light surfaces and readable navy text',async({page})=>{
+ await page.goto('./');
+ const colours=await page.evaluate(()=>{
+  function rgb(selector:string,property:'color'|'backgroundColor'){
+   const element=document.querySelector(selector);
+   if(!element)throw new Error('Missing '+selector);
+   const value=getComputedStyle(element)[property];
+   const numbers=value.match(/[\\d.]+/g)?.slice(0,3).map(Number)||[];
+   return numbers;
+  }
+  function luminance(v:number[]){
+   const channels=v.map(x=>{const c=x/255;return c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4)});
+   return .2126*channels[0]+.7152*channels[1]+.0722*channels[2];
+  }
+  return {
+   headline:luminance(rgb('.academyhero h1','color')),
+   stats:luminance(rgb('.academystat','backgroundColor')),
+   statText:luminance(rgb('.academystat strong','color')),
+   town:luminance(rgb('.townbuilding','backgroundColor')),
+   townText:luminance(rgb('.townbuildingbody h3','color'))
+  };
+ });
+ expect(colours.headline).toBeLessThan(.22);
+ expect(colours.stats).toBeGreaterThan(.75);
+ expect(colours.statText).toBeLessThan(.22);
+ expect(colours.town).toBeGreaterThan(.75);
+ expect(colours.townText).toBeLessThan(.22);
+});
+
 test('Academy Overview and My Progress share a full milestone summary',async({page})=>{
  await page.goto('./');
  await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
