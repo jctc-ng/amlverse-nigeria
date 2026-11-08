@@ -46,6 +46,41 @@ test('Finished game unlocks printable certificate but not the full-course certif
  await expect(page.getByRole('button',{name:'Print / Save as PDF'})).toBeEnabled();
  await expect(page.getByText(/not an accredited qualification/i).first()).toBeVisible();
 });
+test('Institutional theme has legible dark text on white surfaces on desktop and mobile',async({page})=>{
+ await page.goto('./');
+ const measured=await page.evaluate(()=>{
+  function color(selector:string,property:'color'|'backgroundColor'){
+   const el=document.querySelector(selector);
+   if(!el)throw new Error('Theme element missing: '+selector);
+   const raw=getComputedStyle(el)[property];
+   const rgb=Array.from(raw.matchAll(/\\d+(?:\\.\\d+)?/g),match=>Number(match[0])).slice(0,3);
+   if(rgb.length!==3||rgb.some(x=>!Number.isFinite(x)))throw new Error('Unparseable color '+selector+' '+raw);
+   const linear=rgb.map(x=>{const v=x/255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4});
+   return .2126*linear[0]+.7152*linear[1]+.0722*linear[2];
+  }
+  return {
+   body:color('body','backgroundColor'),
+   stats:color('.academystat','backgroundColor'),
+   heading:color('.academyhero h1','color'),
+   statText:color('.academystat strong','color'),
+   town:color('.townbuilding','backgroundColor'),
+   townText:color('.townbuildingbody h3','color'),
+   card:color('.academyworldcard','backgroundColor'),
+   cardText:color('.academyworldbody h4','color'),
+   side:color('.academynavigation.sidebar','backgroundColor')
+  };
+ });
+ for(const key of ['body','stats','town','card','side'] as const)expect(measured[key],key+' surface').toBeGreaterThan(.82);
+ for(const key of ['heading','statText','townText','cardText'] as const)expect(measured[key],key+' text').toBeLessThan(.22);
+ await page.getByRole('button',{name:'Launch Capstone Challenge →',exact:true}).click();
+ await expect(page.locator('.capstonelockdialog')).toBeVisible();
+ const dialog=await page.locator('.capstonelockdialog').evaluate(el=>{
+  const styles=getComputedStyle(el);
+  return {background:styles.backgroundColor,title:getComputedStyle(el.querySelector('h2')!).color};
+ });
+ expect(dialog.background).toMatch(/rgb\\(255, 255, 255\\)/);
+ expect(dialog.title).not.toBe(dialog.background);
+});
 test('Academy Overview and My Progress share a full milestone summary',async({page})=>{
  await page.goto('./');
  await expect(page.getByRole('heading',{name:'Academy overview'})).toBeVisible();
