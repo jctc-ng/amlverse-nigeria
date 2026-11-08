@@ -111,8 +111,8 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
 });
 test('Crypto tracing practice is interactive, touch-friendly and preserves scored missions',async({page,isMobile})=>{
  await page.addInitScript(()=>{
-  const ids=['risk','team','evaluation','egmont','typologies','nigeria'];
-  const scores=['amlverse-arcade-risk','amlverse-arcade-team','amlverse-evaluation-arena-best','amlverse-egmont-best','amlverse-typology-best','amlverse-nigeria-compliance-best'];
+  const ids=['risk','team','evaluation','egmont','typologies','nigeria','virtualassets'];
+  const scores=['amlverse-arcade-risk','amlverse-arcade-team','amlverse-evaluation-arena-best','amlverse-egmont-best','amlverse-typology-best','amlverse-nigeria-compliance-best','amlverse-virtual-asset-best'];
   ids.forEach((id,i)=>{
    localStorage.setItem('amlverse-course-v1-'+id,JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
    localStorage.setItem(scores[i],'100');
