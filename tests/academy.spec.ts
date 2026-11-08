@@ -109,6 +109,40 @@ test('Guided FATF panel and interactive challenge promo use accessible colors',a
  await audit('.worldinteractivepromo','.worldinteractivepromo p');
  await audit('.worldinteractivepromo','.worldinteractivepromo .worldmeterline strong');
 });
+test('Crypto tracing practice is interactive, touch-friendly and preserves scored missions',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  const ids=['risk','team','evaluation','egmont','typologies','nigeria'];
+  const scores=['amlverse-arcade-risk','amlverse-arcade-team','amlverse-evaluation-arena-best','amlverse-egmont-best','amlverse-typology-best','amlverse-nigeria-compliance-best'];
+  ids.forEach((id,i)=>{
+   localStorage.setItem('amlverse-course-v1-'+id,JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
+   localStorage.setItem(scores[i],'100');
+   localStorage.setItem('amlverse-world-interactions-v1-'+id,JSON.stringify({completed:[0,1,2],best:100}));
+   localStorage.setItem('amlverse-world-decisions-v1-'+id,JSON.stringify({passed:true,best:100}));
+  });
+  const advanced={visited:Array.from({length:12},(_,i)=>i),quizPass:{Foundations:true,Intermediate:true,Advanced:true},simPass:{Foundations:true,Intermediate:true,Advanced:true}};
+  localStorage.setItem('amlverse-risklab-advanced-v1',JSON.stringify(advanced));
+  localStorage.setItem('amlverse-nigeria-compliance-advanced-v1',JSON.stringify(advanced));
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ const virtual=page.locator('.townstop').nth(6);
+ await virtual.getByRole('button',{name:/Enter district/}).click();
+ await page.getByRole('button',{name:/Enter expanded Virtual Asset Academy/}).click();
+ await page.getByRole('button',{name:/Open interactive graph missions/}).click();
+ const practice=page.locator('.itracepractice');
+ await practice.getByRole('button',{name:/Try guided tracing/}).click();
+ await expect(practice.getByText(/Step 1 of 3/)).toBeVisible();
+ await practice.getByRole('button',{name:'Sample source wallet A'}).click();
+ await expect(practice.getByText(/Step 2 of 3/)).toBeVisible();
+ await practice.getByRole('button',{name:'Follow sample confirmed transaction TX-01'}).click();
+ await expect(practice.getByText(/Step 3 of 3/)).toBeVisible();
+ await practice.getByRole('button',{name:'Sample receiving wallet B'}).click();
+ await expect(practice.getByText(/Practice complete/)).toBeVisible();
+ await practice.getByRole('button',{name:/Start investigation/}).click();
+ await expect(page.locator('.itracegraphpanel')).toBeVisible();
+ await expect(page.locator('.itraceevidenceitem').first()).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+4)).toBe(true);
+});
 test('RiskLab practice and How to Play tutorial require genuine interaction',async({page,isMobile})=>{
  await page.addInitScript(()=>{
   localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
