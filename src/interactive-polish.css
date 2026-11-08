@@ -351,3 +351,102 @@
  }
  .guideshade .guidepracticecard{transition:none!important;transform:none!important}
 }
+
+
+/* Consistent tracing style across advanced multi-hop and visual asset lessons. */
+.advancedtrace :is(.advancedgraph,.chaincase,.confidenceitem),
+.graphstudyfigure,.graphstudyquiz,.graphstudyexplainer>div{
+ background:#fff!important;
+ background-image:none!important;
+ color:#173d57!important;
+ border:1px solid #c2d6e4!important;
+ border-radius:17px!important;
+ box-shadow:0 4px 16px rgba(18,63,105,.045)!important;
+}
+.advancedtrace :is(.advancedgraph,.chaincase,.confidenceitem) :is(h2,h3,h4,strong),
+.graphstudyfigure .graphstudyhead>strong,
+.graphstudylesson :is(.graphstudyquiz h3,.graphstudyprofessional h3,.graphstudyanalogy h3){
+ color:#103b5b!important;
+}
+.advancedtrace :is(.advancedgraph,.chaincase,.confidenceitem) :is(p,small,span),
+.graphstudylesson :is(.graphstudycaption,.graphstudyprofessional p,.graphstudyanalogy p,.graphstudyquiz p){
+ color:#34546a!important;
+ font-size:15px!important;
+ line-height:1.7!important;
+}
+.advancedtrace .trace-svg,.graphstudyfigure .graphstudysvg{
+ background:#163850!important;
+ border:1px solid #7da7b9!important;
+ border-radius:14px!important;
+ max-width:100%;
+}
+.advancedtrace .traceedges{gap:11px!important}
+.advancedtrace .traceedge{
+ background:#f7fafc!important;
+ border:1px solid #b8cfe0!important;
+ color:#173f5b!important;
+ border-radius:13px!important;
+ padding:15px 8px!important;
+ min-height:102px;
+ transition:background .18s,border-color .18s,transform .18s;
+}
+.advancedtrace .traceedge strong{color:#0d6678!important;font-size:18px!important}
+.advancedtrace .traceedge span{color:#1f4863!important;font-size:13px!important}
+.advancedtrace .traceedge small{color:#3c586e!important;font-size:12px!important}
+.advancedtrace .traceedge:hover,.advancedtrace .traceedge:focus-visible{
+ background:#eaf7f2!important;
+ border-color:#0a876f!important;
+ transform:translateY(-2px);
+}
+.advancedtrace .traceedge.traced{
+ background:#e6f6ea!important;
+ border-color:#11826b!important;
+ box-shadow:0 0 0 2px rgba(17,130,107,.1)!important;
+}
+.advancedtrace .traceedge.traced strong{color:#0b604e!important}
+.advancedtrace .trace-svg g[role="button"]{cursor:pointer}
+.advancedtrace .trace-svg g[role="button"]:focus-visible{outline:3px solid #f8db86;outline-offset:3px}
+.graphstudyfigure{padding:18px!important}
+.graphstudyfigure .graphstudyhead>strong{font-size:17px!important}
+.graphstudyfigure .graphstudylegend{color:#335469!important;font-size:13px!important}
+.graphstudyfigure .graphstudylegend span{color:#31546b!important}
+.graphstudyfigure .graphstudyedges{
+ background:#f6fafc!important;
+ border:1px solid #c8dce8!important;
+ border-radius:13px!important;
+ padding:12px!important;
+}
+.graphstudyfigure .graphstudyedges>strong{
+ color:#153f5a!important;
+ font-size:14px!important;
+}
+.graphstudyfigure .graphstudyedges>div{
+ border-bottom:1px solid #dae7ee!important;
+ font-size:13px!important;
+ min-height:48px;
+}
+.graphstudyfigure .graphstudyedges b{color:#153e59!important;font-size:13px!important}
+.graphstudyfigure .graphstudyedges span{color:#315369!important;font-size:13px!important}
+.graphstudyfigure .graphstudyedges small{
+ font-size:12px!important;
+ background:#e2f3ed!important;
+ color:#105b51!important;
+}
+.graphstudyfigure .graphstudyedges small.graphunverified{
+ background:#fff2dd!important;
+ color:#77501f!important;
+}
+.graphstudyfigure .graphstudycaption{font-size:14px!important}
+.graphstudylesson .graphstudyquiz{padding:22px!important}
+.graphstudylesson .graphstudyquizhead strong{color:#123e5d!important}
+.graphstudylesson .graphstudyprofessional,.graphstudylesson .graphstudyanalogy{
+ padding:17px!important;background:#f4f9fc!important;
+}
+.graphstudylesson .graphstudyanalogy{background:#ecf7f2!important}
+.graphstudylesson .graphstudyquiz .riskadvancedprompt{color:#1c405a!important;font-size:16px!important}
+@media(max-width:760px){
+ .advancedtrace .advancedgraph{padding:17px!important}
+ .advancedtrace .traceedge{min-height:84px!important}
+ .graphstudyfigure{padding:12px!important}
+ .graphstudylesson .graphstudyquiz{padding:17px!important}
+}
