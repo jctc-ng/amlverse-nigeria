@@ -10,7 +10,7 @@ Gamified AML/CFT/CPF learning and simulation platform prototype for financial in
 
 **Project & Research:** Open the live site and select **Project & Research** for project attribution, training methodology, reviewer invitation, source governance and a proposed institutional pilot protocol.
 
-**International review framework:** [docs/INTERNATIONAL_REVIEW_AND_PILOT.md](docs/INTERNATIONAL_REVIEW_AND_PILOT.md). Submit corrections or pilot proposals via the [public issue templates](https://github.com/jctc-ng/amlverse-nigeria/issues/new/choose). Never include restricted intelligence or personal data.
+**International review framework:** [docs/INTERNATIONAL_REVIEW_AND_PILOT.md](docs/INTERNATIONAL_REVIEW_AND_PILOT.md). Submit corrections or pilot proposals via the [public issue templates](https://github.com/m-analyst/amlverse-nigeria/issues/new/choose). Never include restricted intelligence or personal data.
 
 ## Features
 - Nine learning worlds covering risk assessment, interagency cooperation, mutual evaluations, FIU information exchange, typologies, Nigeria compliance, virtual assets, advanced tracing and financial intelligence reporting
