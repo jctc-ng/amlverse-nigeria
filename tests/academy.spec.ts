@@ -24,19 +24,12 @@ test('Resume opens first incomplete guided activity without awarding an unrelate
  expect(progress.lessons).toEqual([0,1,2]);
 });
 
-test('Deep resume to decision lab does not add an introductory lesson visit',async({page})=>{
- await page.addInitScript(()=>{
-   localStorage.setItem('amlverse-town-unlocked-v1-team','yes');
-   localStorage.setItem('amlverse-world-interactions-v1-team',JSON.stringify({completed:[0,1,2],best:100}));
- });
+test('Legacy manual unlock flags cannot bypass the learning path',async({page})=>{
+ await page.addInitScript(()=>localStorage.setItem('amlverse-town-unlocked-v1-team','yes'));
  await page.goto('./');
- await page.getByRole('button',{name:/Teamwork Arcade/}).last().click();
- await page.getByRole('button',{name:/Evidence dossier & three-stage decision lab/}).click();
- await expect(page.getByText('Joint Investigation: Assign Competent Roles')).toBeVisible();
- const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-course-v1-team')||'{}'));
- expect(saved.lessons??[]).toEqual([]);
+ await expect(page.locator('.townstop').nth(1)).toContainText(/LOCKED/i);
+ await expect(page.locator('.townstop').nth(1).getByRole('button',{name:/Unlock/})).toHaveCount(0);
 });
-
 test('CSV exports all activity types and can be downloaded',async({page})=>{
  await page.addInitScript(()=>{
    localStorage.setItem('amlverse-world-interactions-v1-nigeria',JSON.stringify({completed:[0,1],best:93}));
@@ -58,24 +51,13 @@ test('CSV exports all activity types and can be downloaded',async({page})=>{
  expect(csv).toContain('"2"'); // seeded Nigeria evidence milestones
 });
 
-test('Complete an interactive timeline and retain it across navigation',async({page})=>{
- await page.addInitScript(()=>{
-   localStorage.setItem('amlverse-town-unlocked-v1-team','yes');
-   localStorage.setItem('amlverse-world-interactions-v1-team',JSON.stringify({completed:[0,1],best:88}));
- });
+test('Course lesson controls progress automatically without manual unlock',async({page})=>{
  await page.goto('./');
- await page.getByRole('button',{name:/Teamwork Arcade/}).last().click();
- await page.getByRole('button',{name:/Open interactive challenges/}).click();
- await expect(page.getByRole('heading',{name:/Construct the investigation timeline/})).toBeVisible();
- for(const step of ['FIU analyses relevant reports','Investigators pursue corroboration under their authority','Prosecutors assess admissible case material']){
-   await page.getByRole('button',{name:new RegExp(step)}).click();
- }
- await page.getByRole('button',{name:/Complete this case/}).click();
- await expect(page.getByText(/All three interactive cases complete/)).toBeVisible();
- const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-world-interactions-v1-team')||'{}'));
- expect(saved.completed).toEqual(expect.arrayContaining([0,1,2]));
+ await page.locator('.townstop').first().getByRole('button',{name:/Enter district/}).click();
+ await expect(page.locator('.knowledgetabs button').nth(1)).toBeDisabled();
+ await page.getByRole('button',{name:/Next lesson/}).click();
+ await expect(page.locator('.knowledgetabs button').nth(1)).toBeEnabled();
 });
-
 test('Mobile page offers usable navigation without horizontal scrolling',async({page,isMobile})=>{
  test.skip(!isMobile,'This check targets the mobile viewport');
  await page.goto('./');
@@ -98,21 +80,19 @@ test('FATF Quest catalogue contains all forty recommendations and seven categori
  await page.getByLabel('Find a recommendation').fill('beneficial ownership');
  await expect(page.locator('.fatf40tile').first()).toBeVisible();
 });
-test('FATF 40 provides implementation and analogous learning for new recommendations',async({page})=>{
+test('FATF 40 provides implementation and analogous learning for unlocked recommendations',async({page})=>{
+ await page.addInitScript(()=>localStorage.setItem('amlverse-fatf-ch1',JSON.stringify(Object.fromEntries(Array.from({length:23},(_,i)=>[String(i+1),{score:3,total:3}])))));
  await page.goto('./');
  await page.getByRole('button',{name:/FATF Quest/}).first().click();
- await page.getByRole('button',{name:/Unlock FATF course/}).click();
  await page.locator('.fatf40tile').filter({hasText:'R.24'}).click();
  await expect(page.getByRole('heading',{name:'Understand through an analogy'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Implementation process'})).toBeVisible();
  await expect(page.locator('.fatf40steps button')).toHaveCount(4);
- await page.getByRole('button',{name:/Complete study & start 3-question practice/}).click();
- await expect(page.getByText('Question 1 / 3')).toBeVisible();
 });
 test('FATF Recommendation 6 humanitarian safeguards and Recommendation 16 transition notes',async({page})=>{
+ await page.addInitScript(()=>localStorage.setItem('amlverse-fatf-ch1',JSON.stringify(Object.fromEntries(Array.from({length:15},(_,i)=>[String(i+1),{score:3,total:3}])))));
  await page.goto('./');
  await page.getByRole('button',{name:/FATF Quest/}).first().click();
- await page.getByRole('button',{name:/Unlock FATF course/}).click();
  await page.locator('.fatf40tile').filter({hasText:'R.6'}).click();
  await expect(page.getByText(/humanitarian exemptions and basic-needs safeguards/i).first()).toBeVisible();
  await page.getByRole('button',{name:/All forty Recommendations/}).click();
@@ -132,46 +112,33 @@ test('FATF Quest preserves previous R1–R10 achievements and progress is shown 
  await expect(page.getByText('Recommendations 1–40')).toBeVisible();
 });
 
-test('Mobile expanded academy keeps Continue below the course information and opens the relevant lesson',async({page,isMobile})=>{
- test.skip(!isMobile,'Reading-first layout applies to mobile viewport');
- await page.addInitScript(()=>localStorage.setItem('amlverse-town-unlocked-v1-risk','yes'));
+test('Mobile keeps lesson navigation and progress drawer after the lesson',async({page,isMobile})=>{
+ test.skip(!isMobile,'Mobile only');
  await page.goto('./');
- await page.getByRole('button',{name:/RiskLab Arcade/}).last().click();
- await page.getByRole('button',{name:/Enter expanded RiskLab/}).click();
- const footer=page.locator('.mobilelessonfooter');
- await expect(footer).toBeVisible();
- expect(await page.evaluate(()=>{
-  const previous=document.querySelector('.riskadvancedwelcome');
-  const footer=document.querySelector('.mobilelessonfooter');
-  return !!previous&&!!footer&&!!(previous.compareDocumentPosition(footer)&Node.DOCUMENT_POSITION_FOLLOWING);
- })).toBe(true);
- await expect(footer.locator('.nextstepbar')).toHaveCSS('position','static');
- await footer.getByRole('button',{name:/Resume next required activity/}).click();
- await expect(page.locator('.riskadvancedlesson')).toBeVisible();
- await expect.poll(()=>page.locator('.riskadvancedlesson').evaluate(el=>Math.round(el.getBoundingClientRect().top))).toBeLessThan(140);
+ await page.locator('.townstop').first().getByRole('button',{name:/Enter district/}).click();
+ await expect(page.locator('.worldprogressdrawer')).toBeVisible();
+ await expect(page.locator('.worldprogressdrawer')).not.toHaveAttribute('open','');
+ await expect(page.locator('.knowledgecard')).toBeVisible();
+ const after=await page.evaluate(()=>{
+  const lesson=document.querySelector('.knowledgecard');
+  const drawer=document.querySelector('.worldprogressdrawer');
+  return !!lesson&&!!drawer&&!!(lesson.compareDocumentPosition(drawer)&Node.DOCUMENT_POSITION_FOLLOWING);
+ });
+ expect(after).toBe(true);
+ await page.locator('.worldprogressdrawer summary').click();
+ await expect(page.getByRole('heading',{name:'World completion tracker'})).toBeVisible();
 });
-test('Mobile lesson Continue reaches knowledge checker and checker advances question by question',async({page,isMobile})=>{
- test.skip(!isMobile,'Exercise scroll and checker transition on mobile');
- await page.addInitScript(()=>localStorage.setItem('amlverse-town-unlocked-v1-risk','yes'));
+test('Mobile lesson flow reveals the Quick Check only after all three lessons',async({page,isMobile})=>{
+ test.skip(!isMobile,'Mobile only');
  await page.goto('./');
- await page.getByRole('button',{name:/RiskLab Arcade/}).last().click();
- await page.getByRole('button',{name:/Enter expanded RiskLab/}).click();
- await page.locator('.mobilelessonfooter').getByRole('button',{name:/Resume next required activity/}).click();
- for(let i=0;i<3;i++){
-   await page.locator('.riskadvancedlesson').getByRole('button',{name:/Continue/}).click();
- }
- await page.locator('.riskadvancedlesson').getByRole('button',{name:/Continue to Foundations knowledge check/}).click();
- await expect(page.locator('.riskadvancedassessment')).toBeVisible();
- await expect(page.getByText('Question 1 / 10')).toBeVisible();
- await page.locator('.riskadvancedassessment .choice').first().click();
- await page.locator('.riskadvancedassessment').getByRole('button',{name:/Check answer/}).click();
- await expect(page.locator('.riskadvancedassessment .feedback')).toBeVisible();
- await page.locator('.riskadvancedassessment').getByRole('button',{name:/Next question/}).click();
- await expect(page.getByText('Question 2 / 10')).toBeVisible();
- await expect.poll(()=>page.locator('.riskadvancedassessment').evaluate(el=>Math.round(el.getBoundingClientRect().top))).toBeLessThan(140);
+ await page.locator('.townstop').first().getByRole('button',{name:/Enter district/}).click();
+ await expect(page.getByRole('button',{name:/Quick check/})).toBeDisabled();
+ await page.getByRole('button',{name:/Next lesson/}).click();
+ await page.getByRole('button',{name:/Next lesson/}).click();
+ await page.getByRole('button',{name:/Continue to Quick Check/}).click();
+ await expect(page.locator('.knowledgecheck')).toBeVisible();
+ await expect(page.getByRole('button',{name:/Quick check/})).toBeEnabled();
 });
-
-
 test('Learning Town is locked by default after the first district',async({page})=>{
  await page.goto('./');
  await expect(page.getByRole('heading',{name:/Follow the pathway, unlock each district/})).toBeVisible();
@@ -179,18 +146,13 @@ test('Learning Town is locked by default after the first district',async({page})
  await expect(page.locator('.townstop').nth(0)).toContainText(/AVAILABLE/i);
  await expect(page.locator('.townstop').nth(1)).toContainText(/LOCKED/i);
  await expect(page.locator('.academyworldcard').nth(1)).toBeDisabled();
- await expect(page.locator('.townstop').nth(1).getByRole('button',{name:/Unlock this course/})).toBeVisible();
+ await expect(page.locator('.townstop').nth(1).getByRole('button',{name:/Unlock this course/})).toHaveCount(0);
 });
-test('Individual manual unlock grants access to a locked world without manufacturing completion',async({page})=>{
+test('Manual course unlock is not available to learners',async({page})=>{
  await page.goto('./');
- await page.locator('.townstop').nth(1).getByRole('button',{name:/Unlock this course/}).click();
- await expect(page.locator('.townstop').nth(1)).toContainText(/UNLOCKED BY LEARNER/i);
- await page.locator('.townstop').nth(1).getByRole('button',{name:/Enter district/}).click();
- await expect(page.getByRole('heading',{name:'Who Does What?'})).toBeVisible();
- const unlock=await page.evaluate(()=>localStorage.getItem('amlverse-town-unlocked-v1-team'));
- expect(unlock).toBe('yes');
- const progress=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-course-v1-team')||'{}'));
- expect(progress.lessons||[]).toEqual([]);
+ await expect(page.getByRole('button',{name:/Unlock all courses/})).toHaveCount(0);
+ await expect(page.getByRole('button',{name:/Unlock this course/})).toHaveCount(0);
+ await expect(page.locator('.townstop.locked')).toHaveCount(8);
 });
 test('Guided RiskLab locks future lessons and checker until preceding lessons completed',async({page})=>{
  await page.goto('./');
@@ -238,24 +200,18 @@ test('Reset Course requires RESET and deletes only that course progress',async({
  expect(values.fatf).not.toBeNull();
 });
 
-test('Unlock all courses exposes all districts and restores guided mode',async({page})=>{
+test('A previously saved unlock-all flag is ignored in guided mode',async({page})=>{
+ await page.addInitScript(()=>localStorage.setItem('amlverse-town-open-v1','yes'));
  await page.goto('./');
- await page.getByRole('button',{name:/Unlock all courses/}).click();
- await expect(page.locator('.townstop.locked')).toHaveCount(0);
- await page.getByRole('button',{name:/Restore guided course locks/}).click();
  await expect(page.locator('.townstop.locked')).toHaveCount(8);
 });
-
-
-test('FATF Quest locks future recommendations until the preceding one is mastered',async({page})=>{
+test('FATF Quest ignores legacy free-exploration flags',async({page})=>{
+ await page.addInitScript(()=>localStorage.setItem('amlverse-fatf-free-v1','yes'));
  await page.goto('./');
  await page.getByRole('button',{name:/FATF Quest/}).first().click();
  await expect(page.locator('.fatf40tile').nth(0)).toBeEnabled();
  await expect(page.locator('.fatf40tile').nth(1)).toBeDisabled();
- await page.getByRole('button',{name:/Unlock FATF course/}).click();
- await expect(page.locator('.fatf40tile').nth(39)).toBeEnabled();
- await page.getByRole('button',{name:/Restore guided FATF locks/}).click();
- await expect(page.locator('.fatf40tile').nth(39)).toBeDisabled();
+ await expect(page.getByRole('button',{name:/Unlock FATF course/})).toHaveCount(0);
 });
 test('FATF reset requires confirmation and preserves other worlds',async({page})=>{
  await page.goto('./');
@@ -293,16 +249,13 @@ test('Locked district opens an informative card instead of browser alert',async(
  await card.getByRole('button',{name:/Not now/}).click();
  await expect(card).toHaveCount(0);
 });
-test('Locked district modal can unlock selected course without awarding completion',async({page,isMobile})=>{
+test('Locked district modal cannot bypass its prerequisite',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.getByRole('button',{name:'Egmont Exchange',exact:true}).first().click();
  const card=page.getByRole('dialog',{name:/Egmont Exchange is locked/});
- await card.getByRole('button',{name:/Unlock this course anyway/}).click();
- await expect(card).toHaveCount(0);
- await expect(page.getByRole('heading',{name:'Secure FIU Cooperation'}).first()).toBeVisible();
- expect(await page.evaluate(()=>localStorage.getItem('amlverse-town-unlocked-v1-egmont'))).toBe('yes');
- expect(await page.evaluate(()=>localStorage.getItem('amlverse-course-v1-egmont'))).toBeNull();
+ await expect(card.getByRole('button',{name:/Unlock/})).toHaveCount(0);
+ await expect(card.getByText(/unlocks automatically/)).toBeVisible();
 });
 test('Locked district message can be dismissed with Escape',async({page,isMobile})=>{
  await page.goto('./');
