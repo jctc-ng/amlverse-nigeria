@@ -524,3 +524,12 @@ main .worldclassicmeter .worldmetertrack>div{
   .evaluationgame .evalhud>span{font-size:13px!important}
   .evaluationgame .evaldialog p{font-size:16px!important}
 }
+
+
+/* Assessor introduction uses a solid, verifiable light background.
+   Avoid background-image gradients with inherited transparent background-color. */
+.evaluationgame .evalscene{
+  background:#f3f9fc!important;
+  background-image:none!important;
+  background-color:#f3f9fc!important;
+}
