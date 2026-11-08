@@ -46,6 +46,43 @@ test('Finished game unlocks printable certificate but not the full-course certif
  await expect(page.getByRole('button',{name:'Print / Save as PDF'})).toBeEnabled();
  await expect(page.getByText(/not an accredited qualification/i).first()).toBeVisible();
 });
+test('Learning world card badges and locked labels remain legible on white',async({page})=>{
+ await page.goto('./');
+ const cards=page.locator('.academyworldcard');
+ await expect(cards).toHaveCount(9);
+ await expect(cards.nth(2)).toBeDisabled();
+ const measurements=await cards.evaluateAll(nodes=>{
+  function rgb(value:string){
+   const numbers=(value.match(/\\d+(?:\\.\\d+)?/g)||[]).slice(0,3).map(Number);
+   if(numbers.length!==3)throw new Error('Bad CSS color: '+value);
+   return numbers.map(v=>{const c=v/255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4});
+  }
+  function luminance(color:string){const [r,g,b]=rgb(color);return r*.2126+g*.7152+b*.0722}
+  function ratio(foreground:string,background:string){
+   const a=luminance(foreground),b=luminance(background);
+   return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+  }
+  return nodes.slice(0,3).map(node=>{
+   const badge=node.querySelector('.academyworldmeta span')!;
+   const title=node.querySelector('.academyworldbody h4')!;
+   const description=node.querySelector('.academyworldbody p')!;
+   const meta=getComputedStyle(badge);
+   return {disabled:(node as HTMLButtonElement).disabled,
+    opacity:Number(getComputedStyle(node).opacity),
+    badgeContrast:ratio(meta.color,meta.backgroundColor),
+    titleContrast:ratio(getComputedStyle(title).color,getComputedStyle(node).backgroundColor),
+    descriptionContrast:ratio(getComputedStyle(description).color,getComputedStyle(node).backgroundColor),
+    badgeFont:parseFloat(meta.fontSize)};
+  });
+ });
+ for(const result of measurements){
+  expect(result.opacity).toBeGreaterThanOrEqual(0.99);
+  expect(result.badgeContrast).toBeGreaterThanOrEqual(4.5);
+  expect(result.titleContrast).toBeGreaterThanOrEqual(4.5);
+  expect(result.descriptionContrast).toBeGreaterThanOrEqual(4.5);
+  expect(result.badgeFont).toBeGreaterThanOrEqual(13);
+ }
+});
 test('Institutional theme has legible dark text on white surfaces on desktop and mobile',async({page})=>{
  await page.goto('./');
  const measured=await page.evaluate(()=>{
