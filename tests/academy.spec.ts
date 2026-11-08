@@ -8,7 +8,8 @@ test('Academy home uses light surfaces and readable navy text',async({page})=>{
    const element=document.querySelector(selector);
    if(!element)throw new Error('Missing '+selector);
    const value=getComputedStyle(element)[property];
-   const numbers=value.match(/[\\d.]+/g)?.slice(0,3).map(Number)||[];
+   const numbers=Array.from(value.matchAll(/\d+(?:\.\d+)?/g),match=>Number(match[0])).slice(0,3);
+   if(numbers.length!==3||numbers.some(n=>!Number.isFinite(n)))throw new Error(`Invalid computed ${property} for ${selector}: ${value}`);
    return numbers;
   }
   function luminance(v:number[]){
