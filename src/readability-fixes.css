@@ -443,3 +443,432 @@ main .choices .choice .indicator{color:#086a53!important;font-weight:800!importa
  .progressdash .impactdashboardstats>div{padding:17px!important}
  .progressdash .progressworlds{gap:12px}
 }
+
+
+/* v1.4 — Unified completion, achievement, certificate, and tutorial surfaces.
+   Explicit high-contrast styles for legacy controls, no change to learning logic. */
+
+/* Completion tracker disclosure looks and operates like a proper expandable card. */
+.knowledgepath .worldprogressdrawer{
+  margin:24px 0!important;
+  padding:0!important;
+  border:1px solid #c1d4e2!important;
+  background:#fff!important;
+  border-radius:18px!important;
+  box-shadow:0 6px 21px rgba(18,63,105,.06)!important;
+  overflow:hidden;
+}
+.knowledgepath .worldprogressdrawer>summary{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  padding:16px 20px!important;
+  list-style:none!important;
+  cursor:pointer;
+  min-height:62px;
+  border:0!important;
+  border-radius:0!important;
+  background:#eef5fa!important;
+  color:#123d5b!important;
+  font-size:16px!important;
+  font-weight:850!important;
+}
+.knowledgepath .worldprogressdrawer>summary::-webkit-details-marker{display:none}
+.knowledgepath .worldprogressdrawer>summary::marker{content:""}
+.knowledgepath .worldprogressdrawer>summary>span:first-child{
+  color:#113b5b!important;
+  font-size:16px!important;
+  font-weight:850!important;
+}
+.knowledgepath .worldprogressdraweraction{
+  display:inline-flex;align-items:center;gap:8px;
+  white-space:nowrap;
+  color:#0d5d69!important;
+  font-size:14px!important;
+  font-weight:850!important;
+}
+.knowledgepath .worldprogressdraweraction::after{
+  content:"▾";display:inline-block;font-size:18px;
+  transition:transform .15s ease;
+}
+.knowledgepath .worldprogressdrawer[open] .worldprogressdraweraction::after{transform:rotate(180deg)}
+.knowledgepath .worldprogressdrawer[open]>summary{
+  border-bottom:1px solid #cadce8!important;
+  background:#e8f2f8!important;
+}
+.knowledgepath .worldprogressdrawer>.worldprogresspanel{
+  margin:0!important;
+  padding:22px!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:#f5f9fc!important;
+}
+
+/* World completion tracker: readable percentage and four evenly styled subsections. */
+.worldprogresspanel{
+  color:#1a3d55!important;
+  border:1px solid #c3d7e5!important;
+  background:#f1f7fb!important;
+  border-radius:19px!important;
+  box-shadow:none!important;
+}
+.worldprogressheading h2{color:#103757!important;font-size:23px!important}
+.worldprogressheading p,
+.worldprogressnote{
+  color:#365469!important;
+  font-size:14px!important;
+  line-height:1.7!important;
+}
+.worldprogressnumber{
+  background:#fff!important;
+  border:1px solid #c1d5e4!important;
+  border-radius:15px!important;
+  min-width:125px;
+}
+.worldprogressnumber strong{
+  color:#113c5b!important;
+  font-size:30px!important;
+}
+.worldprogressnumber small{font-size:13px!important;color:#34546a!important}
+.worldprogresspanel>.worldmetermini .worldmeterline span,
+.worldprogresspanel>.worldmetermini .worldmeterline strong{
+  color:#12425d!important;
+  font-size:14px!important;
+  opacity:1!important;
+}
+.worldprogresspanel .worldmetertrack{background:#dce8f1!important}
+.worldprogresspanel .worldmetertrack>div{background:#088676!important}
+.worldprogresssections{gap:13px!important}
+.worldprogresssection,
+.worldprogresssection.worldlocked{
+  background:#fff!important;
+  border:1px solid #bed4e3!important;
+  border-radius:14px!important;
+  min-height:112px;
+  padding:17px!important;
+  opacity:1!important;
+  filter:none!important;
+  box-shadow:0 2px 8px rgba(18,63,105,.025);
+}
+.worldprogresssection.worldlocked{background:#f4f7fa!important}
+.worldprogresssectionhead{align-items:start!important;gap:8px!important}
+.worldprogresssectionhead strong{
+  color:#153e5b!important;
+  font-size:15px!important;
+  line-height:1.5!important;
+}
+.worldprogresssectionhead span{
+  color:#075d55!important;
+  font-size:13px!important;
+  font-weight:850!important;
+}
+.worldprogresssection.worldlocked .worldprogresssectionhead span{color:#435c6b!important}
+.worldprogresssection small{
+  color:#344f63!important;
+  font-size:13px!important;
+  line-height:1.6!important;
+}
+.worldprogresspanel .eyebrow{color:#075d6d!important}
+.worldprogresspanel .worldprogressnumber{align-self:start}
+
+/* Expanded sections in My Progress: consistent inset cards instead of square rows. */
+.progressdash .progress31details{
+  padding:0!important;
+  border:1px solid #c0d6e5!important;
+  border-radius:15px!important;
+  background:#f6f9fc!important;
+  overflow:hidden;
+}
+.progressdash .progress31details>summary{
+  display:flex!important;align-items:center;gap:9px;
+  min-height:53px;
+  padding:14px 17px!important;
+  background:#edf5fa!important;
+  border-radius:0!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  color:#123e5a!important;
+  list-style:none!important;
+}
+.progressdash .progress31details>summary::-webkit-details-marker{display:none}
+.progressdash .progress31details>summary::before{
+  content:"▸";
+  display:inline-block;
+  transition:transform .15s ease;
+  font-size:17px;
+  color:#126b7b;
+}
+.progressdash .progress31details[open]>summary::before{transform:rotate(90deg)}
+.progressdash .progress31details[open]>summary{border-bottom:1px solid #c5d9e6!important}
+.progressdash .progress31sections{
+  padding:14px!important;
+  margin:0!important;
+  display:grid;
+  gap:10px!important;
+}
+.progressdash .progress31sections>div{
+  padding:15px 16px!important;
+  border:1px solid #cadce8!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  display:grid;
+  gap:9px!important;
+}
+.progressdash .progress31sections .worldprogresssectionhead strong{font-size:15px!important}
+.progressdash .progress31sections .worldprogresssectionhead span{
+  color:#164b62!important;
+  font-size:13px!important;
+}
+.progressdash .progress31sections small{
+  font-size:13px!important;
+  color:#34556b!important;
+  line-height:1.65!important;
+}
+.progressdash .progress31sections .worldmetertrack{background:#e0eaf2!important}
+.progressdash .progress31sections .worldmetertrack>div{background:#088474!important}
+
+/* Achievements: properly styled milestones instead of dark badges with navy text. */
+.progressdash .badgegrid{gap:15px!important}
+.progressdash .achievement,.progressdash .achievement.unlocked{
+  min-height:205px!important;
+  padding:22px 17px!important;
+  background:#fff!important;
+  border:1px solid #c0d6e5!important;
+  border-radius:17px!important;
+  box-shadow:0 4px 16px rgba(18,63,105,.045)!important;
+  color:#183e5b!important;
+  opacity:1!important;
+  filter:none!important;
+}
+.progressdash .achievement.unlocked{
+  background:#f3faf6!important;
+  border-color:#91cbb0!important;
+}
+.progressdash .achievement>span[aria-hidden]{font-size:34px!important}
+.progressdash .achievement>b{
+  color:#123b5a!important;
+  font-size:16px!important;
+  font-weight:850!important;
+  line-height:1.45!important;
+}
+.progressdash .achievement>small:not(.achievementprogress){
+  color:#365268!important;
+  font-size:14px!important;
+  line-height:1.7!important;
+}
+.progressdash .achievementprogress,
+.progressdash .achievement.unlocked .achievementprogress{
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  max-width:100%;
+  width:auto;
+  min-height:35px;
+  padding:8px 12px!important;
+  border:1px solid #b5cddd!important;
+  border-radius:9px!important;
+  background:#e9f2f8!important;
+  color:#123f5d!important;
+  -webkit-text-fill-color:#123f5d!important;
+  font-size:13px!important;
+  font-weight:850!important;
+  opacity:1!important;
+  line-height:1.35!important;
+  text-align:center;
+}
+.progressdash .achievement.unlocked .achievementprogress{
+  border-color:#88c6ad!important;
+  background:#dcf2e7!important;
+  color:#0d5e4c!important;
+  -webkit-text-fill-color:#0d5e4c!important;
+}
+.progressdash .achievementnote{font-size:14px!important;color:#38546b!important}
+.progressdash .achievementfilters button{min-height:44px;font-size:14px!important}
+
+/* Certificates: generous white section and a distinct single-course layout. */
+.certificates{
+  border:1px solid #c5d8e5!important;
+  border-radius:21px!important;
+  padding:clamp(20px,3vw,32px)!important;
+  background:#fff!important;
+  box-shadow:0 8px 27px rgba(18,63,105,.055)!important;
+  overflow:hidden;
+}
+.certificates-head{gap:20px!important;margin-bottom:20px}
+.certificates-head h2{
+  color:#103757!important;
+  font-size:clamp(23px,2.8vw,28px)!important;
+  margin:8px 0 10px!important;
+}
+.certificates-head p,
+.certificates .certificate-privacy{
+  color:#365267!important;
+  font-size:14px!important;
+  line-height:1.75!important;
+}
+.certificates-head>strong{
+  background:#e9f4f8!important;
+  border:1px solid #b1cddc!important;
+  color:#123e5e!important;
+  font-size:14px!important;
+  font-weight:850!important;
+  padding:10px 15px!important;
+  border-radius:999px!important;
+}
+.certificates .certificate-name-label{
+  display:block;
+  color:#153c57!important;
+  font-size:15px!important;
+  font-weight:850!important;
+}
+.certificates .certificate-name{
+  max-width:550px;
+  width:100%;
+  min-height:50px;
+  border:1px solid #90acbf!important;
+  border-radius:12px!important;
+  background:#fff!important;
+  color:#143c5a!important;
+  font-size:17px!important;
+}
+.certificates .certificate-list{gap:15px!important;margin:23px 0!important}
+.certificates .certificate-tile{
+  background:#fff!important;
+  border:1px solid #bfd5e5!important;
+  border-radius:17px!important;
+  padding:21px!important;
+  gap:15px!important;
+  box-shadow:0 3px 14px rgba(18,63,105,.045);
+  min-height:194px;
+}
+.certificates .certificate-tile.earned{
+  background:#f7fbf9!important;
+  border-color:#93c8b5!important;
+}
+.certificates .certificate-tile.locked{
+  background:#f5f8fb!important;
+  opacity:1!important;
+}
+.certificates .certificate-tile small{
+  color:#0d6071!important;
+  font-size:12px!important;
+  font-weight:850!important;
+}
+.certificates .certificate-tile h3{
+  color:#103b59!important;
+  font-size:18px!important;
+  margin:9px 0!important;
+}
+.certificates .certificate-tile p{
+  color:#38566a!important;
+  font-size:14px!important;
+}
+.certificates .certificate-tile button{
+  grid-column:2;
+  margin-top:5px;
+  min-height:45px;
+  border-radius:10px!important;
+  font-size:14px!important;
+}
+.certificates.certificates-world .certificate-list{
+  grid-template-columns:minmax(0,1fr)!important;
+  max-width:680px;
+}
+.certificates.certificates-world .certificate-tile{
+  width:100%;
+}
+.coursecertificatefinish>.certificates{
+  margin-block:26px!important;
+}
+.certificate-dialog-controls h2{font-size:21px!important;color:#133e5d!important}
+.certificates .certificate-error{color:#8e342c!important}
+
+/* Game tutorial: steps and buttons must not retain dark fills with dark text. */
+.minitutorial{
+  background:#fff!important;
+  border:1px solid #bfd4e2!important;
+  border-radius:20px!important;
+  color:#173c55!important;
+  padding:clamp(19px,2.6vw,30px)!important;
+}
+.minitutorial>p{color:#36556a!important;font-size:16px!important}
+.ministeps{gap:9px!important;margin:20px 0!important}
+.ministeps span,
+.ministeps span.on{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#eaf2f8!important;
+  border:1px solid #bbd1e0!important;
+  border-radius:11px!important;
+  padding:11px 7px!important;
+  min-height:45px;
+  font-size:13px!important;
+  font-weight:800!important;
+  color:#244c68!important;
+  -webkit-text-fill-color:#244c68!important;
+  opacity:1!important;
+  box-shadow:none!important;
+}
+.ministeps span.on{
+  background:#def2e9!important;
+  border:2px solid #0c8372!important;
+  color:#0a5b4f!important;
+  -webkit-text-fill-color:#0a5b4f!important;
+}
+.miniarea{
+  background:#fff!important;
+  border:1px solid #c5d8e5!important;
+  border-radius:16px!important;
+  padding:clamp(17px,2.6vw,24px)!important;
+}
+.miniarea>p{color:#2e4f66!important;font-size:15px!important}
+.miniarea .arcadecard,.miniarea .miniclue{
+  border-radius:13px!important;
+  color:#143e59!important;
+}
+.miniarea .arcadecard :is(b,strong,small,span),
+.miniarea .miniclue :is(b,strong,small,span){
+  color:#193e58!important;
+}
+.minidrop{
+  background:#e9f5f0!important;
+  border:2px dashed #3b9c83!important;
+  color:#0c5b4e!important;
+  -webkit-text-fill-color:#0c5b4e!important;
+  border-radius:15px!important;
+  font-weight:850!important;
+  font-size:17px!important;
+}
+.minidrop.matched{background:#d3f0df!important;border-style:solid!important}
+.miniarea .actions button:not(.primary):not(.secondary){
+  border-radius:10px!important;
+  font-size:14px!important;
+}
+.miniarea button:disabled{
+  opacity:1!important;
+  background:#e0e9f0!important;
+  color:#344e60!important;
+  -webkit-text-fill-color:#344e60!important;
+  border-color:#b2c7d5!important;
+}
+.miniready h2{color:#103757!important}
+.miniready p{color:#344e63!important}
+@media(max-width:760px){
+  .knowledgepath .worldprogressdrawer>summary{padding:15px!important}
+  .knowledgepath .worldprogressdrawer>.worldprogresspanel{padding:18px 14px!important}
+  .worldprogressheading{flex-wrap:wrap;gap:12px!important}
+  .worldprogressnumber{min-width:110px}
+  .progressdash .progress31sections{padding:11px!important}
+  .progressdash .progress31sections>div{padding:13px!important}
+  .progressdash .achievement{padding:19px 14px!important}
+  .certificates{padding:19px 15px!important;border-radius:18px!important}
+  .certificates .certificate-list{grid-template-columns:minmax(0,1fr)!important}
+  .ministeps span{font-size:12px!important;padding:10px 4px!important}
+}
+@media print{
+  .certificate-paper,.certificate-paper *{box-shadow:none!important}
+  .certificates{border:0!important;box-shadow:none!important}
+}
