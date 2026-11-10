@@ -17,7 +17,7 @@ test('OSINT laboratory provides searchable synthetic documents and evidence coll
  await page.addInitScript(()=>localStorage.setItem('amlverse-osint-guided-v1',JSON.stringify({completed:['intro','browser','boolean','regex','username','email','phone','social','image','domain','hash','custody'],attempts:{}})));
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
- await page.getByRole('button',{name:/Start OSINT Simulation/}).click();
+ await page.locator('.osintfirstcard').getByRole('button').click();
  const lab=page.locator('main.osintlab');
  await lab.getByRole('button',{name:/Independent missions/}).click();
  await lab.locator('.osintchoice input').nth(0).check();
@@ -55,7 +55,7 @@ test('Returning learners can retain their foundations-first route without deleti
 test('Guided OSINT course teaches beginner searching and regex before missions',async({page,isMobile})=>{
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
- await page.getByRole('button',{name:/Start OSINT Simulation/}).click();
+ await page.locator('.osintfirstcard').getByRole('button').click();
  const lab=page.locator('main.osintlab');
  await expect(lab.getByRole('heading',{name:'What OSINT actually is'})).toBeVisible();
  await expect(lab.getByRole('button',{name:/Independent missions/})).toBeDisabled();
@@ -85,7 +85,7 @@ test('Guided OSINT email, phone, image, DNS and hash workbenches are functional'
  await page.addInitScript(()=>localStorage.setItem('amlverse-osint-guided-v1',JSON.stringify({completed:['intro','browser','boolean','regex','username'],attempts:{}})));
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
- await page.getByRole('button',{name:/Start OSINT Simulation/}).click();
+ await page.locator('.osintfirstcard').getByRole('button').click();
  const lab=page.locator('main.osintlab');
  await lab.getByRole('button',{name:/Email-address investigations/}).click();
  await lab.getByLabel('Email domain').fill('meridian-aid.example');
