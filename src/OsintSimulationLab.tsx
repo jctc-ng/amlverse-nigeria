@@ -1,5 +1,8 @@
 import {useMemo,useState} from 'react';
 import OsintGuidedAcademy,{guidedComplete,readGuidedProgress,guidedLessons} from './OsintGuidedAcademy';
+import OsintToolDirectory from './OsintToolDirectory';
+import OsintVirtualBrowser from './OsintVirtualBrowser';
+import CompletionCertificates from './CompletionCertificates';
 
 const STORAGE='amlverse-osint-lab-v1';
 export type OsintProgress={completed:string[];captures:string[];notes:Record<string,string>;hashes:Record<string,string>;log:{action:string;time:string}[]};
@@ -43,7 +46,8 @@ function searchPages(input:string){const words=tokenize(input).filter(Boolean);
 const date=()=>new Date().toISOString();
 export default function OsintSimulationLab({onBack,onNext}:{onBack:()=>void;onNext:()=>void}){
  const [progress,setProgress]=useState(readOsintProgress);
- const [mode,setMode]=useState<'guided'|'missions'>('guided');
+ const [mode,setMode]=useState<'guided'|'browser'|'tools'|'missions'|'certificate'>('guided');
+ const [browserTool,setBrowserTool]=useState('search');
  const [mission,setMission]=useState(0);
  const [page,setPage]=useState('search');
  const [query,setQuery]=useState('');
@@ -95,8 +99,11 @@ export default function OsintSimulationLab({onBack,onNext}:{onBack:()=>void;onNe
  return <main className="osintlab">
   <button type="button" className="back" onClick={onBack}>← Academy overview</button>
   <div className="osintheader"><div><span className="eyebrow">WORLD 01 · OSINT LEARNING SIMULATION</span><h1>OSINT Investigation & Digital Evidence Lab</h1><p>Start with guided beginner-to-advanced lessons, then apply the skills in a fictional browser-based investigation.</p></div><div className="osintscore"><strong>{readGuidedProgress().completed.length+progress.completed.length} / {guidedLessons.length+osintMissions.length}</strong><span>Learning activities complete</span></div></div>
-  <div className="osintlearningtabs"><button type="button" className={mode==='guided'?'active':''} onClick={()=>setMode('guided')}>📖 Guided lessons · {readGuidedProgress().completed.length}/{guidedLessons.length}</button><button type="button" className={mode==='missions'?'active':''} disabled={!guidedComplete()&&progress.completed.length===0} onClick={()=>setMode('missions')}>🧭 Independent missions · {progress.completed.length}/{osintMissions.length}{!guidedComplete()&&progress.completed.length===0?' · Locked':''}</button></div>
+  <div className="osintlearningtabs"><button type="button" className={mode==='guided'?'active':''} onClick={()=>setMode('guided')}>📖 Guided lessons · {readGuidedProgress().completed.length}/{guidedLessons.length}</button><button type="button" className={mode==='browser'?'active':''} onClick={()=>setMode('browser')}>🌐 Virtual Investigation Browser</button><button type="button" className={mode==='tools'?'active':''} onClick={()=>setMode('tools')}>🧰 Free OSINT Tools & Videos</button><button type="button" className={mode==='missions'?'active':''} disabled={!guidedComplete()&&progress.completed.length===0} onClick={()=>setMode('missions')}>🧭 Independent missions · {progress.completed.length}/{osintMissions.length}{!guidedComplete()&&progress.completed.length===0?' · Locked':''}</button><button type="button" className={mode==='certificate'?'active':''} onClick={()=>setMode('certificate')}>🏅 OSINT Certificate {osintComplete()?'· Earned':'· Locked'}</button></div>
   {mode==='guided'?<OsintGuidedAcademy onMissions={()=>setMode('missions')}/>:null}
+  {mode==='browser'?<OsintVirtualBrowser launchTool={browserTool}/>:null}
+  {mode==='tools'?<OsintToolDirectory onSimulate={key=>{setBrowserTool(key);setMode('browser')}}/>:null}
+  {mode==='certificate'?<CompletionCertificates osintOnly autoOpen={false}/>:null}
   {mode==='missions'?<>
   
   <div className="osintbanner">SIMULATED NETWORK ONLY · Fictional people and entities · No live social-media accounts or external navigation · Progress stored locally</div>
