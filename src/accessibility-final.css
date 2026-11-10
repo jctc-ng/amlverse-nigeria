@@ -1729,3 +1729,67 @@ main.virtualassetgame .chainnote{
 @media(max-width:1050px){.osintworkspace{grid-template-columns:1fr}.osinttasks{position:static}.osinttasks .osinttask{display:inline-flex;width:calc(50% - 7px);vertical-align:top;margin-right:7px;min-height:76px}}
 @media(max-width:660px){.osintheader{align-items:stretch;flex-direction:column}.osintscore{min-width:0;text-align:left}.osinttasks .osinttask{width:100%;margin-right:0}.osintfirstcard{grid-template-columns:1fr}.osintpage form{flex-direction:column}.osintbrowserdots{display:none}.osintbrowsertop{gap:7px}.osintbrowsertop>span{font-size:10px}.osintaddress span{font-size:12px}.osintpage{min-height:230px}.osintactions button,.osintfirstcard button{width:100%}}
 @media(prefers-reduced-motion:reduce){.osintfirstmeter div,.osinttaskprogress div,.osinttask,.osintlab button{transition:none!important;transform:none!important}}
+
+
+/* v3.1 — OSINT beginner-to-advanced guided skill labs. */
+.osintlearningtabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 24px;border-bottom:1px solid #c4d7e4;padding-bottom:13px}
+.osintlearningtabs button{border:1px solid #b7d0de;background:#fff;color:#173f5a!important;min-height:47px;padding:12px 16px;border-radius:12px;cursor:pointer;font-weight:800;font-size:14px;line-height:1.5}
+.osintlearningtabs button.active{background:#e4f4ed;color:#0d6555!important;border-color:#0e866f;box-shadow:inset 0 -3px #0d866d}
+.osintlearningtabs button:disabled{background:#e5edf3;color:#38556a!important;opacity:.8;cursor:not-allowed}
+.osintguided{color:#183f59}
+.osintguidedhero{display:flex;gap:25px;align-items:center;justify-content:space-between;border:1px solid #bad3e1;background:#f0f8fb;border-radius:20px;padding:clamp(19px,2.6vw,29px);margin-bottom:20px}
+.osintguidedhero .eyebrow{color:#0c6976!important}
+.osintguidedhero h2{font-size:clamp(22px,2.6vw,29px);color:#103e5b!important;line-height:1.35;margin:10px 0 9px}
+.osintguidedhero p{color:#325367!important;font-size:16px!important;line-height:1.75!important;max-width:820px}
+.osintguidedtotal{border:1px solid #afd3c0;background:#e2f5eb;border-radius:14px;min-width:155px;text-align:center;padding:16px}
+.osintguidedtotal strong{font-size:26px;color:#0a6957!important;display:block}
+.osintguidedtotal small{font-size:13px;color:#275665!important}
+.osintguidedlayout{display:grid;grid-template-columns:minmax(230px,305px) minmax(0,1fr);gap:20px;align-items:start}
+.osintguidedtoc,.osintguidedcontent{border:1px solid #bad4e2;border-radius:19px;background:#fff;box-shadow:0 5px 20px rgba(15,55,90,.045);padding:clamp(16px,2vw,24px)}
+.osintguidedtoc h3{color:#143e5c!important;font-size:20px;margin:0 0 15px}
+.osintguidedtoc button{display:flex;width:100%;gap:12px;align-items:center;text-align:left;background:#fff;border:1px solid #bcd4e1;border-radius:12px;margin:7px 0;padding:11px 10px;cursor:pointer;transition:background-color .15s,border-color .15s,transform .15s}
+.osintguidedtoc button:hover:not(:disabled){background:#edf8f3;border-color:#0c876e;transform:translateX(2px)}
+.osintguidedtoc button.active{background:#e6f6ed;border-color:#0b826d}
+.osintguidedtoc button:disabled{cursor:not-allowed;background:#f4f7f9;opacity:.76}
+.osintguidedtoc button>span:first-child{display:grid;flex-shrink:0;place-items:center;background:#e2eff5;color:#1c5067!important;width:33px;height:33px;border-radius:10px;font-size:13px;font-weight:900}
+.osintguidedtoc button.active>span:first-child{background:#0b806b;color:#fff!important}
+.osintguidedtoc button small{display:block;color:#0c6973!important;font-size:11px;font-weight:850;text-transform:uppercase;margin-bottom:4px}
+.osintguidedtoc button strong{font-size:14px;line-height:1.5;color:#214760!important;font-weight:800}
+.osintguidedlessonhead .eyebrow{color:#0b6972!important}
+.osintguidedlessonhead h3{color:#103e5b!important;font-size:clamp(23px,2.7vw,29px);margin:10px 0 12px;line-height:1.35}
+.osintguidedlessonhead p{color:#2d5369!important;font-size:16px!important;line-height:1.75!important}
+.osintguidedtheory,.osintguidedpractice{margin:19px 0;background:#f2f8fb;border:1px solid #bad4e1;border-radius:17px;padding:clamp(17px,2.3vw,23px)}
+.osintguidedtheory{background:#eaf6f0;border-color:#afd4c3;border-left:5px solid #0a8973}
+.osintguidedtheory>strong,.osintguidedpractice>strong{display:block;font-size:15px;color:#0c6156!important;font-weight:850;margin-bottom:11px}
+.osintguidedtheory p,.osintguidedpractice>p{color:#305368!important;font-size:16px!important;line-height:1.75!important}
+.osintguidedpractice label{display:grid;gap:8px;margin:15px 0;font-size:15px;color:#183f5b!important;font-weight:800;line-height:1.5}
+.osintguidedpractice textarea,.osintguidedpractice input{background:#fff;border:1.5px solid #abc9d9;border-radius:11px;color:#163d59!important;-webkit-text-fill-color:#163d59!important;max-width:100%;min-width:0;width:100%;font-size:16px;padding:13px;line-height:1.6}
+.osintguidedpractice textarea{resize:vertical;min-height:90px}
+.osintguidedpractice input:focus-visible,.osintguidedpractice textarea:focus-visible,.osintguidedpractice button:focus-visible{outline:3px solid #0b8b72;outline-offset:3px}
+.osintguidedsim{padding:16px;border:1px solid #b2d0df;background:#fff;border-radius:13px;margin:14px 0;display:grid;gap:9px}
+.osintguidedsim>span{font-size:12px;font-weight:850;color:#0a6872!important}
+.osintguidedsim strong,.osintguidedsim b{color:#104764!important;font-size:15px}
+.osintguidedsim p{color:#365469!important;font-size:14px!important;line-height:1.65!important;margin:0}
+.osintguidedsim code{display:block;overflow-wrap:anywhere;word-break:break-all;background:#edf5f9;border:1px solid #c0d7e3;padding:9px;border-radius:8px;color:#183f5b!important;font-size:12px;line-height:1.7}
+.osintguidedoptions{display:grid;gap:10px;margin:16px 0}
+.osintguidedoptions button{display:grid;gap:6px;text-align:left;cursor:pointer;background:#fff;border:1.5px solid #b2cfde;border-radius:13px;padding:14px;transition:transform .16s,border-color .16s,background-color .16s}
+.osintguidedoptions button strong{color:#12415f!important;font-size:16px}
+.osintguidedoptions button small{color:#19617a!important;font-size:13px}
+.osintguidedoptions button span{color:#35556b!important;font-size:14px}
+.osintguidedoptions button:hover{background:#edf8f3;border-color:#0b866e;transform:translateY(-2px)}
+.osintguidedoptions button.selected{background:#e3f4ec;border:2px solid #0b846d;box-shadow:0 0 0 3px rgba(12,127,103,.11)}
+.osintguidedsamples{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0}
+.osintguidedsamples code{padding:9px 12px;border-radius:8px;color:#154b65!important;background:#fff;border:1px solid #b9d1df;font-size:14px}
+.osintguidedactions{display:flex;align-items:center;flex-wrap:wrap;gap:11px;margin:22px 0 16px}
+.osintguidedactions button{border-radius:11px;min-height:48px;font-size:15px;font-weight:850}
+.osintguidedwarning,.osintguidedpositive{padding:14px 17px;border-radius:12px;font-size:15px!important;line-height:1.65!important;font-weight:700!important}
+.osintguidedwarning{color:#67471f!important;background:#fff4e3;border:1px solid #d2b485}
+.osintguidedpositive{color:#0c6053!important;background:#e8f6ed;border:1px solid #aad1bd}
+.osintguidedphoto{height:230px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;background:linear-gradient(#b3d6e7 0 55%,#83b29a 55% 100%);border:1px solid #adc9d8;border-radius:13px;margin:15px 0;padding:15px}
+.osintguidedsky{position:relative;z-index:2;color:#123f59!important;font-size:12px;font-weight:850;background:rgba(255,255,255,.9);border-radius:9px;align-self:flex-start;padding:7px 11px}
+.osintguidedbuilding{width:72%;height:133px;margin:auto auto -15px;background:#e3e0d7;border:3px solid #6f8e9a;border-radius:8px 8px 0 0;text-align:center;padding:12px}
+.osintguidedsign{background:#184961;color:#fff!important;padding:9px;font-weight:900;letter-spacing:.06em;border-radius:5px}
+.osintguidedwindows{font-size:29px;color:#255c74!important;letter-spacing:8px;margin:7px}
+@media(max-width:980px){.osintguidedlayout{grid-template-columns:1fr}.osintguidedtoc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.osintguidedtoc h3{grid-column:1/-1}.osintguidedtoc button{margin:0}}
+@media(max-width:600px){.osintguidedhero{flex-direction:column;align-items:stretch}.osintguidedtotal{min-width:0}.osintguidedtoc{grid-template-columns:1fr}.osintguidedactions button,.osintlearningtabs button{width:100%}.osintguidedphoto{height:200px}.osintguidedbuilding{width:94%}}
+@media(prefers-reduced-motion:reduce){.osintguidedtoc button,.osintguidedoptions button{transition:none!important;transform:none!important}}
