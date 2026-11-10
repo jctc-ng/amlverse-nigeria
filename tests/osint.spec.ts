@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 // Select a shuffled word bank in the intended grammatical order.
 async function buildSentence(lab:import('@playwright/test').Locator,title:string,parts:string[]){
- const area=lab.locator('.osintsentence').filter({has:lab.locator('.osintsentencehead strong',{hasText:title})});
+ const area=lab.locator('.osintsentence').filter({hasText:title});
  for(const part of parts)await area.getByRole('button',{name:'Add '+part,exact:true}).click();
  await expect(area.getByText('Complete, correctly ordered sentence.')).toBeVisible();
 }
@@ -95,7 +95,7 @@ test('Guided OSINT email, phone, image, DNS and hash workbenches are functional'
  await page.locator('.osintfirstcard').getByRole('button').click();
  const lab=page.locator('main.osintlab');
  await lab.getByRole('button',{name:/Email-address investigations/}).click();
- await lab.getByLabel('Email domain').fill('meridian-aid.example');
+ await lab.locator('input[aria-label="Email domain"]').fill('meridian-aid.example');
  await buildSentence(lab,'Explain what an email address cannot establish',['An email domain','can indicate an organisational link','but does not identify','who operates the mailbox.']);
  await lab.getByRole('button',{name:/Check my practical work/}).click();
  await lab.getByRole('button',{name:/Continue to next lesson/}).click();
