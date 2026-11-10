@@ -1626,3 +1626,106 @@ main.virtualassetgame .chainnote{
 @media(prefers-reduced-motion:reduce){
  .academyhome .academypathactions button{transition:none!important;transform:none!important}
 }
+
+
+/* v3.0 — Accessible OSINT simulated browser and practical mission workstation. */
+.osintfirstcard{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,.55fr);gap:25px;align-items:center;margin:26px 0;padding:clamp(22px,3vw,32px);background:#f3f9fc;border:1px solid #bad4e2;border-radius:22px;box-shadow:0 6px 22px rgba(18,61,90,.055)}
+.osintfirstcard .eyebrow{color:#0b6570!important;-webkit-text-fill-color:#0b6570!important}
+.osintfirstcard h2{color:#133f5c!important;font-size:clamp(23px,2.8vw,30px);line-height:1.35;margin:12px 0}
+.osintfirstcard p{font-size:16px!important;line-height:1.75!important;color:#2c5065!important;max-width:850px}
+.osintfirstcard strong{font-size:15px;color:#0d5f56!important}
+.osintfirstcard small{display:block;font-size:14px;color:#2b5369!important;margin-top:11px}
+.osintfirstmeter{height:10px;background:#dcebf1;border-radius:999px;overflow:hidden;margin:10px 0}
+.osintfirstmeter div{height:100%;background:#0a8a78;transition:width .3s}
+.osintfirstcard button{min-height:54px;white-space:normal;border-radius:12px!important}
+.osintlab{max-width:1480px;margin:auto;padding:24px clamp(12px,2.4vw,35px) 65px;color:#123d58}
+.osintlab .back{color:#155a74!important;font-weight:800!important}
+.osintheader{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:24px 0}
+.osintheader .eyebrow,.osintmission .eyebrow{color:#0c6471!important;-webkit-text-fill-color:#0c6471!important;font-size:13px!important;font-weight:850}
+.osintheader h1{font-size:clamp(27px,3.3vw,40px);line-height:1.25;color:#103d5d!important;margin:9px 0 14px}
+.osintheader p{font-size:17px;line-height:1.7;color:#36576a!important;max-width:830px}
+.osintscore{padding:19px 24px;min-width:200px;background:#e8f5ef;border:1px solid #abd4c1;border-radius:18px;text-align:center}
+.osintscore strong{display:block;font-size:27px;color:#0a6154!important;line-height:1.2}
+.osintscore span{display:block;font-size:13px;color:#355766!important;margin-top:6px}
+.osintbanner{padding:12px 16px;background:#eaf5fa;border:1px solid #b8d5e1;border-radius:12px;color:#194d62!important;font-size:13px;font-weight:800;line-height:1.5;margin-bottom:20px}
+.osintworkspace{display:grid;grid-template-columns:minmax(240px,290px) minmax(0,1fr);align-items:start;gap:20px}
+.osinttasks,.osintmission{background:#fff;border:1px solid #bed4e2;border-radius:20px;padding:clamp(18px,2.5vw,26px);box-shadow:0 4px 18px rgba(16,62,95,.045)}
+.osinttasks{position:sticky;top:20px}
+.osinttasks h2{font-size:21px;color:#103d5b!important;margin:0 0 7px}
+.osinttasks>p{font-size:14px;color:#315166!important;line-height:1.65;margin:0 0 18px}
+.osinttask{display:flex;gap:11px;text-align:left;align-items:center;width:100%;background:#fff;border:1px solid #c2d6e2;border-radius:13px;margin-bottom:9px;padding:12px 11px;cursor:pointer;color:#163e5a;transition:background-color .16s,border-color .16s,transform .16s}
+.osinttask>span:first-child{display:grid;place-items:center;flex:0 0 32px;height:32px;border-radius:10px;background:#e3eff5;color:#15536b;font-size:14px;font-weight:850}
+.osinttask strong{display:block;color:#16435c!important;font-size:14px;font-weight:800;line-height:1.45}
+.osinttask small{display:block;color:#446174!important;font-size:12px;line-height:1.5;margin-top:3px}
+.osinttask.active{background:#e7f5ee;border-color:#0c8b74}
+.osinttask.active>span:first-child{background:#0b806b;color:#fff}
+.osinttask:disabled{background:#f2f5f7;opacity:.78;cursor:not-allowed}
+.osinttask:hover:not(:disabled){background:#edf8f3;transform:translateX(2px);border-color:#0b8b74}
+.osinttaskprogress{margin:20px 0 9px;height:10px;border-radius:99px;background:#deebf1;overflow:hidden}
+.osinttaskprogress div{height:100%;background:#0a8772;transition:width .3s}
+.osintmission>h2{font-size:clamp(23px,2.7vw,29px);margin:9px 0 11px;color:#123d5a!important}
+.osintgoal{font-size:16px;line-height:1.75;color:#305366!important;margin:0 0 20px}
+.osintsetup,.osintbrief,.osintvault,.osintreport{padding:19px;border:1px solid #bbd4e0;background:#f4f9fc;border-radius:16px;margin:19px 0}
+.osintsetup>p,.osintbrief>p,.osintvault>p,.osintreport>p{color:#315267!important;font-size:15px;line-height:1.75}
+.osintsetup strong,.osintbrief strong{color:#10455e!important;font-weight:850}
+.osintchoice{display:flex;gap:13px;align-items:flex-start;padding:14px;margin-top:9px;border:1px solid #bfd6e2;border-radius:12px;background:#fff;font-size:15px;font-weight:650;color:#1a455d!important;cursor:pointer;line-height:1.55}
+.osintchoice.chosen{border-color:#078774;background:#eaf8f0}
+.osintchoice input{height:20px;width:20px;flex:0 0 20px;margin:2px 0 0;accent-color:#0a8770}
+.osinttip{background:#e8f6f0!important;border:1px solid #a8d3c1;border-radius:12px;padding:13px 15px;color:#225166!important;font-size:14px!important;line-height:1.7!important}
+.osintbrowser{overflow:hidden;background:#fff;border:1px solid #adcbdc;border-radius:17px;margin-top:18px;box-shadow:0 9px 28px rgba(22,60,94,.08)}
+.osintbrowsertop{display:flex;gap:13px;align-items:center;background:#e6f0f6;border-bottom:1px solid #bbd4e0;padding:11px 14px}
+.osintbrowsertop strong{color:#163e5b!important;font-size:14px}
+.osintbrowsertop>span{margin-left:auto;color:#0c6655!important;font-size:11px;font-weight:850;letter-spacing:.04em}
+.osintbrowserdots{color:#268ba1;font-size:12px;letter-spacing:5px}
+.osinttabs{display:flex;gap:5px;overflow-x:auto;background:#f3f7fa;padding:9px;border-bottom:1px solid #d2e2ea}
+.osinttabs button{flex:0 0 auto;border:1px solid #b8cfdc;background:#e6eef4;color:#284d63!important;border-radius:8px 8px 0 0;padding:9px 12px;font-size:12px;cursor:pointer}
+.osinttabs button.active{background:#fff;border-color:#0c8674;border-bottom-color:#fff;font-weight:850;color:#0e5260!important}
+.osintaddress{display:flex;gap:9px;align-items:center;padding:10px 12px;border-bottom:1px solid #d2e2ea}
+.osintaddress button{min-width:35px;min-height:35px;border:1px solid #b8cbd6;background:#fff;color:#124b64;border-radius:8px;cursor:pointer}
+.osintaddress span{display:block;min-width:0;flex:1;padding:10px;background:#f1f7fa;border:1px solid #c5d9e4;border-radius:8px;font-size:13px;color:#25556a!important;overflow-wrap:anywhere}
+.osintpage{padding:clamp(17px,2.4vw,28px);min-height:290px}
+.osintpage h3{font-size:24px;color:#103e5e!important;margin:4px 0 13px}
+.osintpage h4{font-size:17px;color:#123c5a!important;margin:19px 0 11px}
+.osintpage p{font-size:16px!important;color:#315369!important;line-height:1.75!important}
+.osintpage form{display:flex;gap:9px;margin:18px 0}
+.osintpage input,.osintcaptureform textarea,.osintreport textarea{background:#fff;border:1.5px solid #a9c6d7;border-radius:11px;padding:12px 14px;min-width:0;color:#153e59!important;-webkit-text-fill-color:#153e59!important;font-size:16px}
+.osintpage input{flex:1}
+.osintpage form button,.osintcapture button,.osintcaptureform button{border-radius:11px}
+.osintresults{display:grid;gap:10px;margin-top:22px}
+.osintresults>strong{color:#17455e!important;font-size:14px}
+.osintresults>button{display:grid;gap:5px;text-align:left;border:1px solid #bbd4e1;background:#fff;padding:15px;border-radius:12px;cursor:pointer}
+.osintresults>button:hover{background:#edf7f3;border-color:#0b876f}
+.osintresults strong,.osintlinks button{color:#114e70!important;font-size:15px;font-weight:800}
+.osintresults small{color:#0b745f!important;overflow-wrap:anywhere}
+.osintresults span{color:#32546b!important;font-size:14px;line-height:1.65}
+.osintwebmeta{display:flex;flex-wrap:wrap;gap:8px;margin:17px 0}
+.osintwebmeta span{padding:7px 10px;background:#e8f5f0;color:#0d6757!important;border-radius:7px;font-size:12px;font-weight:800}
+.osintlinks{display:flex;gap:8px;flex-wrap:wrap}
+.osintlinks button{padding:10px 12px;background:#edf6fa;border:1px solid #b9d3df;border-radius:10px;cursor:pointer;text-align:left}
+.osintlinks button:hover{background:#dff3eb}
+.osintcapture{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:23px 0 0}
+.osintcapture>span{color:#0c6555!important;font-size:14px;font-weight:850}
+.osintcaptureform{display:grid;gap:11px;margin-top:15px;padding:17px;background:#f0f7fa;border:1px solid #bed4e2;border-radius:13px}
+.osintcaptureform label,.osintreport label{display:grid;gap:7px;font-size:15px;font-weight:850;color:#194560!important}
+.osintcaptureform button{justify-self:start}
+.osintvault h3{font-size:20px;color:#103d5a!important}
+.osintevidence{display:grid;gap:10px;margin:17px 0}
+.osintevidence article{padding:15px;border:1px solid #bcd4e2;border-left:4px solid #0b8671;border-radius:12px;background:#fff}
+.osintevidence strong{display:block;color:#123d5c!important;font-size:14px}
+.osintevidence small{display:block;color:#0c655d!important;font-size:13px;margin-top:5px;overflow-wrap:anywhere}
+.osintevidence p{color:#32546a!important;font-size:14px!important;line-height:1.65}
+.osintvault summary{cursor:pointer;color:#154864!important;font-weight:800;padding:11px}
+.osintlog{max-height:240px;overflow:auto;border-top:1px solid #c4d8e4}
+.osintlog p{font-size:12px!important;color:#31566b!important;overflow-wrap:anywhere}
+.osintreport{display:grid;gap:18px}
+.osintreport label small{font-weight:500;color:#415f70!important;line-height:1.5;font-size:13px}
+.osintreport textarea{display:block;resize:vertical;min-height:125px;width:100%}
+.osintfeedback{padding:14px 16px;background:#fff5e7;border:1px solid #dbbd8c;border-left:5px solid #a96b21;color:#604321!important;border-radius:12px;font-size:15px;font-weight:750;line-height:1.6}
+.osintactions{display:flex;flex-wrap:wrap;gap:10px;margin-top:21px}
+.osintactions button{min-height:47px;border-radius:11px;font-weight:800}
+.osintsuccess{background:#e6f5ec;border:1px solid #acd4c1;border-radius:12px;padding:14px;color:#0b6654!important;font-weight:800}
+.osintdisclaimer{margin:20px 0;color:#426075!important;font-size:13px;line-height:1.7}
+.osintlab button:focus-visible,.osintlab input:focus-visible,.osintlab textarea:focus-visible{outline:3px solid #0b856f;outline-offset:3px}
+@media(max-width:1050px){.osintworkspace{grid-template-columns:1fr}.osinttasks{position:static}.osinttasks .osinttask{display:inline-flex;width:calc(50% - 7px);vertical-align:top;margin-right:7px;min-height:76px}}
+@media(max-width:660px){.osintheader{align-items:stretch;flex-direction:column}.osintscore{min-width:0;text-align:left}.osinttasks .osinttask{width:100%;margin-right:0}.osintfirstcard{grid-template-columns:1fr}.osintpage form{flex-direction:column}.osintbrowserdots{display:none}.osintbrowsertop{gap:7px}.osintbrowsertop>span{font-size:10px}.osintaddress span{font-size:12px}.osintpage{min-height:230px}.osintactions button,.osintfirstcard button{width:100%}}
+@media(prefers-reduced-motion:reduce){.osintfirstmeter div,.osinttaskprogress div,.osinttask,.osintlab button{transition:none!important;transform:none!important}}
