@@ -1814,3 +1814,12 @@ main.virtualassetgame .chainnote{
 .osintwalkactions button:disabled{background:#e4ecf1!important;color:#425c6a!important;opacity:1!important;border:1px solid #bcd1da!important}
 @media(max-width:600px){.osintwalkactions button{width:100%}}
 @media(prefers-reduced-motion:reduce){.osintwalkcontent{animation:none!important}}
+
+
+/* v3.3 — image-forensics tools within the guided lab. */
+.osintimageforensics{background:#edf6fa;border:1px solid #b9d2df;border-radius:13px;padding:16px;margin:15px 0}
+.osintimageforensics h4{margin:0 0 13px;font-size:17px;color:#143e5b!important}
+.osintimagebuttons{display:flex;gap:9px;flex-wrap:wrap}
+.osintimagebuttons button{border:1px solid #a8c7d7;background:#fff;color:#15415d!important;border-radius:10px;min-height:43px;padding:10px 12px;font-size:14px;font-weight:800;white-space:normal}
+.osintimagebuttons button:hover{background:#e3f5ed;border-color:#0a826c}
+@media(max-width:600px){.osintimagebuttons button{width:100%}}
