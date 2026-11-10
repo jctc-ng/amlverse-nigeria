@@ -2009,3 +2009,14 @@ main.virtualassetgame .chainnote{
 .osintspecialist button:focus-visible{outline:3px solid #0d846e!important;outline-offset:3px!important}
 @media(max-width:950px){.osintspecialistlayout{grid-template-columns:1fr}.osintspecialistnav{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.osintspecialisthead{display:block}.osintspecialisthead>strong{display:inline-block;margin-top:13px}.osintspecialistnav{grid-template-columns:1fr}.osintspecialistactions button{width:100%}}
+
+
+/* v4.2 — context-specific international resources beside the simulated skill lab. */
+.osintlessonresources{border:1px solid #b6d5cb;background:#ebf7f1;border-radius:13px;padding:16px;margin-top:16px}
+.osintlessonresources>strong{display:block;color:#0c6056!important;-webkit-text-fill-color:#0c6056!important;font-size:15px;font-weight:850}
+.osintlessonresources>p{font-size:13px!important;line-height:1.7!important;color:#32546a!important;margin:8px 0 13px!important}
+.osintlessonresources>div{display:flex;flex-wrap:wrap;gap:8px}
+.osintlessonresources a{display:inline-flex;align-items:center;gap:8px;white-space:normal;text-decoration:none;background:#fff;border:1px solid #aac7d4;color:#114d6c!important;-webkit-text-fill-color:#114d6c!important;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:850;line-height:1.5}
+.osintlessonresources a:hover{background:#e0f3e9;border-color:#0b8672}
+.osintlessonresources a:focus-visible{outline:3px solid #0b8672;outline-offset:3px}
+.osintlessonresources a small{color:#086f65!important;font-size:16px}
