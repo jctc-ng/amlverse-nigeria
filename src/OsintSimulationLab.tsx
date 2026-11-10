@@ -1,4 +1,5 @@
 import {useMemo,useState} from 'react';
+import OsintGuidedAcademy,{guidedComplete,readGuidedProgress,guidedLessons} from './OsintGuidedAcademy';
 
 const STORAGE='amlverse-osint-lab-v1';
 export type OsintProgress={completed:string[];captures:string[];notes:Record<string,string>;hashes:Record<string,string>;log:{action:string;time:string}[]};
@@ -16,7 +17,7 @@ export const osintMissions=[
  {id:'evidence',title:'Build an evidence notebook',subtitle:'Source preservation and chain of custody',goal:'Preserve at least three relevant sources with descriptions and timestamps.',type:'evidence'},
  {id:'report',title:'Write the intelligence assessment',subtitle:'Analytical reporting and uncertainty',goal:'Document supported findings, important limitations and lawful investigative next steps.',type:'report'}
 ] as const;
-export function osintComplete(){return readOsintProgress().completed.length===osintMissions.length}
+export function osintComplete(){return guidedComplete()&&osintMissions.every(m=>readOsintProgress().completed.includes(m.id))}
 
 type Page={id:string;url:string;title:string;source:string;category:string;body:string;tags:string[];links:string[]};
 const pages:Page[]=[
@@ -42,6 +43,7 @@ function searchPages(input:string){const words=tokenize(input).filter(Boolean);
 const date=()=>new Date().toISOString();
 export default function OsintSimulationLab({onBack,onNext}:{onBack:()=>void;onNext:()=>void}){
  const [progress,setProgress]=useState(readOsintProgress);
+ const [mode,setMode]=useState<'guided'|'missions'>('guided');
  const [mission,setMission]=useState(0);
  const [page,setPage]=useState('search');
  const [query,setQuery]=useState('');
@@ -92,6 +94,9 @@ export default function OsintSimulationLab({onBack,onNext}:{onBack:()=>void;onNe
  const available=mission===0||progress.completed.includes(osintMissions[mission-1].id);
  return <main className="osintlab">
   <button type="button" className="back" onClick={onBack}>← Academy overview</button>
+  <div className="osintlearningtabs"><button type="button" className={mode==='guided'?'active':''} onClick={()=>setMode('guided')}>📖 Guided lessons · {readGuidedProgress().completed.length}/{guidedLessons.length}</button><button type="button" className={mode==='missions'?'active':''} disabled={!guidedComplete()&&progress.completed.length===0} onClick={()=>setMode('missions')}>🧭 Independent missions · {progress.completed.length}/{osintMissions.length}{!guidedComplete()&&progress.completed.length===0?' · Locked':''}</button></div>
+  {mode==='guided'?<OsintGuidedAcademy onMissions={()=>setMode('missions')}/>:null}
+  {mode==='missions'?<>
   <div className="osintheader"><div><span className="eyebrow">WORLD 01 · PRACTICAL OSINT INVESTIGATION</span><h1>OSINT Investigation & Digital Evidence Lab</h1><p>Conduct a fictional inquiry using the browser, search results, corporate records, social posts and evidence notebook inside this training environment.</p></div><div className="osintscore"><strong>{progress.completed.length} / {osintMissions.length}</strong><span>Practical missions complete</span></div></div>
   <div className="osintbanner">SIMULATED NETWORK ONLY · Fictional people and entities · No live social-media accounts or external navigation · Progress stored locally</div>
   <div className="osintworkspace">
@@ -112,6 +117,7 @@ export default function OsintSimulationLab({onBack,onNext}:{onBack:()=>void;onNe
    <div className="osintactions"><button type="button" className="primary" disabled={!available} onClick={complete}>{done?mission===osintMissions.length-1?'Continue to Virtual Assets →':'Next mission →':'Check task and complete →'}</button>{mission>0?<button type="button" className="secondary" onClick={()=>switchMission(mission-1)}>← Previous task</button>:null}</div>
    {progress.completed.length===osintMissions.length?<p className="osintsuccess">✓ All OSINT practical missions completed. Your next learning world is Virtual Assets & Blockchain Investigation.</p>:null}
    </section>
-  </div><p className="osintdisclaimer">AMLVERSE independently authored fictional educational exercises. No live browsing, private account access, real-person profiling or certified evidence preservation is performed here.</p>
+  </div></>}
+ <p className="osintdisclaimer">AMLVERSE independently authored fictional educational exercises. No live browsing, private account access, real-person profiling or certified evidence preservation is performed here.</p>
  </main>;
 }
