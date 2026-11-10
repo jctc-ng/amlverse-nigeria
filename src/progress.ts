@@ -14,12 +14,12 @@ export const modules:{id:CourseKey;title:string;icon:string;scoreKey:string;maxS
 export const learningSequence:CourseKey[]=['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'];
 const blockchainFirst:CourseKey[]=['virtualassets','advancedtrace','reportwriting','risk','team','evaluation','egmont','typologies','nigeria'];
 const pathKey='amlverse-learning-path-v1';
-export type LearningPath='foundations'|'blockchain';
+export type LearningPath='foundations'|'blockchain'|'osint';
 export function readLearningPath():LearningPath{
- try{return localStorage.getItem(pathKey)==='blockchain'?'blockchain':'foundations'}catch{return 'foundations'}
+ try{const p=localStorage.getItem(pathKey);return p==='blockchain'?'blockchain':p==='foundations'?'foundations':'osint'}catch{return 'osint'}
 }
 export function setLearningPath(path:LearningPath){try{localStorage.setItem(pathKey,path)}catch{}}
-export function getLearningSequence():CourseKey[]{return readLearningPath()==='blockchain'?[...blockchainFirst]:[...learningSequence]}
+export function getLearningSequence():CourseKey[]{return readLearningPath()==='foundations'?[...learningSequence]:[...blockchainFirst]}
 export function nextLearningWorld(game:CourseKey):CourseKey|null {const sequence=getLearningSequence();return sequence[sequence.indexOf(game)+1]||null}
 const prefix='amlverse-course-v1-';
 const empty=():CourseProgress=>({lessons:[],checkPassed:false,checkAttempts:0,lastVisited:''});
