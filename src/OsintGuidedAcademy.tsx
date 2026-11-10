@@ -2,6 +2,7 @@ import {useEffect,useState} from 'react';
 import OsintSentenceBuilder,{correctSentence} from './OsintSentenceBuilder';
 import OsintWorkedExample from './OsintWorkedExample';
 import OsintVirtualBrowser from './OsintVirtualBrowser';
+import {osintTools} from './OsintToolDirectory';
 
 const KEY='amlverse-osint-guided-v1';
 export type GuidedProgress={completed:string[];attempts:Record<string,number>};
@@ -82,6 +83,20 @@ const walkthroughs:Record<string,{title:string;detail:string;pitfall:string}[]>=
  ]
 };
 
+const lessonResources:Record<string,string[]>={
+ intro:['OHCHR Berkeley Protocol','OSINT Framework','Bellingcat Video Tutorials'],
+ browser:['Google Search','Bing Search','OSINT Framework'],
+ boolean:['Google Search','Bing Search','regex101'],
+ regex:['regex101','CyberChef'],
+ username:['WhatsMyName','Sherlock'],
+ email:['Hunter','Have I Been Pwned','ICANN Lookup'],
+ phone:['Phone Number Parser (libphonenumber)'],
+ social:['Bellingcat Toolkit','Wayback Machine','Bellingcat Video Tutorials'],
+ image:['Google Lens','TinEye','ExifTool','OSINT at Home (video lessons)'],
+ domain:['ICANN Lookup','Google DNS','crt.sh'],
+ hash:['CyberChef','ExifTool'],
+ custody:['OHCHR Berkeley Protocol','CyberChef','Wayback Machine']
+};
 export function readGuidedProgress():GuidedProgress{
  try{const v=JSON.parse(localStorage.getItem(KEY)||'{}') as Partial<GuidedProgress>;
  return {completed:Array.isArray(v.completed)?v.completed.filter((x):x is string=>typeof x==='string'):[],attempts:v.attempts&&typeof v.attempts==='object'?v.attempts:{}}}
@@ -143,7 +158,7 @@ export default function OsintGuidedAcademy({onMissions}:{onMissions:()=>void}){
   <div className="osintguidedcontent"><div className="osintguidedlessonhead"><span className="eyebrow">{lesson.level.toUpperCase()} · LESSON {index+1} OF {guidedLessons.length}</span><h3>{lesson.title}</h3><p>{lesson.skill}</p></div>
   <div className="osintguidedtheory"><strong>01 · Learn the concept</strong><p>{lesson.demo}</p></div><section className="osintwalkthrough" aria-label="Guided investigation walkthrough"><div className="osintwalkhead"><strong>02 · Learn the investigation workflow</strong><span>Step {walkStep+1} of {walkthroughs[lesson.id].length}</span></div><div className="osintwalkdots" aria-hidden="true">{walkthroughs[lesson.id].map((_,i)=><i key={i} className={i<=walkStep?"active":""}/>)}</div><div className="osintwalkcontent" key={lesson.id+"-"+walkStep}><h4>{walkthroughs[lesson.id][walkStep].title}</h4><p>{walkthroughs[lesson.id][walkStep].detail}</p><div className="osintwalkpitfall"><strong>Professional caution</strong><p>{walkthroughs[lesson.id][walkStep].pitfall}</p></div></div><div className="osintwalkactions"><button type="button" className="secondary" disabled={walkStep===0} onClick={()=>setWalkStep(n=>Math.max(0,n-1))}>← Previous technique</button><button type="button" className="primary" disabled={walkStep===walkthroughs[lesson.id].length-1} onClick={()=>setWalkStep(n=>Math.min(walkthroughs[lesson.id].length-1,n+1))}>Next technique →</button></div></section>
   <OsintWorkedExample key={lesson.id} lessonId={lesson.id}/>
-  <div className="osintguidedbrowserlesson"><div><span className="eyebrow">04 · LEARN BY DOING</span><h3>Investigate using the virtual OSINT browser</h3><p>Use the training tools below to examine fictional records. Compare the example with the simulated findings before you complete your own skill task.</p></div><OsintVirtualBrowser lessonId={lesson.id}/></div>
+  <div className="osintguidedbrowserlesson"><div><span className="eyebrow">04 · LEARN BY DOING</span><h3>Investigate using the virtual OSINT browser</h3><p>Use the training tools below to examine fictional records. Compare the example with the simulated findings before you complete your own skill task.</p></div><OsintVirtualBrowser lessonId={lesson.id}/><div className="osintlessonresources"><strong>Real-world free tools and video resources for this technique</strong><p>Optional external reference pages. The exercise above stays inside AMLVERSE and never searches real people or records.</p><div>{(lessonResources[lesson.id]||[]).map(name=>{const t=osintTools.find(item=>item.name===name);return t?<a key={name} href={t.url} target="_blank" rel="noopener noreferrer" title={t.purpose}>{t.name} <small>↗</small></a>:null})}</div></div></div>
   <div className="osintguidedpractice"><strong>05 · Your interactive practice task</strong><p>{lesson.task}</p>
   {tool==='intro'?<div className="osintsentencepair"><OsintSentenceBuilder key="introQuestion" exercise="introQuestion" onChange={setResponse}/><OsintSentenceBuilder key="introEvidence" exercise="introEvidence" onChange={setSupport}/></div>:null}
   {tool==='browser'||tool==='boolean'?<><label>Simulated search query<input aria-label="Guided search query" value={response} onChange={e=>setResponse(e.target.value)} placeholder={tool==='boolean'?'"Meridian Aid" site:registry.osint.lab':'Meridian Aid Logistics'}/></label><div className="osintguidedsim"><span>🔎 TRAINING SEARCH ENGINE</span>{response.trim()?<div><strong>{response.toLowerCase().includes('meridian')?'Meridian Aid Logistics — Registry result':'No precise results yet'}</strong><p>{response.toLowerCase().includes('meridian')?'registry.osint.lab/RC802116 · Check whether the result is official within this fictional dataset.':'Try a name from the case brief. Search operators refine what appears.'}</p></div>:<p>Search results will appear here as you type.</p>}</div></>:null}
