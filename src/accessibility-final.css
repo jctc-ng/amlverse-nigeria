@@ -1852,3 +1852,32 @@ main.virtualassetgame .chainnote{
 @media(max-width:600px){.osintsentencehead{align-items:flex-start}.osintsentencearea{min-height:93px}.osintsentencebank{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.osintsentenceword{width:100%}.osintsentencecontrols button{flex:1 1 auto}}
 @media(max-width:390px){.osintsentencebank{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.osintsentencechosen,.osintsentenceword,.osintsentencearea{animation:none!important;transition:none!important;transform:none!important}}
+
+
+/* v3.5 — Interactive worked examples that precede each OSINT learning task. */
+.osintworked{background:#f2f8fb!important;border:1.5px solid #b6d3e0;border-radius:18px;padding:clamp(17px,2.5vw,25px);margin:20px 0;box-shadow:0 5px 18px rgba(13,57,88,.055)}
+.osintworkedtop{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;flex-wrap:wrap}
+.osintworkedtop .eyebrow{color:#086c6f!important;-webkit-text-fill-color:#086c6f!important;font-size:13px!important;font-weight:850}
+.osintworkedtop h3{color:#103e59!important;-webkit-text-fill-color:#103e59!important;font-size:clamp(20px,2.4vw,24px)!important;line-height:1.4!important;margin:8px 0 11px!important}
+.osintworkedcounter{background:#e1f3e9;border:1px solid #abd3bf;border-radius:999px;color:#11614f!important;font-size:13px!important;font-weight:850;padding:8px 12px}
+.osintworkedcase{padding:15px 17px;background:#fff;border:1px solid #c1d7e2;border-radius:12px;font-size:15px!important;line-height:1.75!important;color:#2f5267!important;margin:8px 0 17px!important}
+.osintworkedcase strong{color:#0d5266!important;-webkit-text-fill-color:#0d5266!important}
+.osintworkedsteps{display:grid;gap:10px}
+.osintworkedstep{display:flex;align-items:flex-start;gap:13px;padding:14px 15px;border:1px solid #bfd5e0;background:#fff;border-radius:12px;animation:aml-stage-fade .23s ease-out both}
+.osintworkedstep.current{border-color:#56ad92;background:#eef9f3}
+.osintworkedstep>span{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;background:#e0eef5;color:#174d65!important;font-size:14px;font-weight:900;border-radius:10px}
+.osintworkedstep.current>span{color:#fff!important;background:#0c806d}
+.osintworkedstep>div{min-width:0;flex:1}
+.osintworkedstep strong{color:#103d59!important;-webkit-text-fill-color:#103d59!important;font-size:16px!important;line-height:1.5!important}
+.osintworkedphrase{margin:11px 0;padding:11px 13px;background:#e6f3f8;border:1px solid #b7d0df;border-radius:9px;color:#0c4f64!important;-webkit-text-fill-color:#0c4f64!important;font-size:16px!important;font-weight:800!important;overflow-wrap:anywhere}
+.osintworkedstep p{margin:8px 0 0!important;color:#315368!important;-webkit-text-fill-color:#315368!important;font-size:15px!important;line-height:1.75!important}
+.osintworkedresult{margin-top:16px;background:#e4f5eb;border:1px solid #a1d0b8;border-left:5px solid #0d836d;border-radius:12px;padding:16px 18px}
+.osintworkedresult strong{color:#0a5d4b!important;-webkit-text-fill-color:#0a5d4b!important;font-size:15px!important}
+.osintworkedresult p{color:#134e53!important;-webkit-text-fill-color:#134e53!important;font-size:17px!important;font-weight:800!important;line-height:1.6!important;margin:9px 0!important;overflow-wrap:anywhere}
+.osintworkedresult small{color:#275369!important;-webkit-text-fill-color:#275369!important;font-size:14px!important;line-height:1.7!important}
+.osintworkedcontrols{display:flex;flex-wrap:wrap;gap:10px;margin:17px 0 8px}
+.osintworkedcontrols button{font-size:14px!important;min-height:44px!important;border-radius:11px!important;font-weight:850!important}
+.osintworkedfoot{color:#305266!important;-webkit-text-fill-color:#305266!important;font-size:13px!important;line-height:1.7!important;margin:12px 0 0!important}
+.osintworked button:focus-visible{outline:3px solid #0a866e!important;outline-offset:3px!important}
+@media(max-width:600px){.osintworkedcontrols button{width:100%}.osintworkedstep{padding:12px}.osintworkedphrase{font-size:15px!important}}
+@media(prefers-reduced-motion:reduce){.osintworkedstep{animation:none!important}}
