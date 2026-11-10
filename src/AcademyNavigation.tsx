@@ -2,10 +2,11 @@ import {useState} from 'react';
 import {modules,readCourse,readScore} from './progress';
 import type {CourseKey} from './progress';
 
-export type MenuScreen='home'|'progress'|'chapter'|'risklab'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets'|'advancedtrace'|'reportwriting'|'capstone'|'resources'|'mission'|'about'|'impact';
+export type MenuScreen='osint'|'home'|'progress'|'chapter'|'risklab'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'virtualassets'|'advancedtrace'|'reportwriting'|'capstone'|'resources'|'mission'|'about'|'impact';
 type MenuEntry={id:MenuScreen;title:string;symbol:string;course?:CourseKey};
 type MenuGroup={id:string;title:string;short:string;entries:MenuEntry[]};
 const groups:MenuGroup[]=[
+{id:'osint',title:'01 · OSINT Investigation Laboratory',short:'OSINT',entries:[{id:'osint',title:'OSINT Practical Simulation',symbol:'🔎'}]},
 {id:'foundation',title:'Foundations & Standards',short:'Foundation',entries:[
 {id:'risklab',title:'RiskLab Arcade',symbol:'◈',course:'risk'},
 {id:'team',title:'Teamwork Arcade',symbol:'♧',course:'team'},
