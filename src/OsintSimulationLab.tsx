@@ -1,11 +1,11 @@
 import {useMemo,useState} from 'react';
 
 const STORAGE='amlverse-osint-lab-v1';
-export type OsintProgress={completed:string[];captures:string[];notes:Record<string,string>;log:{action:string;time:string}[]};
-const empty=():OsintProgress=>({completed:[],captures:[],notes:{},log:[]});
+export type OsintProgress={completed:string[];captures:string[];notes:Record<string,string>;hashes:Record<string,string>;log:{action:string;time:string}[]};
+const empty=():OsintProgress=>({completed:[],captures:[],notes:{},hashes:{},log:[]});
 export function readOsintProgress():OsintProgress{
  try{const raw=JSON.parse(localStorage.getItem(STORAGE)||'null') as Partial<OsintProgress>|null;
-  return raw?{completed:Array.isArray(raw.completed)?raw.completed.filter(x=>typeof x==='string'):[],captures:Array.isArray(raw.captures)?raw.captures.filter(x=>typeof x==='string'):[],notes:raw.notes&&typeof raw.notes==='object'?raw.notes:{},log:Array.isArray(raw.log)?raw.log:[]}:empty()
+  return raw?{completed:Array.isArray(raw.completed)?raw.completed.filter(x=>typeof x==='string'):[],captures:Array.isArray(raw.captures)?raw.captures.filter(x=>typeof x==='string'):[],notes:raw.notes&&typeof raw.notes==='object'?raw.notes:{},hashes:raw.hashes&&typeof raw.hashes==='object'?raw.hashes:{},log:Array.isArray(raw.log)?raw.log:[]}:empty()
  }catch{return empty()}
 }
 export const osintMissions=[
@@ -61,11 +61,14 @@ export default function OsintSimulationLab({onBack,onNext}:{onBack:()=>void;onNe
  function store(next:OsintProgress){setProgress(next);try{localStorage.setItem(STORAGE,JSON.stringify(next))}catch{}}
  function log(action:string){store({...progress,log:[...progress.log,{action,time:date()}].slice(-150)})}
  function visit(id:string){if(!pages.some(p=>p.id===id))return;setPage(id);setCapturePrompt(false);setCaptureNote('');setHistory(h=>[...h,id].slice(-40));setTab(ts=>ts.includes(id)?ts:[...ts,id]);setFeedback('')}
- function capture(){
+ async function capture(){
   if(page==='search')return setFeedback('Open a source page before preserving evidence.');
   if(captureNote.trim().length<15)return setFeedback('Write a source-specific evidence description (at least 15 characters).');
-  store({...progress,captures:[...new Set([...progress.captures,page])],notes:{...progress.notes,[page]:captureNote.trim()},log:[...progress.log,{action:'Captured '+current.url+' — '+captureNote.trim(),time:date()}].slice(-150)});
-  setCapturePrompt(false);setCaptureNote('');setFeedback('Evidence captured with source URL and time recorded in the notebook.');
+  const content=JSON.stringify({url:current.url,title:current.title,source:current.source,body:current.body});
+  const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(content));
+  const hash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
+  store({...progress,captures:[...new Set([...progress.captures,page])],notes:{...progress.notes,[page]:captureNote.trim()},hashes:{...progress.hashes,[page]:hash},log:[...progress.log,{action:'Captured '+current.url+' — SHA-256 '+hash+' — '+captureNote.trim(),time:date()}].slice(-150)});
+  setCapturePrompt(false);setCaptureNote('');setFeedback('Evidence captured with its URL, simulated-source SHA-256 digest and time recorded in the notebook.');
  }
  function complete(){
   if(done){if(mission<osintMissions.length-1)setMission(m=>m+1);else onNext();return}
@@ -79,6 +82,11 @@ export default function OsintSimulationLab({onBack,onNext}:{onBack:()=>void;onNe
   if(why){setFeedback(why);return}
   store({...progress,completed:[...new Set([...progress.completed,task.id])],notes:{...progress.notes,...(task.id==='report'?{'final-findings':report.findings,'final-limitations':report.limitations,'final-steps':report.steps}: {})},log:[...progress.log,{action:'Completed OSINT mission '+task.id,time:date()}].slice(-150)});
   setFeedback('Mission completed. Your investigation progress was saved in this browser.');
+ }
+ function downloadDossier(){
+  const bundle={notice:'Simulated training records only — not independently verified forensic evidence',exportedAt:date(),missions:progress.completed,evidence:captured.map(c=>({id:c.id,url:c.url,title:c.title,source:c.source,content:c.body,sha256:progress.hashes[c.id]||'not hashed',note:progress.notes[c.id]||''})),log:progress.log,report:{findings:progress.notes['final-findings']||report.findings,limitations:progress.notes['final-limitations']||report.limitations,nextSteps:progress.notes['final-steps']||report.steps}};
+  const url=URL.createObjectURL(new Blob([JSON.stringify(bundle,null,2)],{type:'application/json'}));
+  const a=document.createElement('a');a.href=url;a.download='AMLVERSE_OSINT_training_dossier.json';a.click();URL.revokeObjectURL(url);
  }
  function switchMission(i:number){if(i>0&&!progress.completed.includes(osintMissions[i-1].id)){setFeedback('Complete the previous mission to unlock this practical task.');return}setMission(i);setFeedback('')}
  const available=mission===0||progress.completed.includes(osintMissions[mission-1].id);
@@ -98,7 +106,7 @@ export default function OsintSimulationLab({onBack,onNext}:{onBack:()=>void;onNe
     <div className="osintpage">
      {page==='search'?<><h3>OSINT Search</h3><p>Search for fictional companies, directors, public posts and technical records. Results come from this closed training dataset.</p><form onSubmit={e=>{e.preventDefault();setSearched(query);setFeedback('');log('Search: '+query)}}><input aria-label="Search simulated web" placeholder='Try "Meridian Aid" or RC802116' value={query} onChange={e=>setQuery(e.target.value)}/><button className="primary" type="submit">Search</button></form>{searched?<div className="osintresults"><strong>{results.length} simulated results for “{searched}”</strong>{results.length?results.map(p=><button type="button" key={p.id} onClick={()=>visit(p.id)}><strong>{p.title}</strong><small>https://{p.url}</small><span>{p.body.slice(0,165)}…</span></button>):<p>No matching indexed documents. Try fewer keywords or a different spelling.</p>}</div>:null}</>:<><span className="eyebrow">{current.source}</span><h3>{current.title}</h3><p>{current.body}</p><div className="osintwebmeta"><span>TRAINING SOURCE</span><span>Captured content may be incomplete or self-reported</span></div><h4>Related records</h4><div className="osintlinks">{current.links.map(id=><button type="button" key={id} onClick={()=>visit(id)}>{pages.find(p=>p.id===id)?.title} →</button>)}</div><div className="osintcapture"><button className="primary" type="button" onClick={()=>setCapturePrompt(p=>!p)}>＋ Preserve this source in Evidence Vault</button>{progress.captures.includes(page)?<span>✓ Captured</span>:null}</div>{capturePrompt?<div className="osintcaptureform"><label htmlFor="osint-note">What does this source show, and what does it not establish?</label><textarea id="osint-note" value={captureNote} onChange={e=>setCaptureNote(e.target.value)} rows={3} placeholder="Record a specific observation, the source's limitations, and why it is relevant."/><button type="button" onClick={capture} className="primary">Save evidence with timestamp</button></div>:null}</>}
     </div></div>:null}
-   {task.type==='evidence'||task.type==='report'?<section className="osintvault"><h3>Evidence Vault</h3><p>Each captured record contains its original fictional URL, your description and a timestamped action log. This is a training record, not a forensic-grade collection system.</p>{captured.length?<div className="osintevidence">{captured.map((c,i)=><article key={c.id}><strong>EXH-{String(i+1).padStart(3,'0')} · {c.title}</strong><small>https://{c.url}</small><p>{progress.notes[c.id]}</p></article>)}</div>:<p>No evidence captured. Navigate to fictional sources and select Preserve.</p>}<details><summary>Investigation action log ({progress.log.length})</summary><div className="osintlog">{progress.log.map((x,i)=><p key={i}><time>{x.time}</time> · {x.action}</p>)}</div></details></section>:null}
+   {task.type==='evidence'||task.type==='report'?<section className="osintvault"><h3>Evidence Vault</h3><p>Each captured record contains its original fictional URL, your description and a timestamped action log. This is a training record, not a forensic-grade collection system.</p>{captured.length?<div className="osintevidence">{captured.map((c,i)=><article key={c.id}><strong>EXH-{String(i+1).padStart(3,'0')} · {c.title}</strong><small>https://{c.url}</small><p>{progress.notes[c.id]}</p><small>SHA-256 (synthetic source snapshot): {progress.hashes[c.id]||'Not available'}</small></article>)}</div>:<p>No evidence captured. Navigate to fictional sources and select Preserve.</p>}<button type="button" className="secondary" onClick={downloadDossier}>Download training evidence dossier (JSON) ↓</button><details><summary>Investigation action log ({progress.log.length})</summary><div className="osintlog">{progress.log.map((x,i)=><p key={i}><time>{x.time}</time> · {x.action}</p>)}</div></details></section>:null}
    {task.type==='report'?<div className="osintreport"><p>Write an intelligence assessment. Separate corroborated observations from inferences, note important limitations, and propose proportionate lawful follow-up. This exercise checks completion and length; it does not independently verify analytical accuracy.</p>{([{key:'findings',label:'Evidence-supported findings',hint:'Summarise which company, social and domain records were obtained, how they relate, and what each shows.'},{key:'limitations',label:'Alternative explanations and evidential limitations',hint:'Which sources are self-reported, and what cannot be inferred about ownership, wrongdoing or identity?'},{key:'steps',label:'Proportionate next investigative steps',hint:'Describe source verification, records preservation, and any lawful information requests.'}] as const).map(f=><label key={f.key}>{f.label}<small>{f.hint}</small><textarea value={report[f.key]} rows={5} onChange={e=>setReport(p=>({...p,[f.key]:e.target.value}))}/></label>)}<p className="osinttip">Preserve your findings before relying on them. Learner-generated drafts remain in this browser.</p></div>:null}
    {feedback?<p role="status" className="osintfeedback">{feedback}</p>:null}
    <div className="osintactions"><button type="button" className="primary" disabled={!available} onClick={complete}>{done?mission===osintMissions.length-1?'Continue to Virtual Assets →':'Next mission →':'Check task and complete →'}</button>{mission>0?<button type="button" className="secondary" onClick={()=>switchMission(mission-1)}>← Previous task</button>:null}</div>
