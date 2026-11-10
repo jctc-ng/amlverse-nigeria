@@ -1,5 +1,6 @@
 import LearningTownMap from './LearningTownMap';
-import {osintMissions,readOsintProgress} from './OsintSimulationLab';
+import {osintMissions,readOsintProgress,osintComplete} from './OsintSimulationLab';
+import {guidedLessons,readGuidedProgress} from './OsintGuidedAcademy';
 import {worldAccessible} from './LearningTownProgress';
 import {modules,readCourse,readFatf,readLearningPath,setLearningPath} from './progress';
 import {readAcademyMetrics} from './AcademyMetrics';
@@ -27,6 +28,9 @@ export default function AcademyOverview({openOsint,openCourse,openFatf,openProgr
  const metrics=readAcademyMetrics();
  const osint=readOsintProgress();
  const osintDone=osint.completed.length;
+ const osintGuided=readGuidedProgress().completed.length;
+ const osintActivities=osintDone+osintGuided;
+ const osintTotal=guidedLessons.length+osintMissions.length;
  const activePath=readLearningPath();
  const orderedTracks=activePath==='foundations'?[tracks[0],tracks[1],tracks[2]]:[tracks[2],tracks[0],tracks[1]];
  const courseCards=metrics.worlds.map(m=>{const learning=readCourse(m.id);return {...m,...descriptions[m.id],steps:m.done,lessons:learning.lessons.length,passed:learning.checkPassed,done:m.done===m.total,celebrated:hasCelebrated(m.id)}}); 
@@ -37,7 +41,7 @@ export default function AcademyOverview({openOsint,openCourse,openFatf,openProgr
  const totalMilestones=metrics.total;
  const percentage=metrics.percent;
  const next=metrics.resume||metrics.worlds[0];
- const showOsintFirst=activePath==='osint'&&osintDone<osintMissions.length;
+ const showOsintFirst=activePath==='osint'&&!osintComplete();
  const latest=courseCards.find(m=>m.id==='reportwriting')!;
  return <main className="academyhome">
  <section className="academyhero">
@@ -49,13 +53,13 @@ export default function AcademyOverview({openOsint,openCourse,openFatf,openProgr
  <div className="academystat"><small>YOUR MILESTONES</small><strong>{completedMilestones}<span> / {totalMilestones}</span></strong><p>{percentage}% of all world activities</p><div className="academyprogressbar" aria-label={percentage+' percent completed'}><div style={{width:percentage+'%'}}/></div></div>
  <div className="academystat"><small>LEARNING POINTS</small><strong>{totalPoints.toLocaleString()}</strong><p>Saved scores plus FATF and legacy XP</p></div>
  <div className="academystat"><small>FATF QUEST</small><strong>{fatf.perfect}<span> / 40</span></strong><p>FATF Recommendations mastered</p></div></div>
- <div className="academynext"><span className="academynexticon" aria-hidden="true">🚀</span><div><b>{finished===modules.length?'All learning worlds completed!':'Your next recommended mission'}</b><p>{showOsintFirst?'OSINT Investigation & Digital Evidence · Practical simulation, '+osintDone+'/'+osintMissions.length+' missions completed':next.title+' · '+(next.resume?'Next: '+(next.sections.find(s=>s.id===next.resume)?.name||'Learning room'):'All activities complete')}</p></div><button type="button" className="secondary" onClick={()=>showOsintFirst?openOsint():openCourse(next.id,next.resume||undefined)}>{showOsintFirst?'Open OSINT Lab':next.resume?'Resume activity':'Review world'} →</button></div>
+ <div className="academynext"><span className="academynexticon" aria-hidden="true">🚀</span><div><b>{finished===modules.length?'All learning worlds completed!':'Your next recommended mission'}</b><p>{showOsintFirst?'OSINT Investigation & Digital Evidence · '+osintActivities+'/'+osintTotal+' guided lessons and missions completed':next.title+' · '+(next.resume?'Next: '+(next.sections.find(s=>s.id===next.resume)?.name||'Learning room'):'All activities complete')}</p></div><button type="button" className="secondary" onClick={()=>showOsintFirst?openOsint():openCourse(next.id,next.resume||undefined)}>{showOsintFirst?'Open OSINT Lab':next.resume?'Resume activity':'Review world'} →</button></div>
  </section>
  <section className="osintfirstcard" aria-label="First learning world OSINT">
- <div><span className="eyebrow">WORLD 01 · FIRST LEARNING WORLD</span><h2>🔎 OSINT Investigation & Digital Evidence</h2><p>Enter a self-contained simulated browser. Research fictional company, social-network, news and DNS records, preserve source evidence and prepare an intelligence assessment. Practical investigation comes first.</p><strong>{osintDone} / {osintMissions.length} practical missions completed</strong><div className="osintfirstmeter"><div style={{width:osintDone/osintMissions.length*100+'%'}}/></div><small>Next: Virtual Assets & Blockchain Investigation</small></div><button type="button" className="primary" onClick={()=>{setLearningPath('osint');openOsint()}}>{osintDone>0?'Continue OSINT Simulation →':'Start OSINT Simulation →'}</button>
+ <div><span className="eyebrow">WORLD 01 · FIRST LEARNING WORLD</span><h2>🔎 OSINT Investigation & Digital Evidence</h2><p>Begin with guided OSINT lessons from beginner to advanced: search, Boolean operators, Regex, usernames, email, telephone identifiers, social media, images, DNS, hashing and evidence handling. Then complete independent browser-based investigations.</p><strong>{osintActivities} / {osintTotal} guided lessons and investigation activities completed</strong><div className="osintfirstmeter"><div style={{width:osintActivities/osintTotal*100+'%'}}/></div><small>Next: Virtual Assets & Blockchain Investigation</small></div><button type="button" className="primary" onClick={()=>{setLearningPath('osint');openOsint()}}>{osintActivities>0?'Continue OSINT Learning →':'Start OSINT Simulation →'}</button>
  </section>
  <section className="academypathchoice" aria-label="Choose your learning starting point">
-  <div><span className="eyebrow">CHOOSE YOUR LEARNING PATH</span><h2>Begin with your professional interests</h2><p>The recommended route starts with six practical OSINT investigations, followed by Virtual Assets & Blockchain. The previous Foundations-first and Blockchain-first paths remain available for returning learners. Switching never deletes saved records.</p><small>Current pathway: {activePath==='osint'?'OSINT → Virtual Assets & Blockchain':activePath==='blockchain'?'Virtual Assets & Blockchain first':'Foundations & Standards first'}</small></div>
+  <div><span className="eyebrow">CHOOSE YOUR LEARNING PATH</span><h2>Begin with your professional interests</h2><p>The recommended route begins with 12 guided OSINT skill labs followed by six practical investigations, then Virtual Assets & Blockchain. The previous Foundations-first and Blockchain-first paths remain available for returning learners. Switching never deletes saved records.</p><small>Current pathway: {activePath==='osint'?'OSINT → Virtual Assets & Blockchain':activePath==='blockchain'?'Virtual Assets & Blockchain first':'Foundations & Standards first'}</small></div>
   <div className="academypathactions"><button type="button" className={activePath==='osint'?'primary':'secondary'} onClick={()=>{setLearningPath('osint');openOsint()}}>🔎 OSINT first → Virtual Assets & Blockchain</button><button type="button" className={activePath==='blockchain'?'primary':'secondary'} onClick={()=>{setLearningPath('blockchain');openCourse('virtualassets')}}>🔗 Start with Virtual Assets & Blockchain →</button><button type="button" className={activePath==='foundations'?'primary':'secondary'} onClick={()=>{setLearningPath('foundations');openCourse('risk')}}>◈ Start with Foundations & Standards →</button></div>
  </section>
  <LearningTownMap openCourse={openCourse} openOsint={openOsint}/>
