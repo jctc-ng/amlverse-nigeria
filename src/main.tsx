@@ -1,4 +1,5 @@
 import CompetencyImpact from './CompetencyImpact';
+import OsintSimulationLab from './OsintSimulationLab';
 import ProjectResearch from './ProjectResearch';
 import LockedDistrictDialog from './LockedDistrictDialog';
 import LockedCapstoneDialog from './LockedCapstoneDialog';
@@ -22,7 +23,7 @@ import {nextLearningWorld} from './progress';
 import type {CourseKey} from './progress';
 
 
-type Screen='home'|'mission'|'resources'|'chapter'|'risklab'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'progress'|'virtualassets'|'advancedtrace'|'reportwriting'|'capstone'|'about'|'impact';
+type Screen='osint'|'home'|'mission'|'resources'|'chapter'|'risklab'|'team'|'evaluation'|'egmont'|'typologies'|'nigeria'|'progress'|'virtualassets'|'advancedtrace'|'reportwriting'|'capstone'|'about'|'impact';
 type Saved=Record<string,{xp:number;complete:boolean}>;
 function App(){
  const [screen,setScreen]=useState<Screen>('home');
@@ -41,6 +42,7 @@ function App(){
  const scenario=active.scenarios[index];
  function canStartCapstone(){return (['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'] as CourseKey[]).every(id=>{const w=worldMilestones(id);return w.done===w.total})}
  function navigateScreen(next:Screen){
+  if(next==='osint'){setScreen('osint');window.scrollTo(0,0);return}
   const courseId=(next==='risklab'?'risk':['risk','team','evaluation','egmont','typologies','nigeria','virtualassets','advancedtrace','reportwriting'].includes(next)?next:null) as CourseKey|null;
   if(courseId){openCourse(courseId);return}
   if(next==='capstone'&&!canStartCapstone()){setCapstoneLocked(true);return}
@@ -54,7 +56,8 @@ function App(){
  return <div className="shell">
  <AcademyNavigation screen={screen} onNavigate={navigateScreen}/>
  <div className="page"><header><div className="mobilebrand">✦ AMLVERSE <span>NIGERIA</span></div><div className="headeritems"><span className="demo">● PUBLIC DEMO</span><div className="avatar">LE</div></div></header>
- {screen==='home'?<AcademyOverview openCourse={openCourse} openFatf={()=>setScreen('chapter')} openProgress={()=>setScreen('progress')} openResources={()=>setScreen('resources')} openCapstone={()=>navigateScreen('capstone')} openResearch={()=>navigateScreen('about')} openImpact={()=>navigateScreen('impact')}/>
+ {screen==='home'?<AcademyOverview openOsint={()=>navigateScreen('osint')} openCourse={openCourse} openFatf={()=>setScreen('chapter')} openProgress={()=>setScreen('progress')} openResources={()=>setScreen('resources')} openCapstone={()=>navigateScreen('capstone')} openResearch={()=>navigateScreen('about')} openImpact={()=>navigateScreen('impact')}/>
+ :screen==='osint'?<OsintSimulationLab onBack={()=>setScreen('home')} onNext={()=>openCourse('virtualassets')}/>
  :screen==='impact'?<CompetencyImpact onBack={()=>{setScreen('home');window.scrollTo(0,0)}} onLearn={()=>{setScreen('home');window.scrollTo(0,0)}}/>
  :screen==='about'?<ProjectResearch onBack={()=>{setScreen('home');window.scrollTo(0,0)}} onStart={()=>{setScreen('home');window.scrollTo(0,0)}}/>
  :screen==='progress'?<ProgressDashboard onBack={()=>setScreen('home')} onOpen={openCourse} onFatf={()=>setScreen('chapter')} onCapstone={()=>navigateScreen('capstone')} onImpact={()=>navigateScreen('impact')}/>
