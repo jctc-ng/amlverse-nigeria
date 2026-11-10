@@ -117,7 +117,7 @@ export default function OsintSimulationLab({onBack,onNext}:{onBack:()=>void;onNe
    <div className="osintactions"><button type="button" className="primary" disabled={!available} onClick={complete}>{done?mission===osintMissions.length-1?'Continue to Virtual Assets →':'Next mission →':'Check task and complete →'}</button>{mission>0?<button type="button" className="secondary" onClick={()=>switchMission(mission-1)}>← Previous task</button>:null}</div>
    {progress.completed.length===osintMissions.length?<p className="osintsuccess">✓ All OSINT practical missions completed. Your next learning world is Virtual Assets & Blockchain Investigation.</p>:null}
    </section>
-  </div></>}
+  </div></>:null}
  <p className="osintdisclaimer">AMLVERSE independently authored fictional educational exercises. No live browsing, private account access, real-person profiling or certified evidence preservation is performed here.</p>
  </main>;
 }
