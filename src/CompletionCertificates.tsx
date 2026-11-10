@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import {modules,readFatf,readScore} from './progress';
 import {readAcademyMetrics} from './AcademyMetrics';
+import {osintComplete,osintMissions} from './OsintSimulationLab';
+import {guidedLessons} from './OsintGuidedAcademy';
 
 type Award={id:string;title:string;kind:'Game'|'Course'|'Academy'|'Special';earned:boolean;detail:string};
 const NAME_KEY='amlverse-certificate-name-v1';
@@ -19,18 +21,19 @@ export function certificateAwards():Award[]{
  }));
  const fatf=readFatf();
  const allWorlds=metrics.worlds.every(w=>w.done===w.total);
+ const osintAward:Award={id:'course-osint',title:'OSINT Investigation & Digital Evidence',kind:'Course',earned:osintComplete(),detail:'Completed '+guidedLessons.length+' guided OSINT skill laboratories and '+osintMissions.length+' simulated investigation missions, including evidence capture and reporting'};
  const special:Award[]=[
   {id:'special-fatf',title:'FATF 40 Learning Quest',kind:'Special',earned:fatf.perfect===40,detail:'Mastered all 40 FATF Recommendation practice assessments'},
   {id:'special-capstone',title:'Integrated Capstone Challenge',kind:'Special',earned:readCapstone(),detail:'Passed the integrated fictional investigation assessment'},
   {id:'special-academy',title:'AMLVERSE Nigeria Complete Academy',kind:'Academy',earned:allWorlds,detail:'Completed all nine learning worlds and their required activities'}
  ];
- return [...gameAwards,...courseAwards,...special];
+ return [osintAward,...gameAwards,...courseAwards,...special];
 }
 
-export default function CompletionCertificates({worldOnly,autoOpen=false}:{worldOnly?:import('./progress').CourseKey;autoOpen?:boolean}={}){
+export default function CompletionCertificates({worldOnly,osintOnly=false,autoOpen=false}:{worldOnly?:import('./progress').CourseKey;osintOnly?:boolean;autoOpen?:boolean}={}){
  const [name,setName]=useState(readName);
- const [selected,setSelected]=useState<string|null>(autoOpen&&worldOnly?'course-'+worldOnly:null);
- const awards=certificateAwards().filter(a=>!worldOnly||(a.id==='course-'+worldOnly));
+ const [selected,setSelected]=useState<string|null>(autoOpen?(osintOnly?'course-osint':worldOnly?'course-'+worldOnly:null):null);
+ const awards=certificateAwards().filter(a=>osintOnly?a.id==='course-osint':!worldOnly||a.id==='course-'+worldOnly);
  const earned=awards.filter(a=>a.earned);
  const award=earned.find(a=>a.id===selected)||null;
  const validName=name.trim().length>=2&&name.trim().length<=100;
@@ -40,9 +43,9 @@ export default function CompletionCertificates({worldOnly,autoOpen=false}:{world
   try{localStorage.setItem(NAME_KEY,name.trim())}catch{}
   window.print();
  };
- return <section className={"progresssection certificates"+(worldOnly?" certificates-world":"")} aria-labelledby="certificates-title">
-  <div className="certificates-head"><div><span className="eyebrow">PERSONAL ACHIEVEMENTS</span><h2 id="certificates-title">{worldOnly?'Your course certificate':'Certificates of completion'}</h2>
-   <p>{worldOnly?'Complete all required activities in this world to receive its own course certificate. You do not need to finish any other world.':'Earn separate certificates for finished games, fully completed learning worlds, FATF Quest and the integrated Capstone. Only earned certificates can be printed.'}</p></div>
+ return <section className={"progresssection certificates"+(worldOnly||osintOnly?" certificates-world":"")} aria-labelledby="certificates-title">
+  <div className="certificates-head"><div><span className="eyebrow">PERSONAL ACHIEVEMENTS</span><h2 id="certificates-title">{worldOnly||osintOnly?'Your course certificate':'Certificates of completion'}</h2>
+   <p>{osintOnly?'Complete all '+guidedLessons.length+' guided laboratories and '+osintMissions.length+' investigation missions to unlock your OSINT completion certificate.':worldOnly?'Complete all required activities in this world to receive its own course certificate. You do not need to finish any other world.':'Earn separate certificates for OSINT, finished games, fully completed learning worlds, FATF Quest and the integrated Capstone. Only earned certificates can be printed.'}</p></div>
    <strong>{earned.length} / {awards.length} earned</strong></div>
   <label className="certificate-name-label" htmlFor="certificate-learner-name">Learner name for your certificates</label>
   <input id="certificate-learner-name" className="certificate-name" value={name} onChange={e=>{setName(e.target.value);try{localStorage.setItem(NAME_KEY,e.target.value)}catch{}}} maxLength={100} autoComplete="name" placeholder="Enter your full name"/>
