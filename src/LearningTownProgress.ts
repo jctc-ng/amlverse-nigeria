@@ -1,4 +1,5 @@
-import {getLearningSequence,modules,readScore} from './progress';
+import {getLearningSequence,readLearningPath,modules,readScore} from './progress';
+import {osintComplete} from './OsintSimulationLab';
 import type {CourseKey} from './progress';
 import {readWorldSections} from './WorldProgressOverview';
 
@@ -14,7 +15,7 @@ export function worldAccessible(id:CourseKey){
  if(isCourseUnlocked(id))return true;
  const sequence=getLearningSequence();
  const index=sequence.indexOf(id);
- if(index<=0)return true;
+ if(index<=0)return readLearningPath()!=='osint'||osintComplete();
  const previous=worldMilestones(sequence[index-1]);
  return previous.done===previous.total;
 }
@@ -31,7 +32,7 @@ export function sectionAccessible(game:CourseKey,section:string){
  return !!parts.find(p=>p.id===section);
 }
 export function sectionUnlockReason(game:CourseKey,section:string){
- if(!worldAccessible(game)){const sequence=getLearningSequence();const i=sequence.indexOf(game);return 'Complete '+(modules.find(m=>m.id===sequence[i-1])?.title||'the previous world')+' to unlock this town.'}
+ if(!worldAccessible(game)){const sequence=getLearningSequence();const i=sequence.indexOf(game);return i===0&&readLearningPath()==='osint'?'Complete the six practical OSINT missions first.':'Complete '+(modules.find(m=>m.id===sequence[i-1])?.title||'the previous world')+' to unlock this town.'}
  const parts=worldMilestones(game).parts;
  const index=learningPathOrder.indexOf(section as typeof learningPathOrder[number]);
  for(let i=0;i<index;i++){const step=parts.find(p=>p.id===learningPathOrder[i]);if(step&&step.done<step.total)return 'Complete '+step.name+' ('+step.done+'/'+step.total+') first.'}
