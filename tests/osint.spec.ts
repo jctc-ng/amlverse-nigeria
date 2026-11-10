@@ -1,0 +1,50 @@
+import {test,expect} from '@playwright/test';
+
+test('OSINT is the first learning world and virtual assets follows it',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ const first=page.locator('.townstop').first();
+ await expect(first).toContainText('OSINT Investigation Laboratory');
+ await expect(page.locator('.townstop').nth(1)).toContainText('Blockchain Harbour');
+ await expect(page.locator('.townstop').nth(1)).toContainText('LOCKED');
+ await first.getByRole('button',{name:/Start OSINT/}).click();
+ await expect(page.getByRole('heading',{name:'OSINT Investigation & Digital Evidence Lab'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Prepare the investigation workstation'})).toBeVisible();
+ await expect(page.getByText('TRAINING SANDBOX')).toHaveCount(0);
+});
+test('OSINT laboratory provides searchable synthetic documents and evidence collection',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/Start OSINT Simulation/}).click();
+ const lab=page.locator('main.osintlab');
+ await lab.locator('.osintchoice input').nth(0).check();
+ await lab.locator('.osintchoice input').nth(1).check();
+ await lab.locator('.osintchoice input').nth(2).check();
+ await lab.getByRole('button',{name:/Check task and complete/}).click();
+ await expect(lab.getByRole('status')).toContainText('Mission completed');
+ await lab.getByRole('button',{name:/Next mission/}).click();
+ await expect(lab.getByRole('heading',{name:'Find the company connection'})).toBeVisible();
+ await lab.getByRole('textbox',{name:'Search simulated web'}).fill('RC802116');
+ await lab.getByRole('button',{name:'Search',exact:true}).click();
+ await expect(lab.getByText('simulated results for')).toBeVisible();
+ await lab.locator('.osintresults button').first().click();
+ await expect(lab.getByRole('heading',{name:/Company registry extract/})).toBeVisible();
+ await lab.getByRole('button',{name:/Preserve this source in Evidence Vault/}).click();
+ await lab.getByLabel(/What does this source show/).fill('The fictional registry identifies a director but does not establish beneficial ownership.');
+ await lab.getByRole('button',{name:'Save evidence with timestamp'}).click();
+ await expect(lab.getByText('✓ Captured')).toBeVisible();
+ await lab.getByRole('button',{name:/Check task and complete/}).click();
+ await expect(lab.getByRole('status')).toContainText('Mission completed');
+ const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-osint-lab-v1')||'{}'));
+ expect(saved.completed).toEqual(['workstation','search']);
+ expect(saved.captures).toContain('registry');
+ expect(saved.notes.registry).toContain('beneficial ownership');
+});
+test('Returning learners can retain their foundations-first route without deleting OSINT progress',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/Start with Foundations & Standards/}).click();
+ await expect(page.getByRole('heading',{name:/Risk Assessment Basics/})).toBeVisible();
+ await page.getByRole('button',{name:/Academy overview/}).first().click();
+ await expect(page.locator('.townstop').first()).toContainText('Risk Academy');
+});
