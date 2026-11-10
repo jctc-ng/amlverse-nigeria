@@ -1,11 +1,12 @@
 import LearningTownMap from './LearningTownMap';
+import {osintMissions,readOsintProgress} from './OsintSimulationLab';
 import {worldAccessible} from './LearningTownProgress';
 import {modules,readCourse,readFatf,readLearningPath,setLearningPath} from './progress';
 import {readAcademyMetrics} from './AcademyMetrics';
 import type {CourseKey} from './progress';
 import {hasCelebrated} from './WorldCompletion';
 
-type Props={openCourse:(id:CourseKey,section?:string)=>void;openFatf:()=>void;openProgress:()=>void;openResources:()=>void;openCapstone:()=>void;openResearch:()=>void;openImpact:()=>void};
+type Props={openOsint:()=>void;openCourse:(id:CourseKey,section?:string)=>void;openFatf:()=>void;openProgress:()=>void;openResources:()=>void;openCapstone:()=>void;openResearch:()=>void;openImpact:()=>void};
 const descriptions:Record<CourseKey,{subtitle:string;description:string;color:string;label:string}>={
  risk:{subtitle:'Risk Assessment',description:'Identify threats, vulnerabilities and safeguards with a risk-based approach.',color:'#e4bd72',label:'FOUNDATIONS'},
  team:{subtitle:'Interagency Cooperation',description:'Match FIU analysts, supervisors, investigators and prosecutors to their roles.',color:'#72dcc2',label:'FOUNDATIONS'},
@@ -22,10 +23,12 @@ const tracks:{id:string;label:string;description:string;keys:CourseKey[]}[]=[
 {id:'intelligence',label:'Financial Intelligence & Cooperation',description:'Understand red flags, authorised sharing and Nigerian compliance responsibilities.',keys:['egmont','typologies','nigeria']},
 {id:'investigations',label:'Virtual Assets & Blockchain',description:'Trace synthetic transactions, investigate virtual assets and communicate evidence-based findings.',keys:['virtualassets','advancedtrace','reportwriting']}
 ];
-export default function AcademyOverview({openCourse,openFatf,openProgress,openResources,openCapstone,openResearch,openImpact}:Props){
+export default function AcademyOverview({openOsint,openCourse,openFatf,openProgress,openResources,openCapstone,openResearch,openImpact}:Props){
  const metrics=readAcademyMetrics();
+ const osint=readOsintProgress();
+ const osintDone=osint.completed.length;
  const activePath=readLearningPath();
- const orderedTracks=activePath==='blockchain'?[tracks[2],tracks[0],tracks[1]]:tracks;
+ const orderedTracks=activePath==='foundations'?[tracks[0],tracks[1],tracks[2]]:[tracks[2],tracks[0],tracks[1]];
  const courseCards=metrics.worlds.map(m=>{const learning=readCourse(m.id);return {...m,...descriptions[m.id],steps:m.done,lessons:learning.lessons.length,passed:learning.checkPassed,done:m.done===m.total,celebrated:hasCelebrated(m.id)}}); 
  const finished=metrics.fullWorlds;
  const fatf=readFatf();
@@ -34,10 +37,11 @@ export default function AcademyOverview({openCourse,openFatf,openProgress,openRe
  const totalMilestones=metrics.total;
  const percentage=metrics.percent;
  const next=metrics.resume||metrics.worlds[0];
+ const showOsintFirst=activePath==='osint'&&osintDone<osintMissions.length;
  const latest=courseCards.find(m=>m.id==='reportwriting')!;
  return <main className="academyhome">
  <section className="academyhero">
-  <div><span className="eyebrow gold">✦ AMLVERSE NIGERIA • LEARN • PLAY • APPLY</span><h1>Learn financial intelligence by <em>doing.</em></h1><p>Explore AML/CFT/CPF fundamentals, Nigerian compliance, FIU cooperation, cryptocurrency tracing and report writing through fictional interactive missions.</p><div className="academyheroactions"><button className="primary" type="button" onClick={()=>openCourse(next.id,next.resume||undefined)}>{next.done>0?'Resume next unfinished activity →':'Start your learning journey →'}</button><button className="secondary" type="button" onClick={openProgress}>My Progress →</button></div><small className="academyheronote">9 interactive worlds · FATF Quest R.1–R.40 · No account required</small></div>
+  <div><span className="eyebrow gold">✦ AMLVERSE NIGERIA • LEARN • PLAY • APPLY</span><h1>Learn financial intelligence by <em>doing.</em></h1><p>Explore AML/CFT/CPF fundamentals, Nigerian compliance, FIU cooperation, cryptocurrency tracing and report writing through fictional interactive missions.</p><div className="academyheroactions"><button className="primary" type="button" onClick={()=>showOsintFirst?openOsint():openCourse(next.id,next.resume||undefined)}>{showOsintFirst?'Begin OSINT investigation →':next.done>0?'Resume next unfinished activity →':'Start your learning journey →'}</button><button className="secondary" type="button" onClick={openProgress}>My Progress →</button></div><small className="academyheronote">OSINT Simulation + 9 learning worlds · FATF Quest R.1–R.40 · No account required</small></div>
   <div className="academyheroillustration" aria-hidden="true"><div className="academyorb">✦</div><div className="academyorbitword one">LEARN</div><div className="academyorbitword two">ANALYSE</div><div className="academyorbitword three">MASTER</div></div>
  </section>
  <section aria-labelledby="academy-progress-title"><div className="sectionhead"><div><span className="eyebrow">PERSONAL LEARNING SNAPSHOT</span><h2 id="academy-progress-title">Academy overview</h2></div><span className="muted">Version 0.38 · Competency & Impact Evaluation</span></div><div className="academystats">
@@ -45,11 +49,14 @@ export default function AcademyOverview({openCourse,openFatf,openProgress,openRe
  <div className="academystat"><small>YOUR MILESTONES</small><strong>{completedMilestones}<span> / {totalMilestones}</span></strong><p>{percentage}% of all world activities</p><div className="academyprogressbar" aria-label={percentage+' percent completed'}><div style={{width:percentage+'%'}}/></div></div>
  <div className="academystat"><small>LEARNING POINTS</small><strong>{totalPoints.toLocaleString()}</strong><p>Saved scores plus FATF and legacy XP</p></div>
  <div className="academystat"><small>FATF QUEST</small><strong>{fatf.perfect}<span> / 40</span></strong><p>FATF Recommendations mastered</p></div></div>
- <div className="academynext"><span className="academynexticon" aria-hidden="true">🚀</span><div><b>{finished===modules.length?'All learning worlds completed!':'Your next recommended mission'}</b><p>{next.title} · {next.resume?'Next: '+(next.sections.find(s=>s.id===next.resume)?.name||'Learning room'):'All activities complete'}</p></div><button type="button" className="secondary" onClick={()=>openCourse(next.id,next.resume||undefined)}>{next.resume?'Resume activity':'Review world'} →</button></div>
+ <div className="academynext"><span className="academynexticon" aria-hidden="true">🚀</span><div><b>{finished===modules.length?'All learning worlds completed!':'Your next recommended mission'}</b><p>{showOsintFirst?'OSINT Investigation & Digital Evidence · Practical simulation, '+osintDone+'/'+osintMissions.length+' missions completed':next.title+' · '+(next.resume?'Next: '+(next.sections.find(s=>s.id===next.resume)?.name||'Learning room'):'All activities complete')}</p></div><button type="button" className="secondary" onClick={()=>showOsintFirst?openOsint():openCourse(next.id,next.resume||undefined)}>{showOsintFirst?'Open OSINT Lab':next.resume?'Resume activity':'Review world'} →</button></div>
+ </section>
+ <section className="osintfirstcard" aria-label="First learning world OSINT">
+ <div><span className="eyebrow">WORLD 01 · FIRST LEARNING WORLD</span><h2>🔎 OSINT Investigation & Digital Evidence</h2><p>Enter a self-contained simulated browser. Research fictional company, social-network, news and DNS records, preserve source evidence and prepare an intelligence assessment. Practical investigation comes first.</p><strong>{osintDone} / {osintMissions.length} practical missions completed</strong><div className="osintfirstmeter"><div style={{width:osintDone/osintMissions.length*100+'%'}}/></div><small>Next: Virtual Assets & Blockchain Investigation</small></div><button type="button" className="primary" onClick={()=>{setLearningPath('osint');openOsint()}}>{osintDone>0?'Continue OSINT Simulation →':'Start OSINT Simulation →'}</button>
  </section>
  <section className="academypathchoice" aria-label="Choose your learning starting point">
-  <div><span className="eyebrow">CHOOSE YOUR LEARNING PATH</span><h2>Begin with your professional interests</h2><p>Prefer cryptocurrency investigations? Start with Virtual Assets & Blockchain. Or follow the Foundations & Standards route. Both are guided pathways, and your saved results remain intact when switching.</p><small>Current pathway: {activePath==='blockchain'?'Virtual Assets & Blockchain first':'Foundations & Standards first'}</small></div>
-  <div className="academypathactions"><button type="button" className={activePath==='blockchain'?'primary':'secondary'} onClick={()=>{setLearningPath('blockchain');openCourse('virtualassets')}}>🔗 Start with Virtual Assets & Blockchain →</button><button type="button" className={activePath==='foundations'?'primary':'secondary'} onClick={()=>{setLearningPath('foundations');openCourse('risk')}}>◈ Start with Foundations & Standards →</button></div>
+  <div><span className="eyebrow">CHOOSE YOUR LEARNING PATH</span><h2>Begin with your professional interests</h2><p>The recommended route starts with six practical OSINT investigations, followed by Virtual Assets & Blockchain. The previous Foundations-first and Blockchain-first paths remain available for returning learners. Switching never deletes saved records.</p><small>Current pathway: {activePath==='osint'?'OSINT → Virtual Assets & Blockchain':activePath==='blockchain'?'Virtual Assets & Blockchain first':'Foundations & Standards first'}</small></div>
+  <div className="academypathactions"><button type="button" className={activePath==='osint'?'primary':'secondary'} onClick={()=>{setLearningPath('osint');openOsint()}}>🔎 OSINT first → Virtual Assets & Blockchain</button><button type="button" className={activePath==='blockchain'?'primary':'secondary'} onClick={()=>{setLearningPath('blockchain');openCourse('virtualassets')}}>🔗 Start with Virtual Assets & Blockchain →</button><button type="button" className={activePath==='foundations'?'primary':'secondary'} onClick={()=>{setLearningPath('foundations');openCourse('risk')}}>◈ Start with Foundations & Standards →</button></div>
  </section>
  <LearningTownMap openCourse={openCourse}/>
  <section aria-labelledby="academy-worlds-title"><div className="sectionhead"><div><span className="eyebrow">THE COMPLETE ACADEMY</span><h2 id="academy-worlds-title">Explore learning worlds</h2></div><span className="muted">{modules.length} playable worlds · 3 learning tracks</span></div>
