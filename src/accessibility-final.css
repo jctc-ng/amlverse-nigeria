@@ -1793,3 +1793,24 @@ main.virtualassetgame .chainnote{
 @media(max-width:980px){.osintguidedlayout{grid-template-columns:1fr}.osintguidedtoc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.osintguidedtoc h3{grid-column:1/-1}.osintguidedtoc button{margin:0}}
 @media(max-width:600px){.osintguidedhero{flex-direction:column;align-items:stretch}.osintguidedtotal{min-width:0}.osintguidedtoc{grid-template-columns:1fr}.osintguidedactions button,.osintlearningtabs button{width:100%}.osintguidedphoto{height:200px}.osintguidedbuilding{width:94%}}
 @media(prefers-reduced-motion:reduce){.osintguidedtoc button,.osintguidedoptions button{transition:none!important;transform:none!important}}
+
+
+/* v3.2 — Step-by-step OSINT investigation instruction, visible on every skill. */
+.osintwalkthrough{border:1px solid #bad4e1;border-radius:17px;background:#fff;padding:clamp(16px,2.3vw,22px);margin:20px 0;box-shadow:0 5px 15px rgba(17,63,91,.045)}
+.osintwalkhead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.osintwalkhead strong{color:#115d61!important;font-size:15px;font-weight:900}
+.osintwalkhead span{background:#e5f5ee;border:1px solid #a9d3c2;border-radius:999px;padding:7px 12px;color:#0e6557!important;font-size:12px;font-weight:850}
+.osintwalkdots{display:flex;gap:6px;margin:16px 0}
+.osintwalkdots i{height:7px;flex:1 1 0;background:#dbe9f0;border-radius:999px}
+.osintwalkdots i.active{background:#0d8873}
+.osintwalkcontent{background:#f3f8fb;border:1px solid #c3d8e2;border-radius:13px;padding:18px;animation:aml-stage-fade .26s ease-out both}
+.osintwalkcontent h4{font-size:19px;line-height:1.45;color:#123e5b!important;margin:0 0 12px}
+.osintwalkcontent>p{color:#305168!important;font-size:16px!important;line-height:1.8!important;margin:0 0 15px}
+.osintwalkpitfall{border-left:4px solid #af762c;background:#fff7eb;border-radius:8px;padding:12px 14px}
+.osintwalkpitfall strong{color:#77511f!important;font-size:14px;font-weight:850}
+.osintwalkpitfall p{margin:7px 0 0;color:#5b4935!important;font-size:14px!important;line-height:1.7!important}
+.osintwalkactions{display:flex;gap:11px;flex-wrap:wrap;margin-top:15px}
+.osintwalkactions button{min-height:44px;font-size:14px;font-weight:850;border-radius:10px}
+.osintwalkactions button:disabled{background:#e4ecf1!important;color:#425c6a!important;opacity:1!important;border:1px solid #bcd1da!important}
+@media(max-width:600px){.osintwalkactions button{width:100%}}
+@media(prefers-reduced-motion:reduce){.osintwalkcontent{animation:none!important}}
