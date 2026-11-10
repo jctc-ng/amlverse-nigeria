@@ -78,7 +78,6 @@ export default function OsintVirtualBrowser({lessonId,launchTool}:{lessonId?:str
     <div className="osintvsave"><button type="button" className="secondary" onClick={record}>＋ Save observation to notebook</button><button type="button" className="secondary" disabled={!notes.length} onClick={download}>Export notes ({notes.length}) ↓</button></div>
    </div>
   </div>
-  </div>
   <p className="osintvdisclaimer">This virtual browser runs entirely on synthetic records inside AMLVERSE. References to actual tools describe investigative methodology; it does not contact Companies House, CAC, Hunter, social platforms or any other third-party provider.</p>
  </section>;
 }
