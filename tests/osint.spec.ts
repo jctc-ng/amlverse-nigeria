@@ -149,3 +149,27 @@ test('Learner builds OSINT sentences using tap-to-select words, undo and reset',
  await expect(lab.getByText(/Competency recorded/)).toBeVisible();
  await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
 });
+
+test('Every guided OSINT skill includes a worked example before the practical task',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.osintfirstcard').getByRole('button').click();
+ const lab=page.locator('main.osintlab');
+ const worked=lab.locator('.osintworked');
+ const practice=lab.locator('.osintguidedpractice');
+ await expect(worked).toBeVisible();
+ await expect(practice).toBeVisible();
+ expect(await worked.evaluate(el=>Boolean(el.compareDocumentPosition(document.querySelector('.osintguidedpractice')!)&Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
+ await expect(worked.getByText('Harbourline Supplies', {exact:false}).first()).toBeVisible();
+ await worked.getByRole('button',{name:/Reveal next step/}).click();
+ await expect(worked.getByText('Choose the record and subject')).toBeVisible();
+ await worked.getByRole('button',{name:/Reveal next step/}).click();
+ await expect(worked.getByText('Finish with a focused subject')).toBeVisible();
+ await worked.getByRole('button',{name:/Reveal next step/}).click();
+ await expect(worked.getByText('Completed example')).toBeVisible();
+ await expect(worked.getByText('What do public registration records establish about Harbourline Supplies?')).toBeVisible();
+ await worked.getByRole('button',{name:/Replay example/}).click();
+ await expect(worked.getByText('Step 1 of 3')).toBeVisible();
+ await expect(practice.getByText('Construct your investigation question')).toBeVisible();
+ await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
+});
