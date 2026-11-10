@@ -81,14 +81,15 @@ test('Guided OSINT course teaches beginner searching and regex before missions',
  await lab.getByRole('button',{name:/Continue to next lesson/}).click();
  await expect(lab.getByRole('heading',{name:'Regular expressions (Regex)'})).toBeVisible();
  await lab.getByLabel('Regex expression').fill('RC[ -]?\\d{6}\\b');
- await expect(lab.getByText('✓ MATCH · RC 802116')).toBeVisible();
- await expect(lab.getByText('— NO MATCH · RC 123')).toBeVisible();
+ await expect(lab.locator('.osintguidedsim').getByText('✓ MATCH · RC 802116',{exact:true})).toBeVisible();
+ await expect(lab.locator('.osintguidedsim').getByText('— NO MATCH · RC 123',{exact:true})).toBeVisible();
  await lab.getByRole('button',{name:/Check my practical work/}).click();
  await expect(lab.getByText(/Competency recorded/)).toBeVisible();
  const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-osint-guided-v1')||'{}'));
  expect(stored.completed).toEqual(['intro','browser','boolean','regex']);
 });
 test('Guided OSINT email, phone, image, DNS and hash workbenches are functional',async({page,isMobile})=>{
+ test.slow(); // Multiple mobile skill simulations and animation transitions.
  await page.addInitScript(()=>localStorage.setItem('amlverse-osint-guided-v1',JSON.stringify({completed:['intro','browser','boolean','regex','username'],attempts:{}})));
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
