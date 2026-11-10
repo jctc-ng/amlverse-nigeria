@@ -100,6 +100,10 @@ test('Guided OSINT email, phone, image, DNS and hash workbenches are functional'
  await lab.getByRole('button',{name:/Check my practical work/}).click();
  await lab.getByRole('button',{name:/Continue to next lesson/}).click();
  await expect(lab.locator('.osintguidedphoto')).toBeVisible();
+ await lab.getByRole('button',{name:/Inspect metadata/}).click();
+ await expect(lab.getByText(/GPS: not present/)).toBeVisible();
+ await lab.getByRole('button',{name:/Run simulated reverse-image lookup/}).click();
+ await expect(lab.getByText(/Simulated visual search results/)).toBeVisible();
  await lab.getByRole('button',{name:/Location is unverified/}).click();
  await lab.getByLabel('Geolocation limitations').fill('The photograph lacks verified GPS coordinates and the building sign may be replicated.');
  await lab.getByRole('button',{name:/Check my practical work/}).click();
