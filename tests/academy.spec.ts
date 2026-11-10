@@ -1,6 +1,14 @@
 import {test,expect} from '@playwright/test';
 import {readFile} from 'node:fs/promises';
 
+// Legacy journey regression cases explicitly retain the established Foundations-first route.
+// New OSINT-first acceptance tests are isolated in osint.spec.ts.
+test.beforeEach(async({page})=>{
+ await page.addInitScript(()=>{
+  if(!localStorage.getItem('amlverse-learning-path-v1'))localStorage.setItem('amlverse-learning-path-v1','foundations');
+ });
+});
+
 test('Completing one world reveals its course certificate within that world',async({page,isMobile})=>{
  await page.addInitScript(()=>{
   localStorage.setItem('amlverse-course-v1-risk',JSON.stringify({lessons:[0,1,2],checkPassed:true,checkAttempts:1,lastVisited:''}));
