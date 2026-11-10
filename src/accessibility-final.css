@@ -1962,3 +1962,50 @@ main.virtualassetgame .chainnote{
 .osinttooldir button:focus-visible,.osintvbrowser button:focus-visible,.osinttoolsite:focus-visible{outline:3px solid #098873!important;outline-offset:2px!important}
 @media(max-width:900px){.osintvbody{grid-template-columns:1fr}.osintvsidebar{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid #c9dce5}.osintvsidebar>strong{flex:0 0 auto;align-self:center}.osintvsidebar button{flex:0 0 auto;white-space:nowrap}.osinttoolgrid{grid-template-columns:1fr}}
 @media(max-width:600px){.osintvwork form{flex-direction:column}.osinttoolfilters{grid-template-columns:1fr}.osinttooldirhead{display:block}.osinttooldirhead>strong{display:inline-block;margin:12px 0}.osintvtop{gap:8px}.osintvdots{display:none}.osintvsafe{font-size:10px}.osintvwork{padding:15px}.osintvsave button{width:100%}}
+
+
+/* v4.1 — Eight specialist OSINT investigation laboratories. */
+.osintspecialist{margin:24px 0;color:#163e5c}
+.osintspecialisthead{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:24px;background:#eef7fa;border:1px solid #b9d4e1;border-radius:19px;margin-bottom:19px}
+.osintspecialisthead .eyebrow,.osintspecialistcontent .eyebrow{color:#0b6971!important;-webkit-text-fill-color:#0b6971!important;font-weight:900;font-size:12px}
+.osintspecialisthead h2{margin:10px 0;font-size:clamp(24px,3vw,31px);line-height:1.3;color:#103e5a!important;-webkit-text-fill-color:#103e5a!important}
+.osintspecialisthead p{font-size:15px!important;line-height:1.7!important;color:#35566c!important;max-width:850px}
+.osintspecialisthead>strong{white-space:nowrap;padding:13px 16px;background:#e1f5e9;border:1px solid #a5d0b9;border-radius:13px;font-size:16px;color:#0d6554!important}
+.osintspecialistlayout{display:grid;grid-template-columns:minmax(240px,300px) minmax(0,1fr);gap:18px;align-items:start}
+.osintspecialistnav,.osintspecialistcontent{border:1px solid #bcd3e1;border-radius:17px;background:#fff;padding:clamp(16px,2vw,24px);box-shadow:0 4px 15px rgba(15,63,96,.04)}
+.osintspecialistnav{display:grid;gap:8px}
+.osintspecialistnav button{display:flex;align-items:center;text-align:left;gap:11px;padding:13px 11px;border-radius:12px;background:#fff;border:1px solid #bdd3e0;cursor:pointer;color:#16415d}
+.osintspecialistnav button.active{border-color:#07856f;background:#e5f6ed}
+.osintspecialistnav button:disabled{background:#f2f6f8;opacity:.77;cursor:not-allowed}
+.osintspecialistnav button>span{flex:0 0 30px;display:grid;place-items:center;height:30px;background:#e2eef5;color:#154b61!important;border-radius:9px;font-weight:850}
+.osintspecialistnav button.active>span{color:#fff!important;background:#0c7e6a}
+.osintspecialistnav button small{font-size:11px;color:#0c6672!important;font-weight:850;text-transform:uppercase}
+.osintspecialistnav button strong{display:block;margin-top:4px;font-size:14px;color:#23475f!important;line-height:1.55;font-weight:800}
+.osintspecialistcontent>h3{color:#133d5c!important;-webkit-text-fill-color:#133d5c!important;font-size:clamp(22px,2.8vw,28px);margin:10px 0;line-height:1.4}
+.osintspecialistgoal{color:#31536a!important;font-size:16px!important;line-height:1.75!important}
+.osintspecialistbrief,.osintspecialistexample,.osintspecialistbrowser,.osintspecialisttask{padding:clamp(17px,2.3vw,22px);background:#f4f9fc;border:1px solid #bfd5e2;border-radius:15px;margin:20px 0}
+.osintspecialistexample{background:#eaf6ef;border-left:5px solid #0c8670;border-color:#a5d0bc}
+.osintspecialistbrief>strong,.osintspecialistexample>strong,.osintspecialistbrowser>strong,.osintspecialisttask>strong{display:block;font-size:15px;color:#0c6359!important;font-weight:900;margin-bottom:11px}
+.osintspecialistbrief>p,.osintspecialistexample>p,.osintspecialisttask>p{font-size:15px!important;line-height:1.75!important;color:#2e5065!important}
+.osintspecialistexample small{font-size:13px;line-height:1.65;color:#30596a!important;display:block;margin-top:12px}
+.osintspecialistselected{display:flex;gap:9px;flex-wrap:wrap;background:#fff;border:2px dashed #a4cbd7;border-radius:12px;min-height:90px;padding:13px;align-items:center;margin:15px 0}
+.osintspecialistselected>span{font-size:15px;color:#446275!important}
+.osintspecialistselected button,.osintspecialistbank button{border-radius:10px!important;font-size:14px!important;line-height:1.55!important;font-weight:750!important;color:#16465e!important;-webkit-text-fill-color:#16465e!important;white-space:normal;text-align:left;min-height:45px;cursor:pointer}
+.osintspecialistselected button{padding:10px 12px;background:#e4f5ec;border:1px solid #82bba8}
+.osintspecialistselected button span{font-weight:900;color:#0d685a!important}
+.osintspecialistbank{display:grid;gap:9px}
+.osintspecialistbank button{background:#fff;border:1px solid #b3cddb;padding:13px 14px}
+.osintspecialistbank button:hover{background:#e6f7ef;border-color:#0a856f}
+.osintspecialistcontrols,.osintspecialistactions{display:flex;flex-wrap:wrap;gap:10px;margin:17px 0}
+.osintspecialistcontrols button,.osintspecialistactions button{border-radius:10px!important;min-height:44px;font-size:14px!important;font-weight:850!important}
+.osintspecialistlabel{margin-top:18px!important}
+.osintspecialistanswers{display:grid;gap:10px;margin:14px 0}
+.osintspecialistanswers button{background:#fff;border:1.5px solid #b7d0df;border-radius:12px;padding:15px;font-size:15px;font-weight:700;color:#214960!important;-webkit-text-fill-color:#214960!important;text-align:left;line-height:1.7;cursor:pointer}
+.osintspecialistanswers button.selected{background:#e5f6ed;border:2px solid #0b846f}
+.osintspecialistanswers button:hover{border-color:#0c856d}
+.osintspecialisthint,.osintspecialistwarning,.osintspecialistok{padding:13px 16px;border-radius:11px;font-size:14px!important;line-height:1.75!important}
+.osintspecialisthint,.osintspecialistwarning{background:#fff5e7;border:1px solid #d5b98a;color:#694a21!important}
+.osintspecialistok{background:#e4f5ed;border:1px solid #a6d2bd;color:#0b5d4f!important}
+.osintspecialist button:focus-visible{outline:3px solid #0d846e!important;outline-offset:3px!important}
+@media(max-width:950px){.osintspecialistlayout{grid-template-columns:1fr}.osintspecialistnav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.osintspecialisthead{display:block}.osintspecialisthead>strong{display:inline-block;margin-top:13px}.osintspecialistnav{grid-template-columns:1fr}.osintspecialistactions button{width:100%}}
