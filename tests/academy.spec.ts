@@ -31,7 +31,7 @@ test('Certificates start locked until a game or course is actually completed',as
  await page.getByRole('button',{name:/My Progress/}).first().click();
  const gallery=page.locator('.certificates');
  await expect(gallery.getByRole('heading',{name:'Certificates of completion'})).toBeVisible();
- await expect(gallery.locator('.certificate-tile')).toHaveCount(21);
+ await expect(gallery.locator('.certificate-tile')).toHaveCount(22);
  await expect(gallery.locator('.certificate-tile.earned')).toHaveCount(0);
  await expect(gallery.locator('.certificate-tile.locked button').first()).toBeDisabled();
 });
