@@ -1,4 +1,11 @@
 import {test,expect} from '@playwright/test';
+// Select a shuffled word bank in the intended grammatical order.
+async function buildSentence(lab:import('@playwright/test').Locator,title:string,parts:string[]){
+ const area=lab.locator('.osintsentence').filter({has:lab.locator('.osintsentencehead strong',{hasText:title})});
+ for(const part of parts)await area.getByRole('button',{name:'Add '+part,exact:true}).click();
+ await expect(area.getByText('Complete, correctly ordered sentence.')).toBeVisible();
+}
+
 
 test('OSINT is the first learning world and virtual assets follows it',async({page,isMobile})=>{
  await page.goto('./');
@@ -59,8 +66,8 @@ test('Guided OSINT course teaches beginner searching and regex before missions',
  const lab=page.locator('main.osintlab');
  await expect(lab.getByRole('heading',{name:'What OSINT actually is'})).toBeVisible();
  await expect(lab.getByRole('button',{name:/Independent missions/})).toBeDisabled();
- await lab.getByLabel('Investigation question').fill('What does the company register establish about Meridian Aid Logistics?');
- await lab.getByLabel('Required evidence and uncertainty').fill('Find corporate records and corroborating sources, distinguishing statements from identity or control claims.');
+ await buildSentence(lab,'Construct your investigation question',['What','do','public company records','establish','about Meridian Aid Logistics?']);
+ await buildSentence(lab,'Construct your evidence requirement',['I need','a current registry extract','and an independent source','to verify the director claim','without assuming beneficial ownership.']);
  await lab.getByRole('button',{name:/Check my practical work/}).click();
  await expect(lab.getByText(/Competency recorded/)).toBeVisible();
  await lab.getByRole('button',{name:/Continue to next lesson/}).click();
@@ -89,14 +96,14 @@ test('Guided OSINT email, phone, image, DNS and hash workbenches are functional'
  const lab=page.locator('main.osintlab');
  await lab.getByRole('button',{name:/Email-address investigations/}).click();
  await lab.getByLabel('Email domain').fill('meridian-aid.example');
- await lab.getByLabel('Email limitation').fill('The domain does not prove who personally controls the account or reads the messages.');
+ await buildSentence(lab,'Explain what an email address cannot establish',['An email domain','can indicate an organisational link','but does not identify','who operates the mailbox.']);
  await lab.getByRole('button',{name:/Check my practical work/}).click();
  await lab.getByRole('button',{name:/Continue to next lesson/}).click();
  await lab.getByLabel('Phone E.164').fill('+2348020000000');
  await lab.getByRole('button',{name:/Check my practical work/}).click();
  await lab.getByRole('button',{name:/Continue to next lesson/}).click();
  await lab.getByRole('button',{name:/Both sources depend/}).click();
- await lab.getByLabel('Social media source dependence').fill('The article uses the original company programme, so it is not an independently verified observation.');
+ await buildSentence(lab,'Describe the dependence between sources',['Both accounts repeat','the company event programme,','so the claim','is not independently corroborated.']);
  await lab.getByRole('button',{name:/Check my practical work/}).click();
  await lab.getByRole('button',{name:/Continue to next lesson/}).click();
  await expect(lab.locator('.osintguidedphoto')).toBeVisible();
@@ -105,7 +112,7 @@ test('Guided OSINT email, phone, image, DNS and hash workbenches are functional'
  await lab.getByRole('button',{name:/Run simulated reverse-image lookup/}).click();
  await expect(lab.getByText(/Simulated visual search results/)).toBeVisible();
  await lab.getByRole('button',{name:/Location is unverified/}).click();
- await lab.getByLabel('Geolocation limitations').fill('The photograph lacks verified GPS coordinates and the building sign may be replicated.');
+ await buildSentence(lab,'Write a defensible location finding',['No verified GPS metadata','or independent landmarks','are available,','so the photograph’s location','remains unconfirmed.']);
  await lab.getByRole('button',{name:/Check my practical work/}).click();
  await lab.getByRole('button',{name:/Continue to next lesson/}).click();
  await lab.getByLabel('DNS A record').fill('192.0.2.24');
@@ -117,4 +124,28 @@ test('Guided OSINT email, phone, image, DNS and hash workbenches are functional'
  await expect(lab.getByText(/The hashes differ/)).toBeVisible();
  await lab.getByRole('button',{name:/Check my practical work/}).click();
  await expect(lab.getByText(/Competency recorded/)).toBeVisible();
+});
+
+test('Learner builds OSINT sentences using tap-to-select words, undo and reset',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.osintfirstcard').getByRole('button').click();
+ const lab=page.locator('main.osintlab');
+ const question=lab.locator('.osintsentence').filter({hasText:'Construct your investigation question'});
+ await expect(question.getByRole('button',{name:'Add public company records'})).toBeVisible();
+ await question.getByRole('button',{name:'Add public company records'}).click();
+ await question.getByRole('button',{name:'Undo last'}).click();
+ await expect(question.getByText('0/5 word groups')).toBeVisible();
+ await question.getByRole('button',{name:'Add establish'}).click();
+ await question.getByRole('button',{name:'Add What'}).click();
+ await question.getByRole('button',{name:'Add do'}).click();
+ await question.getByRole('button',{name:'Add public company records'}).click();
+ await question.getByRole('button',{name:'Add about Meridian Aid Logistics?'}).click();
+ await expect(question.getByText(/Review their order/)).toBeVisible();
+ await question.getByRole('button',{name:'Start again'}).click();
+ await buildSentence(lab,'Construct your investigation question',['What','do','public company records','establish','about Meridian Aid Logistics?']);
+ await buildSentence(lab,'Construct your evidence requirement',['I need','a current registry extract','and an independent source','to verify the director claim','without assuming beneficial ownership.']);
+ await lab.getByRole('button',{name:/Check my practical work/}).click();
+ await expect(lab.getByText(/Competency recorded/)).toBeVisible();
+ await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
 });
