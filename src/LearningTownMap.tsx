@@ -1,6 +1,7 @@
 import type {CourseKey} from './progress';
 import {osintMissions,readOsintProgress,osintComplete} from './OsintSimulationLab';
 import {guidedLessons,readGuidedProgress} from './OsintGuidedAcademy';
+import {specialistLabs,readSpecialistProgress} from './OsintSpecialistLabs';
 import {getLearningSequence,readLearningPath} from './progress';
 import {readAcademyMetrics} from './AcademyMetrics';
 import {worldAccessible} from './LearningTownProgress';
@@ -11,14 +12,14 @@ export default function LearningTownMap({openCourse,openOsint}:{openCourse:(game
  const metrics=readAcademyMetrics();
  const sequence=getLearningSequence();
  const osintFirst=readLearningPath()==='osint';
- const count=readOsintProgress().completed.length+readGuidedProgress().completed.length;
- const total=guidedLessons.length+osintMissions.length;
+ const count=readOsintProgress().completed.length+readGuidedProgress().completed.length+readSpecialistProgress().completed.length;
+ const total=guidedLessons.length+specialistLabs.length+osintMissions.length;
  const first=osintFirst?'OSINT Investigation Laboratory':readLearningPath()==='blockchain'?'Blockchain Harbour':'Risk Academy';
  return <section className="learningtown" aria-labelledby="learningtown-title">
   <div className="learningtownhead"><div><span className="eyebrow">AMLVERSE LEARNING TOWN</span><h2 id="learningtown-title">Follow the pathway, unlock each district</h2><p>Begin at {first} and progress along the connected road. Future districts remain visible but locked until the previous world's activities are complete. Progress you've already earned is preserved.</p></div>
   </div>
   <div className="townroad" aria-label="Connected learning districts">
-   {osintFirst?<article className="townstop available" aria-label={'District 1: OSINT Investigation & Digital Evidence, '+(osintComplete()?'Completed':'Available')}><div className="townmarker"><span>◆</span></div><div className="townbuilding"><div className="townscenery" aria-hidden="true">🔎</div><div className="townbuildingbody"><small>DISTRICT 01 · {count===osintMissions.length?'COMPLETED':'AVAILABLE'}</small><h3>OSINT Investigation Laboratory</h3><p>OSINT Investigation & Digital Evidence</p><div className="townmeter"><div style={{width:count/total*100+'%'}}/></div><span>{count}/{total} guided lessons and missions · {Math.round(count/osintMissions.length*100)}% completed</span><div className="townactions"><button type="button" className="primary" onClick={openOsint}>{count===osintMissions.length?'Review OSINT missions →':count>0?'Resume OSINT →':'Start OSINT →'}</button></div></div></div></article>:null}
+   {osintFirst?<article className="townstop available" aria-label={'District 1: OSINT Investigation & Digital Evidence, '+(osintComplete()?'Completed':'Available')}><div className="townmarker"><span>◆</span></div><div className="townbuilding"><div className="townscenery" aria-hidden="true">🔎</div><div className="townbuildingbody"><small>DISTRICT 01 · {osintComplete()?'COMPLETED':'AVAILABLE'}</small><h3>OSINT Investigation Laboratory</h3><p>OSINT Investigation & Digital Evidence</p><div className="townmeter"><div style={{width:count/total*100+'%'}}/></div><span>{count}/{total} guided skills, specialist labs and missions · {Math.round(count/total*100)}% completed</span><div className="townactions"><button type="button" className="primary" onClick={openOsint}>{count===osintMissions.length?'Review OSINT missions →':count>0?'Resume OSINT →':'Start OSINT →'}</button></div></div></div></article>:null}
    {sequence.map((id,i)=>{
     const w=metrics.worlds.find(x=>x.id===id)!;
     const access=worldAccessible(id);
