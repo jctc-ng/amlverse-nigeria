@@ -1823,3 +1823,32 @@ main.virtualassetgame .chainnote{
 .osintimagebuttons button{border:1px solid #a8c7d7;background:#fff;color:#15415d!important;border-radius:10px;min-height:43px;padding:10px 12px;font-size:14px;font-weight:800;white-space:normal}
 .osintimagebuttons button:hover{background:#e3f5ed;border-color:#0a826c}
 @media(max-width:600px){.osintimagebuttons button{width:100%}}
+
+
+/* v3.4 — Interactive sentence construction instead of random text entry. */
+.osintsentencepair{display:grid;gap:17px}
+.osintsentence{background:#fff;border:1px solid #b5d1de;border-radius:17px;padding:clamp(16px,2.3vw,23px);margin:16px 0;box-shadow:0 4px 16px rgba(17,60,92,.04)}
+.osintsentencehead{display:flex;justify-content:space-between;gap:9px;align-items:center;flex-wrap:wrap}
+.osintsentencehead strong{color:#103e5b!important;-webkit-text-fill-color:#103e5b!important;font-size:17px;font-weight:850;line-height:1.4}
+.osintsentencehead span{padding:7px 11px;border:1px solid #b6d5c8;background:#e5f5ec;color:#0b6757!important;font-size:12px;font-weight:850;border-radius:999px}
+.osintsentence>p{font-size:15px!important;line-height:1.75!important;color:#315169!important;-webkit-text-fill-color:#315169!important;margin:10px 0}
+.osintsentencearea{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-height:105px;padding:15px;border:2px dashed #a5c8d8;border-radius:13px;background:#f0f7fa;margin:17px 0 13px;transition:border-color .15s,background-color .15s}
+.osintsentencearea:has(.osintsentencechosen){border-style:solid;border-color:#79b9aa;background:#f3faf7}
+.osintsentenceplaceholder{font-size:15px;color:#4b6474!important;-webkit-text-fill-color:#4b6474!important;line-height:1.65;font-style:italic}
+.osintsentencechosen,.osintsentenceword{font-family:inherit;min-height:43px;padding:10px 12px;border-radius:10px!important;border:1px solid #adcbd9!important;background:#fff!important;color:#173d56!important;-webkit-text-fill-color:#173d56!important;font-weight:750;font-size:15px!important;line-height:1.4;white-space:normal;text-align:left;cursor:pointer;transition:background-color .16s,border-color .16s,transform .16s,box-shadow .16s}
+.osintsentencechosen{background:#e3f4ed!important;border-color:#70bba4!important;color:#115c50!important;-webkit-text-fill-color:#115c50!important;animation:aml-stage-fade .18s ease-out both}
+.osintsentencechosen>span{margin-left:6px;font-size:17px;color:#0b6051!important}
+.osintsentencebank{display:flex;flex-wrap:wrap;gap:9px;min-height:53px}
+.osintsentenceword:hover,.osintsentencechosen:hover{background:#e8f6ed!important;border-color:#0a856e!important;transform:translateY(-2px);box-shadow:0 3px 12px rgba(15,85,65,.09)}
+.osintsentencecontrols{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.osintsentencecontrols button{border:1px solid #aecbdb!important;background:#f5f9fc!important;color:#194662!important;-webkit-text-fill-color:#194662!important;border-radius:10px!important;padding:9px 13px!important;min-height:43px!important;line-height:1.4!important;font-size:14px!important;font-weight:800!important}
+.osintsentencecontrols button:hover:not(:disabled){background:#e7f6ed!important;border-color:#0b876e!important}
+.osintsentencecontrols button:disabled{opacity:.65!important;cursor:not-allowed}
+.osintsentencesuccess,.osintsentencehelp,.osintsentencehint{border-radius:10px;padding:11px 13px;font-size:14px!important;line-height:1.6!important}
+.osintsentencesuccess{background:#e5f5ed;border:1px solid #a6d3be;color:#0b6250!important}
+.osintsentencehelp,.osintsentencehint{background:#fff7e9;border:1px solid #e1c99a;color:#654921!important}
+.osintsentencehint{margin:12px 0 0}
+.osintsentence button:focus-visible{outline:3px solid #0b866e!important;outline-offset:3px!important}
+@media(max-width:600px){.osintsentencehead{align-items:flex-start}.osintsentencearea{min-height:93px}.osintsentencebank{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.osintsentenceword{width:100%}.osintsentencecontrols button{flex:1 1 auto}}
+@media(max-width:390px){.osintsentencebank{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.osintsentencechosen,.osintsentenceword,.osintsentencearea{animation:none!important;transition:none!important;transform:none!important}}
