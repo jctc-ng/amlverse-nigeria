@@ -21,7 +21,7 @@ test('OSINT is the first learning world and virtual assets follows it',async({pa
  await expect(page.getByText('TRAINING SANDBOX')).toHaveCount(0);
 });
 test('OSINT laboratory provides searchable synthetic documents and evidence collection',async({page,isMobile})=>{
- await page.addInitScript(()=>localStorage.setItem('amlverse-osint-guided-v1',JSON.stringify({completed:['intro','browser','boolean','regex','username','email','phone','social','image','domain','hash','custody'],attempts:{}})));
+ await page.addInitScript(()=>{localStorage.setItem('amlverse-osint-guided-v1',JSON.stringify({completed:['intro','browser','boolean','regex','username','email','phone','social','image','domain','hash','custody'],attempts:{}}));localStorage.setItem('amlverse-osint-specialist-v1',JSON.stringify({completed:['corporate','query','emailpivot','archives','geo','infrastructure','linkanalysis','evidence'],attempts:{}}))});
  await page.goto('./');
  if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
  await page.locator('.osintfirstcard').getByRole('button').click();
@@ -172,4 +172,65 @@ test('Every guided OSINT skill includes a worked example before the practical ta
  await expect(worked.getByText('Step 1 of 3')).toBeVisible();
  await expect(practice.getByText('Construct your investigation question')).toBeVisible();
  await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
+});
+
+test('OSINT resource directory lists real registry, Hunter and tutorial workflows and opens training simulation',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.osintfirstcard').getByRole('button').click();
+ const lab=page.locator('main.osintlab');
+ await lab.getByRole('button',{name:/Free OSINT Tools & Videos/}).click();
+ const directory=lab.locator('.osinttooldir');
+ await expect(directory.getByRole('heading',{name:'Free and free-tier OSINT tools'})).toBeVisible();
+ await directory.getByRole('textbox',{name:'Search tools'}).fill('Hunter');
+ const hunter=directory.locator('.osinttoolcard').filter({hasText:'Hunter'});
+ await expect(hunter).toBeVisible();
+ await hunter.getByRole('button',{name:'Learn the workflow'}).click();
+ await expect(hunter).toContainText('organisational domain');
+ await hunter.getByRole('button',{name:/Try simulated tool/}).click();
+ const browser=lab.locator('.osintvbrowser');
+ await expect(browser.getByRole('heading',{name:'Email Discovery'})).toBeVisible();
+ await browser.getByRole('textbox',{name:'Company domain'}).fill('meridian-aid.example');
+ await browser.getByRole('button',{name:'Find public email pattern'}).click();
+ await expect(browser).toContainText('enquiries@meridian-aid.example');
+ await expect(browser).toContainText('Person controlling it: unknown');
+ await browser.getByRole('button',{name:/Save observation to notebook/}).click();
+ await expect(browser.getByRole('button',{name:/Export notes \(1\)/})).toBeEnabled();
+});
+test('Advanced specialist OSINT modules teach an ordered workflow before unlocking final missions',async({page,isMobile})=>{
+ await page.addInitScript(()=>localStorage.setItem('amlverse-osint-guided-v1',JSON.stringify({completed:['intro','browser','boolean','regex','username','email','phone','social','image','domain','hash','custody'],attempts:{}})));
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.osintfirstcard').getByRole('button').click();
+ const lab=page.locator('main.osintlab');
+ await lab.getByRole('button',{name:/Advanced labs/}).click();
+ await expect(lab.getByRole('heading',{name:'Advanced OSINT Practical Laboratories'})).toBeVisible();
+ await expect(lab.getByRole('heading',{name:'Cross-border corporate registry investigation'})).toBeVisible();
+ const specialist=lab.locator('.osintspecialist');
+ await specialist.locator('.osintspecialistbank button').filter({hasText:'Confirm the jurisdiction'}).click();
+ await specialist.locator('.osintspecialistbank button').filter({hasText:'Inspect the original public registry'}).click();
+ await specialist.locator('.osintspecialistbank button').filter({hasText:'Compare any linked officer'}).click();
+ await specialist.getByRole('button',{name:/Registry records support/}).click();
+ await specialist.getByRole('button',{name:/Evaluate investigation workflow/}).click();
+ await expect(specialist.getByText(/Skill recorded/)).toBeVisible();
+ const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-osint-specialist-v1')||'{}'));
+ expect(saved.completed).toContain('corporate');
+ await expect(lab.getByRole('button',{name:/Independent missions/})).toBeDisabled();
+});
+test('OSINT completion certificate unlocks only after guided lessons, specialist cases and missions',async({page,isMobile})=>{
+ await page.addInitScript(()=>{
+  localStorage.setItem('amlverse-osint-guided-v1',JSON.stringify({completed:['intro','browser','boolean','regex','username','email','phone','social','image','domain','hash','custody'],attempts:{}}));
+  localStorage.setItem('amlverse-osint-specialist-v1',JSON.stringify({completed:['corporate','query','emailpivot','archives','geo','infrastructure','linkanalysis','evidence'],attempts:{}}));
+  localStorage.setItem('amlverse-osint-lab-v1',JSON.stringify({completed:['workstation','search','social','network','evidence','report'],captures:['registry','social','news','domain'],notes:{},hashes:{},log:[]}));
+ });
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.locator('.osintfirstcard').getByRole('button').click();
+ const lab=page.locator('main.osintlab');
+ await lab.getByRole('button',{name:/OSINT Certificate/}).click();
+ const card=lab.locator('.certificate-tile').filter({hasText:'OSINT Investigation & Digital Evidence'});
+ await expect(card).toContainText('Requirements met');
+ await card.getByRole('button',{name:'View certificate'}).click();
+ await expect(page.getByRole('dialog',{name:'Certificate preview'})).toBeVisible();
+ await expect(page.getByRole('dialog',{name:'Certificate preview'})).toContainText('OSINT Investigation & Digital Evidence');
 });
