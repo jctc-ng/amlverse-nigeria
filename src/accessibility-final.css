@@ -1881,3 +1881,84 @@ main.virtualassetgame .chainnote{
 .osintworked button:focus-visible{outline:3px solid #0a866e!important;outline-offset:3px!important}
 @media(max-width:600px){.osintworkedcontrols button{width:100%}.osintworkedstep{padding:12px}.osintworkedphrase{font-size:15px!important}}
 @media(prefers-reduced-motion:reduce){.osintworkedstep{animation:none!important}}
+
+
+/* v4.0 — International-standard OSINT learning resource library and simulated workstation. */
+.osintguidedbrowserlesson{margin:22px 0;background:#f0f8fb;border:1px solid #b5d0de;border-radius:18px;padding:clamp(15px,2.4vw,24px);color:#163f59}
+.osintguidedbrowserlesson>div:first-child .eyebrow{color:#096f6e!important}
+.osintguidedbrowserlesson h3{font-size:clamp(21px,2.7vw,26px)!important;line-height:1.3!important;color:#103e5c!important;margin:8px 0}
+.osintguidedbrowserlesson p{font-size:15px!important;line-height:1.75!important;color:#315168!important}
+.osintvbrowser{border:1px solid #accbdc;border-radius:17px;background:#fff;box-shadow:0 6px 24px rgba(14,60,91,.07);overflow:hidden;margin:16px 0}
+.osintvtop{display:flex;gap:12px;align-items:center;min-height:49px;padding:11px 16px;background:#e5eff5;border-bottom:1px solid #bed4e1}
+.osintvtop strong{font-size:14px;color:#143e5b!important;font-weight:850}
+.osintvdots{font-size:12px;letter-spacing:5px;color:#188e9e!important}
+.osintvsafe{margin-left:auto;font-size:11px;color:#0b6959!important;font-weight:850;letter-spacing:.02em}
+.osintvtabs{display:flex;gap:5px;padding:9px 10px 0;background:#f2f6f9;overflow-x:auto;border-bottom:1px solid #c6dce6}
+.osintvtabs button{flex:0 0 auto;background:#e4eef4;border:1px solid #bad0db;color:#294c62!important;font-size:12px;font-weight:750;padding:10px 13px;min-height:41px;border-radius:9px 9px 0 0}
+.osintvtabs button.active{background:#fff;border-color:#0c8b73;border-bottom-color:#fff;color:#0e6355!important;font-weight:850}
+.osintvaddress{display:flex;gap:8px;align-items:center;padding:10px 14px;border-bottom:1px solid #c9dce6}
+.osintvaddress button{background:#fff;border:1px solid #b5ccdc;min-width:36px;min-height:37px;color:#143e5a!important;border-radius:8px}
+.osintvaddress span{flex:1;min-width:0;overflow-wrap:anywhere;background:#f1f7fa;border:1px solid #c4d9e4;border-radius:8px;padding:10px;font-size:13px;color:#22536c!important}
+.osintvbody{display:grid;grid-template-columns:minmax(160px,205px) minmax(0,1fr);min-height:390px}
+.osintvsidebar{display:flex;flex-direction:column;gap:6px;border-right:1px solid #c9dce5;padding:16px 10px;background:#f3f8fa}
+.osintvsidebar>strong{font-size:13px;color:#174c65!important;margin-bottom:7px}
+.osintvsidebar button{padding:9px 10px;min-height:37px;border:1px solid transparent;border-radius:9px;background:transparent;color:#2b5066!important;font-size:13px;font-weight:700;text-align:left;cursor:pointer;line-height:1.4}
+.osintvsidebar button:hover{background:#e3f2eb;border-color:#b4d8c8}
+.osintvsidebar button.active{background:#e0f5eb;border-color:#0c8a70;color:#0c6757!important}
+.osintvwork{min-width:0;padding:clamp(15px,2.4vw,26px)}
+.osintvlabel{color:#0b676a!important;font-size:12px;font-weight:900;letter-spacing:.04em}
+.osintvwork h3{font-size:clamp(20px,2.8vw,27px);line-height:1.3;color:#103c58!important;margin:8px 0 11px}
+.osintvwork>p{color:#305269!important;font-size:15px!important;line-height:1.7!important}
+.osintvwork form{display:flex;gap:10px;margin:18px 0}
+.osintvwork label{display:grid;gap:9px;color:#163f59!important;font-size:14px;font-weight:850;margin:16px 0}
+.osintvwork input{min-width:0;width:100%;border:1.5px solid #b1cbdc;background:#fff;border-radius:10px;color:#153f5b!important;-webkit-text-fill-color:#153f5b!important;padding:12px 13px;font-size:15px}
+.osintvwork form input{flex:1}
+.osintvwork button:not(.osintvresults button){cursor:pointer}
+.osintvwork form button,.osintvwork>button{padding:11px 15px;min-height:43px;background:#123f69!important;border:1px solid #123f69!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-radius:10px;font-size:14px;font-weight:850}
+.osintvwork button:disabled{opacity:.7!important;cursor:not-allowed}
+.osintvresults{display:grid;gap:8px;margin:15px 0}
+.osintvresults>strong{color:#17425e!important;font-size:14px}
+.osintvresults button{display:grid;gap:7px;padding:13px;text-align:left;border-radius:11px;border:1px solid #b7d0df;background:#fff;color:#15435d!important;font-size:14px;line-height:1.55;cursor:pointer}
+.osintvresults button:hover{background:#edf8f3;border-color:#118871}
+.osintvresults button strong{color:#0d5870!important;font-weight:850}
+.osintvresults button small{color:#167161!important;font-size:12px;overflow-wrap:anywhere}
+.osintvresults button p{color:#35556a!important;font-size:13px!important;margin:0!important}
+.osintvtip,.osintvrecord{margin:15px 0;background:#edf6fa;border:1px solid #bed6e1;padding:16px;border-radius:12px;font-size:14px;line-height:1.75;color:#2c5167!important;overflow-wrap:anywhere}
+.osintvrecord{display:grid;gap:7px;background:#f7fafc}
+.osintvrecord strong{color:#113e5a!important;font-size:15px;line-height:1.55}
+.osintvrecord p{color:#30546b!important;font-size:14px!important;line-height:1.7!important;margin:0}
+.osintvrecord code{padding:12px;color:#18435b!important;background:#e5f0f5;border-radius:9px;overflow-wrap:anywhere;font-size:12px}
+.osintvrecord button{padding:9px 12px!important;border:1px solid #9fcabb!important;border-radius:9px;background:#e2f4ec;color:#0d6553!important;font-weight:850;text-align:left}
+.osintvphoto{display:grid;align-content:space-between;gap:50px;min-height:170px;padding:19px;margin:16px 0;border-radius:12px;border:1px solid #a4c7d8;background:linear-gradient(#c6dcea 0%,#dfebf0 48%,#86b7a5 48% 100%)}
+.osintvphoto>span{width:max-content;max-width:100%;padding:7px 10px;background:rgba(255,255,255,.93);border-radius:8px;color:#1a4d62!important;font-size:12px;font-weight:900}
+.osintvphoto strong{display:block;justify-self:center;padding:13px 19px;background:#1e4e65;color:#fff!important;font-size:20px;letter-spacing:.04em;border-radius:8px}
+.osintvfeedback{margin:19px 0;padding:14px 16px;border:1px solid #a7cdbf;border-left:4px solid #0c806b;background:#e9f7ef;border-radius:11px;color:#20566a!important;font-size:14px;line-height:1.7}
+.osintvsave{display:flex;gap:9px;flex-wrap:wrap}
+.osintvsave button{min-height:43px;font-size:14px!important;font-weight:800!important;border-radius:10px!important;background:#fff!important;border:1px solid #a8c8d6!important;color:#164b63!important;-webkit-text-fill-color:#164b63!important}
+.osintvdisclaimer{font-size:12px!important;line-height:1.65!important;padding:12px 16px;margin:0!important;border-top:1px solid #c6dce6;color:#416071!important;background:#f4f8fa}
+.osinttooldir{border:1px solid #bbd3e0;background:#fff;border-radius:20px;padding:clamp(18px,2.4vw,28px);margin:22px 0}
+.osinttooldirhead{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:20px}
+.osinttooldirhead .eyebrow{color:#0b6871!important}
+.osinttooldirhead h2{color:#103d5c!important;font-size:clamp(23px,3vw,30px);margin:7px 0 10px}
+.osinttooldirhead p{color:#335368!important;font-size:15px;line-height:1.75;max-width:900px}
+.osinttooldirhead>strong{white-space:nowrap;font-size:15px;color:#0d6b5b!important;background:#e4f6ec;padding:11px 14px;border-radius:99px}
+.osinttoolfilters{display:grid;grid-template-columns:minmax(220px,2fr) minmax(150px,1fr);gap:16px;margin:15px 0 23px}
+.osinttoolfilters label{display:grid;gap:8px;color:#17425c!important;font-size:14px;font-weight:800}
+.osinttoolfilters input,.osinttoolfilters select{min-height:46px;background:#fff;border:1px solid #b0ccdb;border-radius:10px;padding:10px 12px;font-size:15px;color:#18415c!important}
+.osinttoolgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.osinttoolcard{display:flex;flex-direction:column;justify-content:space-between;gap:15px;padding:18px;background:#f7fafc;border:1px solid #c3d8e4;border-radius:15px}
+.osinttoolcategory{font-size:12px;font-weight:900;color:#0c6659!important;background:#e3f4ea;border-radius:999px;padding:6px 10px}
+.osinttoolcard h3{font-size:19px;color:#143f5c!important;margin:13px 0 7px}
+.osinttoolcard p{font-size:14px;line-height:1.7;color:#32556b!important}
+.osinttoolactions{display:flex;flex-wrap:wrap;gap:8px}
+.osinttoolactions button,.osinttoolsite{font-family:inherit;font-size:13px!important;font-weight:800!important;min-height:41px!important;border-radius:9px!important;padding:10px 12px!important;line-height:1.45;white-space:normal;text-decoration:none}
+.osinttoolactions button.secondary{background:#fff!important;color:#17435d!important;border:1px solid #a9c9d8!important}
+.osinttoolsite{background:#e9f5fb;color:#0c5a7a!important;border:1px solid #aacdda;display:inline-flex;align-items:center}
+.osinttoolsite:hover{text-decoration:underline}
+.osinttoolguide{padding:13px 15px;background:#eaf6f1;border:1px solid #a8d2c1;border-radius:11px}
+.osinttoolguide strong{display:block;color:#0d6354!important;font-size:14px;margin-top:6px}
+.osinttoolguide p{margin:4px 0 10px;color:#2c5165!important;font-size:14px;line-height:1.7}
+.osinttooldisclaimer{background:#f1f6f8;border:1px solid #c0d5df;border-radius:10px;padding:14px;font-size:13px!important;color:#36556b!important;line-height:1.65;margin-top:22px}
+.osinttooldir button:focus-visible,.osintvbrowser button:focus-visible,.osinttoolsite:focus-visible{outline:3px solid #098873!important;outline-offset:2px!important}
+@media(max-width:900px){.osintvbody{grid-template-columns:1fr}.osintvsidebar{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid #c9dce5}.osintvsidebar>strong{flex:0 0 auto;align-self:center}.osintvsidebar button{flex:0 0 auto;white-space:nowrap}.osinttoolgrid{grid-template-columns:1fr}}
+@media(max-width:600px){.osintvwork form{flex-direction:column}.osinttoolfilters{grid-template-columns:1fr}.osinttooldirhead{display:block}.osinttooldirhead>strong{display:inline-block;margin:12px 0}.osintvtop{gap:8px}.osintvdots{display:none}.osintvsafe{font-size:10px}.osintvwork{padding:15px}.osintvsave button{width:100%}}
