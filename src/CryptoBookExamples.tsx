@@ -72,7 +72,7 @@ export default function CryptoBookExamples({lessonId,compact=false}:{lessonId?:s
  function check(){if(!current||choice===null)return;setChecked(true);if(choice===current.answer&&!done.includes(current.id)){const next=[...done,current.id];setDone(next);try{localStorage.setItem(KEY,JSON.stringify(next))}catch{}}}
  if(!pool.length)return null;
  return <section className={'cryptobookexamples'+(compact?' cryptobookcompact':'')} aria-label="Textbook worked examples">
-   <header className="cryptobookhead"><div><span className="eyebrow">TEXTBOOK-ALIGNED EXAMPLES · 2018 HISTORICAL SOURCE</span><h2>{compact?'Worked textbook-style examples':'Investigating Cryptocurrencies — Worked Example Studio'}</h2><p>Original AMLVERSE practice cases inspired by techniques and scenarios in all 15 chapters of Nick Furneaux's book. Study the demonstration, reveal each step, then decide what the evidence supports.</p></div><strong>{completed}/{pool.length} completed</strong></header>
+   <div className="cryptobookhead"><div><span className="eyebrow">TEXTBOOK-ALIGNED EXAMPLES · 2018 HISTORICAL SOURCE</span><h2>{compact?'Worked textbook-style examples':'Investigating Cryptocurrencies — Worked Example Studio'}</h2><p>Original AMLVERSE practice cases inspired by techniques and scenarios in all 15 chapters of Nick Furneaux's book. Study the demonstration, reveal each step, then decide what the evidence supports.</p></div><strong>{completed}/{pool.length} completed</strong></div>
    <label className="cryptobookfilter">Choose a chapter to study
     <select aria-label="Book chapter" value={chapter} onChange={e=>setChapterView(Number(e.target.value))}>
      <option value={0}>All 15 chapters ({pool.length} examples)</option>
