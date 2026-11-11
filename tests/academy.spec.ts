@@ -1310,7 +1310,7 @@ test('All crypto fieldbook analogies, worked examples and evidence text meet rea
  for(let i=0;i<count;i++){
   await academy.locator('.cryptoinvestigator-menu button').nth(i).click();
   await expect(academy.locator('.cryptoinvestigator-work .knowledgeexample')).toBeVisible();
-  for(const selector of ['.cryptoinvestigator-work .knowledgeexample b','.cryptoinvestigator-work .knowledgeexample p']){
+  for(const selector of ['.cryptoinvestigator-work .knowledgeexample strong','.cryptoinvestigator-work .knowledgeexample p']){
    const value=await contrast(selector);
    expect(value,`Lesson ${i+1}: ${selector} contrast ratio ${value.toFixed(2)}`).toBeGreaterThanOrEqual(4.5);
   }
