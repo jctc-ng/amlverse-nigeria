@@ -4,6 +4,7 @@ import {virtualLessons,virtualQuestions,virtualCases,virtualReferences} from './
 import type {VirtualTier,VirtualQuestion} from './VirtualAssetContent';
 import VirtualAssetGraphLesson,{TransactionStudyGraph} from './VirtualAssetGraphLesson';
 import InteractiveTracingLab from './InteractiveTracingLab';
+import CryptoInvestigatorAcademy from './CryptoInvestigatorAcademy';
 import {readInteractiveTraceProgress} from './InteractiveTracingLab';
 type Progress={lessonChecks:number[];visited:number[];quizBest:Record<VirtualTier,number>;quizPass:Record<VirtualTier,boolean>;simBest:Record<VirtualTier,number>;simPass:Record<VirtualTier,boolean>;attempts:Record<VirtualTier,number>};
 const tiers:VirtualTier[]=['Foundations','Intermediate','Advanced'];
@@ -20,7 +21,7 @@ function quizFor(tier:VirtualTier,attempt:number):QuizItem[]{
  const chosen=arrange(source,attempt*19+tiers.indexOf(tier)*71).slice(0,10);
  return chosen.map((q,i)=>({source:q,choices:arrange(q.options.map((text,original)=>({text,original})),i*21+attempt*17+3)}));
 }
-type Mode='overview'|'lesson'|'quiz'|'simulation'|'interactive';
+type Mode='overview'|'lesson'|'quiz'|'simulation'|'interactive'|'fieldacademy';
 export default function VirtualAssetAdvanced({onBack,onClassic,onNextCourse,initialMode}:{onBack:()=>void;onClassic:()=>void;onNextCourse:()=>void;initialMode?:'interactive'}){
  const [progress,setProgress]=useState<Progress>(getProgress);
  const [mode,setMode]=useState<Mode>(initialMode||'overview');
@@ -116,8 +117,8 @@ export default function VirtualAssetAdvanced({onBack,onClassic,onNextCourse,init
  <div className="riskadvancedtop"><div><small>ADVANCED CURRICULUM PROGRESS</small><strong>{completedSteps} / {totalSteps} milestones</strong></div><div className="riskadvancedprogress"><div style={{width:percent+'%'}}/></div><span>{percent}%</span></div>
 
  <div className="riskadvancedpromo"><div><span className="eyebrow">NEW • CLICKABLE TRANSACTION INVESTIGATION</span><h2>Interactive Tracing Lab — 6 graph missions</h2><p>Select nodes and transaction paths directly, inspect evidence and build an accurate tracing conclusion. {interactiveCount}/6 missions completed. Progress and gifts are saved in this browser.</p></div><button type="button" className="primary" onClick={()=>{setMode('interactive');window.scrollTo(0,0)}}>Open interactive graph missions →</button></div>
- <div className="riskadvancednav"><button type="button" className={mode==='overview'?'active':''} onClick={()=>setMode('overview')}>Course Overview</button><button type="button" onClick={onClassic}>Classic Virtual Asset game →</button></div>
- {mode==='interactive'?<InteractiveTracingLab onBack={()=>{setMode('overview');window.scrollTo(0,0)}} onAdvance={()=>{setMode('overview');window.scrollTo(0,0)}}/>:mode==='overview'?<>
+ <div className="riskadvancednav"><button type="button" className={mode==='overview'?'active':''} onClick={()=>setMode('overview')}>Course Overview</button><button type="button" className={mode==='fieldacademy'?'active':''} onClick={()=>{setMode('fieldacademy');window.scrollTo(0,0)}}>Crypto Investigator Field Academy</button><button type="button" onClick={onClassic}>Classic Virtual Asset game →</button></div>
+ {mode==='fieldacademy'?<CryptoInvestigatorAcademy/>:mode==='interactive'?<InteractiveTracingLab onBack={()=>{setMode('overview');window.scrollTo(0,0)}} onAdvance={()=>{setMode('overview');window.scrollTo(0,0)}}/>:mode==='overview'?<>
  <div className="riskadvancedwelcome"><h2>{mastered?'🏅 Advanced Virtual Asset Mastery Unlocked':'Three progressive learning levels'}</h2><p>Study four analogy-and-graph lessons and answer five graph questions in each (four correct to pass), then pass a 10-question assessment with at least 80%, and complete the tracing investigation simulation in each level. You can review lessons and retry questions at any time.</p></div>
  {tiers.map(t=>{const indexes=virtualLessons.map((l,i)=>l.tier===t?i:-1).filter(i=>i>=0);const count=indexes.filter(i=>progress.visited.includes(i)).length;return <section key={t} className={"riskadvancedtier"+(!tierAvailable(t)?" riskadvancedtierlocked":"") }>
  <div className="riskadvancedtierhead"><div><span className="eyebrow">{t.toUpperCase()} LEVEL</span><h2>{t==='Foundations'?'Understand blockchains':t==='Intermediate'?'Trace and evaluate':'Investigate and report'}</h2><p>{count}/4 lessons explored · {indexes.filter(i=>progress.lessonChecks.includes(i)).length}/4 graph checks · Quiz best {progress.quizBest[t]}% · Simulation best {progress.simBest[t]}%</p></div><span>{count===4&&indexes.every(i=>progress.lessonChecks.includes(i))&&progress.quizPass[t]&&progress.simPass[t]?'✓ Completed':!tierAvailable(t)?'🔒 Locked':'In progress'}</span></div>
