@@ -2053,3 +2053,13 @@ main.virtualassetgame .chainnote{
 .cryptoinvestigator button:focus-visible,.cryptoinvestigator a:focus-visible{outline:3px solid #087e71;outline-offset:3px}
 @media(max-width:760px){.cryptoinvestigator-grid{grid-template-columns:1fr}.cryptoinvestigator-menu{grid-template-columns:repeat(2,minmax(0,1fr));max-height:250px;overflow:auto}.cryptoinvestigator-patterns{grid-template-columns:1fr}}
 @media(max-width:480px){.cryptoinvestigator-menu{grid-template-columns:1fr}.cryptoinvestigator-work .choices button,.cryptoinvestigator-work .actions button{width:100%}}
+
+/* Virtual Asset Academy entry card: introduction is always a full-width block,
+   with a separate responsive action row. Prevent 3-child flex shrink causing
+   text to render as one word per line on desktop/tablet. */
+.riskadvancedpromo.cryptoacademy-entry{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:16px;min-width:0}
+.cryptoacademy-entry>.cryptoacademy-entry-copy{display:block;flex:none;width:100%;min-width:0;max-width:100%;overflow-wrap:normal}
+.cryptoacademy-entry-copy h2,.cryptoacademy-entry-copy p,.cryptoacademy-entry-copy .eyebrow{max-width:100%;white-space:normal;overflow-wrap:break-word;word-break:normal}
+.cryptoacademy-entry-actions{display:flex;flex-wrap:wrap;align-items:stretch;gap:12px;width:100%;min-width:0}
+.cryptoacademy-entry-actions>button{flex:1 1 260px;min-width:0;width:auto;max-width:100%;white-space:normal;line-height:1.5;overflow-wrap:break-word;min-height:48px;padding:12px 16px}
+@media(max-width:650px){.cryptoacademy-entry-actions{flex-direction:column}.cryptoacademy-entry-actions>button{flex:none;width:100%}}
