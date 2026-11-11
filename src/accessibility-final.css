@@ -2121,3 +2121,35 @@ main.virtualassetgame .chainnote{
 .cryptobookexamples .cryptobookexercise button.secondary{color:#144a5f}
 .cryptobookinline>summary{list-style-position:inside}
 @media(max-width:760px){.cryptobookinline{padding:8px}.cryptobookcompact{padding:10px}.cryptobookexercise{padding:14px}}
+
+/* Fix crypto example header overlap: global site header has a fixed height.
+   Explicitly restore intrinsic sizing and normal document flow here. */
+.cryptobookexamples>.cryptobookhead{
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ align-items:start!important;justify-content:stretch!important;
+ height:auto!important;min-height:0!important;max-height:none!important;
+ padding:0 0 15px!important;margin:0 0 16px!important;
+ border-bottom:1px solid #c4d8e0;overflow:visible!important;position:static!important;
+ gap:16px!important;
+}
+.cryptobookhead>div{min-width:0;max-width:100%}
+.cryptobookhead .eyebrow{display:block;white-space:normal;line-height:1.5}
+.cryptobookhead h2{margin:9px 0 12px!important;line-height:1.3!important}
+.cryptobookhead p{display:block;position:static!important;white-space:normal!important;
+ height:auto!important;line-height:1.7!important;margin:0!important;max-width:70ch}
+.cryptobookhead>strong{align-self:start;justify-self:end;position:static!important;
+ width:auto;max-width:100%;font-size:14px;line-height:1.5;white-space:nowrap}
+.cryptobookexamples>.cryptobookfilter{
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;
+ gap:8px!important;width:100%!important;height:auto!important;min-height:0!important;
+ margin:14px 0 18px!important;padding:0!important;border:0!important;
+ background:transparent!important;position:static!important;line-height:1.5!important;
+}
+.cryptobookexamples>.cryptobookfilter>select{position:static!important;display:block!important;
+ flex:none!important;width:100%!important;min-height:48px;margin:0!important}
+.cryptobookcompactcontrols{height:auto!important;margin:0 0 6px!important}
+.cryptobookcompactcontrols label{display:block!important;position:static!important;margin:0!important;padding:0!important;
+ min-height:0!important;height:auto!important;background:transparent!important;border:0!important}
+.cryptobookcompactcontrols select{position:static!important;min-height:48px!important}
+@media(max-width:700px){.cryptobookexamples>.cryptobookhead{grid-template-columns:minmax(0,1fr)!important}
+.cryptobookhead>strong{justify-self:start}}
