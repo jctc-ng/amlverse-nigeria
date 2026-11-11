@@ -1286,3 +1286,37 @@ test('Book studio header, paragraph, progress and dropdowns never overlap',async
  const yOverlap=Math.max(0,Math.min(progress.bottom,p.bottom)-Math.max(progress.top,p.top));
  expect(xOverlap*yOverlap).toBeLessThan(2);
 });
+
+
+test('All crypto fieldbook analogies, worked examples and evidence text meet readable contrast',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/Start with Virtual Assets & Blockchain/}).click();
+ await page.getByRole('button',{name:/Open practical Crypto Investigator Field Academy/}).click();
+ const academy=page.locator('.cryptoinvestigator');
+ const contrast=async(selector:string)=>{
+  return await academy.locator(selector).first().evaluate(element=>{
+   const rgb=(s:string)=>{const values=s.match(/[\d.]+/g)||[];return values.slice(0,3).map(Number)};
+   const lum=(s:string)=>{const c=rgb(s).map(v=>{v/=255;return v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)});return c[0]*.2126+c[1]*.7152+c[2]*.0722};
+   let parent:Element|null=element;
+   let bg='rgb(255, 255, 255)';
+   while(parent){const b=getComputedStyle(parent).backgroundColor;if(b!=='transparent'&&b!=='rgba(0, 0, 0, 0)'){bg=b;break}parent=parent.parentElement}
+   const a=lum(getComputedStyle(element).color),b=lum(bg);
+   return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+  });
+ };
+ const count=await academy.locator('.cryptoinvestigator-menu button').count();
+ expect(count).toBe(17);
+ for(let i=0;i<count;i++){
+  await academy.locator('.cryptoinvestigator-menu button').nth(i).click();
+  await expect(academy.locator('.cryptoinvestigator-work .knowledgeexample')).toBeVisible();
+  for(const selector of ['.cryptoinvestigator-work .knowledgeexample b','.cryptoinvestigator-work .knowledgeexample p']){
+   const value=await contrast(selector);
+   expect(value,`Lesson ${i+1}: ${selector} contrast ratio ${value.toFixed(2)}`).toBeGreaterThanOrEqual(4.5);
+  }
+ }
+ await academy.getByRole('button',{name:/Investigation simulator/}).click();
+ expect(await contrast('.cryptoinvestigator-evidence>div')).toBeGreaterThanOrEqual(4.5);
+ await academy.getByRole('button',{name:/Crime typologies/}).click();
+ expect(await contrast('.cryptoinvestigator-patterns article p')).toBeGreaterThanOrEqual(4.5);
+});
