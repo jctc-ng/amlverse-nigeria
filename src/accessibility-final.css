@@ -2101,3 +2101,23 @@ main.virtualassetgame .chainnote{
 .cryptobookexamples button:focus-visible,.cryptobookexamples select:focus-visible,.cryptobookexamples input:focus-visible{outline:3px solid #118372;outline-offset:2px}
 @media(max-width:760px){.cryptobooklayout{grid-template-columns:1fr}.cryptobookmenu{grid-template-columns:repeat(2,minmax(0,1fr));max-height:220px}}
 @media(max-width:520px){.cryptobookmenu,.cryptobookcompact .cryptobookmenu{grid-template-columns:1fr}.cryptobookexercise .actions{flex-direction:column}.cryptobookexercise .actions button{width:100%}}
+
+/* Textbook studio readability repair (chapter selector and single example on lessons).
+   Inherited lesson/grid styles must not squeeze or clip the embedded exercise. */
+.cryptobookinline,.cryptobookinline[open],.cryptobookexamples,.cryptobookcompact,.cryptobooklayout,.cryptobookexercise{min-width:0;max-width:100%;overflow:visible;box-sizing:border-box}
+.cryptobookcompact .cryptobooklayout{display:flex;flex-direction:column;align-items:stretch;gap:12px}
+.cryptobookcompact .cryptobookexercise{width:100%;flex:none}
+.cryptobookcompactcontrols{display:grid;gap:7px;width:100%}
+.cryptobookcompactcontrols label{font-weight:750;color:#16465c}
+.cryptobookcompactcontrols select{display:block;width:100%;max-width:100%;min-width:0;padding:12px;border:1px solid #b5d0dc;border-radius:10px;background:#fff;color:#143d53;font:inherit}
+.cryptobookcompact .cryptobookfilter,.cryptobookcompact .cryptobookhead{width:100%;min-width:0}
+.cryptobookcompact .cryptobookfilter select{width:100%;max-width:100%}
+.cryptobookexamples .cryptobookmenu button.active,.cryptobookexamples .cryptobookmenu button.active small,.cryptobookexamples .cryptobookmenu button.active span{color:#ffffff!important;background-color:#155c69}
+.cryptobookexamples .cryptobookmenu button:not(.active),.cryptobookexamples .cryptobookmenu button:not(.active) small,.cryptobookexamples .cryptobookmenu button:not(.active) span{color:#153f56!important}
+.cryptobookexamples .cryptobookexercise,.cryptobookexamples .cryptobookexercise p,.cryptobookexamples .cryptobookexercise li{color:#214658}
+.cryptobookexamples .cryptobookscenario p{color:#1c4b48!important}
+.cryptobookexamples .cryptobookhead p{color:#244b5f!important}
+.cryptobookexamples .cryptobookexercise .eyebrow{color:#1b5c70!important}
+.cryptobookexamples .cryptobookexercise button.secondary{color:#144a5f}
+.cryptobookinline>summary{list-style-position:inside}
+@media(max-width:760px){.cryptobookinline{padding:8px}.cryptobookcompact{padding:10px}.cryptobookexercise{padding:14px}}
