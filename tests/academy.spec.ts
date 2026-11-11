@@ -1163,3 +1163,29 @@ test('Competency evaluation reset requires typed confirmation and preserves unre
  expect(await page.evaluate(()=>localStorage.getItem('amlverse-course-v1-risk'))).not.toBeNull();
  await expect(page.getByRole('button',{name:/Start baseline/})).toBeEnabled();
 });
+
+
+test('Crypto investigator field academy teaches from examples and saves fictional case decisions',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/Start with Virtual Assets & Blockchain/}).click();
+ await page.getByRole('button',{name:/Open practical Crypto Investigator Field Academy/}).click();
+ const academy=page.locator('.cryptoinvestigator');
+ await expect(academy.getByRole('heading',{name:'Crypto Investigator Field Academy'})).toBeVisible();
+ await expect(academy.getByRole('heading',{name:'Speak cryptocurrency fluently'})).toBeVisible();
+ await expect(academy.getByText(/Worked example/).first()).toBeVisible();
+ await academy.getByRole('button',{name:/A chain-specific identifier/}).click();
+ await academy.getByRole('button',{name:/Check investigative decision/}).click();
+ await expect(academy.getByRole('status')).toContainText('Correct, competence checkpoint saved');
+ await academy.getByRole('button',{name:/Investigation simulator/}).click();
+ await expect(academy.getByRole('heading',{name:'Victim-to-exchange tracing'})).toBeVisible();
+ await academy.getByRole('button',{name:/Document 6 units on the B/}).click();
+ await academy.getByRole('button',{name:/Check investigative decision/}).click();
+ await expect(academy.getByRole('status')).toContainText('Correct, competence checkpoint saved');
+ const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-crypto-investigator-v1')||'[]'));
+ expect(saved).toContain('lesson:language');
+ expect(saved).toContain('case:victim');
+ await academy.getByRole('button',{name:/Crime typologies/}).click();
+ await expect(academy.getByRole('heading',{name:'Investment and Ponzi fraud'})).toBeVisible();
+ await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
+});
