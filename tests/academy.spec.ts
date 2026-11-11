@@ -1210,3 +1210,31 @@ test('Virtual Asset Academy entry copy stays readable beside two course actions'
  expect(geometry.buttonTop).toBeGreaterThanOrEqual(geometry.copyBottom-2);
  await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
 });
+
+
+test('Crypto textbook examples are organised by all 15 chapters and support guided practice',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/Start with Virtual Assets & Blockchain/}).click();
+ await page.getByRole('button',{name:/Open practical Crypto Investigator Field Academy/}).click();
+ const academy=page.locator('.cryptoinvestigator');
+ await academy.getByRole('button',{name:/Book examples/}).click();
+ const studio=academy.locator('.cryptobookexamples').first();
+ await expect(studio.getByRole('heading',{name:/Worked Example Studio/})).toBeVisible();
+ const chapter=studio.getByRole('combobox',{name:'Book chapter'});
+ await expect(chapter.locator('option')).toHaveCount(16);
+ await chapter.selectOption('3');
+ await expect(studio.locator('.cryptobookmenu button')).toHaveCount(2);
+ await expect(studio.getByRole('heading',{name:/Read the six components/})).toBeVisible();
+ await studio.getByRole('button',{name:/Reveal next demonstration step/}).click();
+ await studio.getByRole('button',{name:/Reveal next demonstration step/}).click();
+ await studio.getByRole('radio',{name:'Customer KYC name'}).check();
+ await studio.getByRole('button',{name:/Check evidence reasoning/}).click();
+ await expect(studio.getByRole('status')).toContainText('Correct');
+ const progress=await page.evaluate(()=>JSON.parse(localStorage.getItem('amlverse-crypto-book-examples-v1')||'[]'));
+ expect(progress).toContain('header');
+ await chapter.selectOption('15');
+ await expect(studio.locator('.cryptobookmenu button')).toHaveCount(2);
+ await expect(studio.getByRole('heading',{name:/From ransom demand/})).toBeVisible();
+ await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
+});
