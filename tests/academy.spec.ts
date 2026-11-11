@@ -1189,3 +1189,24 @@ test('Crypto investigator field academy teaches from examples and saves fictiona
  await expect(academy.getByRole('heading',{name:'Investment and Ponzi fraud'})).toBeVisible();
  await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
 });
+
+
+test('Virtual Asset Academy entry copy stays readable beside two course actions',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/Start with Virtual Assets & Blockchain/}).click();
+ const entry=page.locator('.cryptoacademy-entry');
+ await expect(entry.getByRole('heading',{name:/Virtual Asset Academy 2.0/})).toBeVisible();
+ await expect(entry.getByRole('button',{name:/Open practical Crypto Investigator Field Academy/})).toBeVisible();
+ const geometry=await entry.evaluate(el=>{
+  const copy=el.querySelector('.cryptoacademy-entry-copy')!.getBoundingClientRect();
+  const outer=el.getBoundingClientRect();
+  const buttons=el.querySelector('.cryptoacademy-entry-actions')!.getBoundingClientRect();
+  const heading=el.querySelector('h2')!.getBoundingClientRect();
+  return {copyWidth:copy.width,outerWidth:outer.width,buttonTop:buttons.top,copyBottom:copy.bottom,headingWidth:heading.width};
+ });
+ expect(geometry.copyWidth).toBeGreaterThan(geometry.outerWidth*0.75);
+ expect(geometry.headingWidth).toBeGreaterThan(200);
+ expect(geometry.buttonTop).toBeGreaterThanOrEqual(geometry.copyBottom-2);
+ await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
+});
