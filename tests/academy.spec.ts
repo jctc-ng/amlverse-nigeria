@@ -1261,3 +1261,28 @@ test('Beginner crypto textbook examples show chapter one and readable single-exa
  await studio.getByRole('combobox',{name:'Book chapter'}).selectOption('15');
  await expect(studio.getByRole('heading',{name:/From ransom demand/})).toBeVisible();
 });
+
+
+test('Book studio header, paragraph, progress and dropdowns never overlap',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/Start with Virtual Assets & Blockchain/}).click();
+ const lesson=page.locator('.knowledgecard');
+ await lesson.getByText(/Worked investigation examples from the cryptocurrency textbook/).click();
+ const studio=lesson.locator('.cryptobookcompact');
+ await expect(studio.getByRole('combobox',{name:'Book chapter'})).toBeVisible();
+ const boxes=await studio.evaluate(el=>{
+  const names=['.cryptobookhead','.cryptobookhead h2','.cryptobookhead p','.cryptobookhead>strong','.cryptobookfilter','.cryptobookfilter select','.cryptobookcompactcontrols','.cryptobookcompactcontrols select','.cryptobookexercise'];
+  return Object.fromEntries(names.map(n=>{const r=el.querySelector(n)!.getBoundingClientRect();return [n,{top:r.top,bottom:r.bottom,left:r.left,right:r.right,height:r.height}]}));
+ });
+ const a=(n:string)=>boxes[n] as {top:number;bottom:number;left:number;right:number;height:number};
+ expect(a('.cryptobookhead').bottom).toBeLessThan(a('.cryptobookfilter').top);
+ expect(a('.cryptobookhead h2').bottom).toBeLessThan(a('.cryptobookhead p').top+2);
+ expect(a('.cryptobookhead p').bottom).toBeLessThan(a('.cryptobookfilter').top);
+ expect(a('.cryptobookfilter select').bottom).toBeLessThan(a('.cryptobookcompactcontrols').top);
+ expect(a('.cryptobookcompactcontrols select').bottom).toBeLessThan(a('.cryptobookexercise').top);
+ const progress=a('.cryptobookhead>strong'),p=a('.cryptobookhead p');
+ const xOverlap=Math.max(0,Math.min(progress.right,p.right)-Math.max(progress.left,p.left));
+ const yOverlap=Math.max(0,Math.min(progress.bottom,p.bottom)-Math.max(progress.top,p.top));
+ expect(xOverlap*yOverlap).toBeLessThan(2);
+});
