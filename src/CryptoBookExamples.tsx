@@ -56,8 +56,9 @@ export const bookChapters=[
 const KEY='amlverse-crypto-book-examples-v1';
 const load=()=>{try{const value=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(value)?value.filter((x:unknown)=>typeof x==='string'):[]}catch{return []}};
 export default function CryptoBookExamples({lessonId,compact=false}:{lessonId?:string;compact?:boolean}){
- const pool=lessonId?bookExamples.filter(e=>e.tags.includes(lessonId)):bookExamples;
- const [chapter,setChapter]=useState<number>(0);
+ const pool=bookExamples; // All fifteen chapters are always reachable, including within a beginner lesson.
+ void lessonId;
+ const [chapter,setChapter]=useState<number>(compact?1:0);
  const [active,setActive]=useState(0);
  const [choice,setChoice]=useState<number|null>(null);
  const [checked,setChecked]=useState(false);
@@ -72,14 +73,14 @@ export default function CryptoBookExamples({lessonId,compact=false}:{lessonId?:s
  if(!pool.length)return null;
  return <section className={'cryptobookexamples'+(compact?' cryptobookcompact':'')} aria-label="Textbook worked examples">
    <header className="cryptobookhead"><div><span className="eyebrow">TEXTBOOK-ALIGNED EXAMPLES · 2018 HISTORICAL SOURCE</span><h2>{compact?'Worked textbook-style examples':'Investigating Cryptocurrencies — Worked Example Studio'}</h2><p>Original AMLVERSE practice cases inspired by techniques and scenarios in all 15 chapters of Nick Furneaux's book. Study the demonstration, reveal each step, then decide what the evidence supports.</p></div><strong>{completed}/{pool.length} completed</strong></header>
-   {!compact?<label className="cryptobookfilter">Explore a book chapter
+   <label className="cryptobookfilter">Choose a chapter to study
     <select aria-label="Book chapter" value={chapter} onChange={e=>setChapterView(Number(e.target.value))}>
      <option value={0}>All 15 chapters ({pool.length} examples)</option>
      {bookChapters.map((title,i)=><option key={i} value={i+1}>Chapter {i+1} · {title}</option>)}
     </select>
-   </label>:null}
+   </label>
    <div className="cryptobooklayout">
-    <nav className="cryptobookmenu" aria-label="Worked example list">{list.map((e,i)=><button type="button" className={i===active?'active':''} key={e.id} onClick={()=>choose(i)} aria-current={i===active?'step':undefined}>{done.includes(e.id)?'✓ ':''}<small>Chapter {e.chapter} · {e.kind}</small><span>{e.title}</span></button>)}</nav>
+    {!compact?<nav className="cryptobookmenu" aria-label="Worked example list">{list.map((e,i)=><button type="button" className={i===active?'active':''} key={e.id} onClick={()=>choose(i)} aria-current={i===active?'step':undefined}>{done.includes(e.id)?'✓ ':''}<small>Chapter {e.chapter} · {e.kind}</small><span>{e.title}</span></button>)}</nav>:<div className="cryptobookcompactcontrols"><label htmlFor="cryptobook-example-select">Choose an example in this chapter</label><select id="cryptobook-example-select" value={active} onChange={e=>choose(Number(e.target.value))}>{list.map((e,i)=><option key={e.id} value={i}>{e.title}</option>)}</select></div>}
     {current?<article className="cryptobookexercise">
       <span className="eyebrow">CHAPTER {current.chapter} · PRINTED PP. {current.page} · {current.kind}</span>
       <h3>{current.title}</h3>
