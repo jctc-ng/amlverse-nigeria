@@ -2153,3 +2153,56 @@ main.virtualassetgame .chainnote{
 .cryptobookcompactcontrols select{position:static!important;min-height:48px!important}
 @media(max-width:700px){.cryptobookexamples>.cryptobookhead{grid-template-columns:minmax(0,1fr)!important}
 .cryptobookhead>strong{justify-self:start}}
+
+/* Crypto Investigator Academy: WCAG-AA readable worked examples across all
+   Foundation, Practitioner and Specialist lessons. The shared knowledgeexample
+   class was dark while globally inherited text had also been made dark. */
+main .cryptoinvestigator .cryptoinvestigator-work .knowledgeexample,
+main .riskadvanced .cryptoinvestigator .cryptoinvestigator-work .knowledgeexample{
+ background:#edf7f5!important;background-image:none!important;
+ border:1px solid #b5d9cf!important;border-left:4px solid #148573!important;
+ color:#153d51!important;opacity:1!important;filter:none!important;
+ border-radius:11px!important;padding:17px 19px!important;margin:18px 0!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-work .knowledgeexample :is(b,strong,p,span,small),
+main .riskadvanced .cryptoinvestigator .cryptoinvestigator-work .knowledgeexample :is(b,strong,p,span,small){
+ color:#173f51!important;-webkit-text-fill-color:#173f51!important;opacity:1!important;
+ text-shadow:none!important;filter:none!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-work .knowledgeexample :is(b,strong){
+ color:#0b6157!important;-webkit-text-fill-color:#0b6157!important;
+ font-weight:850!important;font-size:15px!important;line-height:1.5!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-work .knowledgeexample p{
+ font-size:16px!important;line-height:1.75!important;margin:7px 0 17px!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-work .knowledgeexample p:last-child{margin-bottom:0!important}
+main .cryptoinvestigator .cryptoinvestigator-evidence,
+main .cryptoinvestigator .cryptoinvestigator-notes,
+main .cryptoinvestigator .cryptoinvestigator-patterns article,
+main .cryptoinvestigator .cryptoinvestigator-work .feedback{
+ opacity:1!important;filter:none!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-evidence{
+ background:#eaf4f6!important;color:#173e52!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-evidence>div{
+ background:#fff!important;color:#173e52!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-evidence :is(strong,span){
+ color:#0c625c!important;-webkit-text-fill-color:#0c625c!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-work .feedback,
+main .cryptoinvestigator .cryptoinvestigator-work .feedback p{
+ background:#e9f7f1!important;color:#194a45!important;-webkit-text-fill-color:#194a45!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-patterns article :is(h4,p,b,strong){
+ color:#194357!important;-webkit-text-fill-color:#194357!important;
+}
+main .cryptoinvestigator .cryptoinvestigator-work .choices .choice{
+ opacity:1!important;filter:none!important;
+}
+@media(max-width:760px){
+ main .cryptoinvestigator .cryptoinvestigator-work .knowledgeexample{padding:14px 15px!important}
+ main .cryptoinvestigator .cryptoinvestigator-work .knowledgeexample p{font-size:16px!important}
+}
