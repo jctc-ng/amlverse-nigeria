@@ -1238,3 +1238,26 @@ test('Crypto textbook examples are organised by all 15 chapters and support guid
  await expect(studio.getByRole('heading',{name:/From ransom demand/})).toBeVisible();
  await expect(page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+4)).resolves.toBe(true);
 });
+
+
+test('Beginner crypto textbook examples show chapter one and readable single-example layout',async({page,isMobile})=>{
+ await page.goto('./');
+ if(isMobile)await page.getByRole('button',{name:/Explore academy/}).click();
+ await page.getByRole('button',{name:/Start with Virtual Assets & Blockchain/}).click();
+ const lesson=page.locator('.knowledgecard');
+ await lesson.getByText(/Worked investigation examples from the cryptocurrency textbook/).click();
+ const studio=lesson.locator('.cryptobookcompact');
+ await expect(studio.getByRole('combobox',{name:'Book chapter'})).toBeVisible();
+ await expect(studio.getByRole('heading',{name:/immovable stone/})).toBeVisible();
+ await expect(studio.locator('.cryptobookcompactcontrols select')).toBeVisible();
+ await expect(studio.locator('.cryptobookmenu')).toHaveCount(0);
+ const rect=await studio.evaluate(el=>{
+  const section=el.getBoundingClientRect();
+  const article=el.querySelector('.cryptobookexercise')!.getBoundingClientRect();
+  return {section:section.width,article:article.width,scroll:el.scrollWidth,client:el.clientWidth};
+ });
+ expect(rect.article).toBeGreaterThan(rect.section*0.75);
+ expect(rect.scroll).toBeLessThanOrEqual(rect.client+4);
+ await studio.getByRole('combobox',{name:'Book chapter'}).selectOption('15');
+ await expect(studio.getByRole('heading',{name:/From ransom demand/})).toBeVisible();
+});
